@@ -14,10 +14,10 @@ public class NewBehaviourScript : MonoBehaviour {
     public float upMovement = .001f;
     public float sideMovement = .05f;
 
-    public KeyCode up;
-    public KeyCode down;
-    public KeyCode left;
-    public KeyCode right;
+    public KeyCode upKey;
+    public KeyCode downKey;
+    public KeyCode leftKey;
+    public KeyCode rightKey;
 
 	public float healthValue = 100;
 
@@ -37,7 +37,7 @@ public class NewBehaviourScript : MonoBehaviour {
 	// Update is called once per frame
 	void Update () {
 
-		if (Input.GetKey (KeyCode.W)) {
+		if (Input.GetKey (upKey)) {
             //transform.Translate(0, movementDistance, 0);
 			if(transform.position.y<yMax)
            		rigidbody2D.AddForce(Vector2.up * upMovement);
@@ -46,7 +46,7 @@ public class NewBehaviourScript : MonoBehaviour {
                 currentSprite = back;
             }
 		}
-		if (Input.GetKey (KeyCode.S)) {
+		if (Input.GetKey (downKey)) {
 			if(transform.position.y>yMin)
             	rigidbody2D.AddForce(Vector2.up * -1 * upMovement);
 			//transform.Translate(0,-movementDistance,0);
@@ -55,21 +55,21 @@ public class NewBehaviourScript : MonoBehaviour {
                 currentSprite = front;
             }
 		}
-		if (Input.GetKey (KeyCode.A)) {
+		if (Input.GetKey(leftKey)) {
             rigidbody2D.AddForce(Vector2.right * -1 * sideMovement);
 			//transform.Translate(-movementDistance,0,0);
-            if (currentSprite != left){
-                spriteRenderer.sprite = left;
-                currentSprite = left;
+            if (currentSprite != leftKey){
+                spriteRenderer.sprite = leftKey;
+                currentSprite = leftKey;
             }
 
 		}
-		if (Input.GetKey (KeyCode.D)) {
+		if (Input.GetKey (rightKey)) {
             rigidbody2D.AddForce(Vector2.right * sideMovement);
 			//transform.Translate(movementDistance,0,0);
-            if(currentSprite != right){
-                spriteRenderer.sprite = right;
-                currentSprite = right;
+            if(currentSprite != rightKey){
+                spriteRenderer.sprite = rightKey;
+                currentSprite = rightKey;
             }
 		}
 
