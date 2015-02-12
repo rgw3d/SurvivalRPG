@@ -3,10 +3,10 @@ using System.Collections;
 
 public class NewBehaviourScript : MonoBehaviour {
 
-    public Sprite front;
-    public Sprite back;
-    public Sprite left;
-    public Sprite right;
+    public Sprite frontSprite;
+    public Sprite backSprite;
+    public Sprite leftSprite;
+    public Sprite rightSprite;
     private Sprite currentSprite;
 	private SpriteRenderer spriteRenderer;
 
@@ -29,8 +29,8 @@ public class NewBehaviourScript : MonoBehaviour {
         spriteRenderer = GetComponent<SpriteRenderer>();
         BoxCollider2D box = GetComponent<BoxCollider2D>();
         
-        spriteRenderer.sprite = front;
-        currentSprite = front;
+        spriteRenderer.sprite = frontSprite;
+        currentSprite = frontSprite;
         
 	}
 	
@@ -41,35 +41,35 @@ public class NewBehaviourScript : MonoBehaviour {
             //transform.Translate(0, movementDistance, 0);
 			if(transform.position.y<yMax)
            		rigidbody2D.AddForce(Vector2.up * upMovement);
-            if (currentSprite != back){
-                spriteRenderer.sprite = back;
-                currentSprite = back;
+            if (currentSprite != backSprite){
+                spriteRenderer.sprite = backSprite;
+                currentSprite = backSprite;
             }
 		}
 		if (Input.GetKey (downKey)) {
 			if(transform.position.y>yMin)
             	rigidbody2D.AddForce(Vector2.up * -1 * upMovement);
 			//transform.Translate(0,-movementDistance,0);
-            if (currentSprite != front){
-                spriteRenderer.sprite = front;
-                currentSprite = front;
+            if (currentSprite != frontSprite){
+                spriteRenderer.sprite = frontSprite;
+                currentSprite = frontSprite;
             }
 		}
 		if (Input.GetKey(leftKey)) {
             rigidbody2D.AddForce(Vector2.right * -1 * sideMovement);
 			//transform.Translate(-movementDistance,0,0);
-            if (currentSprite != leftKey){
-                spriteRenderer.sprite = leftKey;
-                currentSprite = leftKey;
+            if (currentSprite != leftSprite){
+                spriteRenderer.sprite = leftSprite;
+                currentSprite = leftSprite;
             }
 
 		}
 		if (Input.GetKey (rightKey)) {
             rigidbody2D.AddForce(Vector2.right * sideMovement);
 			//transform.Translate(movementDistance,0,0);
-            if(currentSprite != rightKey){
-                spriteRenderer.sprite = rightKey;
-                currentSprite = rightKey;
+            if(currentSprite != rightSprite){
+                spriteRenderer.sprite = rightSprite;
+                currentSprite = rightSprite;
             }
 		}
 
