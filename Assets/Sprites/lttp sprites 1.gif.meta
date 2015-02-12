@@ -1,0 +1,1156 @@
+fileFormatVersion: 2
+guid: 0f491ec263b3953419c255895b4cb4ad
+TextureImporter:
+  serializedVersion: 2
+  mipmaps:
+    mipMapMode: 0
+    enableMipMap: 0
+    linearTexture: 0
+    correctGamma: 0
+    fadeOut: 0
+    borderMipMap: 0
+    mipMapFadeDistanceStart: 1
+    mipMapFadeDistanceEnd: 3
+  bumpmap:
+    convertToNormalMap: 0
+    externalNormalMap: 0
+    heightScale: .25
+    normalMapFilter: 0
+  isReadable: 0
+  grayScaleToAlpha: 0
+  generateCubemap: 0
+  seamlessCubemap: 0
+  textureFormat: -2
+  maxTextureSize: 1024
+  textureSettings:
+    filterMode: 0
+    aniso: 1
+    mipBias: -1
+    wrapMode: 1
+  nPOTScale: 0
+  lightmap: 0
+  compressionQuality: 50
+  spriteMode: 2
+  spriteExtrude: 1
+  spriteMeshType: 1
+  alignment: 0
+  spritePivot: {x: .5, y: .5}
+  spriteBorder: {x: 0, y: 0, z: 0, w: 0}
+  spritePixelsToUnits: 100
+  alphaIsTransparency: 1
+  textureType: 8
+  buildTargetSettings: []
+  spriteSheet:
+    sprites:
+    - name: lttp sprites 1_0
+      rect:
+        serializedVersion: 2
+        x: 148
+        y: 297
+        width: 16
+        height: 22
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: lttp sprites 1_1
+      rect:
+        serializedVersion: 2
+        x: 169
+        y: 297
+        width: 16
+        height: 22
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: lttp sprites 1_2
+      rect:
+        serializedVersion: 2
+        x: 190
+        y: 297
+        width: 16
+        height: 23
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: lttp sprites 1_3
+      rect:
+        serializedVersion: 2
+        x: 211
+        y: 297
+        width: 16
+        height: 24
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: lttp sprites 1_4
+      rect:
+        serializedVersion: 2
+        x: 232
+        y: 297
+        width: 16
+        height: 22
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: lttp sprites 1_5
+      rect:
+        serializedVersion: 2
+        x: 253
+        y: 297
+        width: 16
+        height: 23
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: lttp sprites 1_6
+      rect:
+        serializedVersion: 2
+        x: 274
+        y: 297
+        width: 16
+        height: 23
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: lttp sprites 1_7
+      rect:
+        serializedVersion: 2
+        x: 295
+        y: 297
+        width: 16
+        height: 24
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: lttp sprites 1_8
+      rect:
+        serializedVersion: 2
+        x: 2
+        y: 268
+        width: 19
+        height: 24
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: lttp sprites 1_9
+      rect:
+        serializedVersion: 2
+        x: 26
+        y: 268
+        width: 18
+        height: 24
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: lttp sprites 1_10
+      rect:
+        serializedVersion: 2
+        x: 49
+        y: 268
+        width: 19
+        height: 23
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: lttp sprites 1_11
+      rect:
+        serializedVersion: 2
+        x: 73
+        y: 268
+        width: 19
+        height: 23
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: lttp sprites 1_12
+      rect:
+        serializedVersion: 2
+        x: 97
+        y: 268
+        width: 19
+        height: 24
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: lttp sprites 1_13
+      rect:
+        serializedVersion: 2
+        x: 121
+        y: 268
+        width: 18
+        height: 24
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: lttp sprites 1_14
+      rect:
+        serializedVersion: 2
+        x: 144
+        y: 268
+        width: 19
+        height: 24
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: lttp sprites 1_15
+      rect:
+        serializedVersion: 2
+        x: 168
+        y: 268
+        width: 18
+        height: 24
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: lttp sprites 1_16
+      rect:
+        serializedVersion: 2
+        x: 191
+        y: 268
+        width: 19
+        height: 23
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: lttp sprites 1_17
+      rect:
+        serializedVersion: 2
+        x: 215
+        y: 268
+        width: 19
+        height: 23
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: lttp sprites 1_18
+      rect:
+        serializedVersion: 2
+        x: 239
+        y: 268
+        width: 19
+        height: 24
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: lttp sprites 1_19
+      rect:
+        serializedVersion: 2
+        x: 263
+        y: 268
+        width: 18
+        height: 24
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: lttp sprites 1_20
+      rect:
+        serializedVersion: 2
+        x: 286
+        y: 268
+        width: 17
+        height: 23
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: lttp sprites 1_21
+      rect:
+        serializedVersion: 2
+        x: 308
+        y: 268
+        width: 17
+        height: 24
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: lttp sprites 1_22
+      rect:
+        serializedVersion: 2
+        x: 330
+        y: 268
+        width: 17
+        height: 22
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: lttp sprites 1_23
+      rect:
+        serializedVersion: 2
+        x: 352
+        y: 268
+        width: 17
+        height: 22
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: lttp sprites 1_24
+      rect:
+        serializedVersion: 2
+        x: 374
+        y: 268
+        width: 17
+        height: 23
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: lttp sprites 1_25
+      rect:
+        serializedVersion: 2
+        x: 396
+        y: 268
+        width: 17
+        height: 24
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: lttp sprites 1_26
+      rect:
+        serializedVersion: 2
+        x: 418
+        y: 268
+        width: 17
+        height: 22
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: lttp sprites 1_27
+      rect:
+        serializedVersion: 2
+        x: 440
+        y: 268
+        width: 17
+        height: 22
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: lttp sprites 1_28
+      rect:
+        serializedVersion: 2
+        x: 90
+        y: 239
+        width: 17
+        height: 24
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: lttp sprites 1_29
+      rect:
+        serializedVersion: 2
+        x: 112
+        y: 239
+        width: 18
+        height: 21
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: lttp sprites 1_30
+      rect:
+        serializedVersion: 2
+        x: 135
+        y: 239
+        width: 18
+        height: 22
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: lttp sprites 1_31
+      rect:
+        serializedVersion: 2
+        x: 158
+        y: 239
+        width: 17
+        height: 23
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: lttp sprites 1_32
+      rect:
+        serializedVersion: 2
+        x: 180
+        y: 239
+        width: 19
+        height: 22
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: lttp sprites 1_33
+      rect:
+        serializedVersion: 2
+        x: 204
+        y: 239
+        width: 20
+        height: 23
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: lttp sprites 1_34
+      rect:
+        serializedVersion: 2
+        x: 229
+        y: 239
+        width: 17
+        height: 23
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: lttp sprites 1_35
+      rect:
+        serializedVersion: 2
+        x: 251
+        y: 239
+        width: 19
+        height: 22
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: lttp sprites 1_36
+      rect:
+        serializedVersion: 2
+        x: 275
+        y: 239
+        width: 20
+        height: 23
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: lttp sprites 1_37
+      rect:
+        serializedVersion: 2
+        x: 300
+        y: 239
+        width: 18
+        height: 22
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: lttp sprites 1_38
+      rect:
+        serializedVersion: 2
+        x: 323
+        y: 239
+        width: 21
+        height: 21
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: lttp sprites 1_39
+      rect:
+        serializedVersion: 2
+        x: 349
+        y: 239
+        width: 21
+        height: 22
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: lttp sprites 1_40
+      rect:
+        serializedVersion: 2
+        x: 112
+        y: 199
+        width: 28
+        height: 28
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: lttp sprites 1_41
+      rect:
+        serializedVersion: 2
+        x: 145
+        y: 199
+        width: 32
+        height: 22
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: lttp sprites 1_42
+      rect:
+        serializedVersion: 2
+        x: 182
+        y: 199
+        width: 26
+        height: 28
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: lttp sprites 1_43
+      rect:
+        serializedVersion: 2
+        x: 213
+        y: 199
+        width: 16
+        height: 35
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: lttp sprites 1_44
+      rect:
+        serializedVersion: 2
+        x: 234
+        y: 199
+        width: 26
+        height: 30
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: lttp sprites 1_45
+      rect:
+        serializedVersion: 2
+        x: 265
+        y: 199
+        width: 32
+        height: 22
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: lttp sprites 1_46
+      rect:
+        serializedVersion: 2
+        x: 302
+        y: 199
+        width: 24
+        height: 25
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: lttp sprites 1_47
+      rect:
+        serializedVersion: 2
+        x: 331
+        y: 199
+        width: 16
+        height: 31
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: lttp sprites 1_48
+      rect:
+        serializedVersion: 2
+        x: 132
+        y: 171
+        width: 23
+        height: 22
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: lttp sprites 1_49
+      rect:
+        serializedVersion: 2
+        x: 160
+        y: 171
+        width: 20
+        height: 21
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: lttp sprites 1_50
+      rect:
+        serializedVersion: 2
+        x: 185
+        y: 171
+        width: 22
+        height: 23
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: lttp sprites 1_51
+      rect:
+        serializedVersion: 2
+        x: 212
+        y: 171
+        width: 16
+        height: 22
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: lttp sprites 1_52
+      rect:
+        serializedVersion: 2
+        x: 233
+        y: 171
+        width: 22
+        height: 23
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: lttp sprites 1_53
+      rect:
+        serializedVersion: 2
+        x: 260
+        y: 171
+        width: 16
+        height: 22
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: lttp sprites 1_54
+      rect:
+        serializedVersion: 2
+        x: 281
+        y: 171
+        width: 23
+        height: 23
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: lttp sprites 1_55
+      rect:
+        serializedVersion: 2
+        x: 309
+        y: 171
+        width: 19
+        height: 22
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: lttp sprites 1_56
+      rect:
+        serializedVersion: 2
+        x: 9
+        y: 135
+        width: 20
+        height: 23
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: lttp sprites 1_57
+      rect:
+        serializedVersion: 2
+        x: 34
+        y: 135
+        width: 22
+        height: 24
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: lttp sprites 1_58
+      rect:
+        serializedVersion: 2
+        x: 61
+        y: 135
+        width: 20
+        height: 31
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: lttp sprites 1_59
+      rect:
+        serializedVersion: 2
+        x: 86
+        y: 135
+        width: 20
+        height: 31
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: lttp sprites 1_60
+      rect:
+        serializedVersion: 2
+        x: 111
+        y: 135
+        width: 28
+        height: 29
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: lttp sprites 1_61
+      rect:
+        serializedVersion: 2
+        x: 144
+        y: 135
+        width: 32
+        height: 27
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: lttp sprites 1_62
+      rect:
+        serializedVersion: 2
+        x: 181
+        y: 135
+        width: 18
+        height: 23
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: lttp sprites 1_63
+      rect:
+        serializedVersion: 2
+        x: 204
+        y: 135
+        width: 26
+        height: 24
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: lttp sprites 1_64
+      rect:
+        serializedVersion: 2
+        x: 235
+        y: 135
+        width: 31
+        height: 21
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: lttp sprites 1_65
+      rect:
+        serializedVersion: 2
+        x: 271
+        y: 135
+        width: 28
+        height: 21
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: lttp sprites 1_66
+      rect:
+        serializedVersion: 2
+        x: 304
+        y: 135
+        width: 23
+        height: 31
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: lttp sprites 1_67
+      rect:
+        serializedVersion: 2
+        x: 332
+        y: 135
+        width: 18
+        height: 23
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: lttp sprites 1_68
+      rect:
+        serializedVersion: 2
+        x: 355
+        y: 135
+        width: 26
+        height: 24
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: lttp sprites 1_69
+      rect:
+        serializedVersion: 2
+        x: 386
+        y: 135
+        width: 31
+        height: 21
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: lttp sprites 1_70
+      rect:
+        serializedVersion: 2
+        x: 422
+        y: 135
+        width: 28
+        height: 21
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: lttp sprites 1_71
+      rect:
+        serializedVersion: 2
+        x: 146
+        y: 95
+        width: 23
+        height: 31
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: lttp sprites 1_72
+      rect:
+        serializedVersion: 2
+        x: 174
+        y: 95
+        width: 22
+        height: 22
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: lttp sprites 1_73
+      rect:
+        serializedVersion: 2
+        x: 201
+        y: 95
+        width: 22
+        height: 30
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: lttp sprites 1_74
+      rect:
+        serializedVersion: 2
+        x: 228
+        y: 95
+        width: 20
+        height: 35
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: lttp sprites 1_75
+      rect:
+        serializedVersion: 2
+        x: 253
+        y: 95
+        width: 24
+        height: 30
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: lttp sprites 1_76
+      rect:
+        serializedVersion: 2
+        x: 282
+        y: 95
+        width: 32
+        height: 23
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: lttp sprites 1_77
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 50
+        width: 18
+        height: 38
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: lttp sprites 1_78
+      rect:
+        serializedVersion: 2
+        x: 23
+        y: 50
+        width: 16
+        height: 22
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: lttp sprites 1_79
+      rect:
+        serializedVersion: 2
+        x: 44
+        y: 50
+        width: 23
+        height: 22
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: lttp sprites 1_80
+      rect:
+        serializedVersion: 2
+        x: 72
+        y: 50
+        width: 16
+        height: 22
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: lttp sprites 1_81
+      rect:
+        serializedVersion: 2
+        x: 93
+        y: 50
+        width: 18
+        height: 21
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: lttp sprites 1_82
+      rect:
+        serializedVersion: 2
+        x: 116
+        y: 50
+        width: 32
+        height: 40
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: lttp sprites 1_83
+      rect:
+        serializedVersion: 2
+        x: 153
+        y: 50
+        width: 32
+        height: 40
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: lttp sprites 1_84
+      rect:
+        serializedVersion: 2
+        x: 190
+        y: 50
+        width: 16
+        height: 22
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: lttp sprites 1_85
+      rect:
+        serializedVersion: 2
+        x: 211
+        y: 50
+        width: 19
+        height: 34
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: lttp sprites 1_86
+      rect:
+        serializedVersion: 2
+        x: 235
+        y: 50
+        width: 20
+        height: 37
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: lttp sprites 1_87
+      rect:
+        serializedVersion: 2
+        x: 260
+        y: 50
+        width: 20
+        height: 23
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: lttp sprites 1_88
+      rect:
+        serializedVersion: 2
+        x: 285
+        y: 50
+        width: 16
+        height: 36
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: lttp sprites 1_89
+      rect:
+        serializedVersion: 2
+        x: 306
+        y: 50
+        width: 24
+        height: 15
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: lttp sprites 1_90
+      rect:
+        serializedVersion: 2
+        x: 335
+        y: 50
+        width: 22
+        height: 21
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: lttp sprites 1_91
+      rect:
+        serializedVersion: 2
+        x: 362
+        y: 50
+        width: 21
+        height: 29
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: lttp sprites 1_92
+      rect:
+        serializedVersion: 2
+        x: 388
+        y: 50
+        width: 20
+        height: 31
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: lttp sprites 1_93
+      rect:
+        serializedVersion: 2
+        x: 413
+        y: 50
+        width: 22
+        height: 38
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: lttp sprites 1_94
+      rect:
+        serializedVersion: 2
+        x: 440
+        y: 50
+        width: 20
+        height: 38
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: lttp sprites 1_95
+      rect:
+        serializedVersion: 2
+        x: 34
+        y: 0
+        width: 22
+        height: 37
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: lttp sprites 1_96
+      rect:
+        serializedVersion: 2
+        x: 61
+        y: 0
+        width: 19
+        height: 29
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: lttp sprites 1_97
+      rect:
+        serializedVersion: 2
+        x: 85
+        y: 0
+        width: 19
+        height: 22
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: lttp sprites 1_98
+      rect:
+        serializedVersion: 2
+        x: 109
+        y: 0
+        width: 30
+        height: 21
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: lttp sprites 1_99
+      rect:
+        serializedVersion: 2
+        x: 144
+        y: 0
+        width: 16
+        height: 18
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: lttp sprites 1_100
+      rect:
+        serializedVersion: 2
+        x: 165
+        y: 0
+        width: 16
+        height: 22
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: lttp sprites 1_101
+      rect:
+        serializedVersion: 2
+        x: 186
+        y: 0
+        width: 17
+        height: 23
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: lttp sprites 1_102
+      rect:
+        serializedVersion: 2
+        x: 208
+        y: 0
+        width: 21
+        height: 23
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: lttp sprites 1_103
+      rect:
+        serializedVersion: 2
+        x: 234
+        y: 0
+        width: 19
+        height: 37
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: lttp sprites 1_104
+      rect:
+        serializedVersion: 2
+        x: 258
+        y: 0
+        width: 19
+        height: 23
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: lttp sprites 1_105
+      rect:
+        serializedVersion: 2
+        x: 282
+        y: 0
+        width: 20
+        height: 23
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: lttp sprites 1_106
+      rect:
+        serializedVersion: 2
+        x: 307
+        y: 0
+        width: 20
+        height: 26
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: lttp sprites 1_107
+      rect:
+        serializedVersion: 2
+        x: 332
+        y: 0
+        width: 26
+        height: 45
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: lttp sprites 1_108
+      rect:
+        serializedVersion: 2
+        x: 363
+        y: 0
+        width: 20
+        height: 27
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: lttp sprites 1_109
+      rect:
+        serializedVersion: 2
+        x: 388
+        y: 0
+        width: 16
+        height: 19
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: lttp sprites 1_110
+      rect:
+        serializedVersion: 2
+        x: 409
+        y: 0
+        width: 16
+        height: 19
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+  spritePackingTag: 
+  userData: 

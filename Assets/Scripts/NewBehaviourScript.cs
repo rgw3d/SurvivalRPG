@@ -8,11 +8,16 @@ public class NewBehaviourScript : MonoBehaviour {
     public Sprite left;
     public Sprite right;
     private Sprite currentSprite;
-	SpriteRenderer spriteRenderer;
+	private SpriteRenderer spriteRenderer;
 
 	public float movementDistance = .001f;
     public float upMovement = .001f;
     public float sideMovement = .05f;
+
+    public KeyCode up;
+    public KeyCode down;
+    public KeyCode left;
+    public KeyCode right;
 
 	public float healthValue = 100;
 
