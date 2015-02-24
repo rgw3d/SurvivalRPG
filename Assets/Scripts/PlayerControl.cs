@@ -19,7 +19,7 @@ public class PlayerControl : MonoBehaviour, PlayerClass {
     public KeyCode LeftKey;
     public KeyCode RightKey;
 
-    public event ChangePlayerScore OnChangeScore;
+    public event ChangePlayerStat OnChangeScore;
 
     public float yMax = 1;
     public float yMin = -1;

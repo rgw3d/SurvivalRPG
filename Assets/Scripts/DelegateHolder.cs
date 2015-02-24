@@ -2,7 +2,7 @@
 using System.Collections;
 
 
-public delegate float ChangePlayerScore(StatType statType, float amountChange);
+public delegate float ChangePlayerStat(StatType statType, float amountChange);
 
 public class DelegateHolder {
 

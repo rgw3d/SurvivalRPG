@@ -9,7 +9,6 @@ public class basic_Enemy_follow : MonoBehaviour {
 
 	void FixedUpdate () {
 		moveTowardsPlayer ();
-		//sprayBullets ();
 	}
 
 	void moveTowardsPlayer(){
@@ -24,8 +23,6 @@ public class basic_Enemy_follow : MonoBehaviour {
 	void addDamage (float damage) {
 		healthValue -= damage;
 		if (healthValue < 0) {
-			//scoreControl.Score += 1000;
-			//spawnEnemies.totalEnemies--;
 			Destroy (gameObject);
 		}
 	}
