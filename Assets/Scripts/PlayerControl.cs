@@ -7,6 +7,10 @@ public class PlayerControl : MonoBehaviour, PlayerClass {
     public Sprite BackSprite;
     public Sprite LeftSprite;
     public Sprite RightSprite;
+    public Sprite FrontAttack;
+    public Sprite BackAttack;
+    public Sprite LeftAttack;
+    public Sprite RightAttack;
     private Sprite _currentSprite;
 	private SpriteRenderer _spriteRenderer;
 
@@ -18,14 +22,19 @@ public class PlayerControl : MonoBehaviour, PlayerClass {
     public KeyCode DownKey;
     public KeyCode LeftKey;
     public KeyCode RightKey;
+    public KeyCode AttackKey;
 
-    public event ChangePlayerStat OnChangeScore;
+    public event ChangePlayerStat OnChangeStat;
 
     public float yMax = 1;
     public float yMin = -1;
 
     public int AttackCooldown = 100;
+    public int AttackLength = 20;
     private int _atkCoolCounter = 0;
+
+    private CardinalDirection _playerDirection = CardinalDirection.front;
+    
 
 	// Use this for initialization
 	void Start () {
@@ -36,14 +45,22 @@ public class PlayerControl : MonoBehaviour, PlayerClass {
         _currentSprite = FrontSprite;
         
 	}
+
+    private enum CardinalDirection {
+        front,
+        back,
+        left,
+        right
+    }
 	
 	// Update is called once per frame
 	void FixedUpdate () {
-        if (Input.GetKey(KeyCode.E)) {
-            Debug.Log(OnChangeScore(StatType.Score, 1f));
+        if (Input.GetKey(KeyCode.E)) { //just a test of the ability to work
+            OnChangeStat(StatType.Score, 1f);
         }
 
         playerMovement();
+        playerSprite();
         if(ScalePlayer)
             playerScale();
 
@@ -59,42 +76,56 @@ public class PlayerControl : MonoBehaviour, PlayerClass {
         if (Input.GetKey(UpKey)) {
             if (transform.position.y < yMax)
                 rigidbody2D.AddForce(Vector2.up * VerticalMovement);
-            if (_currentSprite != BackSprite) {
-                _spriteRenderer.sprite = BackSprite;
-                _currentSprite = BackSprite;
-            }
+            _playerDirection = CardinalDirection.back;
         }
         if (Input.GetKey(DownKey)) {
             if (transform.position.y > yMin)
                 rigidbody2D.AddForce(Vector2.up * -1 * VerticalMovement);
-            if (_currentSprite != FrontSprite) {
-                _spriteRenderer.sprite = FrontSprite;
-                _currentSprite = FrontSprite;
-            }
+            _playerDirection = CardinalDirection.front;
         }
         if (Input.GetKey(LeftKey)) {
             rigidbody2D.AddForce(Vector2.right * -1 * HorizontalMovement);
-            if (_currentSprite != LeftSprite) {
-                _spriteRenderer.sprite = LeftSprite;
-                _currentSprite = LeftSprite;
-            }
+            _playerDirection = CardinalDirection.left;
 
         }
         if (Input.GetKey(RightKey)) {
             rigidbody2D.AddForce(Vector2.right * HorizontalMovement);
-            if (_currentSprite != RightSprite) {
-                _spriteRenderer.sprite = RightSprite;
-                _currentSprite = RightSprite;
-            }
+            _playerDirection = CardinalDirection.right;
         }
         
+    }
+
+    public void playerSprite() {
+        if (_playerDirection == CardinalDirection.back) {
+            if(Input.GetKey(AttackKey))
+                _spriteRenderer.sprite = BackAttack;
+            else
+                _spriteRenderer.sprite = BackSprite;
+        }
+        if (_playerDirection == CardinalDirection.front) {
+            if(Input.GetKey(AttackKey))
+                _spriteRenderer.sprite = FrontAttack;
+            else
+                _spriteRenderer.sprite = FrontSprite;
+        }
+        if (_playerDirection == CardinalDirection.left) {
+            if(Input.GetKey(AttackKey))
+                _spriteRenderer.sprite = LeftAttack;
+            else
+                _spriteRenderer.sprite = LeftSprite;
+        }
+        if (_playerDirection == CardinalDirection.right) {
+            if(Input.GetKey(AttackKey))
+                _spriteRenderer.sprite = RightAttack;
+            else
+                _spriteRenderer.sprite = RightSprite;
+        }
     }
 
     
 
     public void playerAttack() {
         if(Input.GetKey(KeyCode.Space)){
-
         }
     }
 }

@@ -11,7 +11,7 @@ public class PlayerGUI : MonoBehaviour {
 
     void Start() {
         PlayerControl playerController = FindObjectOfType<PlayerControl>();
-        playerController.OnChangeScore += UpdateGUIStats;//add the method to the event, and the event is made from the delegate
+        playerController.OnChangeStat += UpdateGUIStats;//add the method to the event, and the event is made from the delegate
     }
 
     void OnGUI() {
