@@ -29,9 +29,6 @@ public class PlayerControl : MonoBehaviour, PlayerClass {
     public float yMax = 1;
     public float yMin = -1;
 
-    public int AttackCooldown = 100;
-    public int AttackLength = 20;
-    private int _atkCoolCounter = 0;
 
     private CardinalDirection _playerDirection = CardinalDirection.front;
     
@@ -122,10 +119,9 @@ public class PlayerControl : MonoBehaviour, PlayerClass {
         }
     }
 
-    
-
     public void playerAttack() {
-        if(Input.GetKey(KeyCode.Space)){
+        if(Input.GetKey(AttackKey)){
+
         }
     }
 }
