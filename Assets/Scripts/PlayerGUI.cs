@@ -12,6 +12,9 @@ public class PlayerGUI : MonoBehaviour {
     void Start() {
         PlayerControl playerController = FindObjectOfType<PlayerControl>();
         playerController.OnChangeStat += UpdateGUIStats;//add the method to the event, and the event is made from the delegate
+
+        basic_Enemy_follow basicEnemy = FindObjectOfType<basic_Enemy_follow>();
+        basicEnemy.OnChangeStat += UpdateGUIStats;//add the method to the event, and the event is made from the delegate
     }
 
     void OnGUI() {

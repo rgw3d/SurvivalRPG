@@ -25,6 +25,7 @@ public class PlayerControl : MonoBehaviour, PlayerClass {
     public KeyCode AttackKey;
 
     public event ChangePlayerStat OnChangeStat;
+    public event PlayerAttack OnPlayerAttack;
 
     public float yMax = 1;
     public float yMin = -1;
@@ -58,6 +59,7 @@ public class PlayerControl : MonoBehaviour, PlayerClass {
 
         playerMovement();
         playerSprite();
+        playerAttack();
         if(ScalePlayer)
             playerScale();
 
@@ -120,8 +122,6 @@ public class PlayerControl : MonoBehaviour, PlayerClass {
     }
 
     public void playerAttack() {
-        if(Input.GetKey(AttackKey)){
-
-        }
+        OnPlayerAttack(Input.GetKey(AttackKey));
     }
 }
