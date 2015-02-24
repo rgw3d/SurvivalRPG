@@ -1,6 +1,30 @@
 fileFormatVersion: 2
 guid: 45fb0154943edb64eab491e699e6839a
 TextureImporter:
+  fileIDToRecycleName:
+    21300000: enemy_soldier_lance_0
+    21300002: enemy_soldier_lance_1
+    21300004: enemy_soldier_lance_2
+    21300006: enemy_soldier_lance_3
+    21300008: enemy_soldier_lance_4
+    21300010: enemy_soldier_lance_5
+    21300012: enemy_soldier_lance_6
+    21300014: enemy_soldier_lance_7
+    21300016: enemy_soldier_lance_8
+    21300018: enemy_soldier_lance_9
+    21300020: enemy_soldier_lance_10
+    21300022: enemy_soldier_lance_11
+    21300024: enemy_soldier_lance_12
+    21300026: enemy_soldier_lance_13
+    21300028: enemy_soldier_lance_14
+    21300030: enemy_soldier_lance_15
+    21300032: enemy_soldier_lance_16
+    21300034: enemy_soldier_lance_17
+    21300036: enemy_soldier_lance_18
+    21300038: enemy_soldier_lance_19
+    21300040: enemy_soldier_lance_20
+    21300042: enemy_soldier_lance_21
+    21300044: enemy_soldier_lance_22
   serializedVersion: 2
   mipmaps:
     mipMapMode: 0
