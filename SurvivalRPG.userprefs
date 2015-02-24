@@ -2,7 +2,7 @@
   <MonoDevelop.Ide.Workspace />
   <MonoDevelop.Ide.Workbench ActiveDocument="..\..\NHSGA\OneWayOut\Assets\Scripts\EventManager.cs">
     <Files>
-      <File FileName="..\..\NHSGA\OneWayOut\Assets\Scripts\EventManager.cs" Line="6" Column="27" />
+      <File FileName="..\..\NHSGA\OneWayOut\Assets\Scripts\EventManager.cs" Line="33" Column="28" />
       <File FileName="..\..\NHSGA\OneWayOut\Assets\Scripts\PlayerControl.cs" Line="55" Column="45" />
     </Files>
   </MonoDevelop.Ide.Workbench>

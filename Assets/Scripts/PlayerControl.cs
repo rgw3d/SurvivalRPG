@@ -57,7 +57,6 @@ public class PlayerControl : MonoBehaviour, PlayerClass {
 
     public void playerMovement() {
         if (Input.GetKey(UpKey)) {
-            //transform.Translate(0, movementDistance, 0);
             if (transform.position.y < yMax)
                 rigidbody2D.AddForce(Vector2.up * VerticalMovement);
             if (_currentSprite != BackSprite) {
@@ -68,7 +67,6 @@ public class PlayerControl : MonoBehaviour, PlayerClass {
         if (Input.GetKey(DownKey)) {
             if (transform.position.y > yMin)
                 rigidbody2D.AddForce(Vector2.up * -1 * VerticalMovement);
-            //transform.Translate(0,-movementDistance,0);
             if (_currentSprite != FrontSprite) {
                 _spriteRenderer.sprite = FrontSprite;
                 _currentSprite = FrontSprite;
@@ -76,7 +74,6 @@ public class PlayerControl : MonoBehaviour, PlayerClass {
         }
         if (Input.GetKey(LeftKey)) {
             rigidbody2D.AddForce(Vector2.right * -1 * HorizontalMovement);
-            //transform.Translate(-movementDistance,0,0);
             if (_currentSprite != LeftSprite) {
                 _spriteRenderer.sprite = LeftSprite;
                 _currentSprite = LeftSprite;
@@ -85,7 +82,6 @@ public class PlayerControl : MonoBehaviour, PlayerClass {
         }
         if (Input.GetKey(RightKey)) {
             rigidbody2D.AddForce(Vector2.right * HorizontalMovement);
-            //transform.Translate(movementDistance,0,0);
             if (_currentSprite != RightSprite) {
                 _spriteRenderer.sprite = RightSprite;
                 _currentSprite = RightSprite;
