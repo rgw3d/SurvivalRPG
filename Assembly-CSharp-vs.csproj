@@ -46,8 +46,11 @@
 	</Reference>
   </ItemGroup>
   <ItemGroup>
-     <Compile Include="Assets\Scripts\BasicGUI.cs" />
-     <Compile Include="Assets\Scripts\NewBehaviourScript.cs" />
+     <Compile Include="Assets\Scripts\DelegateHolder.cs" />
+     <Compile Include="Assets\Scripts\PlayerClass.cs" />
+     <Compile Include="Assets\Scripts\PlayerControl.cs" />
+     <Compile Include="Assets\Scripts\PlayerGUI.cs" />
+     <Compile Include="Assets\Scripts\StatType.cs" />
      <Compile Include="Assets\Scripts\basic_Enemy_follow.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
