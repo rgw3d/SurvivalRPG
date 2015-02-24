@@ -27,6 +27,16 @@ public class PlayerGUI : MonoBehaviour {
         GUI.color = Color.black;
     }
 
+    void drawHealth() {
+        string scoreNum = (int)(playerHealth) + "";
+        GUIStyle style = new GUIStyle();
+        style.richText = true;
+        style.alignment = TextAnchor.UpperCenter;
+        style.fontSize = 40;
+        GUI.Label(new Rect(Screen.width * 0.4f, Screen.height * 0.9f, Screen.width * 0.2f, Screen.height * 0.05f), scoreNum, style);
+        GUI.color = Color.black;
+    }
+
     float UpdateGUIStats(StatType statType, float change) {
         if (statType == StatType.Score) {
             playerScore += change;
