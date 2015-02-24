@@ -24,9 +24,6 @@ public class PlayerControl : MonoBehaviour, PlayerClass {
     public KeyCode RightKey;
     public KeyCode AttackKey;
 
-    public event ChangePlayerStat OnChangeStat;
-    public event PlayerAttack OnPlayerAttack;
-
     public float yMax = 1;
     public float yMin = -1;
 
@@ -36,6 +33,8 @@ public class PlayerControl : MonoBehaviour, PlayerClass {
 
 	// Use this for initialization
 	void Start () {
+
+
         _spriteRenderer = GetComponent<SpriteRenderer>();
         BoxCollider2D box = GetComponent<BoxCollider2D>();
         
@@ -54,7 +53,7 @@ public class PlayerControl : MonoBehaviour, PlayerClass {
 	// Update is called once per frame
 	void FixedUpdate () {
         if (Input.GetKey(KeyCode.E)) { //just a test of the ability to work
-            OnChangeStat(StatType.Score, 1f);
+            DelegateHolder.TriggerPlayerStatChange(StatType.Score, 1f);   
         }
 
         playerMovement();
@@ -122,6 +121,6 @@ public class PlayerControl : MonoBehaviour, PlayerClass {
     }
 
     public void playerAttack() {
-        OnPlayerAttack(Input.GetKey(AttackKey));
+        DelegateHolder.TriggerPlayerAttack(Input.GetKey(AttackKey));
     }
 }

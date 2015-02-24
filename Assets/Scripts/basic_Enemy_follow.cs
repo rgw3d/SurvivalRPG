@@ -9,11 +9,9 @@ public class basic_Enemy_follow : MonoBehaviour {
 
     private bool _isAttacking = false;
 
-    public event ChangePlayerStat OnChangeStat;
 
     void Start() {
-        PlayerControl playerController = FindObjectOfType<PlayerControl>();
-        playerController.OnPlayerAttack += PlayerAttackStance;//add the method to the event, and the event is made from the delegate
+        DelegateHolder.OnPlayerAttack += PlayerAttackStance;//add the method to the event, and the event is made from the delegate
     }
 
 	void FixedUpdate () {
@@ -41,7 +39,7 @@ public class basic_Enemy_follow : MonoBehaviour {
                 rigidbody2D.AddForce( (col.gameObject.transform.position + transform.position) * -200  );
         }
         else if (col.gameObject == playerChar && !_isAttacking)
-            OnChangeStat(StatType.Health, -.1f);
+            DelegateHolder.TriggerPlayerStatChange(StatType.Health, -.1f);
     }
 
     void OnTriggerStay2D(Collider2D col) {

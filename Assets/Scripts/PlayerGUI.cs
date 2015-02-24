@@ -10,11 +10,7 @@ public class PlayerGUI : MonoBehaviour {
     
 
     void Start() {
-        PlayerControl playerController = FindObjectOfType<PlayerControl>();
-        playerController.OnChangeStat += UpdateGUIStats;//add the method to the event, and the event is made from the delegate
-
-        basic_Enemy_follow basicEnemy = FindObjectOfType<basic_Enemy_follow>();
-        basicEnemy.OnChangeStat += UpdateGUIStats;//add the method to the event, and the event is made from the delegate
+        DelegateHolder.OnPlayerStatChange += UpdateGUIStats;//add the method to the event, and the event is made from the delegate
     }
 
     void OnGUI() {
@@ -26,7 +22,8 @@ public class PlayerGUI : MonoBehaviour {
         GUIStyle style = new GUIStyle();
         style.richText = true;
         style.alignment = TextAnchor.UpperCenter;
-        GUI.Label(new Rect(Screen.width * 0.4f, Screen.height * 0.9f, Screen.width * 0.2f, Screen.height * 0.05f), "<size=30>" + scoreNum + "</size>", style);
+        style.fontSize = 40;
+        GUI.Label(new Rect(Screen.width * 0.4f, Screen.height * 0.9f, Screen.width * 0.2f, Screen.height * 0.05f), scoreNum , style);
         GUI.color = Color.black;
     }
 
@@ -41,8 +38,6 @@ public class PlayerGUI : MonoBehaviour {
         }
         else
             return -1;
-
-
     }
 
 }
