@@ -24,8 +24,6 @@ public class PlayerControl : MonoBehaviour, PlayerClass {
     public KeyCode RightKey;
     public KeyCode AttackKey;
 
-    public float yMax = 1;
-    public float yMin = -1;
 
 
     private CardinalDirection _playerDirection = CardinalDirection.front;
@@ -72,13 +70,11 @@ public class PlayerControl : MonoBehaviour, PlayerClass {
 
     public void playerMovement() {
         if (Input.GetKey(UpKey)) {
-            if (transform.position.y < yMax)
-                rigidbody2D.AddForce(Vector2.up * VerticalMovement);
+            rigidbody2D.AddForce(Vector2.up * VerticalMovement);
             _playerDirection = CardinalDirection.back;
         }
         if (Input.GetKey(DownKey)) {
-            if (transform.position.y > yMin)
-                rigidbody2D.AddForce(Vector2.up * -1 * VerticalMovement);
+            rigidbody2D.AddForce(Vector2.up * -1 * VerticalMovement);
             _playerDirection = CardinalDirection.front;
         }
         if (Input.GetKey(LeftKey)) {
