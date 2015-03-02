@@ -5,11 +5,25 @@ public class Tile : MonoBehaviour {
 
 	public float x;
 	public float y;
+    public TileType tileType;
 
-	public enum tileType;
+    public enum TileType {
+        center,
+        topEdge,
+        botEdge,
+        rightEdge,
+        leftEdge,
+        topRightCorner,
+        topLeftCorner,
+        botRightCorner,
+        botLeftCorner
+    }
 
+    public Tile() {
 
-	void Start () {
-	
-	}
+    }
+    public Tile(float x, float y) {
+
+    }
+
 }
