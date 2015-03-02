@@ -1,13 +1,19 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class Tile : MonoBehaviour {
+public class Tile {
 
 	public float x;
 	public float y;
-    public TileType tileType;
+	public TileType tileType;
+    public TileSubType tileSubType;
 
-    public enum TileType {
+	public enum TileType {
+		red,
+		white
+	}
+
+    public enum TileSubType {
         center,
         topEdge,
         botEdge,
@@ -22,8 +28,9 @@ public class Tile : MonoBehaviour {
     public Tile() {
 
     }
-    public Tile(float x, float y) {
-
+    public Tile(float xLoc, float yLoc) {
+		x = xLoc;
+		y = yLoc;
     }
 
 }
