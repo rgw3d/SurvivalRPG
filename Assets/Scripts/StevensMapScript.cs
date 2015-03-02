@@ -28,21 +28,19 @@ public class StevensMapScript : MonoBehaviour {
 	
 	List<Vector2> initRoomNodes(){
 		List<Vector2> nodes = new List<Vector2>();
-		for(int i = 0; i < startingRoomWidth; i++){ // creates an initial 3x3 room for the player to start in
-			for(int j = 0; j < startingRoomWidth; j++){
-				nodes.Add(new Vector2(j, i));
-			}
-		}
 
-		nodes.Add(new Vector2(Random.Range(3, width-1), Random.Range(3, width-1)));
-		nodes.Add(new Vector2(Random.Range(3, width-1), Random.Range(3, width-1)));
+		nodes = addInitialRoom(nodes);
+
+		nodes = addRandomRoomNodeToNodes(nodes);
+		nodes = addRandomRoomNodeToNodes(nodes);
+
 		nodes = initCorridors(nodes);
 
 		return nodes;
 	}
 
 	List<Vector2> initCorridors(List<Vector2> nodes){ // adds "corridor" nodes to connect rooms to 1,1
-		List<Vector2> tmpNodes = new List<Vector2>(nodes); // needed so that error isn't thrown about modifying a list that's being looped
+		List<Vector2> tmpNodes = new List<Vector2>(nodes); // needed so that error isn't thrown about modifying a list that's being for-each'd
 		foreach(Vector2 tile in tmpNodes){
 			if(tile.x != 1f && tile.y != 1f){
 				if(!checkAdjacent(tile, new Vector2(1f, 1f))){
@@ -55,6 +53,20 @@ public class StevensMapScript : MonoBehaviour {
 				}
 			}
 		}
+		return nodes;
+	}
+
+	List<Vector2> addInitialRoom(List<Vector2> nodes){
+		for(int i = 0; i < startingRoomWidth; i++){ // creates an initial 3x3 room for the player to start in
+			for(int j = 0; j < startingRoomWidth; j++){
+				nodes.Add(new Vector2(j, i));
+			}
+		}
+		return nodes;
+	}
+
+	List<Vector2> addRandomRoomNodeToNodes(List<Vector2> nodes){
+		nodes.Add(new Vector2(Random.Range((int)startingRoomWidth, width-1), Random.Range((int)startingRoomWidth, width-1)));
 		return nodes;
 	}
 
