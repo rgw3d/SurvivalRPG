@@ -16,7 +16,6 @@ public class PlayerControl : MonoBehaviour, PlayerClass {
 
     public float VerticalMovement = 15f;
     public float HorizontalMovement = 15;
-    public bool ScalePlayer = false;
 
     public KeyCode UpKey;
     public KeyCode DownKey;
@@ -57,16 +56,9 @@ public class PlayerControl : MonoBehaviour, PlayerClass {
         playerMovement();
         playerSprite();
         playerAttack();
-        if(ScalePlayer)
-            playerScale();
 
 	}
 
-    public void playerScale() {
-        float distToBot = Mathf.Abs(yMin - transform.position.y);
-        Vector3 newScale = new Vector3(-.3f * distToBot + 2f, -.3f * distToBot + 2f, 1);
-        transform.localScale = newScale;
-    }
 
     public void playerMovement() {
         if (Input.GetKey(UpKey)) {
