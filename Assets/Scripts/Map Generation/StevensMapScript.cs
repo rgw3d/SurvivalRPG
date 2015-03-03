@@ -2,7 +2,7 @@
 using System.Collections;
 using System.Collections.Generic;
 
-public class StevensMapScript : MonoBehaviour {
+public class StevensMapScript : MonoBehaviour, MapGenInterface {
 	
 	public GameObject walkable;
 	public GameObject background;
@@ -38,12 +38,12 @@ public class StevensMapScript : MonoBehaviour {
 	
 	List<Tile> initRoomNodes(List<Tile> nodes){
 
-		nodes = addInitialRoomNode(nodes);
+		nodes = initBaseNode(nodes);
 		nodes = addRandomRoomNodes(nodes);
 		return nodes;
 	}
 
-	List<Tile> addInitialRoomNode(List<Tile> nodes){
+	Tile initBaseNode(List<Tile> nodes){
 		nodes.Add(new Tile(1f,1f)); // change later to start wherever the player begins the level
 		return nodes;
 	}
