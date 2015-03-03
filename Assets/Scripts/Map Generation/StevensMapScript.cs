@@ -62,7 +62,7 @@ public class StevensMapScript : MonoBehaviour {
 						nodes.Add(new Tile((float)x, tile.y));
 					}
 					for(int y = 1; y < (int)tile.y ; y++){
-						nodes.Add(new Tile(1f , (float)y));
+						nodes.Add(new Tile(1f , (float)y + 1f));
 					}
 				}
 			}
