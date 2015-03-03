@@ -33,7 +33,7 @@ public class StevensMapScript : MonoBehaviour {
 		tileList = initRoomNodes(tileList);
 		tileList = initCorridors(tileList); // we probably need to have two separate lists somehow, one for all the nodes,
 		tileList = initRooms(tileList);		// and another for all the tiles. Combining the two is tricky because we need the nodes to create
-		createRooms(tileList);				// the rooms, but don't want the rooms for creating the corridors
+		drawTiles(tileList);				// the rooms, but don't want the rooms for creating the corridors
 	}
 	
 	List<Tile> initRoomNodes(List<Tile> nodes){
@@ -93,9 +93,9 @@ public class StevensMapScript : MonoBehaviour {
 		return nodes;
 	}
 
-	void createRooms(List<Tile> rooms){
+	void drawTiles(List<Tile> tiles){
 
-		foreach(Tile tile in rooms){
+		foreach(Tile tile in tiles){
 
 			spriteArray[(int)(tile.x), (int)(tile.y)] = Instantiate(walkable, new Vector3(tile.x, tile.y), transform.rotation) as GameObject;
 			spriteArray[(int)(tile.x), (int)(tile.y)].transform.parent = gameObject.transform;
