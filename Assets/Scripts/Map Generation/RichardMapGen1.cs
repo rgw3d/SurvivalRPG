@@ -12,8 +12,13 @@ public class RichardMapGen1 : MonoBehaviour, MapGenInterface {
     public int roomNumber = 5;
     public int roomWidth = 3;
     public int minimumDistanceBetweenRooms = 10;
+    public List<GameObject> Players;
 
     void Start() {
+        if (Players == null) {//then find the player
+            Players = new List<GameObject>(GameObject.FindGameObjectsWithTag("Player"));
+        }
+
         GameObject[,] tileArray = new GameObject[width, width];
         List<Tile> roomNodes = initRoomNodes();
         createRooms(roomNodes);
@@ -26,6 +31,8 @@ public class RichardMapGen1 : MonoBehaviour, MapGenInterface {
      * list of Vector2s, containing the x and y coordinate
      */
     public List<Tile> initRoomNodes() {
+
+        List<Tile> nodeList = initBaseNode(new Tile()
 
         return new List<Tile>();
     }
