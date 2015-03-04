@@ -8,14 +8,13 @@ public class RichardMapGen1 : MonoBehaviour, MapGenInterface {
     void Start() {
 
     }
-
-
      /*
     * This method will draw a room around the player. 
     * Player must start in room.
     * duh
     */
-    List<Tile> initBaseNode(List<Tile> tileList) {
+    public List<Tile> initBaseNode(List<Tile> tileList) {
+        
         return new List<Tile>();
     }
 
@@ -24,7 +23,7 @@ public class RichardMapGen1 : MonoBehaviour, MapGenInterface {
      * All the centers of the rooms are nodes, and they are returned in a 
      * list of Vector2s, containing the x and y coordinate
      */
-    List<Tile> initRoomNodes() {
+    public List<Tile> initRoomNodes() {
 
         return new List<Tile>();
     }
@@ -34,7 +33,7 @@ public class RichardMapGen1 : MonoBehaviour, MapGenInterface {
      * This method will create the rooms and return them grouped together in a list stored inside a list
      * 
      */
-    List<List<Tile>> createRooms() {
+    public List<List<Tile>> createRooms() {
         return new List<List<Tile>>();
     }
 
@@ -43,7 +42,7 @@ public class RichardMapGen1 : MonoBehaviour, MapGenInterface {
      * This will draw all the rooms based on the locations that it recieves
      * 
      */
-    void drawRooms(List<List<Tile>> roomsCoordinates) { 
+    public void drawRooms(List<List<Tile>> roomsCoordinates) { 
         
 
     }
@@ -53,7 +52,7 @@ public class RichardMapGen1 : MonoBehaviour, MapGenInterface {
      * This should fill the background 
      * 
      */
-    void fillBackground() { 
+    public void fillBackground() { 
     
     }
 
