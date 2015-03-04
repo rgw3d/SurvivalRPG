@@ -2,7 +2,7 @@
 using System.Collections;
 using System.Collections.Generic;
 
-public interface MapGenInterface {
+public interface StevensMapGenInterface {
 
 
     /*
