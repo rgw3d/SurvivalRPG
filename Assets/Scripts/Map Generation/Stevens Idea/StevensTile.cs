@@ -2,9 +2,7 @@
 using System.Collections;
 
 public class StevensTile {
-
-	public float x;
-	public float y;
+	
 	public TileType tileType;
     public TileSubType tileSubType;
 
@@ -25,9 +23,8 @@ public class StevensTile {
         botLeftCorner
     }
 
-    public StevensTile(float xLoc, float yLoc) {
-		x = xLoc;
-		y = yLoc;
+    public StevensTile(StevensTile.TileType Type) {
+		tileType = Type;
     }
 
 }
