@@ -8,12 +8,6 @@ public class RichardMapGen1 : MonoBehaviour, MapGenInterface {
 
     }
 
-    using UnityEngine;
-using System.Collections;
-using System.Collections.Generic;
-
-public interface MapGenInterface {
-
 
     /*
     * This method will draw a room around the player. 
@@ -48,14 +42,6 @@ public interface MapGenInterface {
      * 
      */ 
     void fillBackground();
-    
-    
-
-
-
-
-
-
 
 
 	
