@@ -2,7 +2,7 @@
 using System.Collections;
 using System.Collections.Generic;
 
-public class StevensMapScript : MonoBehaviour, MapGenInterface {
+public class StevensMapScript : MonoBehaviour {
 	
 	public GameObject walkable;
 	public GameObject background;
@@ -16,6 +16,7 @@ public class StevensMapScript : MonoBehaviour, MapGenInterface {
 	public int minimumDistanceBetweenRooms = 10;
 	
 	
+
 	private GameObject[,] spriteArray;
 
 	//"Tile" refers to a singular background object such as a theoretical 'TopRightCorner of a Red background at (4,7)'
@@ -27,6 +28,7 @@ public class StevensMapScript : MonoBehaviour, MapGenInterface {
 
 	// Use this for initialization
 	void Start () {
+
 		spriteArray = new GameObject[width,width];
 
 		List<Tile> tileList = new List<Tile>();
@@ -35,7 +37,7 @@ public class StevensMapScript : MonoBehaviour, MapGenInterface {
 		tileList = initRooms(tileList);		// and another for all the tiles. Combining the two is tricky because we need the nodes to create
 		drawTiles(tileList);				// the rooms, but don't want the rooms for creating the corridors
 	}
-	
+
 	List<Tile> initRoomNodes(List<Tile> nodes){
 
 		nodes = initBaseNode(nodes);
@@ -43,7 +45,7 @@ public class StevensMapScript : MonoBehaviour, MapGenInterface {
 		return nodes;
 	}
 
-	Tile initBaseNode(List<Tile> nodes){
+	public List<Tile> initBaseNode(List<Tile> nodes){
 		nodes.Add(new Tile(1f,1f)); // change later to start wherever the player begins the level
 		return nodes;
 	}
