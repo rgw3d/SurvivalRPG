@@ -10,7 +10,7 @@ public interface MapGenInterface {
     * Player must start in room.
     * duh
     */
-    List<Tile> initBaseNode(List<Tile> tileList);
+    List<Tile> initBaseNode(Tile location);
 
     /*
      * This method will be used to return the list of all the centers of rooms 
@@ -24,20 +24,20 @@ public interface MapGenInterface {
      * This method will create the rooms and return them grouped together in a list stored inside a list
      * 
      */ 
-    List<List<Tile>> createRooms();
+    List<List<Tile>> createRooms(List<Tile> roomNodes);
 
     /*
      * This will draw all the rooms based on the locations that it recieves
      * 
      */ 
-    void drawRooms(List<List<Tile>> roomsCoordinates);
+    GameObject[,] drawRooms(List<List<Tile>> roomsCoordinates);
 
 
     /*
      * This should fill the background 
      * 
      */ 
-    void fillBackground();
+    GameObject[,] fillBackground(GameObject[,] tileArray);
     
     }
 

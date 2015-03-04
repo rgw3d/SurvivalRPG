@@ -5,18 +5,20 @@ using System.Collections.Generic;
 public class RichardMapGen1 : MonoBehaviour, MapGenInterface {
 
 
-    void Start() {
+    public GameObject walkable;
+    public GameObject background;
 
+    public int width = 100;
+    public int roomNumber = 5;
+    public int roomWidth = 3;
+    public int minimumDistanceBetweenRooms = 10;
+
+    void Start() {
+        GameObject[,] tileArray = new GameObject[width, width];
+        List<Tile> roomNodes = initRoomNodes();
+        createRooms(roomNodes);
     }
-     /*
-    * This method will draw a room around the player. 
-    * Player must start in room.
-    * duh
-    */
-    public List<Tile> initBaseNode(List<Tile> tileList) {
-        
-        return new List<Tile>();
-    }
+    
 
     /*
      * This method will be used to return the list of all the centers of rooms 
@@ -28,12 +30,22 @@ public class RichardMapGen1 : MonoBehaviour, MapGenInterface {
         return new List<Tile>();
     }
 
+    /*
+   * This method will draw a room around the player. 
+   * Player must start in room.
+   * duh
+   */
+    public List<Tile> initBaseNode(Tile location) {
+
+        return new List<Tile>();
+    }
+
 
     /*
      * This method will create the rooms and return them grouped together in a list stored inside a list
      * 
      */
-    public List<List<Tile>> createRooms() {
+    public List<List<Tile>> createRooms(List<Tile> roomNodes) {
         return new List<List<Tile>>();
     }
 
@@ -42,8 +54,8 @@ public class RichardMapGen1 : MonoBehaviour, MapGenInterface {
      * This will draw all the rooms based on the locations that it recieves
      * 
      */
-    public void drawRooms(List<List<Tile>> roomsCoordinates) { 
-        
+    public GameObject[,] drawRooms(List<List<Tile>> roomsCoordinates) {
+        return new GameObject[width, width];
 
     }
 
@@ -52,7 +64,8 @@ public class RichardMapGen1 : MonoBehaviour, MapGenInterface {
      * This should fill the background 
      * 
      */
-    public void fillBackground() { 
+    public GameObject[,] fillBackground(GameObject[,] tileArray) {
+        return new GameObject[width, width];
     
     }
 
