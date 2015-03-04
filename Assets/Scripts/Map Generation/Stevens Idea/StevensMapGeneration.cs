@@ -20,30 +20,37 @@ public class StevensMapGeneration : MonoBehaviour {
 	//		(EstablishTileSubtypes?)
 	//Return Map to MapRenderer
 
-	public StevensTile[,] map;
-	public List<StevensRoom> roomList;
-
+	public StevensMap map;
+	
 	public int mapWidth = 30;
 	public int mapHeight = 30;
 
+	public GameObject player;
+
 	// Use this for initialization
 	void Start () {
-		map = new StevensTile[mapWidth, mapHeight];
-		roomList = new List<StevensRoom>();
+
+		map = new StevensMap();
+		map.mapTiles = new StevensTile[mapWidth, mapHeight];
 
 		createMap(mapWidth, mapHeight);
-		
+		createInitialRoom();
 	}
 
 	void createMap(int width, int length){
 		for(int y = 0; y < length; y++){
 			for(int x = 0; x < width; x++){
-				map[x,y] = new StevensTile(StevensTile.TileType.white);
+				map.mapTiles[x,y] = new StevensTile(StevensTile.TileType.white);
 			}
 		}
-		map[13,13] = new StevensTile(StevensTile.TileType.red);
 	}
 
+	void createInitialRoom(){
+		int playerX = Mathf.FloorToInt(player.transform.position.x - .5f);
+		int playerY = Mathf.FloorToInt(player.transform.position.y - .5f);
+
+		map.mapTiles[playerX,playerY].setTileType(StevensTile.TileType.red);
+	}
 
 
 	// Update is called once per frame

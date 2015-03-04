@@ -27,4 +27,7 @@ public class StevensTile {
 		tileType = Type;
     }
 
+	public void setTileType(StevensTile.TileType Type){
+		tileType = Type;
+	}
 }
