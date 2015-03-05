@@ -30,12 +30,12 @@ public class StevensMapRenderer : MonoBehaviour {
 				StevensTile.TileType tileType = tiles[x,y].tileType;
 				GameObject tile = background;
 				switch(tileType){
-					case StevensTile.TileType.red:
-						tile = walkable;
-						break;
-					case StevensTile.TileType.white:
-						tile = background;
-						break;
+				case StevensTile.TileType.red:
+					tile = walkable;
+					break;
+				case StevensTile.TileType.white:
+					tile = background;
+					break;
 				}
 
 				spriteArray[x,y] = Instantiate(tile, new Vector3((float)x + .5f, (float)y + .5f), transform.rotation) as GameObject;

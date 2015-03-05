@@ -25,6 +25,14 @@ public class StevensMapGeneration : MonoBehaviour {
 	public int mapWidth = 30;
 	public int mapHeight = 30;
 
+	public int numRooms = 10;
+	public int minRoomWidth = 4;
+	public int maxRoomWidth = 8;
+	public int minRoomHeight = 4;
+	public int maxRoomHeight = 8;
+	public int numTriesToMakeRooms = 20;
+	public int roomIntersectionOffset = 1;
+
 	public GameObject player;
 
 	// Use this for initialization
@@ -35,6 +43,7 @@ public class StevensMapGeneration : MonoBehaviour {
 
 		createMap(mapWidth, mapHeight);
 		createInitialRoom();
+		createRooms(numRooms);
 	}
 
 	void createMap(int width, int length){
@@ -45,13 +54,47 @@ public class StevensMapGeneration : MonoBehaviour {
 		}
 	}
 
-	void createInitialRoom(){
+	void createInitialRoom(){ // probably obsolete once we determine how we want the player to spawn in
 		int playerX = Mathf.FloorToInt(player.transform.position.x - .5f);
 		int playerY = Mathf.FloorToInt(player.transform.position.y - .5f);
 
 		map.mapTiles[playerX,playerY].setTileType(StevensTile.TileType.red);
+
 	}
 
+	void createRooms(int numberOfRooms){
+		int maxTries = numTriesToMakeRooms;
+		for(int tries = 0; tries < maxTries; tries++){
+			int roomWidth = Random.Range(minRoomWidth,maxRoomWidth);
+			int roomHeight = Random.Range(minRoomHeight,maxRoomHeight);
+			int roomLocX = Random.Range(0,mapWidth - roomWidth);
+			int roomLocY = Random.Range(0,mapHeight - roomHeight);
+			StevensRoom basicRoom = new StevensRoom(roomLocY,roomLocX,roomLocY + roomHeight,roomLocX + roomWidth);
+
+			bool intersected = false;
+			foreach(StevensRoom otherRoom in map.roomList){
+				if(basicRoom.roomIntersectsWith(otherRoom, roomIntersectionOffset)){
+					intersected = true;
+				}
+			}
+
+			if(!intersected){
+				map.roomList.Add(basicRoom);
+				for(int y = basicRoom.rBottom; y <= basicRoom.rTop; y++){
+					for(int x = basicRoom.rLeft; x <= basicRoom.rRight; x++){
+						map.mapTiles[x,y].tileType = StevensTile.TileType.red;
+					}
+				}
+				numberOfRooms--;
+			}
+			if(numberOfRooms <= 0){
+				break;
+			}
+		}
+		if(numberOfRooms > 0){
+			Debug.Log("Couldn't place all the rooms!");
+		}
+	}
 
 	// Update is called once per frame
 	void Update () {
