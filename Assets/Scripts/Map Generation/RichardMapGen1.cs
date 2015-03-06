@@ -23,6 +23,8 @@ public class RichardMapGen1 : MonoBehaviour, MapGenInterface {
     public int minimumDistanceBetweenNodes = 20;
     public List<GameObject> Players;
 
+    public GameObject[,] mapTiles;
+
     void Start() {
         if (Players == null) {//then find the player
             Players = new List<GameObject>(GameObject.FindGameObjectsWithTag("Player"));
@@ -30,8 +32,24 @@ public class RichardMapGen1 : MonoBehaviour, MapGenInterface {
 
         List<Tile> roomNodes = initRoomNodes();
         List<List<Tile>> roomCoords = createRooms(roomNodes);
-        GameObject[,] mapTiles = drawRooms(roomCoords);
-        Debug.Log("yes it got here");
+        mapTiles = drawRooms(roomCoords);
+    }
+
+    void Update() {
+        if (Input.GetKey(KeyCode.Space)) {
+            regenerate();
+        }
+    }
+
+    void regenerate() {
+        foreach (GameObject x in mapTiles) {
+            Destroy(x);
+        }
+        List<Tile> roomNodes = initRoomNodes();
+        List<List<Tile>> roomCoords = createRooms(roomNodes);
+        mapTiles = drawRooms(roomCoords);
+
+
     }
     
 
@@ -67,6 +85,7 @@ public class RichardMapGen1 : MonoBehaviour, MapGenInterface {
                 int extraNodeTries = 0;
                 for (int j = 0; j < numberOfRoomsInClusters && extraNodeTries < extraNodeCreationAttempts; j++) {
                     Tile extraPos = new Tile(pos.x + Random.Range(-interClusterRange, interClusterRange), pos.y + Random.Range(-interClusterRange, interClusterRange));
+                    
                     bool canAddExtraNode = true;
                     foreach (Tile node in tmpTiles) {
                         if (extraPos.x == node.x && extraPos.y == node.y) {
@@ -81,10 +100,6 @@ public class RichardMapGen1 : MonoBehaviour, MapGenInterface {
                     }
                 }
             }
-        }
-
-        foreach (Tile t in nodeList) {
-            Debug.Log("x " + t.x + "  y " + t.y);
         }
 
         return nodeList;
@@ -114,8 +129,21 @@ public class RichardMapGen1 : MonoBehaviour, MapGenInterface {
         List<List<Tile>> roomCoordinates = new List<List<Tile>>();
 
         foreach (Tile node in roomNodes) {
-            Tile botLeft = new Tile(node.x - Random.Range(minimumHalfWidthOfRoom, maximumHalfWidthOfRoom), node.y - Random.Range(minimumHalfHeightOfRoom, maximumHalfHeightOfRoom));
-            Tile topRight = new Tile(node.x + Random.Range(minimumHalfWidthOfRoom, maximumHalfWidthOfRoom), node.y + Random.Range(minimumHalfHeightOfRoom, maximumHalfHeightOfRoom));
+            int botXTest = (int)node.x - Random.Range(minimumHalfWidthOfRoom, maximumHalfWidthOfRoom);
+            int botX = botXTest > 0 ? botXTest : (int)node.x;
+
+            int botYTest = (int)node.y - Random.Range(minimumHalfHeightOfRoom, maximumHalfHeightOfRoom);
+            int botY = botYTest > 0 ? botYTest : (int)node.y;
+
+            int topXTest = (int)node.x + Random.Range(minimumHalfWidthOfRoom, maximumHalfWidthOfRoom);
+            int topX = topXTest < mapWidth ? topXTest : (int)node.x;
+
+            int topYTest = (int)node.y + Random.Range(minimumHalfHeightOfRoom, maximumHalfHeightOfRoom);
+            int topY = topYTest < mapHeight ? topYTest : (int)node.x;
+
+
+            Tile botLeft = new Tile(botX,botY);
+            Tile topRight = new Tile(topX,topY);
             roomCoordinates.Add(fillArea(botLeft, topRight));
         }
 
@@ -145,10 +173,14 @@ public class RichardMapGen1 : MonoBehaviour, MapGenInterface {
         GameObject[,] mapTiles = new GameObject[mapWidth,mapHeight];
         foreach(List<Tile> room in roomsCoordinates){
             foreach (Tile node in room) {
-                if (mapTiles[(int)node.x, (int)node.y] == null) {
-                    Debug.Log("pls tell me it is running");
-                    mapTiles[(int)node.x, (int)node.y] = Instantiate(walkable, new Vector3(node.x, node.y), transform.rotation) as GameObject;
-                    mapTiles[(int)node.x, (int)node.y].transform.parent = gameObject.transform;
+                try {
+                    if (mapTiles[(int)node.x, (int)node.y] == null) {
+                        mapTiles[(int)node.x, (int)node.y] = Instantiate(walkable, new Vector3(node.x, node.y), transform.rotation) as GameObject;
+                        mapTiles[(int)node.x, (int)node.y].transform.parent = gameObject.transform;
+                    }
+                }
+                catch {
+
                 }
             }
 
