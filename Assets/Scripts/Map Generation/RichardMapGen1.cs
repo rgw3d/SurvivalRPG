@@ -31,6 +31,7 @@ public class RichardMapGen1 : MonoBehaviour, MapGenInterface {
         List<Tile> roomNodes = initRoomNodes();
         List<List<Tile>> roomCoords = createRooms(roomNodes);
         GameObject[,] mapTiles = drawRooms(roomCoords);
+        Debug.Log("yes it got here");
     }
     
 
@@ -82,6 +83,9 @@ public class RichardMapGen1 : MonoBehaviour, MapGenInterface {
             }
         }
 
+        foreach (Tile t in nodeList) {
+            Debug.Log("x " + t.x + "  y " + t.y);
+        }
 
         return nodeList;
     }
@@ -94,7 +98,7 @@ public class RichardMapGen1 : MonoBehaviour, MapGenInterface {
     public List<Tile> initBaseNode() {
         List<Tile> nodeList = new List<Tile>();
         foreach (GameObject player in Players) {
-            nodeList.Add(new Tile(player.transform.localPosition.x, player.transform.localPosition.y));
+            nodeList.Add(new Tile(player.transform.position.x, player.transform.position.y));
         }
 
         return nodeList;
@@ -115,7 +119,7 @@ public class RichardMapGen1 : MonoBehaviour, MapGenInterface {
             roomCoordinates.Add(fillArea(botLeft, topRight));
         }
 
-        return new List<List<Tile>>();
+        return roomCoordinates;
     }
 
     private List<Tile> fillArea(Tile botLeftCoord, Tile upRightCoord) {
@@ -125,7 +129,7 @@ public class RichardMapGen1 : MonoBehaviour, MapGenInterface {
 
         for (int x = 0; x < areaWidth; x++) {
             for (int y = 0; y < areaHeight; y++) {
-                room.Add(new Tile(x, y));
+                room.Add(new Tile(botLeftCoord.x + x, botLeftCoord.y + y));
             }
         }
 
@@ -142,6 +146,7 @@ public class RichardMapGen1 : MonoBehaviour, MapGenInterface {
         foreach(List<Tile> room in roomsCoordinates){
             foreach (Tile node in room) {
                 if (mapTiles[(int)node.x, (int)node.y] == null) {
+                    Debug.Log("pls tell me it is running");
                     mapTiles[(int)node.x, (int)node.y] = Instantiate(walkable, new Vector3(node.x, node.y), transform.rotation) as GameObject;
                     mapTiles[(int)node.x, (int)node.y].transform.parent = gameObject.transform;
                 }
@@ -149,9 +154,6 @@ public class RichardMapGen1 : MonoBehaviour, MapGenInterface {
 
         }
 
-        
-        //spriteArray[(int)(botLeftCoord.x + x), (int)(botLeftCoord.y + y)] = Instantiate(walkable, new Vector3(botLeftCoord.x + x, botLeftCoord.y + y), transform.rotation) as GameObject;
-        //spriteArray[(int)(botLeftCoord.x + x), (int)(botLeftCoord.y + y)].transform.parent = gameObject.transform;
         return mapTiles;
 
     }
