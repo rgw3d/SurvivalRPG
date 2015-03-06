@@ -8,10 +8,14 @@ public class RichardMapGen1 : MonoBehaviour, MapGenInterface {
     public GameObject walkable;
     public GameObject background;
 
-    public int width = 100;
-    public int roomNumber = 5;
-    public int roomWidth = 3;
-    public int minimumDistanceBetweenRooms = 10;
+    public int mapWidth = 100;
+    public int numberOfRooms = 5;
+    public int minimumWidthOfRoom = 3;
+    public int maximumWidthOfRoom = 6;
+    public int minimumHeightOfRoom = 3;
+    public int maximumHeightOfRoom = 6;
+
+    public int minimumDistanceBetweenNodes = 15;
     public List<GameObject> Players;
 
     void Start() {
@@ -19,7 +23,6 @@ public class RichardMapGen1 : MonoBehaviour, MapGenInterface {
             Players = new List<GameObject>(GameObject.FindGameObjectsWithTag("Player"));
         }
 
-        GameObject[,] tileArray = new GameObject[width, width];
         List<Tile> roomNodes = initRoomNodes();
         createRooms(roomNodes);
     }
@@ -32,7 +35,7 @@ public class RichardMapGen1 : MonoBehaviour, MapGenInterface {
      */
     public List<Tile> initRoomNodes() {
 
-        List<Tile> nodeList = initBaseNode(new Tile()
+        List<Tile> nodeList = initBaseNode();
 
         return new List<Tile>();
     }
@@ -42,9 +45,13 @@ public class RichardMapGen1 : MonoBehaviour, MapGenInterface {
    * Player must start in room.
    * duh
    */
-    public List<Tile> initBaseNode(Tile location) {
+    public List<Tile> initBaseNode() {
+        List<Tile> nodeList = new List<Tile>();
+        foreach (GameObject player in Players) {
+            nodeList.Add(new Tile(player.transform.localPosition.x, player.transform.localPosition.y));
+        }
 
-        return new List<Tile>();
+        return nodeList;
     }
 
 
