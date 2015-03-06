@@ -13,10 +13,10 @@ public class RichardMapGen1 : MonoBehaviour, MapGenInterface {
     public int numberOfClusters = 5;
     public int numberOfRoomsInClusters = 3;
     public int interClusterRange = 2;
-    public int minimumWidthOfRoom = 3;
-    public int maximumWidthOfRoom = 6;
-    public int minimumHeightOfRoom = 3;
-    public int maximumHeightOfRoom = 6;
+    public int minimumHalfWidthOfRoom = 3;
+    public int maximumHalfWidthOfRoom = 6;
+    public int minimumHalfHeightOfRoom = 3;
+    public int maximumHalfHeightOfRoom = 6;
 
     public int nodeCreationAttempts = 50;
 
@@ -105,7 +105,30 @@ public class RichardMapGen1 : MonoBehaviour, MapGenInterface {
      * 
      */
     public List<List<Tile>> createRooms(List<Tile> roomNodes) {
+
+        List<List<Tile>> roomCoordinates = new List<List<Tile>>();
+
+        foreach (Tile node in roomNodes) {
+            Tile botLeft = new Tile(node.x - Random.Range(minimumHalfWidthOfRoom, maximumHalfWidthOfRoom), node.y - Random.Range(minimumHalfHeightOfRoom, maximumHalfHeightOfRoom));
+            Tile topRight = new Tile(node.x + Random.Range(minimumHalfWidthOfRoom, maximumHalfWidthOfRoom), node.y + Random.Range(minimumHalfHeightOfRoom, maximumHalfHeightOfRoom));
+            roomCoordinates.Add(fillArea(botLeft, topRight));
+        }
+
         return new List<List<Tile>>();
+    }
+
+    private List<Tile> fillArea(Tile botLeftCoord, Tile upRightCoord) {
+        List<Tile> room = new List<Tile>();
+        int areaWidth = (int)(upRightCoord.x - botLeftCoord.x);
+        int areaHeight = (int)(upRightCoord.y - botLeftCoord.y);
+
+        for (int x = 0; x < areaWidth; x++) {
+            for (int y = 0; y < areaHeight; y++) {
+                room.Add(new Tile(x, y));
+            }
+        }
+
+        return room;
     }
 
 
@@ -114,6 +137,8 @@ public class RichardMapGen1 : MonoBehaviour, MapGenInterface {
      * 
      */
     public GameObject[,] drawRooms(List<List<Tile>> roomsCoordinates) {
+        spriteArray[(int)(botLeftCoord.x + x), (int)(botLeftCoord.y + y)] = Instantiate(walkable, new Vector3(botLeftCoord.x + x, botLeftCoord.y + y), transform.rotation) as GameObject;
+        spriteArray[(int)(botLeftCoord.x + x), (int)(botLeftCoord.y + y)].transform.parent = gameObject.transform;
         return new GameObject[mapWidth,mapHeight];
 
     }
