@@ -10,7 +10,7 @@ public interface MapGenInterface {
     * Player must start in room.
     * duh
     */
-    List<Tile> initBaseNode(Tile location);
+    List<Tile> initBaseNode();
 
     /*
      * This method will be used to return the list of all the centers of rooms 
