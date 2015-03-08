@@ -99,19 +99,8 @@ public class StevensMapGeneration : MonoBehaviour {
 
 	void createCorridors(){
 		foreach(StevensRoom r1 in map.roomList){
-			foreach(StevensRoom r2 in map.roomList){
-				if(r1 == r2){
-					break;
-				}
-				if(r1.roomIntersectsWith(r2 , 1)){
-					r1.isConnected = true;
-				}
-			}
-		}
-
-		foreach(StevensRoom r1 in map.roomList){
 			if(!r1.isConnected){
-				StevensRoom r2 = findNearestConnectedRoom(r1, map.roomList);
+				StevensRoom r2 = findNearestConnectedRoom(r1);
 				int r1X = Random.Range(r1.rLeft, r1.rRight + 1);
 				int r1Y = Random.Range(r1.rBottom, r1.rTop + 1);
 				int r2X = Random.Range(r2.rLeft, r2.rRight + 1);
@@ -132,14 +121,14 @@ public class StevensMapGeneration : MonoBehaviour {
 		}
 	}
 
-	StevensRoom findNearestConnectedRoom(StevensRoom r1, List<StevensRoom> roomList){
+	StevensRoom findNearestConnectedRoom(StevensRoom r1){
 		List<StevensRoom> connectedRooms = new List<StevensRoom>();
-		foreach(StevensRoom conRoom in roomList){
-			if(conRoom.isConnected){
+		foreach(StevensRoom conRoom in map.roomList){
+			if(r1 != conRoom && !conRoom.isConnected){
 				connectedRooms.Add(conRoom);
 			}
 		}
-		StevensRoom nearestRoom = new StevensRoom(0,0,0,0);
+		StevensRoom nearestRoom = r1;
 		float closestDistance = Mathf.Infinity;
 		foreach(StevensRoom r2 in connectedRooms){
 			if(r1.distanceToRoom(r2) < closestDistance){
