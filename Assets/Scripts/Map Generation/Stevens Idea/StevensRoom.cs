@@ -8,6 +8,8 @@ public class StevensRoom {
 	public int rLeft;
 	public int rRight;
 
+	public bool isConnected = false;
+
 	public StevensRoom(int bottom, int left, int top, int right){
 		rTop = top;
 		rBottom = bottom;
@@ -29,5 +31,14 @@ public class StevensRoom {
 			return false;
 		}
 		return true;
+	}
+
+	public float distanceToRoom(StevensRoom r2){
+		float r1CenterX = rLeft + (rRight / 2);
+		float r1CenterY = rBottom + (rTop / 2);
+		float r2CenterX = r2.rLeft + (r2.rRight / 2);
+		float r2CenterY = r2.rBottom + (r2.rTop / 2);
+
+		return (Mathf.Sqrt(Mathf.Pow(r1CenterX - r2CenterX,2) + Mathf.Pow(r1CenterY - r2CenterY, 2)));
 	}
 }

@@ -44,6 +44,7 @@ public class StevensMapGeneration : MonoBehaviour {
 		createMap(mapWidth, mapHeight);
 		createInitialRoom();
 		createRooms(numRooms);
+		createCorridors();
 	}
 
 	void createMap(int width, int length){
@@ -94,6 +95,59 @@ public class StevensMapGeneration : MonoBehaviour {
 		if(numberOfRooms > 0){
 			Debug.Log("Couldn't place all the rooms!");
 		}
+	}
+
+	void createCorridors(){
+		foreach(StevensRoom r1 in map.roomList){
+			foreach(StevensRoom r2 in map.roomList){
+				if(r1 == r2){
+					break;
+				}
+				if(r1.roomIntersectsWith(r2 , 1)){
+					r1.isConnected = true;
+				}
+			}
+		}
+
+		foreach(StevensRoom r1 in map.roomList){
+			if(!r1.isConnected){
+				StevensRoom r2 = findNearestConnectedRoom(r1, map.roomList);
+				int r1X = Random.Range(r1.rLeft, r1.rRight + 1);
+				int r1Y = Random.Range(r1.rBottom, r1.rTop + 1);
+				int r2X = Random.Range(r2.rLeft, r2.rRight + 1);
+				int r2Y = Random.Range(r2.rBottom, r2.rTop + 1);
+
+				while(r1X != r2X){
+					map.mapTiles[r1X,r1Y].tileType = StevensTile.TileType.red;
+
+					r1X += (r1X < r2X) ? 1 : -1;  
+				}
+				while(r1Y != r2Y){
+					map.mapTiles[r1X,r1Y].tileType = StevensTile.TileType.red;
+					
+					r1Y += (r1Y < r2Y) ? 1 : -1;  
+				}
+				r1.isConnected = true;
+			}
+		}
+	}
+
+	StevensRoom findNearestConnectedRoom(StevensRoom r1, List<StevensRoom> roomList){
+		List<StevensRoom> connectedRooms = new List<StevensRoom>();
+		foreach(StevensRoom conRoom in roomList){
+			if(conRoom.isConnected){
+				connectedRooms.Add(conRoom);
+			}
+		}
+		StevensRoom nearestRoom = new StevensRoom(0,0,0,0);
+		float closestDistance = Mathf.Infinity;
+		foreach(StevensRoom r2 in connectedRooms){
+			if(r1.distanceToRoom(r2) < closestDistance){
+				closestDistance = r1.distanceToRoom(r2);
+				nearestRoom = r2;
+			}
+		}
+		return nearestRoom;
 	}
 
 	// Update is called once per frame
