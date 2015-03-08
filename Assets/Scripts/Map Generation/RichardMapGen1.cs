@@ -33,6 +33,8 @@ public class RichardMapGen1 : MonoBehaviour, MapGenInterface {
         List<Tile> roomNodes = initRoomNodes();
         List<List<Tile>> roomCoords = createRooms(roomNodes);
         mapTiles = drawRooms(roomCoords);
+        
+        //fillBackground(mapTiles);
     }
 
     void Update() {
@@ -48,6 +50,7 @@ public class RichardMapGen1 : MonoBehaviour, MapGenInterface {
         List<Tile> roomNodes = initRoomNodes();
         List<List<Tile>> roomCoords = createRooms(roomNodes);
         mapTiles = drawRooms(roomCoords);
+        //fillBackground(mapTiles);
 
 
     }
@@ -196,7 +199,16 @@ public class RichardMapGen1 : MonoBehaviour, MapGenInterface {
      * 
      */
     public GameObject[,] fillBackground(GameObject[,] tileArray) {
-        return new GameObject[1,1];
+        for (int c = 0; c < mapWidth; c++) {
+            for (int r = 0; r < mapHeight; r++) {
+                if(tileArray[c,r] == null){
+                    tileArray[c, r] = Instantiate(background, new Vector3(c,r), transform.rotation) as GameObject;
+                }
+            }
+        }
+
+        return tileArray;
+        
     
     }
 
