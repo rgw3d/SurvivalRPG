@@ -45,6 +45,7 @@ public class StevensMapGeneration : MonoBehaviour {
 		createInitialRoom();
 		createRooms(numRooms);
 		createCorridors();
+		createWalls();
 	}
 
 	void createMap(int width, int length){
@@ -68,8 +69,8 @@ public class StevensMapGeneration : MonoBehaviour {
 		for(int tries = 0; tries < maxTries; tries++){
 			int roomWidth = Random.Range(minRoomWidth,maxRoomWidth);
 			int roomHeight = Random.Range(minRoomHeight,maxRoomHeight);
-			int roomLocX = Random.Range(0,mapWidth - roomWidth);
-			int roomLocY = Random.Range(0,mapHeight - roomHeight);
+			int roomLocX = Random.Range(1,mapWidth - roomWidth - 1);
+			int roomLocY = Random.Range(1,mapHeight - roomHeight - 1);
 			StevensRoom basicRoom = new StevensRoom(roomLocY,roomLocX,roomLocY + roomHeight,roomLocX + roomWidth);
 
 			bool intersected = false;
@@ -137,6 +138,39 @@ public class StevensMapGeneration : MonoBehaviour {
 			}
 		}
 		return nearestRoom;
+	}
+
+	void createWalls(){
+		for(int y = 0; y < mapHeight; y++){
+			for(int x = 0; x < mapWidth; x++){
+				StevensTile tile = map.mapTiles[x,y];
+				if(tile.tileType == StevensTile.TileType.red){
+					if(map.mapTiles[x-1,y].tileType == StevensTile.TileType.white)//left
+						map.mapTiles[x-1,y].tileType = StevensTile.TileType.blue;
+
+					if(map.mapTiles[x-1,y+1].tileType == StevensTile.TileType.white)//above left
+						map.mapTiles[x-1,y+1].tileType = StevensTile.TileType.blue;
+
+					if(map.mapTiles[x,y+1].tileType == StevensTile.TileType.white)//above
+						map.mapTiles[x,y+1].tileType = StevensTile.TileType.blue;
+
+					if(map.mapTiles[x+1,y+1].tileType == StevensTile.TileType.white)//above right
+						map.mapTiles[x+1,y+1].tileType = StevensTile.TileType.blue;
+
+					if(map.mapTiles[x+1,y].tileType == StevensTile.TileType.white)//right
+						map.mapTiles[x+1,y].tileType = StevensTile.TileType.blue;
+
+					if(map.mapTiles[x+1,y-1].tileType == StevensTile.TileType.white)//below right
+						map.mapTiles[x+1,y-1].tileType = StevensTile.TileType.blue;
+
+					if(map.mapTiles[x,y-1].tileType == StevensTile.TileType.white)//below
+						map.mapTiles[x,y-1].tileType = StevensTile.TileType.blue;
+
+					if(map.mapTiles[x-1,y-1].tileType == StevensTile.TileType.white)//below left
+						map.mapTiles[x-1,y-1].tileType = StevensTile.TileType.blue;
+				}
+			}
+		}
 	}
 
 	// Update is called once per frame

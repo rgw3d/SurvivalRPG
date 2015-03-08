@@ -6,6 +6,7 @@ public class StevensMapRenderer : MonoBehaviour {
 	
 	public GameObject walkable;
 	public GameObject background;
+	public GameObject wall;
 	
 	private int mapWidth;
 	private int mapHeight;
@@ -35,6 +36,9 @@ public class StevensMapRenderer : MonoBehaviour {
 					break;
 				case StevensTile.TileType.white:
 					tile = background;
+					break;
+				case StevensTile.TileType.blue:
+					tile = wall;
 					break;
 				}
 
