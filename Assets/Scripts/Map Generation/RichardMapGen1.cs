@@ -10,6 +10,7 @@ public class RichardMapGen1 : MonoBehaviour, MapGenInterface {
 
     public int mapWidth = 100;
     public int mapHeight = 100;
+    public int nodeCreationAttempts = 50;
     public int numberOfClusters = 5;
     public int numberOfRoomsInClusters = 3;
     public int interClusterRange = 2;
@@ -18,7 +19,7 @@ public class RichardMapGen1 : MonoBehaviour, MapGenInterface {
     public int minimumHalfHeightOfRoom = 3;
     public int maximumHalfHeightOfRoom = 6;
 
-    public int nodeCreationAttempts = 50;
+    
 
     public int minimumDistanceBetweenNodes = 20;
     public List<GameObject> Players;
@@ -191,6 +192,31 @@ public class RichardMapGen1 : MonoBehaviour, MapGenInterface {
 
         return mapTiles;
 
+    }
+
+    public List<List<Tile>> createCorridors(List<Tile> roomNodes) {
+
+        List<Tile> startNodes = initBaseNode();
+        Tile startTile = startNodes[0];//just pick the first one.
+        List<List<Tile>> corridorsToFill = new List<List<Tile>>();
+
+
+
+        int corridorCreationTimes = 3;
+        for (int i = 0; i < corridorCreationTimes; i++) {
+            List<Tile> newList = new List<Tile>(roomNodes.Count);
+            roomNodes.ForEach((item) => {//copy into a new list
+                    newList.Add(new Tile(item.x,item.y));
+                });
+
+            while (newList.Count > 1) {//creating the paths
+
+            }
+
+
+        }
+
+            return corridorsToFill;
     }
 
 
