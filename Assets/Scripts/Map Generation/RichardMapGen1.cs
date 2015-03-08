@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 
 public class RichardMapGen1 : MonoBehaviour, MapGenInterface {
 
@@ -195,29 +196,51 @@ public class RichardMapGen1 : MonoBehaviour, MapGenInterface {
     }
 
     public List<List<Tile>> createCorridors(List<Tile> roomNodes) {
+        
+        int corridorCreationTimes = 3;
+        int numberOfCloseCorridorPoints = 4;
 
+        
+        List<List<Tile>> corridorsToFill = new List<List<Tile>>();
         List<Tile> startNodes = initBaseNode();
         Tile startTile = startNodes[0];//just pick the first one.
-        List<List<Tile>> corridorsToFill = new List<List<Tile>>();
-
-
-
-        int corridorCreationTimes = 3;
         for (int i = 0; i < corridorCreationTimes; i++) {
             List<Tile> newList = new List<Tile>(roomNodes.Count);
-            roomNodes.ForEach((item) => {//copy into a new list
+            roomNodes.ForEach(item => {//copy into a new list
                     newList.Add(new Tile(item.x,item.y));
                 });
+            while (newList.Count > 1) {
+                List<Tile> orderedNodes = orderedPoints(startTile, newList);
+                Tile nextRoom;
+                if (numberOfCloseCorridorPoints > newList.Count) 
+                    nextRoom = orderedNodes[Random.Range(0, numberOfCloseCorridorPoints - 1)];
+                else 
+                    nextRoom = orderedNodes[Random.Range(0, newList.Count - 1)];
+                newList.Remove(nextRoom);//so that we dont go to this room again
+                float xSeperation = startTile.x - nextRoom.x;
+                float ySeperation = startTile.y - nextRoom.y;
+                if (ySeperation % xSeperation == 0) {//yay. they go in evenly.  this is good
+                    
+                }
 
-            while (newList.Count > 1) {//creating the paths
-
+                
             }
+            
 
 
         }
 
             return corridorsToFill;
     }
+
+    public List<Tile> orderedPoints(Tile origin, List<Tile> nodes) {
+        var orderedList = from tile in nodes.ToArray()
+                                 orderby Mathf.Pow(Mathf.Abs(tile.x - origin.x) + Mathf.Abs(tile.y-origin.y),0.5f)
+                                 select tile;
+        return orderedList.ToList<Tile>();
+
+    }
+
 
 
     /*
