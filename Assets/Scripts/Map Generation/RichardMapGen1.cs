@@ -217,20 +217,11 @@ public class RichardMapGen1 : MonoBehaviour, MapGenInterface {
                 else 
                     nextRoom = orderedNodes[Random.Range(0, newList.Count - 1)];
                 newList.Remove(nextRoom);//so that we dont go to this room again
-                float xSeperation = startTile.x - nextRoom.x;
-                float ySeperation = startTile.y - nextRoom.y;
-                if (ySeperation % xSeperation == 0) {//yay. they go in evenly.  this is good
-                    
-                }
-
-                
+                corridorsToFill.Add(createCorridor(startTile,nextRoom));                
             }
-            
-
-
         }
 
-            return corridorsToFill;
+        return corridorsToFill;
     }
 
     public List<Tile> orderedPoints(Tile origin, List<Tile> nodes) {
@@ -241,7 +232,25 @@ public class RichardMapGen1 : MonoBehaviour, MapGenInterface {
 
     }
 
+    public List<Tile> createCorridor(Tile start, Tile end) {
 
+        List<Tile> path = new List<Tile>();
+
+        float xSeperation = start.x - end.x;
+        float ySeperation = start.y - end.y;
+        int slope;
+        if (xSeperation == 0) 
+            slope = 1000000;
+        else 
+            slope = (int)(ySeperation / xSeperation);
+
+        Tile position = new Tile(start.x, start.y);
+
+
+        
+        return path;
+        
+    }
 
     /*
      * This should fill the background 
