@@ -238,15 +238,37 @@ public class RichardMapGen1 : MonoBehaviour, MapGenInterface {
 
         float xSeperation = start.x - end.x;
         float ySeperation = start.y - end.y;
-        int slope;
-        if (xSeperation == 0) 
-            slope = 1000000;
-        else 
-            slope = (int)(ySeperation / xSeperation);
+        if (xSeperation == 0) {
+            float startingY = start.y;
+            float endingY = end.y;
+            if (start.y > end.y) {
+                startingY = end.y;
+                endingY = start.y;
+            }
+            for (float y = startingY; y < endingY; y++) {
+                path.Add(new Tile(start.x, y));
+            }
+            return path;
+        }
 
-        Tile position = new Tile(start.x, start.y);
+        float slope = ySeperation / xSeperation;
 
+        for (float y = start.y+slope, x = start.x+slope/Mathf.Abs(slope); Mathf.Abs(y) < Mathf.Abs(end.y); y += slope, x+= slope/Mathf.Abs(slope)) {
+            path.Add(new Tile(x,(int)(y-slope)));//add the x tile (horizontal movement)
+            path.Add(new Tile(x,(int)y));//add the current 
+            path.Add(new Tile(x, Mathf.Ceil(y)));//add one above
 
+            for(int i = (Mathf.Abs((int)slope))-1; i>0; i--){//add the (height of the slope-1) below last tile that we just placed.  this is because of very tall slopes like 10 or 4
+                //were drawing the three blocks we just drew will not connect
+                if (slope > 0) {
+                    path.Add(new Tile(x, (int)(y - slope) + i));
+                }
+                else {
+                    path.Add(new Tile(x, (int)(y - slope) - i));
+                }
+               
+            }
+        }
         
         return path;
         
