@@ -3,7 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 
-public class RichardMapGen1 : MonoBehaviour, MapGenInterface {
+public class RichardMapGen1 : MonoBehaviour {
 
 
     public GameObject walkable;
@@ -26,15 +26,20 @@ public class RichardMapGen1 : MonoBehaviour, MapGenInterface {
     public List<GameObject> Players;
 
     public GameObject[,] mapTiles;
+    public List<Tile> roomNodes;
 
     void Start() {
         if (Players == null) {//then find the player
             Players = new List<GameObject>(GameObject.FindGameObjectsWithTag("Player"));
         }
 
-        List<Tile> roomNodes = initRoomNodes();
+        roomNodes = initRoomNodes();
         List<List<Tile>> roomCoords = createRooms(roomNodes);
-        mapTiles = drawRooms(roomCoords);
+        mapTiles = new GameObject[mapWidth, mapHeight];
+        mapTiles = drawRooms(roomCoords,mapTiles);
+
+        List<List<Tile>> pathCoords = createCorridors(roomNodes);
+        mapTiles = drawRooms(pathCoords, mapTiles);
         
         //fillBackground(mapTiles);
     }
@@ -43,18 +48,28 @@ public class RichardMapGen1 : MonoBehaviour, MapGenInterface {
         if (Input.GetKey(KeyCode.Space)) {
             regenerate();
         }
+        if (Input.GetKey(KeyCode.F)) {
+            genCorridors();
+        }
+
     }
+
+    void genCorridors() {
+        List<List<Tile>> pathCoords = createCorridors(roomNodes);
+        mapTiles = drawRooms(pathCoords, mapTiles);
+    }
+
 
     void regenerate() {
         foreach (GameObject x in mapTiles) {
             Destroy(x);
         }
-        List<Tile> roomNodes = initRoomNodes();
+        roomNodes = initRoomNodes();
         List<List<Tile>> roomCoords = createRooms(roomNodes);
-        mapTiles = drawRooms(roomCoords);
-        //fillBackground(mapTiles);
+        mapTiles = new GameObject[mapWidth, mapHeight];
+        mapTiles = drawRooms(roomCoords, mapTiles);
 
-
+       
     }
     
 
@@ -174,8 +189,8 @@ public class RichardMapGen1 : MonoBehaviour, MapGenInterface {
      * This will draw all the rooms based on the locations that it recieves
      * 
      */
-    public GameObject[,] drawRooms(List<List<Tile>> roomsCoordinates) {
-        GameObject[,] mapTiles = new GameObject[mapWidth,mapHeight];
+    public GameObject[,] drawRooms(List<List<Tile>> roomsCoordinates, GameObject[,] mapTiles) {
+        
         foreach(List<Tile> room in roomsCoordinates){
             foreach (Tile node in room) {
                 try {
@@ -204,7 +219,7 @@ public class RichardMapGen1 : MonoBehaviour, MapGenInterface {
         List<List<Tile>> corridorsToFill = new List<List<Tile>>();
         List<Tile> startNodes = initBaseNode();
         Tile startTile = startNodes[0];//just pick the first one.
-        for (int i = 0; i < corridorCreationTimes; i++) {
+        //for (int i = 0; i < corridorCreationTimes; i++) {
             List<Tile> newList = new List<Tile>(roomNodes.Count);
             roomNodes.ForEach(item => {//copy into a new list
                     newList.Add(new Tile(item.x,item.y));
@@ -216,10 +231,12 @@ public class RichardMapGen1 : MonoBehaviour, MapGenInterface {
                     nextRoom = orderedNodes[Random.Range(0, numberOfCloseCorridorPoints - 1)];
                 else 
                     nextRoom = orderedNodes[Random.Range(0, newList.Count - 1)];
+
                 newList.Remove(nextRoom);//so that we dont go to this room again
-                corridorsToFill.Add(createCorridor(startTile,nextRoom));                
+                corridorsToFill.Add(createCorridor(startTile,nextRoom));
+                startTile = nextRoom;
             }
-        }
+        //}
 
         return corridorsToFill;
     }
