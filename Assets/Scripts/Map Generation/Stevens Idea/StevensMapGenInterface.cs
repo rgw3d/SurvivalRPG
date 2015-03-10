@@ -5,45 +5,35 @@ using System.Collections.Generic;
 public interface StevensMapGenInterface {
 
 
+	/*
+	* We need a map to actually create these things on
+	*/
+	void createMap(int width, int length);
+
     /*
     * This method will draw a room around the player. 
     * Player must start in room.
     * duh
     */
-    List<Tile> initBaseNode(List<Tile> tileList);
+	void createInitialRoom();
 
+ 
     /*
-     * This method will be used to return the list of all the centers of rooms 
-     * All the centers of the rooms are nodes, and they are returned in a 
-     * list of Vector2s, containing the x and y coordinate
-     */
-    List<Tile> initRoomNodes();
-
-
-    /*
-     * This method will create the rooms and return them grouped together in a list stored inside a list
+     * This method will create the rooms 
      * 
      */ 
-    List<List<Tile>> createRooms();
+	void createRooms(int numberOfRooms);
 
     /*
-     * This will draw all the rooms based on the locations that it recieves
+     * This will create all the corridors between the rooms
      * 
      */ 
-    void drawRooms(List<List<Tile>> roomsCoordinates);
+	void createCorridors();
 
 
     /*
-     * This should fill the background 
+     * This method causes the map to turn any "blank"(white) tile into a wall based on where it is relative to a floor tile.
      * 
      */ 
-    void fillBackground();
-    
-    }
-
-
-
-
-
-
-
+	void createWalls();
+}

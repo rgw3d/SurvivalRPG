@@ -2,7 +2,7 @@
 using System.Collections;
 using System.Collections.Generic;
 
-public class StevensMapGeneration : MonoBehaviour {
+public class StevensMapGeneration : MonoBehaviour, StevensMapGenInterface {
 
 
 	//"Tile" refers to a singular background object such as a theoretical 'TopRightCorner of a Red background at (4,7)'
@@ -48,7 +48,7 @@ public class StevensMapGeneration : MonoBehaviour {
 		createWalls();
 	}
 
-	void createMap(int width, int length){
+	public void createMap(int width, int length){
 		for(int y = 0; y < length; y++){
 			for(int x = 0; x < width; x++){
 				map.mapTiles[x,y] = new StevensTile(StevensTile.TileType.white);
@@ -56,7 +56,7 @@ public class StevensMapGeneration : MonoBehaviour {
 		}
 	}
 
-	void createInitialRoom(){ // probably obsolete once we determine how we want the player to spawn in
+	public void createInitialRoom(){ // probably obsolete once we determine how we want the player to spawn in
 		int playerX = Mathf.FloorToInt(player.transform.position.x - .5f);
 		int playerY = Mathf.FloorToInt(player.transform.position.y - .5f);
 
@@ -64,7 +64,7 @@ public class StevensMapGeneration : MonoBehaviour {
 
 	}
 
-	void createRooms(int numberOfRooms){
+	public void createRooms(int numberOfRooms){
 		int maxTries = numTriesToMakeRooms;
 		for(int tries = 0; tries < maxTries; tries++){
 			int roomWidth = Random.Range(minRoomWidth,maxRoomWidth);
@@ -98,7 +98,7 @@ public class StevensMapGeneration : MonoBehaviour {
 		}
 	}
 
-	void createCorridors(){
+	public void createCorridors(){
 		foreach(StevensRoom r1 in map.roomList){
 			if(!r1.isConnected){
 				StevensRoom r2 = findNearestNotConnectedRoom(r1);
@@ -140,7 +140,7 @@ public class StevensMapGeneration : MonoBehaviour {
 		return nearestRoom;
 	}
 
-	void createWalls(){
+	public void createWalls(){
 		for(int y = 0; y < mapHeight; y++){
 			for(int x = 0; x < mapWidth; x++){
 				StevensTile tile = map.mapTiles[x,y];
