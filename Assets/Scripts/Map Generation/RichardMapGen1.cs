@@ -212,9 +212,6 @@ public class RichardMapGen1 : MonoBehaviour {
 
     public List<List<Tile>> createCorridors(List<Tile> roomNodes) {
         
-        int numberOfCloseCorridorPoints = 4;
-
-        
         List<List<Tile>> corridorsToFill = new List<List<Tile>>();
         Dictionary<Tile, bool> ConnectedNodes = new Dictionary<Tile, bool>();
         foreach (Tile tile in roomNodes) {
@@ -237,8 +234,12 @@ public class RichardMapGen1 : MonoBehaviour {
             }
             if (connectTo == null)
                 break;
-            corridorsToFill.Add(createCorridor(nextTile, connectTo));
-            ConnectedNodes[connectTo] = true;
+
+            List<Tile> tmpPath = new List<Tile>();
+            tmpPath.AddRange(drawXPath(nextTile, connectTo));
+            tmpPath.AddRange(drawYPath(nextTile,connectTo));
+            corridorsToFill.Add(tmpPath);
+
             nextTile = connectTo;
 
         }
@@ -254,39 +255,16 @@ public class RichardMapGen1 : MonoBehaviour {
 
     }
 
-    public List<Tile> createCorridor(Tile start, Tile end) {
-
-        List<Tile> path = new List<Tile>();
-
-            path.AddRange(drawXPath(start, end));
-            path.AddRange(drawYPath(start, end));
-
-        return path;
-    }
-
     public List<Tile> drawXPath(Tile start, Tile end){
-        float xSeperation = start.x - end.x;
-        float ySeperation = start.y - end.y;
         List<Tile> path = new List<Tile>();
-        /*if(xSeperation<0){
-            for(float i = xSeperation; i<0; i++){
-                path.Add(new Tile(start.x+i,start.y));
-            }
-        }
-        else if (xSeperation>0){
-            for(float i = xSeperation; i>0; i--){
-                path.Add(new Tile(start.x+i,start.y));
-            }
-        }
-         * */
 
         if (start.x < end.x) {
-            for (float i = start.x; i <= end.x; i++) {
+            for (float i = 0; i <= end.x-start.x; i++) {
                 path.Add(new Tile(start.x + i, start.y));
             }
         }
         else if (start.x > end.x) {
-            for (float i = end.x; i <= start.x; i++) {
+            for (float i = 0; i <= start.x-end.x; i++) {
                 path.Add(new Tile(end.x + i, start.y));
             }
         }
@@ -294,28 +272,14 @@ public class RichardMapGen1 : MonoBehaviour {
     }
 
     public List<Tile> drawYPath(Tile start, Tile end){
-        float xSeperation = start.x - end.x;
-        float ySeperation = start.y - end.y;
         List<Tile> path = new List<Tile>();
-        /*
-        if(ySeperation<0){
-            for(float i = ySeperation; i<0; i++){
-                path.Add(new Tile(start.x+xSeperation,start.y+i));
-            }
-        }
-        else if (ySeperation>0){
-            for(float i = ySeperation; i>0; i--){
-                path.Add(new Tile(start.x+xSeperation,start.y+i));
-            }
-        }
-         * */
         if (start.y < end.y) {
-            for (float i = start.y; i <= end.y; i++) {
+            for (float i = 0; i <= end.y-start.y; i++) {
                 path.Add(new Tile(end.x , start.y+i));
             }
         }
         else if (start.y > end.y) {
-            for (float i = end.y; i <= start.y; i++) {
+            for (float i = 0; i <= start.y-end.y; i++) {
                 path.Add(new Tile(end.x, end.y+i));
             }
         }
