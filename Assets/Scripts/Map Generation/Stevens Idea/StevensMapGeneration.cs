@@ -42,8 +42,8 @@ public class StevensMapGeneration : MonoBehaviour, StevensMapGenInterface {
 		map.mapTiles = new StevensTile[mapWidth, mapHeight];
 
 		createMap(mapWidth, mapHeight);
-		createInitialRoom();
 		createRooms(numRooms);
+		createInitialRoom();
 		createCorridors();
 		createWalls();
 	}
@@ -57,11 +57,11 @@ public class StevensMapGeneration : MonoBehaviour, StevensMapGenInterface {
 	}
 
 	public void createInitialRoom(){ // probably obsolete once we determine how we want the player to spawn in
-		int playerX = Mathf.FloorToInt(player.transform.position.x - .5f);
-		int playerY = Mathf.FloorToInt(player.transform.position.y - .5f);
 
-		map.mapTiles[playerX,playerY].setTileType(StevensTile.TileType.red);
+		int x = Mathf.FloorToInt(map.roomList[0].rLeft + ((map.roomList[0].rRight - map.roomList[0].rLeft) / 2));
+		int y = Mathf.FloorToInt(map.roomList[0].rBottom + ((map.roomList[0].rTop - map.roomList[0].rBottom) / 2));
 
+		player.transform.position = new Vector2(x,y);
 	}
 
 	public void createRooms(int numberOfRooms){
