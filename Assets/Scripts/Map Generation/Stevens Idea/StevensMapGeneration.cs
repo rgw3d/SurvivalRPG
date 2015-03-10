@@ -46,6 +46,7 @@ public class StevensMapGeneration : MonoBehaviour, StevensMapGenInterface {
 		createInitialRoom();
 		createCorridors();
 		createWalls();
+		createGoal();
 	}
 
 	public void createMap(int width, int length){
@@ -171,6 +172,14 @@ public class StevensMapGeneration : MonoBehaviour, StevensMapGenInterface {
 				}
 			}
 		}
+	}
+
+	public void createGoal(){
+		int last = map.roomList.Count - 1;
+		int x = Mathf.FloorToInt(map.roomList[last].rLeft + ((map.roomList[last].rRight - map.roomList[last].rLeft) / 2));
+		int y = Mathf.FloorToInt(map.roomList[last].rBottom + ((map.roomList[last].rTop - map.roomList[last].rBottom) / 2));
+
+		map.mapTiles[x,y].tileType = StevensTile.TileType.green;
 	}
 
 	// Update is called once per frame

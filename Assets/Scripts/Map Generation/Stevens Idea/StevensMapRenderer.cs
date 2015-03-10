@@ -7,6 +7,7 @@ public class StevensMapRenderer : MonoBehaviour {
 	public GameObject walkable;
 	public GameObject background;
 	public GameObject wall;
+	public GameObject goal;
 	
 	private int mapWidth;
 	private int mapHeight;
@@ -40,8 +41,10 @@ public class StevensMapRenderer : MonoBehaviour {
 				case StevensTile.TileType.blue:
 					tile = wall;
 					break;
+				case StevensTile.TileType.green:
+					tile = goal;
+					break;
 				}
-
 				if(tile != null){
 					spriteArray[x,y] = Instantiate(tile, new Vector3((float)x + .5f, (float)y + .5f), transform.rotation) as GameObject;
 					spriteArray[x,y].transform.parent = gameObject.transform;

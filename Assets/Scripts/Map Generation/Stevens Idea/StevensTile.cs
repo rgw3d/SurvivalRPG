@@ -9,7 +9,8 @@ public class StevensTile {
 	public enum TileType {
 		red,
 		white,
-		blue
+		blue,
+		green
 	}
 
     public enum TileSubType {
