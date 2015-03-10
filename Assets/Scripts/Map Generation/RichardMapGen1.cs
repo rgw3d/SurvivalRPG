@@ -6,8 +6,9 @@ using System.Linq;
 public class RichardMapGen1 : MonoBehaviour {
 
 
-    public GameObject walkable;
+    public GameObject red;
     public GameObject background;
+    public GameObject blue;
 
     public int mapWidth = 100;
     public int mapHeight = 100;
@@ -26,6 +27,7 @@ public class RichardMapGen1 : MonoBehaviour {
     public List<GameObject> Players;
 
     public GameObject[,] mapTiles;
+    
     public List<Tile> roomNodes;
 
     void Start() {
@@ -40,6 +42,8 @@ public class RichardMapGen1 : MonoBehaviour {
 
         List<List<Tile>> pathCoords = createCorridors(roomNodes);
         mapTiles = drawRooms(pathCoords, mapTiles);
+
+        addBlueBackground(mapTiles);
         
         //fillBackground(mapTiles);
     }
@@ -68,6 +72,8 @@ public class RichardMapGen1 : MonoBehaviour {
         List<List<Tile>> roomCoords = createRooms(roomNodes);
         mapTiles = new GameObject[mapWidth, mapHeight];
         mapTiles = drawRooms(roomCoords, mapTiles);
+        //addBlueBackground();
+        //fillBackground(mapTiles);
 
        
     }
@@ -195,7 +201,7 @@ public class RichardMapGen1 : MonoBehaviour {
             foreach (Tile node in room) {
                 try {
                     if (mapTiles[(int)node.x, (int)node.y] == null) {
-                        mapTiles[(int)node.x, (int)node.y] = Instantiate(walkable, new Vector3(node.x, node.y), transform.rotation) as GameObject;
+                        mapTiles[(int)node.x, (int)node.y] = Instantiate(red, new Vector3(node.x, node.y), transform.rotation) as GameObject;
                         mapTiles[(int)node.x, (int)node.y].transform.parent = gameObject.transform;
                     }
                 }
@@ -203,9 +209,7 @@ public class RichardMapGen1 : MonoBehaviour {
 
                 }
             }
-
         }
-
         return mapTiles;
 
     }
@@ -252,7 +256,6 @@ public class RichardMapGen1 : MonoBehaviour {
                                  orderby Mathf.Pow(Mathf.Abs(tile.x - origin.x) + Mathf.Abs(tile.y-origin.y),0.5f)
                                  select tile;
         return orderedList.ToList<Tile>();
-
     }
 
     public List<Tile> drawXPath(Tile start, Tile end){
@@ -285,8 +288,21 @@ public class RichardMapGen1 : MonoBehaviour {
         }
         return path;
     }
-        
 
+
+
+    /*public GameObject[,] addBlueBackground(GameObject[,] tileArray) {
+        for (int c = 0; c < mapWidth; c++) {
+            for (int r = 0; r < mapHeight; r++) {
+                if (tileArray[c, r] == red) {
+                    tileArray[c, r] = Instantiate(background, new Vector3(c, r), transform.rotation) as GameObject;
+                }
+            }
+        }
+
+
+    }
+     * */
         
 
     /*
