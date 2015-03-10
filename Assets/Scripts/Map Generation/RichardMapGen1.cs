@@ -212,31 +212,36 @@ public class RichardMapGen1 : MonoBehaviour {
 
     public List<List<Tile>> createCorridors(List<Tile> roomNodes) {
         
-        int corridorCreationTimes = 3;
         int numberOfCloseCorridorPoints = 4;
 
         
         List<List<Tile>> corridorsToFill = new List<List<Tile>>();
-        List<Tile> startNodes = initBaseNode();
-        Tile startTile = startNodes[0];//just pick the first one.
-        //for (int i = 0; i < corridorCreationTimes; i++) {
-            List<Tile> newList = new List<Tile>(roomNodes.Count);
-            roomNodes.ForEach(item => {//copy into a new list
-                    newList.Add(new Tile(item.x,item.y));
-                });
-            while (newList.Count > 1) {
-                List<Tile> orderedNodes = orderedPoints(startTile, newList);
-                Tile nextRoom;
-                if (numberOfCloseCorridorPoints > newList.Count) 
-                    nextRoom = orderedNodes[Random.Range(0, numberOfCloseCorridorPoints - 1)];
-                else 
-                    nextRoom = orderedNodes[Random.Range(0, newList.Count - 1)];
-
-                newList.Remove(nextRoom);//so that we dont go to this room again
-                corridorsToFill.Add(createCorridor(startTile,nextRoom));
-                startTile = nextRoom;
+        Dictionary<Tile, bool> ConnectedNodes = new Dictionary<Tile, bool>();
+        foreach (Tile tile in roomNodes) {
+            try {
+                ConnectedNodes.Add(tile, false);
             }
-        //}
+            catch { };
+        }
+        
+        Tile nextTile = initBaseNode()[0];//grab the player starting point
+        while (nextTile != null) {
+            ConnectedNodes[nextTile] = true;
+            List<Tile> OrderedList = orderedPoints(nextTile, roomNodes);
+            Tile connectTo = null;
+            foreach (Tile tile in OrderedList) {
+                if (ConnectedNodes[tile] == false) {
+                    connectTo = tile;
+                    break;
+                }
+            }
+            if (connectTo == null)
+                break;
+            corridorsToFill.Add(createCorridor(nextTile, connectTo));
+            ConnectedNodes[connectTo] = true;
+            nextTile = connectTo;
+
+        }
 
         return corridorsToFill;
     }
@@ -253,43 +258,72 @@ public class RichardMapGen1 : MonoBehaviour {
 
         List<Tile> path = new List<Tile>();
 
+            path.AddRange(drawXPath(start, end));
+            path.AddRange(drawYPath(start, end));
+
+        return path;
+    }
+
+    public List<Tile> drawXPath(Tile start, Tile end){
         float xSeperation = start.x - end.x;
         float ySeperation = start.y - end.y;
-        if (xSeperation == 0) {
-            float startingY = start.y;
-            float endingY = end.y;
-            if (start.y > end.y) {
-                startingY = end.y;
-                endingY = start.y;
-            }
-            for (float y = startingY; y < endingY; y++) {
-                path.Add(new Tile(start.x, y));
-            }
-            return path;
-        }
-
-        float slope = ySeperation / xSeperation;
-
-        for (float y = start.y+slope, x = start.x+slope/Mathf.Abs(slope); Mathf.Abs(y) < Mathf.Abs(end.y); y += slope, x+= slope/Mathf.Abs(slope)) {
-            path.Add(new Tile(x,(int)(y-slope)));//add the x tile (horizontal movement)
-            path.Add(new Tile(x,(int)y));//add the current 
-            path.Add(new Tile(x, Mathf.Ceil(y)));//add one above
-
-            for(int i = (Mathf.Abs((int)slope))-1; i>0; i--){//add the (height of the slope-1) below last tile that we just placed.  this is because of very tall slopes like 10 or 4
-                //were drawing the three blocks we just drew will not connect
-                if (slope > 0) {
-                    path.Add(new Tile(x, (int)(y - slope) + i));
-                }
-                else {
-                    path.Add(new Tile(x, (int)(y - slope) - i));
-                }
-               
+        List<Tile> path = new List<Tile>();
+        /*if(xSeperation<0){
+            for(float i = xSeperation; i<0; i++){
+                path.Add(new Tile(start.x+i,start.y));
             }
         }
-        
+        else if (xSeperation>0){
+            for(float i = xSeperation; i>0; i--){
+                path.Add(new Tile(start.x+i,start.y));
+            }
+        }
+         * */
+
+        if (start.x < end.x) {
+            for (float i = start.x; i <= end.x; i++) {
+                path.Add(new Tile(start.x + i, start.y));
+            }
+        }
+        else if (start.x > end.x) {
+            for (float i = end.x; i <= start.x; i++) {
+                path.Add(new Tile(end.x + i, start.y));
+            }
+        }
         return path;
-        
     }
+
+    public List<Tile> drawYPath(Tile start, Tile end){
+        float xSeperation = start.x - end.x;
+        float ySeperation = start.y - end.y;
+        List<Tile> path = new List<Tile>();
+        /*
+        if(ySeperation<0){
+            for(float i = ySeperation; i<0; i++){
+                path.Add(new Tile(start.x+xSeperation,start.y+i));
+            }
+        }
+        else if (ySeperation>0){
+            for(float i = ySeperation; i>0; i--){
+                path.Add(new Tile(start.x+xSeperation,start.y+i));
+            }
+        }
+         * */
+        if (start.y < end.y) {
+            for (float i = start.y; i <= end.y; i++) {
+                path.Add(new Tile(end.x , start.y+i));
+            }
+        }
+        else if (start.y > end.y) {
+            for (float i = end.y; i <= start.y; i++) {
+                path.Add(new Tile(end.x, end.y+i));
+            }
+        }
+        return path;
+    }
+        
+
+        
 
     /*
      * This should fill the background 

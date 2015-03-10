@@ -65,6 +65,10 @@ public class Tile {
         return hash;
     }
 
+    public override string ToString() {
+        return x + ", " + y;
+    }
+
 
 
 }
