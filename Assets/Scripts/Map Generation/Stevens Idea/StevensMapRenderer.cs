@@ -35,15 +35,17 @@ public class StevensMapRenderer : MonoBehaviour {
 					tile = walkable;
 					break;
 				case StevensTile.TileType.white:
-					tile = background;
+					tile = null;
 					break;
 				case StevensTile.TileType.blue:
 					tile = wall;
 					break;
 				}
 
-				spriteArray[x,y] = Instantiate(tile, new Vector3((float)x + .5f, (float)y + .5f), transform.rotation) as GameObject;
-				spriteArray[x,y].transform.parent = gameObject.transform;
+				if(tile != null){
+					spriteArray[x,y] = Instantiate(tile, new Vector3((float)x + .5f, (float)y + .5f), transform.rotation) as GameObject;
+					spriteArray[x,y].transform.parent = gameObject.transform;
+				}
 			}
 		}
 	}
