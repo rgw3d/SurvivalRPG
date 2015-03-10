@@ -11,7 +11,7 @@ public class basic_Enemy_follow : MonoBehaviour {
 
 
     void Start() {
-        DelegateHolder.OnPlayerAttack += PlayerAttackStance;//add the method to the event, and the event is made from the delegate
+        //DelegateHolder.OnPlayerAttack += PlayerAttackStance;//add the method to the event, and the event is made from the delegate
     }
 
 	void FixedUpdate () {
@@ -33,13 +33,13 @@ public class basic_Enemy_follow : MonoBehaviour {
 
     void OnTriggerEnter2D(Collider2D col){
         if (col.gameObject == playerChar && _isAttacking) {
-            if (col.gameObject.transform.position.x> transform.position.x)
+            if (col.gameObject.transform.position.x > transform.position.x)
                 rigidbody2D.AddForce((col.gameObject.transform.position + transform.position) * 200);
             else
-                rigidbody2D.AddForce( (col.gameObject.transform.position + transform.position) * -200  );
+                rigidbody2D.AddForce((col.gameObject.transform.position + transform.position) * -200);
         }
-        else if (col.gameObject == playerChar && !_isAttacking)
-            DelegateHolder.TriggerPlayerStatChange(StatType.Health, -.1f);
+        //else if (col.gameObject == playerChar && !_isAttacking)
+            //DelegateHolder.TriggerPlayerStatChange(StatType.Health, -.1f);
     }
 
     void OnTriggerStay2D(Collider2D col) {
