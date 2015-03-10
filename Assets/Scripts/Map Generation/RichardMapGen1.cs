@@ -40,10 +40,10 @@ public class RichardMapGen1 : MonoBehaviour {
         mapTiles = new GameObject[mapWidth, mapHeight];
         mapTiles = drawRooms(roomCoords,mapTiles);
 
-        List<List<Tile>> pathCoords = createCorridors(roomNodes);
-        mapTiles = drawRooms(pathCoords, mapTiles);
+        //List<List<Tile>> pathCoords = createCorridors(roomNodes);
+        //mapTiles = drawRooms(pathCoords, mapTiles);
 
-        addBlueBackground(mapTiles);
+        //addBlueBackground(mapTiles);
         
         //fillBackground(mapTiles);
     }
