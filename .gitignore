@@ -1,8 +1,14 @@
-Library/
 Temp/
 Assembly-CSharp-vs.csproj
 Assembly-CSharp.csproj
 SurvivalRPG.sln
 SurvivalRPG-csharp.sln
 SurvivalRPG.userprefs
-obj/Debug/
+Library/
+obj/
+*.csproj
+*.unityproj
+*.sln
+*.user
+*.userprefs
+*.DS_store

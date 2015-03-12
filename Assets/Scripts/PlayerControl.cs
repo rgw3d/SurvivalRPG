@@ -50,7 +50,7 @@ public class PlayerControl : MonoBehaviour, PlayerClass {
 	// Update is called once per frame
 	void FixedUpdate () {
         if (Input.GetKey(KeyCode.E)) { //just a test of the ability to work
-            
+            DelegateHolder.TriggerPlayerStatChange(StatType.Score, 1f);   
         }
 
         playerMovement();
