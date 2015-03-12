@@ -13,20 +13,41 @@ public class StevensMapRenderer : MonoBehaviour {
 	private int mapHeight;
 
 	private GameObject[,] spriteArray;
+
+	public StevensMapGeneration mapGen;
 	
 	// Use this for initialization
 	void Start () {
 
-		StevensMapGeneration mapGen = GetComponent<StevensMapGeneration>();
+		mapGen = GetComponent<StevensMapGeneration>();
+		mapWidth = mapGen.mapWidth;
+		mapHeight = mapGen.mapHeight;
+		spriteArray = new GameObject[mapWidth, mapHeight];
+		
+		renderTiles(mapGen.map.mapTiles);
+	}
+
+	public void reRenderMap(){
+
 		mapWidth = mapGen.mapWidth;
 		mapHeight = mapGen.mapHeight;
 
+		destroyOldMap();
+
 		spriteArray = new GameObject[mapWidth, mapHeight];
-		
-		RenderTiles(mapGen.map.mapTiles);
+
+		renderTiles(mapGen.map.mapTiles);
 	}
 
-	void RenderTiles(StevensTile[,] tiles){
+	void destroyOldMap(){
+		for(int y = 0; y < mapHeight; y++){
+			for(int x = 0; x < mapWidth; x++){
+				Destroy(spriteArray[x,y]);
+			}
+		}
+	}
+
+	void renderTiles(StevensTile[,] tiles){
 		for(int y = 0; y < mapHeight; y++){
 			for(int x = 0; x < mapWidth; x++){
 				StevensTile.TileType tileType = tiles[x,y].tileType;

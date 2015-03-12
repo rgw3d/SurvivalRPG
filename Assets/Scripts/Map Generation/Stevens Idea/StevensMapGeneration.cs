@@ -37,10 +37,12 @@ public class StevensMapGeneration : MonoBehaviour, StevensMapGenInterface {
 
 	// Use this for initialization
 	void Start () {
+		generateMap();
+	}
 
+	public void generateMap(){
 		map = new StevensMap();
 		map.mapTiles = new StevensTile[mapWidth, mapHeight];
-
 		createMap(mapWidth, mapHeight);
 		createRooms(numRooms);
 		createInitialRoom();
