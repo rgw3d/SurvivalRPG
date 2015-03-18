@@ -21,6 +21,7 @@ public class StevensMapGeneration : MonoBehaviour, StevensMapGenInterface {
 	//Return Map to MapRenderer
 
 	public StevensMap map;
+    public StevensMapRenderer stevensMapRenderer;
 	
 	public int mapWidth = 30;
 	public int mapHeight = 30;
@@ -35,11 +36,18 @@ public class StevensMapGeneration : MonoBehaviour, StevensMapGenInterface {
 
 	public GameObject player;
     public Vector2 PlayerPosition;
+    
 
 	// Use this for initialization
 	void Start () {
-		generateMap();
+        stevensMapRenderer = GetComponent<StevensMapRenderer>();
+		//generateMap();
 	}
+
+    public void StartGeneration() {
+        generateMap();
+        stevensMapRenderer.reRenderMap();
+    }
 
 	public void generateMap(){
 		map = new StevensMap();

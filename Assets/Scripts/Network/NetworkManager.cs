@@ -3,6 +3,8 @@ using System.Collections;
 
 public class NetworkManager : MonoBehaviour {
 
+    public StevensMapGeneration MapGenerationScript;
+
     private const string typeName = "UniqueGameNameWendel";
     //private const string gameName = "Room Name Test";
     public string gameName = "Example Room Name ";
@@ -10,6 +12,7 @@ public class NetworkManager : MonoBehaviour {
 
 	void Start () {
 	//MasterServer.ipAddress = "127.0.0.1";
+        MapGenerationScript = FindObjectOfType<StevensMapGeneration>();
 	}
 
     void Awake() {
@@ -45,6 +48,7 @@ public class NetworkManager : MonoBehaviour {
     }
     void OnConnectedToServer() {
         Debug.Log("Server Joined");
+        Network.Instantiate(MapGenerationScript.player, new Vector3(29, 20, 0), Quaternion.identity, 0);
     }
     void OnDisconnectedFromServer() {
         Debug.Log("Disconnected for whatever reason");
@@ -54,7 +58,8 @@ public class NetworkManager : MonoBehaviour {
         if (!Network.isClient && !Network.isServer) {
             if (GUI.Button(new Rect(100, 100, 250, 100), "Start Server")) {
                 StartServer();
-                Application.LoadLevel(1);
+                MapGenerationScript.StartGeneration();
+                //Application.LoadLevel(1);
             }
 
             gameName = GUI.TextField(new Rect( 400, 100, 250, 25), gameName, 25);
@@ -64,8 +69,10 @@ public class NetworkManager : MonoBehaviour {
 
             if (hostList != null) {
                 for (int i = 0; i < hostList.Length; i++) {
-                    if (GUI.Button(new Rect(400, 100 + (110 * i), 300, 100), hostList[i].gameName))
+                    if (GUI.Button(new Rect(400, 100 + (110 * i), 300, 100), hostList[i].gameName)) {
                         JoinServer(hostList[i]);
+                        
+                    }
                 }
             }
         }

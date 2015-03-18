@@ -18,13 +18,14 @@ public class StevensMapRenderer : MonoBehaviour {
 	
 	// Use this for initialization
 	void Start () {
-
+        
 		mapWidth = mapGen.mapWidth;
 		mapHeight = mapGen.mapHeight;
 		spriteArray = new GameObject[mapWidth, mapHeight];
 		
 		renderTiles(mapGen.map.mapTiles);
 	}
+
 
 	public void reRenderMap(){
 
