@@ -12,3 +12,4 @@ obj/
 *.user
 *.userprefs
 *.DS_store
+temporaryBuildForNetworkTesting_Data/

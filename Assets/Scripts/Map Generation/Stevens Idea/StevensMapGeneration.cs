@@ -34,9 +34,11 @@ public class StevensMapGeneration : MonoBehaviour, StevensMapGenInterface {
 	public int roomIntersectionOffset = 1;
 
 	public GameObject player;
+    public Vector2 PlayerPosition;
 
 	// Use this for initialization
 	void Start () {
+        Debug.Log("Startring to generate map");
 		generateMap();
 	}
 
@@ -64,7 +66,10 @@ public class StevensMapGeneration : MonoBehaviour, StevensMapGenInterface {
 		int x = Mathf.FloorToInt(map.roomList[0].rLeft + ((map.roomList[0].rRight - map.roomList[0].rLeft) / 2));
 		int y = Mathf.FloorToInt(map.roomList[0].rBottom + ((map.roomList[0].rTop - map.roomList[0].rBottom) / 2));
 
+        Instantiate(player, new Vector3(x, y, 0),Quaternion.identity);
 		player.transform.position = new Vector2(x,y);
+        PlayerPosition = new Vector2(x, y);
+        
 	}
 
 	public void createRooms(int numberOfRooms){
@@ -184,9 +189,5 @@ public class StevensMapGeneration : MonoBehaviour, StevensMapGenInterface {
 		map.mapTiles[x,y].tileType = StevensTile.TileType.green;
 	}
 
-	// Update is called once per frame
-	void Update () {
-		
-	}
 }
 

@@ -11,6 +11,10 @@ public class NetworkManager : MonoBehaviour {
 	void Start () {
 	//MasterServer.ipAddress = "127.0.0.1";
 	}
+
+    void Awake() {
+        DontDestroyOnLoad(this);//dont kill this object :)
+    }
 	
 	// Update is called once per frame
 	void Update () {
@@ -50,10 +54,9 @@ public class NetworkManager : MonoBehaviour {
         if (!Network.isClient && !Network.isServer) {
             if (GUI.Button(new Rect(100, 100, 250, 100), "Start Server")) {
                 StartServer();
-
+                Application.LoadLevel(1);
             }
 
-            
             gameName = GUI.TextField(new Rect( 400, 100, 250, 25), gameName, 25);
 
             if (GUI.Button(new Rect(100, 250, 250, 100), "Refresh Hosts"))
