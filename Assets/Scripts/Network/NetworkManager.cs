@@ -3,7 +3,11 @@ using System.Collections;
 
 public class NetworkManager : MonoBehaviour {
 
-	// Use this for initialization
+    private const string typeName = "UniqueGameNameWendel";
+    //private const string gameName = "Room Name Test";
+    public string gameName = "Example Room Name ";
+    private HostData[] hostList;
+
 	void Start () {
 	//MasterServer.ipAddress = "127.0.0.1";
 	}
@@ -12,10 +16,6 @@ public class NetworkManager : MonoBehaviour {
 	void Update () {
 	
 	}
-
-    private const string typeName = "UniqueGameNameWendel";
-    private const string gameName = "Room Name Test";
-    private HostData[] hostList;
 
     private void StartServer() {
         Network.InitializeServer(2, 25000, !Network.HavePublicAddress());
@@ -42,12 +42,19 @@ public class NetworkManager : MonoBehaviour {
     void OnConnectedToServer() {
         Debug.Log("Server Joined");
     }
+    void OnDisconnectedFromServer() {
+        Debug.Log("Disconnected for whatever reason");
+    }
 
     void OnGUI() {
         if (!Network.isClient && !Network.isServer) {
-            if (GUI.Button(new Rect(100, 100, 250, 100), "Start Server"))
-                StartServer(); if (GUI.Button(new Rect(100, 100, 250, 100), "Start Server"))
+            if (GUI.Button(new Rect(100, 100, 250, 100), "Start Server")) {
                 StartServer();
+
+            }
+
+            
+            gameName = GUI.TextField(new Rect( 400, 100, 250, 25), gameName, 25);
 
             if (GUI.Button(new Rect(100, 250, 250, 100), "Refresh Hosts"))
                 RefreshHostList();
