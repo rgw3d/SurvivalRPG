@@ -19,7 +19,6 @@ public class StevensMapRenderer : MonoBehaviour {
 	// Use this for initialization
 	void Start () {
 
-		mapGen = GetComponent<StevensMapGeneration>();
 		mapWidth = mapGen.mapWidth;
 		mapHeight = mapGen.mapHeight;
 		spriteArray = new GameObject[mapWidth, mapHeight];

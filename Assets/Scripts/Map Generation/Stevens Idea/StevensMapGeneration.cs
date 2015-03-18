@@ -38,7 +38,6 @@ public class StevensMapGeneration : MonoBehaviour, StevensMapGenInterface {
 
 	// Use this for initialization
 	void Start () {
-        Debug.Log("Startring to generate map");
 		generateMap();
 	}
 
@@ -67,7 +66,6 @@ public class StevensMapGeneration : MonoBehaviour, StevensMapGenInterface {
 		int y = Mathf.FloorToInt(map.roomList[0].rBottom + ((map.roomList[0].rTop - map.roomList[0].rBottom) / 2));
 
         Instantiate(player, new Vector3(x, y, 0),Quaternion.identity);
-		player.transform.position = new Vector2(x,y);
         PlayerPosition = new Vector2(x, y);
         
 	}
