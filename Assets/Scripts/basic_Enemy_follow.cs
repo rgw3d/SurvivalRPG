@@ -18,6 +18,13 @@ public class basic_Enemy_follow : MonoBehaviour {
 		moveTowardsPlayer ();
 	}
 
+	void OnTriggerEnter2D(Collider2D collider){
+		if(collider.gameObject == GameObject.FindGameObjectWithTag("Player")){
+			Destroy(GameObject.FindGameObjectWithTag("Enemy"));
+		}
+
+	}
+
     void PlayerAttackStance(bool isAttacking) {
         _isAttacking = isAttacking;
     }
@@ -31,7 +38,7 @@ public class basic_Enemy_follow : MonoBehaviour {
 		transform.Translate (speed *Mathf.Sin(angle), speed *Mathf.Cos(angle), 0);
 	}
 
-    void OnTriggerEnter2D(Collider2D col){
+    /*void OnTriggerEnter2D(Collider2D col){
         if (col.gameObject == playerChar && _isAttacking) {
             if (col.gameObject.transform.position.x > transform.position.x)
                 rigidbody2D.AddForce((col.gameObject.transform.position + transform.position) * 200);
@@ -40,7 +47,7 @@ public class basic_Enemy_follow : MonoBehaviour {
         }
         //else if (col.gameObject == playerChar && !_isAttacking)
             //DelegateHolder.TriggerPlayerStatChange(StatType.Health, -.1f);
-    }
+    }*/
 
     void OnTriggerStay2D(Collider2D col) {
         if (col.gameObject == playerChar && _isAttacking) {
