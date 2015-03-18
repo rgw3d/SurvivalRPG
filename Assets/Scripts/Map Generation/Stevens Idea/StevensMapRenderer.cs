@@ -19,11 +19,11 @@ public class StevensMapRenderer : MonoBehaviour {
 	// Use this for initialization
 	void Start () {
         
-		mapWidth = mapGen.mapWidth;
-		mapHeight = mapGen.mapHeight;
-		spriteArray = new GameObject[mapWidth, mapHeight];
+		//mapWidth = mapGen.mapWidth;
+		//mapHeight = mapGen.mapHeight;
+		//spriteArray = new GameObject[mapWidth, mapHeight];
 		
-		renderTiles(mapGen.map.mapTiles);
+		//renderTiles(mapGen.map.mapTiles);
 	}
 
 
@@ -32,7 +32,8 @@ public class StevensMapRenderer : MonoBehaviour {
 		mapWidth = mapGen.mapWidth;
 		mapHeight = mapGen.mapHeight;
 
-		destroyOldMap();
+        if (spriteArray != null) 
+		    destroyOldMap();
 
 		spriteArray = new GameObject[mapWidth, mapHeight];
 
