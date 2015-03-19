@@ -52,10 +52,11 @@ public class PlayerControl : MonoBehaviour, PlayerClass {
         if (Input.GetKey(KeyCode.E)) { //just a test of the ability to work
             DelegateHolder.TriggerPlayerStatChange(StatType.Score, 1f);   
         }
-
-        playerMovement();
-        playerSprite();
-        playerAttack();
+        if (networkView.isMine) {
+            playerMovement();
+            playerSprite();
+            playerAttack();
+        }
 
 	}
 
