@@ -33,6 +33,8 @@ public class StevensMapGeneration : MonoBehaviour, StevensMapGenInterface {
 	public int numTriesToMakeRooms = 20;
 	public int roomIntersectionOffset = 1;
 
+
+
 	public GameObject player;
 
 	// Use this for initialization
@@ -54,7 +56,7 @@ public class StevensMapGeneration : MonoBehaviour, StevensMapGenInterface {
 	public void createMap(int width, int length){
 		for(int y = 0; y < length; y++){
 			for(int x = 0; x < width; x++){
-				map.mapTiles[x,y] = new StevensTile(StevensTile.TileType.white);
+				map.mapTiles[x,y] = new StevensTile(StevensTile.TileType.white, x, y);
 			}
 		}
 	}
@@ -68,7 +70,7 @@ public class StevensMapGeneration : MonoBehaviour, StevensMapGenInterface {
 		int y = Mathf.FloorToInt(map.roomList[0].rBottom + ((map.roomList[0].rTop - map.roomList[0].rBottom) / 2));
 
 		player.transform.position = new Vector2(x,y);
-		//enemy.transform.position = new Vector2(x + 1 ,y + 1);
+		enemy.transform.position = new Vector2(x + 2 ,y + 3);
 	}
 
 	public void createRooms(int numberOfRooms){

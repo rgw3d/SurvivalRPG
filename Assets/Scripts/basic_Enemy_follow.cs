@@ -1,5 +1,5 @@
 ﻿using UnityEngine;
-using System.Collections;
+using System.Collections.Generic;
 
 public class basic_Enemy_follow : MonoBehaviour {
 
@@ -9,10 +9,17 @@ public class basic_Enemy_follow : MonoBehaviour {
 
     private bool _isAttacking = false;
 
+	List<Vector3> currentPath = new List<Vector3>();
+	int indexOfPath = 0;
+
+	public StevensMap map;
 
     void Start() {
         //DelegateHolder.OnPlayerAttack += PlayerAttackStance;//add the method to the event, and the event is made from the delegate
-    }
+		GameObject mapControl = GameObject.FindGameObjectWithTag("Map Controller");
+		map = mapControl.GetComponent<StevensMapGeneration>().map;
+		findPath();
+	}
 
 	void FixedUpdate () {
 		moveTowardsPlayer ();
@@ -29,13 +36,23 @@ public class basic_Enemy_follow : MonoBehaviour {
         _isAttacking = isAttacking;
     }
 
+	void findPath(){
+		currentPath = AStar.findABPath(map , transform.position, playerChar.transform.position);
+		
+		foreach(Vector3 node in currentPath){
+			Debug.Log (node.x + " " + node.y);
+		}
+	}
+
 	void moveTowardsPlayer(){
-		//compare x of enemy to player
-		//compare y of enemy to palyer
-		float angle = Mathf.Atan ( (transform.position.x - playerChar.transform.position.x )  / (transform.position.y - playerChar.transform.position.y));
+
+		//compare x of enemy to next tile
+		//compare y of enemy to next tile
+		float angle = Mathf.Atan ( (transform.position.x - currentPath[indexOfPath].x )  / (transform.position.y - currentPath[indexOfPath].y));
 		if (transform.position.y - playerChar.transform.position.y > 0)
 			angle += Mathf.PI;
 		transform.Translate (speed *Mathf.Sin(angle), speed *Mathf.Cos(angle), 0);
+
 	}
 
     /*void OnTriggerEnter2D(Collider2D col){
