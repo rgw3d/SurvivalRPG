@@ -68,14 +68,12 @@ public class StevensMapRenderer : MonoBehaviour {
 					break;
 				}
 				if(tile != null){
-					spriteArray[x,y] = Instantiate(tile, new Vector3((float)x + .5f, (float)y + .5f), transform.rotation) as GameObject;
-					spriteArray[x,y].transform.parent = gameObject.transform;
+					//spriteArray[x,y] = Instantiate(tile, new Vector3((float)x + .5f, (float)y + .5f), transform.rotation) as GameObject;
+					//spriteArray[x,y].transform.parent = gameObject.transform;
+                    PhotonNetwork.Instantiate(tileType.ToString(), new Vector3((float)x + .5f, (float)y + .5f), transform.rotation,0);
+                    //Debug.Log("Instantiating objects");
 				}
 			}
 		}
-	}
-	// Update is called once per frame
-	void Update () {
-	
 	}
 }

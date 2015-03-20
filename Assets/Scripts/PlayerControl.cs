@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class PlayerControl : MonoBehaviour, PlayerClass {
+public class PlayerControl : Photon.MonoBehaviour{
 
     public Sprite FrontSprite;
     public Sprite BackSprite;
@@ -22,6 +22,8 @@ public class PlayerControl : MonoBehaviour, PlayerClass {
     public KeyCode LeftKey;
     public KeyCode RightKey;
     public KeyCode AttackKey;
+
+    
 
 
 
@@ -52,7 +54,7 @@ public class PlayerControl : MonoBehaviour, PlayerClass {
         if (Input.GetKey(KeyCode.E)) { //just a test of the ability to work
             DelegateHolder.TriggerPlayerStatChange(StatType.Score, 1f);   
         }
-        if (networkView.isMine) {
+        if (photonView.isMine) {
             playerMovement();
             playerSprite();
             playerAttack();
@@ -112,4 +114,5 @@ public class PlayerControl : MonoBehaviour, PlayerClass {
     public void playerAttack() {
        
     }
+
 }

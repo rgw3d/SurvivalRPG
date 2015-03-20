@@ -11,6 +11,7 @@ public class StevensTile {
 		white,
 		blue,
 		green
+
 	}
 
     public enum TileSubType {
@@ -32,4 +33,18 @@ public class StevensTile {
 	public void setTileType(StevensTile.TileType Type){
 		tileType = Type;
 	}
+
+    public string toString() {
+        switch(tileType){
+            case StevensTile.TileType.red:
+                return "red";
+            case StevensTile.TileType.white:
+                return "white";
+            case StevensTile.TileType.blue:
+                return "blue";
+            case StevensTile.TileType.green:
+                return "Green";
+        }
+        return "white";
+    }
 }

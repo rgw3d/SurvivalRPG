@@ -4,11 +4,20 @@ using System;
 
 public class PhotonNetworkManager : MonoBehaviour {
 
-    private const string roomName = "RoomNameUniqueWendel";
+    private string roomName = "Example Room Name";
     private RoomInfo[] roomsList;
 
+
+
+    public StevensMapGeneration mapGeneration;
+
+    public static bool isHost = false;
+
     void Start() {
+        //PhotonNetwork.ConnectToBestCloudServer("0.1");
+        mapGeneration = GameObject.FindGameObjectWithTag("Map Controller").GetComponent<StevensMapGeneration>();
         PhotonNetwork.ConnectUsingSettings("0.1");
+        //PhotonNetwork.MAX_VIEW_IDS = 2000;
     }
 
 
@@ -20,12 +29,12 @@ public class PhotonNetworkManager : MonoBehaviour {
         }
         else if (PhotonNetwork.room == null)
         {
-            Debug.Log("drawing buttons");
             // Create Room
             if (GUI.Button(new Rect(100, 100, 250, 100), "Start Server")){
                 RoomOptions roomOptions = new RoomOptions(){ isVisible = true, maxPlayers = 4, isOpen = true};
-                PhotonNetwork.CreateRoom(roomName + Guid.NewGuid().ToString("N"), roomOptions,TypedLobby.Default);
+                PhotonNetwork.CreateRoom(roomName +"  "+  Guid.NewGuid().ToString("N"), roomOptions,TypedLobby.Default);
             }
+            roomName = GUI.TextField(new Rect(100, 250, 250, 25), roomName, 20);
             // Join Room
             if (roomsList != null)
             {
@@ -43,22 +52,29 @@ public class PhotonNetworkManager : MonoBehaviour {
     }
 
     void OnCreatedRoom() {//if started room, then this is called
+        Debug.Log("Connected to room");
+        isHost = true;
+        mapGeneration.StartGeneration();
         //start functions generating map
     }
 
     void OnPhotonPlayerConnected() {
-
+        if (isHost) {//tel players
+            
+        }
+        Debug.Log("Player has connected");
     }
     public void OnJoinedRoom() {
         //called when created or joined a room
 
         //call 
+
+        if (!isHost) {//spawn player if not host
+
+        }
         Debug.Log("Connected to Room");
     }
 
-    [RPC]
-    bool hasGeneratedMap() {
+    
 
-        return true;
-    }
 }

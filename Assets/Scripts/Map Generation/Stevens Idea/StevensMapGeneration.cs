@@ -2,7 +2,7 @@
 using System.Collections;
 using System.Collections.Generic;
 
-public class StevensMapGeneration : MonoBehaviour, StevensMapGenInterface {
+public class StevensMapGeneration : Photon.MonoBehaviour, StevensMapGenInterface {
 
 
 	//"Tile" refers to a singular background object such as a theoretical 'TopRightCorner of a Red background at (4,7)'
@@ -35,7 +35,6 @@ public class StevensMapGeneration : MonoBehaviour, StevensMapGenInterface {
 	public int roomIntersectionOffset = 1;
 
 	public GameObject player;
-    public Vector2 PlayerPosition;
     
 
 	// Use this for initialization
@@ -72,11 +71,15 @@ public class StevensMapGeneration : MonoBehaviour, StevensMapGenInterface {
 
 		int x = Mathf.FloorToInt(map.roomList[0].rLeft + ((map.roomList[0].rRight - map.roomList[0].rLeft) / 2));
 		int y = Mathf.FloorToInt(map.roomList[0].rBottom + ((map.roomList[0].rTop - map.roomList[0].rBottom) / 2));
-
-        Instantiate(player, new Vector3(x, y, 0),Quaternion.identity);
-        PlayerPosition = new Vector2(x, y);
+        photonView.RPC("spawnPosition", PhotonTargets.OthersBuffered,new Vector2(x,y));
+        PhotonNetwork.Instantiate(player.name, new Vector3(x, y),Quaternion.identity,0);
         
 	}
+
+    [RPC]
+    void spawnPosition(Vector2 position) {
+        PhotonNetwork.Instantiate(player.name, new Vector3(position.x,position.y), Quaternion.identity, 0);
+    }
 
 	public void createRooms(int numberOfRooms){
 		int maxTries = numTriesToMakeRooms;
