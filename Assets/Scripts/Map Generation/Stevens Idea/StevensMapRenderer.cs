@@ -8,9 +8,6 @@ public class StevensMapRenderer : Photon.MonoBehaviour {
 	public GameObject background;
 	public GameObject wall;
 	public GameObject goal;
-	
-	private int mapWidth;
-	private int mapHeight;
 
 	private GameObject[,] spriteArray;
     private StevensMap Map;
@@ -22,27 +19,20 @@ public class StevensMapRenderer : Photon.MonoBehaviour {
 
         if (mapGeneration == null) 
             mapGeneration = GetComponent<StevensMapGeneration>();
-        Map = mapGeneration.Map;
+        Map = mapGeneration.Map;//set the map
 
-        
-		mapWidth = mapGeneration.mapWidth;//set width from the map gen script
-		mapHeight = mapGeneration.mapHeight;//set height from the 
-		spriteArray = new GameObject[mapWidth, mapHeight];
+		spriteArray = new GameObject[Map.mapWidth, Map.mapHeight];
 		
-		//renderTiles(mapGen.map.mapTiles);
 	}
 
 	public void reRenderMap(){
-
-		mapWidth = mapGeneration.mapWidth;
-		mapHeight = mapGeneration.mapHeight;
+        Map = mapGeneration.Map;//set the map
 
         if (spriteArray != null) 
 		    destroyOldMap();
 
-		spriteArray = new GameObject[mapWidth, mapHeight];
-
-		renderTiles(mapGeneration.Map.mapTiles);
+		spriteArray = new GameObject[Map.mapWidth, Map.mapHeight];
+		renderTiles(Map.mapTiles);
 	}
 
 	void destroyOldMap(){
@@ -53,8 +43,8 @@ public class StevensMapRenderer : Photon.MonoBehaviour {
 	}
 
 	void renderTiles(StevensTile[,] tiles){
-		for(int y = 0; y < mapHeight; y++){
-			for(int x = 0; x < mapWidth; x++){
+		for(int y = 0; y < Map.mapHeight; y++){
+			for(int x = 0; x < Map.mapWidth; x++){
 				StevensTile.TileType tileType = tiles[x,y].tileType;
 				GameObject tile = background;
 				switch(tileType){
@@ -85,6 +75,11 @@ public class StevensMapRenderer : Photon.MonoBehaviour {
 	}
 
     [RPC]
+    void SetMapFromServer(Vector2 HeightWidth, string mapString) {
+
+    }
+
+    [RPC]
     void renderTile(Vector3 gameObject) {
         
         //spriteArray[gameObject.x, gameObject.y] = Instantiate(allTiles[x, y], allTiles[x, y].transform.position, Quaternion.identity) as GameObject;
@@ -92,17 +87,7 @@ public class StevensMapRenderer : Photon.MonoBehaviour {
                 
     }
 
-    [RPC]
-    void renderTile(GameObject[,] allTiles) {
-        for(int y = 0; y < mapHeight; y++){
-            for (int x = 0; x < mapWidth; x++) {
-                if (allTiles[x,y] != null) {
-                    spriteArray[x,y] = Instantiate(allTiles[x,y], allTiles[x,y].transform.position, Quaternion.identity) as GameObject;
-                    spriteArray[x, y].transform.parent = gameObject.transform;
-                }
-            }
-        }
-    }
+    
 
     
 }
