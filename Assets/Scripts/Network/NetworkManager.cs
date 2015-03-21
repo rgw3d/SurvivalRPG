@@ -48,7 +48,7 @@ public class NetworkManager : MonoBehaviour {
     }
     void OnConnectedToServer() {
         Debug.Log("Server Joined");
-        Network.Instantiate(MapGenerationScript.player, new Vector3(29, 20, 0), Quaternion.identity, 0);
+        Network.Instantiate(MapGenerationScript.playerPrefab, new Vector3(29, 20, 0), Quaternion.identity, 0);
     }
     void OnDisconnectedFromServer() {
         Debug.Log("Disconnected for whatever reason");
@@ -58,7 +58,7 @@ public class NetworkManager : MonoBehaviour {
         if (!Network.isClient && !Network.isServer) {
             if (GUI.Button(new Rect(100, 100, 250, 100), "Start Server")) {
                 StartServer();
-                MapGenerationScript.StartGeneration();
+                MapGenerationScript.GenerateAndDisplayMap();
                 //Application.LoadLevel(1);
             }
 

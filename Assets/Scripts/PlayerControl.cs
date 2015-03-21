@@ -35,10 +35,10 @@ public class PlayerControl : Photon.MonoBehaviour{
 
 
         _spriteRenderer = GetComponent<SpriteRenderer>();
-        BoxCollider2D box = GetComponent<BoxCollider2D>();
+        //BoxCollider2D box = GetComponent<BoxCollider2D>();
         
         _spriteRenderer.sprite = FrontSprite;
-        _currentSprite = FrontSprite;
+        //_currentSprite = FrontSprite;
         
 	}
 

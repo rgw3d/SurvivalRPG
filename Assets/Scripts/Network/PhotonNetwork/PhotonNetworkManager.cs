@@ -54,7 +54,7 @@ public class PhotonNetworkManager : MonoBehaviour {
     void OnCreatedRoom() {//if started room, then this is called
         Debug.Log("Connected to room");
         isHost = true;
-        mapGeneration.StartGeneration();
+        mapGeneration.GenerateAndDisplayMap();
         //start functions generating map
     }
 
