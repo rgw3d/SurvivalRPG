@@ -41,4 +41,12 @@ public class StevensRoom {
 
 		return (Mathf.Sqrt(Mathf.Pow(r1CenterX - r2CenterX,2) + Mathf.Pow(r1CenterY - r2CenterY, 2)));
 	}
+
+    public override int GetHashCode() {
+        int hashCode = rTop;
+        hashCode += 7 * rBottom;
+        hashCode += 13 * rLeft;
+        hashCode += 17 * rRight;
+        return hashCode;
+    }
 }

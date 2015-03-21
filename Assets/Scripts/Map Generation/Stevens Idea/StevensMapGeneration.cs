@@ -2,7 +2,7 @@
 using System.Collections;
 using System.Collections.Generic;
 
-public class StevensMapGeneration : Photon.MonoBehaviour, StevensMapGenInterface {
+public class StevensMapGeneration : Photon.MonoBehaviour {
 
 
 	//"Tile" refers to a singular background object such as a theoretical 'TopRightCorner of a Red background at (4,7)'
