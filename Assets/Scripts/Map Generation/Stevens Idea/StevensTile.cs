@@ -13,8 +13,25 @@ public class StevensTile {
 
 	}
 
-    public StevensTile(StevensTile.TileType Type) {
-		tileType = Type;
+    public StevensTile(StevensTile.TileType type) {
+		tileType = type;
+    }
+
+    public StevensTile(int type) {
+        switch (type) {
+            case 0:
+                tileType = TileType.red;
+                break;
+            case 1:
+                tileType = TileType.white;
+                break;
+            case 2:
+                tileType = TileType.blue;
+                break;
+            case 3:
+                tileType = TileType.green;
+                break;
+        }
     }
 
 	public void setTileType(StevensTile.TileType Type){
@@ -36,7 +53,7 @@ public class StevensTile {
     }
 
     public int GetHashCode() {
-        return tileType.GetHashCode();
+        return (int)tileType;
     }
 
     public override bool Equals(System.Object obj) {

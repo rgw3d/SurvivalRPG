@@ -13,26 +13,37 @@ public class StevensMapRenderer : Photon.MonoBehaviour {
     private StevensMap Map;
 
 	public StevensMapGeneration mapGeneration;
+
 	
 	// Use this for initialization
 	void Start () {
 
         if (mapGeneration == null) 
             mapGeneration = GetComponent<StevensMapGeneration>();
-        Map = mapGeneration.Map;//set the map
-
-		spriteArray = new GameObject[Map.mapWidth, Map.mapHeight];
+        if (mapGeneration != null) {
+            Map = mapGeneration.Map;//set the map
+            spriteArray = new GameObject[Map.mapWidth, Map.mapHeight];
+        }
 		
 	}
 
 	public void reRenderMap(){
-        Map = mapGeneration.Map;//set the map
+        if (mapGeneration!= null) {//If the map generator is not null (on the client side)
+            Map = mapGeneration.Map;//set the map
 
-        if (spriteArray != null) 
-		    destroyOldMap();
+            if (spriteArray != null)
+                destroyOldMap();
 
-		spriteArray = new GameObject[Map.mapWidth, Map.mapHeight];
-		renderTiles(Map.mapTiles);
+            spriteArray = new GameObject[Map.mapWidth, Map.mapHeight];
+            renderTiles(Map.mapTiles);
+        }
+        else {
+            if (spriteArray != null)
+                destroyOldMap();
+
+            spriteArray = new GameObject[Map.mapWidth, Map.mapHeight];
+            renderTiles(Map.mapTiles);
+        }
 	}
 
 	void destroyOldMap(){
@@ -70,24 +81,20 @@ public class StevensMapRenderer : Photon.MonoBehaviour {
 				}
 			}
 		}
-        photonView.RPC("renderTile", PhotonTargets.OthersBuffered, spriteArray);
+        photonView.RPC("SetMapFromServer", PhotonTargets.OthersBuffered,new System.Object[]{new Vector2(Map.mapWidth,Map.mapHeight), Map.SerializeMapTiles()});
 
 	}
-
     [RPC]
     void SetMapFromServer(Vector2 HeightWidth, string mapString) {
+        int stringindx = 0;
+        StevensTile[,] mapTiles = new StevensTile[(int)HeightWidth.x, (int)HeightWidth.y];
+        for (int y = 0; y < HeightWidth.y; y++) {
+            for (int x = 0; x < HeightWidth.x; x++)
+                mapTiles[x, y] = new StevensTile(mapString[stringindx++]);
+        }
 
+        Map = new StevensMap((int)HeightWidth.x, (int)HeightWidth.y, mapTiles);
     }
 
-    [RPC]
-    void renderTile(Vector3 gameObject) {
-        
-        //spriteArray[gameObject.x, gameObject.y] = Instantiate(allTiles[x, y], allTiles[x, y].transform.position, Quaternion.identity) as GameObject;
-        //spriteArray[x, y].transform.parent = gameObject.transform;
-                
-    }
-
-    
-
-    
+     
 }

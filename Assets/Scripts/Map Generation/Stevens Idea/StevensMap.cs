@@ -21,18 +21,18 @@ public class StevensMap {
         mapTiles = tiles;
     }
 
-    public string SerializeToSend() {
-        string serializedValue = GetHashCode()+" ";//hashcode and a space
-        serializedValue += mapWidth+" ";//map width and a space
-        serializedValue += mapHeight + " ";//map height and a space
-
+    public string SerializeMapTiles() {
+        string serializedValue = "";
+        for(int y = 0; y < mapHeight; y++){
+            for (int x = 0; x < mapHeight; x++)
+                serializedValue += mapTiles[x,y].GetHashCode() + "";//hashcode of the tile (what TileType it is) and a cast to string
+        }
         
-
-        return "wow";
+        return serializedValue;
     }
 
     public int GetHashCode() {
-        int hashCode = mapTiles.GetHashCode();
+        int hashCode = 7 * mapTiles.GetHashCode();
         hashCode += roomList.GetHashCode();
         hashCode += mapWidth.GetHashCode();
         hashCode += mapHeight.GetHashCode();
