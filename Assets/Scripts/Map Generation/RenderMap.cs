@@ -11,10 +11,9 @@ public class RenderMap: Photon.MonoBehaviour {
 
     private GameObject[,] _displayedMapArray;
     private StevensMap _gameMap;
-
     private bool _isHost = true;
 
-    public void RenderMap() {
+    public void ReRenderMap() {
         if (_isHost) {//if we are the host, then we go to the mapGenerator to get the map
             _gameMap = GenerateMap.Map;//set the map
 
@@ -24,7 +23,7 @@ public class RenderMap: Photon.MonoBehaviour {
             _displayedMapArray = new GameObject[_gameMap.mapWidth, _gameMap.mapHeight];
             RenderTiles(_gameMap.mapTiles);
         }
-        else {
+        else {//we are not the host, so dont update the map - assume that it has already been done (updated via RPC)
             if (_displayedMapArray != null)
                 DestroyOldMap();
 
@@ -87,7 +86,7 @@ public class RenderMap: Photon.MonoBehaviour {
 
         _gameMap = new StevensMap((int)HeightWidth.x, (int)HeightWidth.y, mapTiles);
         _isHost = false;
-        RenderMap();
+        ReRenderMap();
     }
 
 }

@@ -4,13 +4,13 @@ using System.Collections.Generic;
 
 public class StevensMapRenderer : Photon.MonoBehaviour {
 	
-	public GameObject walkable;
-	public GameObject background;
-	public GameObject wall;
-	public GameObject goal;
+	public GameObject Ground;
+	public GameObject Background;
+	public GameObject Wall;
+	public GameObject ExitTile;
 
-	private GameObject[,] spriteArray;
-    private StevensMap Map;
+	private GameObject[,] _displayedMapArray;
+    private StevensMap _gameMap;
 
 	public StevensMapGeneration mapGeneration;
     private bool isHost = true;

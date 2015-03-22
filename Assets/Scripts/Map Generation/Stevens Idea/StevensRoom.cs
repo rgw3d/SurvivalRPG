@@ -10,6 +10,7 @@ public class StevensRoom {
 
 	public bool isConnected = false;
 
+    // y , x, height, width
 	public StevensRoom(int bottom, int left, int top, int right){
 		rTop = top;
 		rBottom = bottom;

@@ -73,9 +73,9 @@ public class GenerateMap : Photon.MonoBehaviour {
         for (int tries = 0; tries < maxTries; tries++) {
             int roomWidth = Random.Range(MinimumRoomWidth, MaximumRoomWidth);
             int roomHeight = Random.Range(MinimumRoomHeight, MaximumRoomHeight);
-            int roomLocX = Random.Range(1, MapWidth - roomWidth - 1);
-            int roomLocY = Random.Range(1, MapHeight - roomHeight - 1);
-            StevensRoom basicRoom = new StevensRoom(roomLocY, roomLocX, roomLocY + roomHeight, roomLocX + roomWidth);
+            int roomX = Random.Range(1, MapWidth - roomWidth - 1);
+            int roomY = Random.Range(1, MapHeight - roomHeight - 1);
+            MapRoom basicRoom = new MapRoom(roomY, roomX, roomY + roomHeight, roomX + roomWidth);
 
             bool intersected = false;
             foreach (StevensRoom otherRoom in Map.roomList) {
