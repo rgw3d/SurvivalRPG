@@ -35,11 +35,13 @@ public class StevensMapGeneration : Photon.MonoBehaviour {
 	public int roomIntersectionOffset = 1;
 
 	public GameObject playerPrefab;
+    public GameObject cameraPrefab;
     
 
 	void Start () {
-        if (stevensMapRenderer == null) 
+        if (stevensMapRenderer == null) {
             stevensMapRenderer = GetComponent<StevensMapRenderer>();
+        }
 	}
 
     public void GenerateAndDisplayMap() {
@@ -106,7 +108,8 @@ public class StevensMapGeneration : Photon.MonoBehaviour {
         int x = Mathf.FloorToInt(Map.roomList[0].rLeft + ((Map.roomList[0].rRight - Map.roomList[0].rLeft) / 2));
         int y = Mathf.FloorToInt(Map.roomList[0].rBottom + ((Map.roomList[0].rTop - Map.roomList[0].rBottom) / 2));
         photonView.RPC("spawnPosition", PhotonTargets.OthersBuffered, new Vector2(x, y));
-        PhotonNetwork.Instantiate(playerPrefab.name, new Vector3(x, y), Quaternion.identity, 0);
+        GameObject player = PhotonNetwork.Instantiate(playerPrefab.name, new Vector3(x, y), Quaternion.identity, 0);
+
 
     }
 

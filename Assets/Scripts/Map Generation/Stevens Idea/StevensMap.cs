@@ -24,14 +24,15 @@ public class StevensMap {
     public string SerializeMapTiles() {
         string serializedValue = "";
         for(int y = 0; y < mapHeight; y++){
-            for (int x = 0; x < mapHeight; x++)
-                serializedValue += mapTiles[x,y].GetHashCode() + "";//hashcode of the tile (what TileType it is) and a cast to string
+            for (int x = 0; x < mapHeight; x++) {
+                serializedValue += (int)mapTiles[x, y].tileType + "";//hashcode of the tile (what TileType it is) and a cast to string
+            }
         }
-        
+        Debug.Log(serializedValue);
         return serializedValue;
     }
 
-    public int GetHashCode() {
+    public override int GetHashCode() {
         int hashCode = 7 * mapTiles.GetHashCode();
         hashCode += roomList.GetHashCode();
         hashCode += mapWidth.GetHashCode();

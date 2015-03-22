@@ -52,7 +52,7 @@ public class StevensTile {
         return "white";
     }
 
-    public int GetHashCode() {
+    public override int GetHashCode() {
         return (int)tileType;
     }
 

@@ -13,6 +13,8 @@ public class StevensMapRenderer : Photon.MonoBehaviour {
     private StevensMap Map;
 
 	public StevensMapGeneration mapGeneration;
+    private bool isHost = true;
+
 
 	
 	// Use this for initialization
@@ -20,15 +22,17 @@ public class StevensMapRenderer : Photon.MonoBehaviour {
 
         if (mapGeneration == null) 
             mapGeneration = GetComponent<StevensMapGeneration>();
-        if (mapGeneration != null) {
+       /* if (mapGeneration != null) {
             Map = mapGeneration.Map;//set the map
             spriteArray = new GameObject[Map.mapWidth, Map.mapHeight];
         }
+        * */
+        
 		
 	}
 
 	public void reRenderMap(){
-        if (mapGeneration!= null) {//If the map generator is not null (on the client side)
+        if (isHost) {//If the map generator is not null (on the client side)
             Map = mapGeneration.Map;//set the map
 
             if (spriteArray != null)
@@ -75,25 +79,31 @@ public class StevensMapRenderer : Photon.MonoBehaviour {
 				if(tile != null){
 					spriteArray[x,y] = Instantiate(tile, new Vector3((float)x + .5f, (float)y + .5f), transform.rotation) as GameObject;
 					spriteArray[x,y].transform.parent = gameObject.transform;
-                    //PhotonNetwork.Instantiate(tileType.ToString(), new Vector3((float)x + .5f, (float)y + .5f), transform.rotation,0);
-                    
-                    //Debug.Log("Instantiating objects");
 				}
 			}
 		}
-        photonView.RPC("SetMapFromServer", PhotonTargets.OthersBuffered,new System.Object[]{new Vector2(Map.mapWidth,Map.mapHeight), Map.SerializeMapTiles()});
+        if (isHost) {
+            Debug.Log("Sending RPC to set map tiles");
+            photonView.RPC("SetMapFromServer", PhotonTargets.OthersBuffered, new System.Object[] { new Vector2(Map.mapWidth, Map.mapHeight), Map.SerializeMapTiles() });
+        }
 
 	}
     [RPC]
     void SetMapFromServer(Vector2 HeightWidth, string mapString) {
+        Debug.Log("Recieved Map Data via RPC call");
+        Debug.Log(mapString);
         int stringindx = 0;
         StevensTile[,] mapTiles = new StevensTile[(int)HeightWidth.x, (int)HeightWidth.y];
         for (int y = 0; y < HeightWidth.y; y++) {
-            for (int x = 0; x < HeightWidth.x; x++)
-                mapTiles[x, y] = new StevensTile(mapString[stringindx++]);
+            for (int x = 0; x < HeightWidth.x; x++) {
+                mapTiles[x, y] = new StevensTile((int)System.Char.GetNumericValue((mapString[stringindx++])));
+                //Debug.Log("Tile type: "+System.Convert.ToInt32(mapString[stringindx-1]));
+            }
         }
 
         Map = new StevensMap((int)HeightWidth.x, (int)HeightWidth.y, mapTiles);
+        isHost = false;
+        reRenderMap();
     }
 
      

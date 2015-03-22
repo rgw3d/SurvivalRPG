@@ -59,19 +59,9 @@ public class PhotonNetworkManager : MonoBehaviour {
     }
 
     void OnPhotonPlayerConnected() {
-        if (isHost) {//tel players
-            
-        }
         Debug.Log("Player has connected");
     }
     public void OnJoinedRoom() {
-        //called when created or joined a room
-
-        //call 
-
-        if (!isHost) {//spawn player if not host
-
-        }
         Debug.Log("Connected to Room");
     }
 
