@@ -109,13 +109,20 @@ public class StevensMapGeneration : Photon.MonoBehaviour {
         int y = Mathf.FloorToInt(Map.roomList[0].rBottom + ((Map.roomList[0].rTop - Map.roomList[0].rBottom) / 2));
         photonView.RPC("spawnPosition", PhotonTargets.OthersBuffered, new Vector2(x, y));
         GameObject player = PhotonNetwork.Instantiate(playerPrefab.name, new Vector3(x, y), Quaternion.identity, 0);
+        GameObject playerCamera = Instantiate(cameraPrefab) as GameObject;
+        playerCamera.transform.parent = player.transform;//set the camera to be a child of the player
+        playerCamera.transform.localPosition = new Vector3(0, 0,-10);
 
 
     }
 
     [RPC]
     void spawnPosition(Vector2 position) {
-        PhotonNetwork.Instantiate(playerPrefab.name, new Vector3(position.x, position.y), Quaternion.identity, 0);
+        GameObject player = PhotonNetwork.Instantiate(playerPrefab.name, new Vector3(position.x, position.y), Quaternion.identity, 0);
+        GameObject playerCamera = Instantiate(cameraPrefab) as GameObject;
+        playerCamera.transform.parent = player.transform;//set the camera to be a child of the player
+        playerCamera.transform.localPosition = new Vector3(0, 0,-10);
+
     }
 
 	public void createCorridors(){
