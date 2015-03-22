@@ -30,11 +30,11 @@ public class PhotonNetworkManager : MonoBehaviour {
         else if (PhotonNetwork.room == null)
         {
             // Create Room
-            if (GUI.Button(new Rect(100, 100, 250, 100), "Start Server")){
+            if (GUI.Button(new Rect(100, 100, 250, 100), "Create Room")){
                 RoomOptions roomOptions = new RoomOptions(){ isVisible = true, maxPlayers = 4, isOpen = true};
-                PhotonNetwork.CreateRoom(roomName +"  "+  Guid.NewGuid().ToString("N"), roomOptions,TypedLobby.Default);
+                PhotonNetwork.CreateRoom(roomName, roomOptions,TypedLobby.Default);
             }
-            roomName = GUI.TextField(new Rect(100, 250, 250, 25), roomName, 20);
+            roomName = GUI.TextField(new Rect(350, 100, 250, 25), roomName, 20);
             // Join Room
             if (roomsList != null)
             {
