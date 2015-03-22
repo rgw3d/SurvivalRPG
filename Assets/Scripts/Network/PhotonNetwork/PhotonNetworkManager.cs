@@ -6,20 +6,13 @@ public class PhotonNetworkManager : MonoBehaviour {
 
     private string roomName = "Example Room Name";
     private RoomInfo[] roomsList;
-
-
-
     public StevensMapGeneration mapGeneration;
-
     public static bool isHost = false;
 
     void Start() {
-        //PhotonNetwork.ConnectToBestCloudServer("0.1");
         mapGeneration = GameObject.FindGameObjectWithTag("Map Controller").GetComponent<StevensMapGeneration>();
         PhotonNetwork.ConnectUsingSettings("0.1");
-        //PhotonNetwork.MAX_VIEW_IDS = 2000;
     }
-
 
     void OnGUI()
     {
@@ -51,11 +44,10 @@ public class PhotonNetworkManager : MonoBehaviour {
         roomsList = PhotonNetwork.GetRoomList();
     }
 
-    void OnCreatedRoom() {//if started room, then this is called
+    void OnCreatedRoom() {//if this user created the room, then this is called
         Debug.Log("Connected to room");
         isHost = true;
         mapGeneration.GenerateAndDisplayMap();
-        //start functions generating map
     }
 
     void OnPhotonPlayerConnected() {

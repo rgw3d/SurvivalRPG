@@ -15,24 +15,15 @@ public class StevensMapRenderer : Photon.MonoBehaviour {
 	public StevensMapGeneration mapGeneration;
     private bool isHost = true;
 
-
 	
 	// Use this for initialization
 	void Start () {
-
         if (mapGeneration == null) 
-            mapGeneration = GetComponent<StevensMapGeneration>();
-       /* if (mapGeneration != null) {
-            Map = mapGeneration.Map;//set the map
-            spriteArray = new GameObject[Map.mapWidth, Map.mapHeight];
-        }
-        * */
-        
-		
+            mapGeneration = GetComponent<StevensMapGeneration>();  
 	}
 
 	public void reRenderMap(){
-        if (isHost) {//If the map generator is not null (on the client side)
+        if (isHost) {//if we are the host, then we go to the mapGenerator to get the map
             Map = mapGeneration.Map;//set the map
 
             if (spriteArray != null)
@@ -105,6 +96,5 @@ public class StevensMapRenderer : Photon.MonoBehaviour {
         isHost = false;
         reRenderMap();
     }
-
      
 }
