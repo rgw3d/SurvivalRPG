@@ -75,11 +75,11 @@ public class GenerateMap : Photon.MonoBehaviour {
             int roomHeight = Random.Range(MinimumRoomHeight, MaximumRoomHeight);
             int roomX = Random.Range(1, MapWidth - roomWidth - 1);
             int roomY = Random.Range(1, MapHeight - roomHeight - 1);
-            MapRoom basicRoom = new MapRoom(roomY, roomX, roomY + roomHeight, roomX + roomWidth);
+            MapRoom basicRoom = new MapRoom(roomX, roomY, roomX + roomWidth, roomY + roomHeight);
 
             bool intersected = false;
-            foreach (StevensRoom otherRoom in Map.roomList) {
-                if (basicRoom.roomIntersectsWith(otherRoom, RoomIntersectionOffset)) {
+            foreach (MapRoom otherRoom in Map.roomList) {
+                if (basicRoom.IntersectsWith(otherRoom, RoomIntersectionOffset)) {
                     intersected = true;
                 }
             }

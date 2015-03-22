@@ -50,4 +50,6 @@ public class StevensRoom {
         hashCode += 17 * rRight;
         return hashCode;
     }
+
+
 }
