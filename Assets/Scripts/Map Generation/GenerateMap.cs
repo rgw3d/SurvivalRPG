@@ -17,39 +17,34 @@ public class GenerateMap : Photon.MonoBehaviour {
     //		CreateNodes:
     //		CreateRooms:
     //		CreateCorridors:
-    //		(EstablishTileSubtypes?)
     //Return Map to MapRenderer
 
-    public static StevensMap Map;
-    public StevensMapRenderer stevensMapRenderer;
+    public static Map Map;
 
-    public int MapWidth = 30;
-    public int MapHeight = 30;
-    public int NumberOfRooms = 10;
-    public int MinimumRoomWidth = 4;
-    public int MaximumRoomWidth = 8;
-    public int MinimumRoomHeight = 4;
-    public int MaximumRoomHeight = 8;
-    public int NumberTriesToGenRooms = 20;
+    public int MapWidth = 100;
+    public int MapHeight = 100;
+    public int NumberOfRooms = 20;
+    public int MinimumRoomWidth = 5;
+    public int MaximumRoomWidth = 12;
+    public int MinimumRoomHeight = 5;
+    public int MaximumRoomHeight = 12;
+    public int NumberTriesToGenRooms = 150;
     public int RoomIntersectionOffset = 1;
 
     public GameObject playerPrefab;
     public GameObject cameraPrefab;
 
-
     void Start() {
-        if (stevensMapRenderer == null) {
-            stevensMapRenderer = GetComponent<StevensMapRenderer>();
-        }
+        DelegateHolder.OnGenerateAndRenderMap += GenerateAndDisplayMap;
     }
 
     public void GenerateAndDisplayMap() {
         generateMap();
-        stevensMapRenderer.reRenderMap();
+        DelegateHolder.TriggerMapGenerated(true);//assume that if the map is generated this way, then it is the host
     }
 
     public void generateMap() {
-        Map = new StevensMap(MapWidth, MapHeight);
+        Map = new Map(MapWidth, MapHeight);
         createMap();
         createRooms();
         createInitialRoom();
@@ -61,7 +56,7 @@ public class GenerateMap : Photon.MonoBehaviour {
     public void createMap() {//This fills the entire map with white tiles (blank tiles)
         for (int y = 0; y < MapHeight; y++) {
             for (int x = 0; x < MapWidth; x++) {
-                Map.mapTiles[x, y] = new StevensTile(StevensTile.TileType.white);
+                Map.mapTiles[x, y] = new MapTile(MapTile.TileType.white);
             }
         }
     }
@@ -86,9 +81,9 @@ public class GenerateMap : Photon.MonoBehaviour {
 
             if (!intersected) {
                 Map.roomList.Add(basicRoom);
-                for (int y = basicRoom.rBottom; y <= basicRoom.rTop; y++) {
-                    for (int x = basicRoom.rLeft; x <= basicRoom.rRight; x++) {
-                        Map.mapTiles[x, y].tileType = StevensTile.TileType.red;
+                for (int y = basicRoom.BottomY; y <= basicRoom.TopY; y++) {
+                    for (int x = basicRoom.LeftX; x <= basicRoom.RightX; x++) {
+                        Map.mapTiles[x, y].SetTileType(MapTile.TileType.red);
                     }
                 }
                 numberOfRooms--;
@@ -110,7 +105,6 @@ public class GenerateMap : Photon.MonoBehaviour {
         playerCamera.transform.parent = player.transform;//set the camera to be a child of the player
         playerCamera.transform.localPosition = new Vector3(0, 0, -10);
 
-
     }
 
     [RPC]
@@ -123,22 +117,20 @@ public class GenerateMap : Photon.MonoBehaviour {
     }
 
     public void createCorridors() {
-        foreach (StevensRoom r1 in Map.roomList) {
+        foreach (MapRoom r1 in Map.roomList) {
             if (!r1.isConnected) {
-                StevensRoom r2 = findNearestNotConnectedRoom(r1);
-                int r1X = Random.Range(r1.rLeft, r1.rRight + 1);
-                int r1Y = Random.Range(r1.rBottom, r1.rTop + 1);
-                int r2X = Random.Range(r2.rLeft, r2.rRight + 1);
-                int r2Y = Random.Range(r2.rBottom, r2.rTop + 1);
+                MapRoom r2 = FindNearestNonConnectedRoom(r1);
+                int r1X = Random.Range(r1.LeftX, r1.RightX + 1);
+                int r1Y = Random.Range(r1.BottomY, r1.TopY + 1);
+                int r2X = Random.Range(r2.LeftX, r2.RightX + 1);
+                int r2Y = Random.Range(r2.BottomY, r2.TopY + 1);
 
                 while (r1X != r2X) {
-                    Map.mapTiles[r1X, r1Y].tileType = StevensTile.TileType.red;
-
+                    Map.mapTiles[r1X, r1Y].SetTileType(MapTile.TileType.red);
                     r1X += (r1X < r2X) ? 1 : -1;
                 }
                 while (r1Y != r2Y) {
-                    Map.mapTiles[r1X, r1Y].tileType = StevensTile.TileType.red;
-
+                    Map.mapTiles[r1X, r1Y].SetTileType(MapTile.TileType.red);
                     r1Y += (r1Y < r2Y) ? 1 : -1;
                 }
                 r1.isConnected = true;
@@ -146,18 +138,18 @@ public class GenerateMap : Photon.MonoBehaviour {
         }
     }
 
-    StevensRoom findNearestNotConnectedRoom(StevensRoom r1) {
-        List<StevensRoom> notConnectedRooms = new List<StevensRoom>();
-        foreach (StevensRoom notConRoom in Map.roomList) {
+    MapRoom FindNearestNonConnectedRoom(MapRoom r1) {
+        List<MapRoom> notConnectedRooms = new List<MapRoom>();
+        foreach (MapRoom notConRoom in Map.roomList) {
             if (r1 != notConRoom && !notConRoom.isConnected) {
                 notConnectedRooms.Add(notConRoom);
             }
         }
-        StevensRoom nearestRoom = r1;
+        MapRoom nearestRoom = r1;
         float closestDistance = Mathf.Infinity;
-        foreach (StevensRoom r2 in notConnectedRooms) {
-            if (r1.distanceToRoom(r2) < closestDistance) {
-                closestDistance = r1.distanceToRoom(r2);
+        foreach (MapRoom r2 in notConnectedRooms) {
+            if (r1.DistanceToRoom(r2) < closestDistance) {
+                closestDistance = r1.DistanceToRoom(r2);
                 nearestRoom = r2;
             }
         }
@@ -167,42 +159,39 @@ public class GenerateMap : Photon.MonoBehaviour {
     public void createWalls() {
         for (int y = 0; y < MapHeight; y++) {
             for (int x = 0; x < MapWidth; x++) {
-                StevensTile tile = Map.mapTiles[x, y];
-                if (tile.tileType == StevensTile.TileType.red) {
-                    if (Map.mapTiles[x - 1, y].tileType == StevensTile.TileType.white)//left
-                        Map.mapTiles[x - 1, y].tileType = StevensTile.TileType.blue;
+                MapTile tile = Map.mapTiles[x, y];
+                if (tile.GetTileType() == MapTile.TileType.red) {
+                    if (Map.mapTiles[x - 1, y].GetTileType() == MapTile.TileType.white)//left
+                        Map.mapTiles[x - 1, y].SetTileType(MapTile.TileType.blue);
 
-                    if (Map.mapTiles[x - 1, y + 1].tileType == StevensTile.TileType.white)//above left
-                        Map.mapTiles[x - 1, y + 1].tileType = StevensTile.TileType.blue;
+                    if (Map.mapTiles[x - 1, y + 1].GetTileType() == MapTile.TileType.white)//above left
+                        Map.mapTiles[x - 1, y + 1].SetTileType(MapTile.TileType.blue);
 
-                    if (Map.mapTiles[x, y + 1].tileType == StevensTile.TileType.white)//above
-                        Map.mapTiles[x, y + 1].tileType = StevensTile.TileType.blue;
+                    if (Map.mapTiles[x, y + 1].GetTileType() == MapTile.TileType.white)//above
+                        Map.mapTiles[x, y + 1].SetTileType(MapTile.TileType.blue);
 
-                    if (Map.mapTiles[x + 1, y + 1].tileType == StevensTile.TileType.white)//above right
-                        Map.mapTiles[x + 1, y + 1].tileType = StevensTile.TileType.blue;
+                    if (Map.mapTiles[x + 1, y + 1].GetTileType() == MapTile.TileType.white)//above right
+                        Map.mapTiles[x + 1, y + 1].SetTileType(MapTile.TileType.blue);
 
-                    if (Map.mapTiles[x + 1, y].tileType == StevensTile.TileType.white)//right
-                        Map.mapTiles[x + 1, y].tileType = StevensTile.TileType.blue;
+                    if (Map.mapTiles[x + 1, y].GetTileType() == MapTile.TileType.white)//right
+                        Map.mapTiles[x + 1, y].SetTileType(MapTile.TileType.blue);
 
-                    if (Map.mapTiles[x + 1, y - 1].tileType == StevensTile.TileType.white)//below right
-                        Map.mapTiles[x + 1, y - 1].tileType = StevensTile.TileType.blue;
+                    if (Map.mapTiles[x + 1, y - 1].GetTileType() == MapTile.TileType.white)//below right
+                        Map.mapTiles[x + 1, y - 1].SetTileType(MapTile.TileType.blue);
 
-                    if (Map.mapTiles[x, y - 1].tileType == StevensTile.TileType.white)//below
-                        Map.mapTiles[x, y - 1].tileType = StevensTile.TileType.blue;
+                    if (Map.mapTiles[x, y - 1].GetTileType() == MapTile.TileType.white)//below
+                        Map.mapTiles[x, y - 1].SetTileType(MapTile.TileType.blue);
 
-                    if (Map.mapTiles[x - 1, y - 1].tileType == StevensTile.TileType.white)//below left
-                        Map.mapTiles[x - 1, y - 1].tileType = StevensTile.TileType.blue;
+                    if (Map.mapTiles[x - 1, y - 1].GetTileType() == MapTile.TileType.white)//below left
+                        Map.mapTiles[x - 1, y - 1].SetTileType(MapTile.TileType.blue);
                 }
             }
         }
     }
 
     public void createGoal() {
-        int last = Map.roomList.Count - 1;
-        int x = Mathf.FloorToInt(Map.roomList[last].rLeft + ((Map.roomList[last].rRight - Map.roomList[last].rLeft) / 2));
-        int y = Mathf.FloorToInt(Map.roomList[last].rBottom + ((Map.roomList[last].rTop - Map.roomList[last].rBottom) / 2));
-
-        Map.mapTiles[x, y].tileType = StevensTile.TileType.green;
+        Vector2 center = Map.roomList[Map.roomList.Count - 1].GetCenter();
+        Map.mapTiles[(int)center.x, (int)center.y].SetTileType(MapTile.TileType.green);
     }
 
 }

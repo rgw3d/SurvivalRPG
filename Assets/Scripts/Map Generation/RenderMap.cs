@@ -10,26 +10,23 @@ public class RenderMap: Photon.MonoBehaviour {
     public GameObject ExitTile;
 
     private GameObject[,] _displayedMapArray;
-    private StevensMap _gameMap;
-    private bool _isHost = true;
+    private Map _gameMap;
 
-    public void ReRenderMap() {
-        if (_isHost) {//if we are the host, then we go to the mapGenerator to get the map
+    void Start() {
+        DelegateHolder.OnMapGenerated += ReRenderMap;//set ReRenderMap() to trigger when the map has been generated
+    }
+
+    public void ReRenderMap(bool isHost) {
+        if (isHost) {//if we are the host, then we go to the mapGenerator to get the map
             _gameMap = GenerateMap.Map;//set the map
-
-            if (_displayedMapArray != null)
-                DestroyOldMap();
-
-            _displayedMapArray = new GameObject[_gameMap.mapWidth, _gameMap.mapHeight];
-            RenderTiles(_gameMap.mapTiles);
         }
-        else {//we are not the host, so dont update the map - assume that it has already been done (updated via RPC)
-            if (_displayedMapArray != null)
-                DestroyOldMap();
 
-            _displayedMapArray = new GameObject[_gameMap.mapWidth, _gameMap.mapHeight];
-            RenderTiles(_gameMap.mapTiles);
-        }
+        if (_displayedMapArray != null)
+            DestroyOldMap();
+
+        _displayedMapArray = new GameObject[_gameMap.mapWidth, _gameMap.mapHeight];
+        RenderTiles(_gameMap.mapTiles, isHost);
+        DelegateHolder.TriggerMapRendered(isHost);
     }
 
     void DestroyOldMap() {
@@ -39,27 +36,27 @@ public class RenderMap: Photon.MonoBehaviour {
         }
     }
 
-    void RenderTiles(StevensTile[,] tiles) {
-        if (_isHost) {//brodcast data
+    void RenderTiles(MapTile[,] tiles, bool isHost) {
+        if (isHost) {//brodcast data
             Debug.Log("Sending RPC to set map tiles");
             photonView.RPC("SetMapFromServer", PhotonTargets.OthersBuffered, new System.Object[] { new Vector2(_gameMap.mapWidth, _gameMap.mapHeight), _gameMap.SerializeMapTiles() });
         }
 
         for (int y = 0; y < _gameMap.mapHeight; y++) {
             for (int x = 0; x < _gameMap.mapWidth; x++) {
-                StevensTile.TileType tileType = tiles[x, y].tileType;
+                MapTile.TileType tileType = tiles[x, y].GetTileType();
                 GameObject tile = null;
                 switch (tileType) {
-                    case StevensTile.TileType.red:
+                    case MapTile.TileType.red:
                         tile = Ground;
                         break;
-                    case StevensTile.TileType.white:
+                    case MapTile.TileType.white:
                         tile = null;//we are not displaying the background tiles right now
                         break;
-                    case StevensTile.TileType.blue:
+                    case MapTile.TileType.blue:
                         tile = Wall;
                         break;
-                    case StevensTile.TileType.green:
+                    case MapTile.TileType.green:
                         tile = ExitTile;
                         break;
                     default:
@@ -78,15 +75,14 @@ public class RenderMap: Photon.MonoBehaviour {
     void SetMapFromServer(Vector2 HeightWidth, string mapString) {
         Debug.Log("Recieved Map Data via RPC call");
         int stringindx = 0;
-        StevensTile[,] mapTiles = new StevensTile[(int)HeightWidth.x, (int)HeightWidth.y];
+        MapTile[,] mapTiles = new MapTile[(int)HeightWidth.x, (int)HeightWidth.y];
         for (int y = 0; y < HeightWidth.y; y++) {
             for (int x = 0; x < HeightWidth.x; x++) 
-                mapTiles[x, y] = new StevensTile((int)System.Char.GetNumericValue((mapString[stringindx++])));
+                mapTiles[x, y] = new MapTile((int)System.Char.GetNumericValue((mapString[stringindx++])));
         }
 
-        _gameMap = new StevensMap((int)HeightWidth.x, (int)HeightWidth.y, mapTiles);
-        _isHost = false;
-        ReRenderMap();
+        _gameMap = new Map((int)HeightWidth.x, (int)HeightWidth.y, mapTiles);
+        DelegateHolder.TriggerMapGenerated(false);//false because it is not the host
     }
 
 }

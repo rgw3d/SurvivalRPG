@@ -25,10 +25,10 @@ public class Map {
         string serializedValue = "";
         for (int y = 0; y < mapHeight; y++) {
             for (int x = 0; x < mapHeight; x++) {
-                serializedValue += (int)mapTiles[x, y]._tileType + "";//hashcode of the tile (what TileType it is) and a cast to string
+                serializedValue += (int)mapTiles[x, y].GetTileType() + "";//hashcode of the tile (what TileType it is) and a cast to string
             }
         }
-        Debug.Log(serializedValue);
+        //Debug.Log(serializedValue);
         return serializedValue;
     }
 

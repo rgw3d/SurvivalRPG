@@ -23,23 +23,13 @@ public class PlayerControl : Photon.MonoBehaviour{
     public KeyCode RightKey;
     public KeyCode AttackKey;
 
-    
-
-
-
     private CardinalDirection _playerDirection = CardinalDirection.front;
     
 
 	// Use this for initialization
 	void Start () {
-
-
         _spriteRenderer = GetComponent<SpriteRenderer>();
-        //BoxCollider2D box = GetComponent<BoxCollider2D>();
-        
         _spriteRenderer.sprite = FrontSprite;
-        //_currentSprite = FrontSprite;
-        
 	}
 
     private enum CardinalDirection {
