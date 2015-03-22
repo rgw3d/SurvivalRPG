@@ -20,19 +20,18 @@ public class GenerateMap : Photon.MonoBehaviour {
     //		(EstablishTileSubtypes?)
     //Return Map to MapRenderer
 
-    public StevensMap Map;
+    public static StevensMap Map;
     public StevensMapRenderer stevensMapRenderer;
 
-    public int mapWidth = 30;
-    public int mapHeight = 30;
-
-    public int numRooms = 10;
-    public int minRoomWidth = 4;
-    public int maxRoomWidth = 8;
-    public int minRoomHeight = 4;
-    public int maxRoomHeight = 8;
-    public int numTriesToMakeRooms = 20;
-    public int roomIntersectionOffset = 1;
+    public int MapWidth = 30;
+    public int MapHeight = 30;
+    public int NumberOfRooms = 10;
+    public int MinimumRoomWidth = 4;
+    public int MaximumRoomWidth = 8;
+    public int MinimumRoomHeight = 4;
+    public int MaximumRoomHeight = 8;
+    public int NumberTriesToGenRooms = 20;
+    public int RoomIntersectionOffset = 1;
 
     public GameObject playerPrefab;
     public GameObject cameraPrefab;
@@ -50,7 +49,7 @@ public class GenerateMap : Photon.MonoBehaviour {
     }
 
     public void generateMap() {
-        Map = new StevensMap(mapWidth, mapHeight);
+        Map = new StevensMap(MapWidth, MapHeight);
         createMap();
         createRooms();
         createInitialRoom();
@@ -60,8 +59,8 @@ public class GenerateMap : Photon.MonoBehaviour {
     }
 
     public void createMap() {//This fills the entire map with white tiles (blank tiles)
-        for (int y = 0; y < mapHeight; y++) {
-            for (int x = 0; x < mapWidth; x++) {
+        for (int y = 0; y < MapHeight; y++) {
+            for (int x = 0; x < MapWidth; x++) {
                 Map.mapTiles[x, y] = new StevensTile(StevensTile.TileType.white);
             }
         }
@@ -69,18 +68,18 @@ public class GenerateMap : Photon.MonoBehaviour {
 
 
     public void createRooms() {//this creates the rooms, 
-        int maxTries = numTriesToMakeRooms;//and also changes the tiles to have the appropriate color (from white to red)
-        int numberOfRooms = numRooms;
+        int maxTries = NumberTriesToGenRooms;//and also changes the tiles to have the appropriate color (from white to red)
+        int numberOfRooms = NumberOfRooms;
         for (int tries = 0; tries < maxTries; tries++) {
-            int roomWidth = Random.Range(minRoomWidth, maxRoomWidth);
-            int roomHeight = Random.Range(minRoomHeight, maxRoomHeight);
-            int roomLocX = Random.Range(1, mapWidth - roomWidth - 1);
-            int roomLocY = Random.Range(1, mapHeight - roomHeight - 1);
+            int roomWidth = Random.Range(MinimumRoomWidth, MaximumRoomWidth);
+            int roomHeight = Random.Range(MinimumRoomHeight, MaximumRoomHeight);
+            int roomLocX = Random.Range(1, MapWidth - roomWidth - 1);
+            int roomLocY = Random.Range(1, MapHeight - roomHeight - 1);
             StevensRoom basicRoom = new StevensRoom(roomLocY, roomLocX, roomLocY + roomHeight, roomLocX + roomWidth);
 
             bool intersected = false;
             foreach (StevensRoom otherRoom in Map.roomList) {
-                if (basicRoom.roomIntersectsWith(otherRoom, roomIntersectionOffset)) {
+                if (basicRoom.roomIntersectsWith(otherRoom, RoomIntersectionOffset)) {
                     intersected = true;
                 }
             }
@@ -168,8 +167,8 @@ public class GenerateMap : Photon.MonoBehaviour {
     }
 
     public void createWalls() {
-        for (int y = 0; y < mapHeight; y++) {
-            for (int x = 0; x < mapWidth; x++) {
+        for (int y = 0; y < MapHeight; y++) {
+            for (int x = 0; x < MapWidth; x++) {
                 StevensTile tile = Map.mapTiles[x, y];
                 if (tile.tileType == StevensTile.TileType.red) {
                     if (Map.mapTiles[x - 1, y].tileType == StevensTile.TileType.white)//left

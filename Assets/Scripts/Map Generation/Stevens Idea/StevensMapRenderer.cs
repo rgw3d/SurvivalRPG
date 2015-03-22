@@ -24,58 +24,58 @@ public class StevensMapRenderer : Photon.MonoBehaviour {
 
 	public void reRenderMap(){
         if (isHost) {//if we are the host, then we go to the mapGenerator to get the map
-            Map = mapGeneration.Map;//set the map
+            _gameMap = mapGeneration.Map;//set the map
 
-            if (spriteArray != null)
+            if (_displayedMapArray != null)
                 destroyOldMap();
 
-            spriteArray = new GameObject[Map.mapWidth, Map.mapHeight];
-            renderTiles(Map.mapTiles);
+            _displayedMapArray = new GameObject[_gameMap.mapWidth, _gameMap.mapHeight];
+            renderTiles(_gameMap.mapTiles);
         }
         else {
-            if (spriteArray != null)
+            if (_displayedMapArray != null)
                 destroyOldMap();
 
-            spriteArray = new GameObject[Map.mapWidth, Map.mapHeight];
-            renderTiles(Map.mapTiles);
+            _displayedMapArray = new GameObject[_gameMap.mapWidth, _gameMap.mapHeight];
+            renderTiles(_gameMap.mapTiles);
         }
 	}
 
 	void destroyOldMap(){
-        foreach(GameObject obj in spriteArray){
+        foreach(GameObject obj in _displayedMapArray){
             if(obj!= null)
                 Destroy(obj);
         }
 	}
 
 	void renderTiles(StevensTile[,] tiles){
-		for(int y = 0; y < Map.mapHeight; y++){
-			for(int x = 0; x < Map.mapWidth; x++){
+		for(int y = 0; y < _gameMap.mapHeight; y++){
+			for(int x = 0; x < _gameMap.mapWidth; x++){
 				StevensTile.TileType tileType = tiles[x,y].tileType;
-				GameObject tile = background;
+				GameObject tile = Background;
 				switch(tileType){
 				case StevensTile.TileType.red:
-					tile = walkable;
+					tile = Ground;
 					break;
 				case StevensTile.TileType.white:
 					tile = null;
 					break;
 				case StevensTile.TileType.blue:
-					tile = wall;
+					tile = Wall;
 					break;
 				case StevensTile.TileType.green:
-					tile = goal;
+					tile = ExitTile;
 					break;
 				}
 				if(tile != null){
-					spriteArray[x,y] = Instantiate(tile, new Vector3((float)x + .5f, (float)y + .5f), transform.rotation) as GameObject;
-					spriteArray[x,y].transform.parent = gameObject.transform;
+					_displayedMapArray[x,y] = Instantiate(tile, new Vector3((float)x + .5f, (float)y + .5f), transform.rotation) as GameObject;
+					_displayedMapArray[x,y].transform.parent = gameObject.transform;
 				}
 			}
 		}
         if (isHost) {
             Debug.Log("Sending RPC to set map tiles");
-            photonView.RPC("SetMapFromServer", PhotonTargets.OthersBuffered, new System.Object[] { new Vector2(Map.mapWidth, Map.mapHeight), Map.SerializeMapTiles() });
+            photonView.RPC("SetMapFromServer", PhotonTargets.OthersBuffered, new System.Object[] { new Vector2(_gameMap.mapWidth, _gameMap.mapHeight), _gameMap.SerializeMapTiles() });
         }
 
 	}
@@ -92,7 +92,7 @@ public class StevensMapRenderer : Photon.MonoBehaviour {
             }
         }
 
-        Map = new StevensMap((int)HeightWidth.x, (int)HeightWidth.y, mapTiles);
+        _gameMap = new StevensMap((int)HeightWidth.x, (int)HeightWidth.y, mapTiles);
         isHost = false;
         reRenderMap();
     }
