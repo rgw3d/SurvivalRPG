@@ -64,7 +64,7 @@ public class RenderMap: Photon.MonoBehaviour {
                         break;
                 }
                 if (tile != null) {
-                    _displayedMapArray[x, y] = Instantiate(tile, new Vector3((float)x + .5f, (float)y + .5f), transform.rotation) as GameObject;
+                    _displayedMapArray[x, y] = Instantiate(tile, new Vector3((float)x, (float)y), transform.rotation) as GameObject;
                     _displayedMapArray[x, y].transform.parent = gameObject.transform;
                 }
             }
