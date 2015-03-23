@@ -98,7 +98,10 @@ public class GenerateMap : Photon.MonoBehaviour {
     }
 
     public void createInitialRoom() { // probably obsolete once we determine how we want the player to spawn in
-        
+        if (Map.roomList[0] == null) {
+            Debug.Log("map room 0 is null");
+        }
+
         photonView.RPC("spawnPosition", PhotonTargets.OthersBuffered, Map.roomList[0].GetCenter());
         GameObject player = PhotonNetwork.Instantiate(playerPrefab.name, Map.roomList[0].GetCenter(), Quaternion.identity, 0);
         GameObject playerCamera = Instantiate(cameraPrefab) as GameObject;

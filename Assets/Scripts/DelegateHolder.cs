@@ -30,8 +30,10 @@ public static class DelegateHolder {
     }
 
     public static void TriggerGenerateAndRenderMap() {
-        if(OnGenerateAndRenderMap != null)
+        if (OnGenerateAndRenderMap != null) {
+            Debug.Log("Triggerd Generate And Render Map");
             OnGenerateAndRenderMap();
+        }
     }
 
     public static void TriggerMapGenerated(bool isHost) {

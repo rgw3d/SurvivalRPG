@@ -6,11 +6,9 @@ public class PhotonNetworkManager : MonoBehaviour {
 
     private string roomName = "Example Room Name";
     private RoomInfo[] roomsList;
-    public StevensMapGeneration mapGeneration;
     public static bool isHost = false;
 
     void Start() {
-        mapGeneration = GameObject.FindGameObjectWithTag("Map Controller").GetComponent<StevensMapGeneration>();
         PhotonNetwork.ConnectUsingSettings("0.1");
     }
 
@@ -45,9 +43,9 @@ public class PhotonNetworkManager : MonoBehaviour {
     }
 
     void OnCreatedRoom() {//if this user created the room, then this is called
-        Debug.Log("Connected to room");
+        Debug.Log("Created Room. Connected to room");
         isHost = true;
-        mapGeneration.GenerateAndDisplayMap();
+        DelegateHolder.TriggerGenerateAndRenderMap();
     }
 
     void OnPhotonPlayerConnected() {
