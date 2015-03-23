@@ -5,6 +5,13 @@ public class StevensTile {
 	
 	public TileType tileType;
 
+	public int x;
+	public int y;
+	public int F;
+	public int G;
+	public int H;
+	public StevensTile parent;
+
 	public enum TileType {
 		red=0,
 		white=1,
@@ -16,7 +23,7 @@ public class StevensTile {
     public StevensTile(StevensTile.TileType type) {
 		tileType = type;
     }
-
+	
     public StevensTile(int type) {
         switch (type) {
             case 0:
@@ -32,12 +39,19 @@ public class StevensTile {
                 tileType = TileType.green;
                 break;
         }
+	}
+
+    public StevensTile(StevensTile.TileType Type, int X, int Y) {
+		tileType = Type;
+		x = X;
+		y = Y;
+
     }
 
 	public void setTileType(StevensTile.TileType Type){
 		tileType = Type;
 	}
-
+	
     public override string ToString() {
         switch(tileType){
             case StevensTile.TileType.red:
@@ -70,4 +84,30 @@ public class StevensTile {
         // Return true if the fields match:
         return (tileType == p.tileType);
     }
+
+	public bool isOrthogonalTo(StevensTile otherTile){
+		if(x + 1 == otherTile.x && y == otherTile.y)
+			return true;
+		else if (x - 1 == otherTile.x && y == otherTile.y)
+			return true;
+		else if (x == otherTile.x && y - 1 == otherTile.y)
+			return true;
+		else if (x == otherTile.x && y + 1 == otherTile.y)
+			return true;
+		else
+			return false;
+	}
+
+	public bool isDiagonalTo(StevensTile otherTile){
+		if(x + 1 == otherTile.x && y + 1 == otherTile.y)
+			return true;
+		else if (x - 1 == otherTile.x && y + 1 == otherTile.y)
+			return true;
+		else if (x - 1 == otherTile.x && y - 1 == otherTile.y)
+			return true;
+		else if (x + 1 == otherTile.x && y - 1 == otherTile.y)
+			return true;
+		else
+			return false;
+	}
 }
