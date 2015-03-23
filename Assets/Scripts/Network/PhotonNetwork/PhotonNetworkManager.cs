@@ -52,7 +52,7 @@ public class PhotonNetworkManager : MonoBehaviour {
         Debug.Log("Player has connected");
     }
     public void OnJoinedRoom() {
-        Debug.Log("Connected to Room");
+        Debug.Log("Joined Room");
     }
 
     

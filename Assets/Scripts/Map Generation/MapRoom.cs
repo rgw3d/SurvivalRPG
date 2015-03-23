@@ -17,7 +17,7 @@ public class MapRoom {
         BottomY = y; // y
         RightX = right; //width+x
 		TopY = top; //height+y
-        _center = new Vector2(LeftX + (RightX / 2), BottomY + (TopY / 2));
+        _center = new Vector2((LeftX + RightX) / 2, (BottomY + TopY) / 2);
 	}
 
     public bool IntersectsWith(MapRoom otherRoom, int intersectionOffset) {
