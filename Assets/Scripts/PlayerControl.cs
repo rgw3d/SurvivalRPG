@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class PlayerControl : MonoBehaviour, PlayerClass {
+public class PlayerControl : Photon.MonoBehaviour{
 
     public Sprite FrontSprite;
     public Sprite BackSprite;
@@ -23,21 +23,21 @@ public class PlayerControl : MonoBehaviour, PlayerClass {
     public KeyCode RightKey;
     public KeyCode AttackKey;
 
-
-
     private CardinalDirection _playerDirection = CardinalDirection.front;
+
+    private float _lastSynchronizationTime = 0f;
+    private float _syncDelay = 0f;
+    private float _syncTime = 0f;
+    private Vector2 _syncStartPosition;
+    private Vector2 _syncEndPosition;
     
 
 	// Use this for initialization
 	void Start () {
-
-
         _spriteRenderer = GetComponent<SpriteRenderer>();
-        BoxCollider2D box = GetComponent<BoxCollider2D>();
-        
         _spriteRenderer.sprite = FrontSprite;
-        _currentSprite = FrontSprite;
-        
+        _syncStartPosition = transform.position;
+        _syncEndPosition = transform.position;
 	}
 
     private enum CardinalDirection {
@@ -52,10 +52,14 @@ public class PlayerControl : MonoBehaviour, PlayerClass {
         if (Input.GetKey(KeyCode.E)) { //just a test of the ability to work
             DelegateHolder.TriggerPlayerStatChange(StatType.Score, 1f);   
         }
-
-        playerMovement();
-        playerSprite();
-        playerAttack();
+        if (photonView.isMine) {
+            playerMovement();
+            playerSprite();
+            playerAttack();
+        }
+        else {
+            SyncedMovement();
+        }
 
 	}
 
@@ -111,4 +115,25 @@ public class PlayerControl : MonoBehaviour, PlayerClass {
     public void playerAttack() {
        
     }
+
+    void OnPhotonSerializeView(PhotonStream stream, PhotonMessageInfo info) {
+        if (stream.isWriting) {
+            stream.SendNext(rigidbody2D.position);
+        }
+        else {
+            _syncEndPosition = (Vector2)stream.ReceiveNext();
+            _syncStartPosition = rigidbody2D.position;
+
+            _syncTime = 0f;
+            _syncDelay = Time.time - _lastSynchronizationTime;
+            _lastSynchronizationTime = Time.time;
+
+        }
+    }
+
+    private void SyncedMovement() {
+        _syncTime += Time.deltaTime;
+        rigidbody2D.position = Vector2.Lerp(_syncStartPosition, _syncEndPosition, _syncTime / _syncDelay);
+    }
+
 }
