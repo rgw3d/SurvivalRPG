@@ -99,7 +99,7 @@ public class GenerateMap : Photon.MonoBehaviour {
 
     public void createInitialRoom() { // probably obsolete once we determine how we want the player to spawn in
 
-        photonView.RPC("spawnPosition", PhotonTargets.OthersBuffered, Map.roomList[0].GetCenter());
+        photonView.RPC("PlacePlayer", PhotonTargets.OthersBuffered, Map.roomList[0].GetCenter());
         GameObject player = PhotonNetwork.Instantiate(playerPrefab.name, Map.roomList[0].GetCenter(), Quaternion.identity, 0);
         GameObject playerCamera = Instantiate(cameraPrefab) as GameObject;
         playerCamera.transform.parent = player.transform;//set the camera to be a child of the player
@@ -108,7 +108,7 @@ public class GenerateMap : Photon.MonoBehaviour {
     }
 
     [RPC]
-    void spawnPosition(Vector2 position) {
+    void PlacePlayer(Vector2 position) {
         GameObject player = PhotonNetwork.Instantiate(playerPrefab.name, new Vector3(position.x, position.y), Quaternion.identity, 0);
         GameObject playerCamera = Instantiate(cameraPrefab) as GameObject;
         playerCamera.transform.parent = player.transform;//set the camera to be a child of the player
