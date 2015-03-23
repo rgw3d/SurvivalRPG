@@ -43,7 +43,7 @@ public class StevensMapGeneration : MonoBehaviour, StevensMapGenInterface {
 	}
 
 	public void generateMap(){
-		map = new StevensMap();
+		map = new StevensMap(mapWidth,mapHeight);
 		map.mapTiles = new StevensTile[mapWidth, mapHeight];
 		createMap(mapWidth, mapHeight);
 		createRooms(numRooms);
