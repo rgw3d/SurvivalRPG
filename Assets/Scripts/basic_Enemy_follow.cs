@@ -11,6 +11,7 @@ public class basic_Enemy_follow : MonoBehaviour {
 
 	List<Vector3> currentPath = new List<Vector3>();
 	int indexOfPath = 0;
+	bool isDonePathing = false;
 
 	public StevensMap map;
 
@@ -42,17 +43,30 @@ public class basic_Enemy_follow : MonoBehaviour {
 		foreach(Vector3 node in currentPath){
 			Debug.Log (node.x + " " + node.y);
 		}
+		Debug.Log ("current path is " + currentPath.Count);
 	}
 
 	void moveTowardsPlayer(){
 
 		//compare x of enemy to next tile
 		//compare y of enemy to next tile
-		float angle = Mathf.Atan ( (transform.position.x - currentPath[indexOfPath].x )  / (transform.position.y - currentPath[indexOfPath].y));
-		if (transform.position.y - playerChar.transform.position.y > 0)
-			angle += Mathf.PI;
-		transform.Translate (speed *Mathf.Sin(angle), speed *Mathf.Cos(angle), 0);
+		if(!isDonePathing){
+			float angle = Mathf.Atan ( (transform.position.x - currentPath[indexOfPath].x )  / (transform.position.y - currentPath[indexOfPath].y));
+			if (transform.position.y - currentPath[indexOfPath].y >= 0)
+				angle += Mathf.PI;
+			transform.Translate (speed *Mathf.Sin(angle), speed *Mathf.Cos(angle), 0);
 
+			if(Mathf.Abs(transform.position.x - currentPath[indexOfPath].x) < .03f && Mathf.Abs(transform.position.y - currentPath[indexOfPath].y) < .03f){
+				indexOfPath++;
+			
+
+			}
+			Debug.Log("indexOfPath is " + indexOfPath);
+			if(indexOfPath == currentPath.Count){
+				isDonePathing = true;
+			}
+			
+		}
 	}
 
     /*void OnTriggerEnter2D(Collider2D col){

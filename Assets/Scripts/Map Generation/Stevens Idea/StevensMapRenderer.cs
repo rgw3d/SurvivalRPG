@@ -67,7 +67,7 @@ public class StevensMapRenderer : MonoBehaviour {
 					break;
 				}
 				if(tile != null){
-					spriteArray[x,y] = Instantiate(tile, new Vector3((float)x + .5f, (float)y + .5f), transform.rotation) as GameObject;
+					spriteArray[x,y] = Instantiate(tile, new Vector3((float)x, (float)y), transform.rotation) as GameObject;
 					spriteArray[x,y].transform.parent = gameObject.transform;
 				}
 			}

@@ -68,9 +68,11 @@ public class StevensMapGeneration : MonoBehaviour, StevensMapGenInterface {
 
 		int x = Mathf.FloorToInt(map.roomList[0].rLeft + ((map.roomList[0].rRight - map.roomList[0].rLeft) / 2));
 		int y = Mathf.FloorToInt(map.roomList[0].rBottom + ((map.roomList[0].rTop - map.roomList[0].rBottom) / 2));
+		int enemyX = Mathf.FloorToInt(map.roomList[5].rLeft + ((map.roomList[5].rRight - map.roomList[5].rLeft) / 2));
+		int enemyY = Mathf.FloorToInt(map.roomList[5].rBottom + ((map.roomList[5].rTop - map.roomList[5].rBottom) / 2));
 
 		player.transform.position = new Vector2(x,y);
-		enemy.transform.position = new Vector2(x + 2 ,y + 3);
+		enemy.transform.position = new Vector2(enemyX,enemyY);
 	}
 
 	public void createRooms(int numberOfRooms){
