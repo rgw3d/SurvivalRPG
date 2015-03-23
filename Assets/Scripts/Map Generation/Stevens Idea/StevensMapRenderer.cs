@@ -24,7 +24,7 @@ public class StevensMapRenderer : Photon.MonoBehaviour {
 
 	public void reRenderMap(){
         if (isHost) {//if we are the host, then we go to the mapGenerator to get the map
-            _gameMap = mapGeneration.Map;//set the map
+            //_gameMap = mapGeneration.Map;//set the map
 
             if (_displayedMapArray != null)
                 destroyOldMap();
