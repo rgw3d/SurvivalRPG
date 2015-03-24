@@ -3,21 +3,21 @@ using System.Collections.Generic;
 
 public static class AStar {
 
-	static List<StevensTile> closedList = new List<StevensTile>();
-	static List<StevensTile> openList = new List<StevensTile>();
+	static List<MapTile> closedList = new List<MapTile>();
+	static List<MapTile> openList = new List<MapTile>();
 	static List<Vector3> path = new List<Vector3>();
 
-	static StevensTile start;
-	static StevensTile end;
-	static StevensTile current;
+	static MapTile start;
+	static MapTile end;
+	static MapTile current;
 
-	public static List<Vector3> findABPath(StevensMap map, Vector3 startPos, Vector3 endPos){
+	public static List<Vector3> findABPath(Map map, Vector3 startPos, Vector3 endPos){
 	
 		start = map.mapTiles[Mathf.FloorToInt(startPos.x),Mathf.FloorToInt(startPos.y)];
 		end = map.mapTiles[Mathf.FloorToInt(endPos.x),Mathf.FloorToInt(endPos.y)];
 		current = start;
 		start.G = 0;
-		List<StevensTile> adjTiles = new List<StevensTile>();
+		List<MapTile> adjTiles = new List<MapTile>();
 
 		addToOpenList(start);
 
@@ -27,8 +27,8 @@ public static class AStar {
 			closedList.Add(current);
 			openList.Remove(current);
 			adjTiles = findAdjacentTiles(current, map);
-			foreach(StevensTile tile in adjTiles){
-				if(tile.tileType != StevensTile.TileType.red || closedList.Contains(tile)){
+			foreach(MapTile tile in adjTiles){
+				if(tile.tileType != MapTile.TileType.red || closedList.Contains(tile)){
 
 				}
 				else if(!openList.Contains(tile)){
@@ -56,7 +56,7 @@ public static class AStar {
 		return path;
 	}
 
-	static void addToOpenList(StevensTile tile){
+	static void addToOpenList(MapTile tile){
 		setParent(tile);
 		calculateScores(tile);
 		Debug.Log("Tile at " + tile.x + "," + tile.y + " added, scores of GHF " + tile.G + " " + tile.H + " " + tile.F);
@@ -67,17 +67,17 @@ public static class AStar {
 
 	}
 
-	static void setParent(StevensTile tile){
+	static void setParent(MapTile tile){
 		tile.parent = current;
 	}
 
-	static void calculateScores(StevensTile tile){
+	static void calculateScores(MapTile tile){
 		tile.G = calculateG(tile);
 		tile.H = calculateH(tile);
 		tile.F = calculateF(tile);
 	}
 
-	static int calculateG(StevensTile tile){
+	static int calculateG(MapTile tile){
 		int i = 0;
 		if(tile.isDiagonalTo(current))
 			i = 14;
@@ -87,16 +87,16 @@ public static class AStar {
 		return current.G + i;
 	}
 
-	static int calculateH(StevensTile tile){
+	static int calculateH(MapTile tile){
 		return (Mathf.Abs(end.x - tile.x) + Mathf.Abs(end.y - tile.y)) * 10;
 	}
 
-	static int calculateF(StevensTile tile){
+	static int calculateF(MapTile tile){
 		return tile.G + tile.H;
 	}
 
-	static List<StevensTile> findAdjacentTiles(StevensTile center, StevensMap map){
-		List<StevensTile> tiles = new List<StevensTile>();
+	static List<MapTile> findAdjacentTiles(MapTile center, Map map){
+		List<MapTile> tiles = new List<MapTile>();
 		tiles.Add(map.mapTiles[center.x + 1, center.y]);
 		tiles.Add(map.mapTiles[center.x + 1, center.y + 1]);
 		tiles.Add(map.mapTiles[center.x, center.y + 1]);
@@ -110,7 +110,7 @@ public static class AStar {
 
 
 
-	static int CompareTilesFScore(StevensTile tile1, StevensTile tile2){
+	static int CompareTilesFScore(MapTile tile1, MapTile tile2){
 		if(tile1.F < tile2.F)
 			return -1;
 		else if(tile1.F > tile2.F)

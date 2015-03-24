@@ -56,7 +56,7 @@ public class GenerateMap : Photon.MonoBehaviour {
     public void createMap() {//This fills the entire map with white tiles (blank tiles)
         for (int y = 0; y < MapHeight; y++) {
             for (int x = 0; x < MapWidth; x++) {
-                Map.mapTiles[x, y] = new MapTile(MapTile.TileType.white);
+                Map.mapTiles[x, y] = new MapTile(MapTile.TileType.white, x, y);
             }
         }
     }

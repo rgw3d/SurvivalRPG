@@ -3,7 +3,14 @@ using System.Collections;
 
 public class MapTile {
 
-    private TileType _tileType;
+    public TileType tileType;
+
+	public int x;
+	public int y;
+	public int F;
+	public int G;
+	public int H;
+	public MapTile parent;
 
     public enum TileType {
         red = 0,
@@ -13,37 +20,39 @@ public class MapTile {
 
     }
 
-    public MapTile(TileType tileType) {
-        _tileType = tileType;
+    public MapTile(TileType TileType, int X, int Y) {
+        tileType = TileType;
+		x = X;
+		y = Y;
     }
 
     public MapTile(int tileValue) {
         switch (tileValue) {
             case 0:
-                _tileType = TileType.red;
+                tileType = TileType.red;
                 break;
             case 1:
-                _tileType = TileType.white;
+                tileType = TileType.white;
                 break;
             case 2:
-                _tileType = TileType.blue;
+                tileType = TileType.blue;
                 break;
             case 3:
-                _tileType = TileType.green;
+                tileType = TileType.green;
                 break;
         }
     }
 
-    public void SetTileType(TileType tileType) {
-        _tileType = tileType;
+    public void SetTileType(TileType TileType) {
+        tileType = TileType;
     }
 
     public TileType GetTileType() {
-        return _tileType;
+        return tileType;
     }
 
     public override string ToString() {
-        switch (_tileType) {
+        switch (tileType) {
             case TileType.red:
                 return "red";
             case TileType.white:
@@ -57,7 +66,7 @@ public class MapTile {
     }
 
     public override int GetHashCode() {
-        return (int)_tileType;
+        return (int)tileType;
     }
 
     public override bool Equals(System.Object obj) {
@@ -75,4 +84,30 @@ public class MapTile {
         // Return true if the fields match:
         return (GetTileType() == p.GetTileType());
     }
+
+	public bool isOrthogonalTo(MapTile otherTile){
+		if(x + 1 == otherTile.x && y == otherTile.y)
+			return true;
+		else if (x - 1 == otherTile.x && y == otherTile.y)
+			return true;
+		else if (x == otherTile.x && y - 1 == otherTile.y)
+			return true;
+		else if (x == otherTile.x && y + 1 == otherTile.y)
+			return true;
+		else
+			return false;
+	}
+	
+	public bool isDiagonalTo(MapTile otherTile){
+		if(x + 1 == otherTile.x && y + 1 == otherTile.y)
+			return true;
+		else if (x - 1 == otherTile.x && y + 1 == otherTile.y)
+			return true;
+		else if (x - 1 == otherTile.x && y - 1 == otherTile.y)
+			return true;
+		else if (x + 1 == otherTile.x && y - 1 == otherTile.y)
+			return true;
+		else
+			return false;
+	}
 }

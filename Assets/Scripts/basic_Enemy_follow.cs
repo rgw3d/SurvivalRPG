@@ -13,12 +13,11 @@ public class basic_Enemy_follow : MonoBehaviour {
 	int indexOfPath = 0;
 	bool isDonePathing = false;
 
-	public StevensMap map;
+	public Map map;
 
     void Start() {
         //DelegateHolder.OnPlayerAttack += PlayerAttackStance;//add the method to the event, and the event is made from the delegate
-		GameObject mapControl = GameObject.FindGameObjectWithTag("Map Controller");
-		map = mapControl.GetComponent<StevensMapGeneration>().map;
+		map = GenerateMap.Map;
 		findPath();
 	}
 
