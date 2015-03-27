@@ -7,10 +7,10 @@ public class MapTile {
 
 	public int x;
 	public int y;
-	public int F;
-	public int G;
-	public int H;
-	public MapTile parent;
+	public int F; //=G+H
+	public int G; //= Dist to init tile
+	public int H; //= Dist to goal/ladder tile
+	public MapTile parent; // the public
 
     public enum TileType {
         red = 0,

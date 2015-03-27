@@ -21,6 +21,13 @@ public class Map {
         mapTiles = tiles;
     }
 
+    public Map(Map map) {//copy constructor
+        mapWidth = map.mapWidth;
+        mapHeight = map.mapHeight;
+        mapTiles = map.mapTiles;
+        roomList = map.roomList;
+    }
+
     public string SerializeMapTiles() {
         string serializedValue = "";
         for (int y = 0; y < mapHeight; y++) {
