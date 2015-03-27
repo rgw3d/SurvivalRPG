@@ -3,15 +3,24 @@ using System.Collections.Generic;
 
 public static class AStar {
 
-	static List<MapTile> closedList = new List<MapTile>();
-	static List<MapTile> openList = new List<MapTile>();
-	static List<Vector3> path = new List<Vector3>();
+    private static MapTile[,] mapTiles;
 
-	static MapTile start;
-	static MapTile end;
-	static MapTile current;
+	private static List<MapTile> closedList;
+	private static List<MapTile> openList;
+	private static List<Vector3> path;
+
+	private static MapTile start;
+	private static MapTile end;
+	private static MapTile current;
 
 	public static List<Vector3> findABPath(Map map, Vector3 startPos, Vector3 endPos){
+        //instantiate new
+        mapTiles = new MapTile[map.mapWidth,map.mapHeight];
+        System.Array.Copy(map.mapTiles, 0, mapTiles, 0, map.mapTiles.Length); 
+	    closedList = new List<MapTile>();
+	    openList = new List<MapTile>();
+	    path = new List<Vector3>();
+
 	
 		start = map.mapTiles[Mathf.FloorToInt(startPos.x),Mathf.FloorToInt(startPos.y)];
 		end = map.mapTiles[Mathf.FloorToInt(endPos.x),Mathf.FloorToInt(endPos.y)];
