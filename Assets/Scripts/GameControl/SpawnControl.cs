@@ -21,7 +21,6 @@ public class SpawnControl : Photon.MonoBehaviour {
             photonView.RPC("PlacePlayer", PhotonTargets.OthersBuffered, GenerateMap.Map.roomList[0].GetCenter());//Call all clients
         }
 
-
     }
 
     [RPC]
