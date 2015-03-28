@@ -82,7 +82,7 @@ public class MapTile {
         }
 
         // Return true if the fields match:
-        return (GetTileType() == p.GetTileType());
+        return (GetTileType() == p.GetTileType() && x == p.x && y == p.y);
     }
 
 	public bool isOrthogonalTo(MapTile otherTile){

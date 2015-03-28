@@ -17,8 +17,10 @@ public class basic_Enemy_follow : MonoBehaviour {
 	public Map Map;
 
     void Start() {
-        playerChar = GameObject.FindGameObjectWithTag("Player");
-
+        playerChar = GameObject.FindGameObjectWithTag("Player") as GameObject;
+        if (playerChar == null) {
+            Debug.Log("player char is null");
+        }
         findPath();
         
 	}

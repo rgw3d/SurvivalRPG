@@ -58,7 +58,9 @@ public static class AStar {
 
 		current = end;
 		while(current != start){
-            Debug.Log(current.ToString());
+            if (current == null) {
+                Debug.Log("current is null");
+            }
             path.Insert(0,new Vector3(current.x,current.y));
 			current = current.parent;
 		}
