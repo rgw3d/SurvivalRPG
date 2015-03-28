@@ -3,13 +3,17 @@ using System.Collections;
 
 public class GameControl : MonoBehaviour {
 
-	// Use this for initialization
+    public static int Difficulty = 5; //Out of 0-10
+    //Music when we have it
+    //Any other settings
+    //
+
+
 	void Start () {
 	
 	}
 	
-	// Update is called once per frame
 	void Update () {
-	
+	    //use this to control what music is playing
 	}
 }
