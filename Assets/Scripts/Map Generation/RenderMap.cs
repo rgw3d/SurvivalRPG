@@ -39,7 +39,7 @@ public class RenderMap: Photon.MonoBehaviour {
     void RenderTiles(MapTile[,] tiles, bool isHost) {
         if (isHost) {//brodcast data
             Debug.Log("Sending RPC to set map tiles");
-            photonView.RPC("SetMapFromServer", PhotonTargets.OthersBuffered, new System.Object[] { new Vector2(_gameMap.mapWidth, _gameMap.mapHeight), _gameMap.SerializeMapTiles() });
+            photonView.RPC("SetMapFromServer", PhotonTargets.OthersBuffered, new System.Object[] { _gameMap.mapWidth, _gameMap.mapHeight, _gameMap.SerializeMapTiles() });
         }
 
         for (int y = 0; y < _gameMap.mapHeight; y++) {
@@ -72,16 +72,16 @@ public class RenderMap: Photon.MonoBehaviour {
     }
 
     [RPC]
-    void SetMapFromServer(Vector2 HeightWidth, string mapString) {
+    void SetMapFromServer(int mapWidth, int mapHeight, string mapString) {
         Debug.Log("Recieved Map Data via RPC call");
         int stringindx = 0;
-        MapTile[,] mapTiles = new MapTile[(int)HeightWidth.x, (int)HeightWidth.y];
-        for (int y = 0; y < HeightWidth.y; y++) {
-            for (int x = 0; x < HeightWidth.x; x++) 
+        MapTile[,] mapTiles = new MapTile[mapWidth, mapHeight];
+        for (int y = 0; y < mapHeight; y++) {
+            for (int x = 0; x < mapWidth; x++) 
                 mapTiles[x, y] = new MapTile((int)System.Char.GetNumericValue((mapString[stringindx++])));
         }
 
-        _gameMap = new Map((int)HeightWidth.x, (int)HeightWidth.y, mapTiles);
+        _gameMap = new Map(mapWidth, mapHeight, mapTiles);
         DelegateHolder.TriggerMapGenerated(false);//false because it is not the host
     }
 
