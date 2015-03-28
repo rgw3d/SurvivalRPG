@@ -124,8 +124,6 @@ MonoBehaviour:
   MaximumRoomHeight: 12
   NumberTriesToGenRooms: 150
   RoomIntersectionOffset: 1
-  playerPrefab: {fileID: 100000, guid: 324e7e8985f374349bf4127f48448169, type: 2}
-  cameraPrefab: {fileID: 100000, guid: b0674bb90435bb349a475d11394b5c56, type: 2}
 --- !u!114 &167586607
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -176,8 +174,9 @@ GameObject:
   - 4: {fileID: 1081265327}
   - 114: {fileID: 1081265328}
   - 114: {fileID: 1081265326}
+  - 114: {fileID: 1081265329}
   m_Layer: 0
-  m_Name: NetworkManager
+  m_Name: Game Controller
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -231,3 +230,17 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 38ca3590ae12ee043a4da1bc58da3315, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &1081265329
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1081265325}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fa761dd9d2dd00d418a953ed528f205d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  playerPrefab: {fileID: 100000, guid: 324e7e8985f374349bf4127f48448169, type: 2}
+  enemyPrefab: {fileID: 100000, guid: db6493934dc68c745983c14a68f21b2c, type: 2}
+  cameraPrefab: {fileID: 100000, guid: b0674bb90435bb349a475d11394b5c56, type: 2}
