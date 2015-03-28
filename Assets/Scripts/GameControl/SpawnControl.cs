@@ -1,14 +1,17 @@
 ﻿using UnityEngine;
 using System.Collections;
+using System.Collections.Generic;
 
 public class SpawnControl : Photon.MonoBehaviour {
 
     public GameObject playerPrefab;
     public GameObject cameraPrefab;
 
+    public List<List<GameObject>> EnemyParties;//for the programmer to decide what types of groups of enemies you will see
 	
 	void Start () {
         DelegateHolder.OnMapGenerated += SpawnPlayers;
+        DelegateHolder.OnMapGenerated += SpawnEnemies;
 	}
 
     public void SpawnPlayers(bool isHost) {
@@ -31,4 +34,15 @@ public class SpawnControl : Photon.MonoBehaviour {
         playerCamera.transform.localPosition = new Vector3(0, 0, -10);
 
     }
+
+
+    public void SpawnEnemies(bool isHost) {
+        if (isHost) {
+            PhotonNetwork.Instantiate(playerPrefab.name, GenerateMap.Map.roomList[0].GetCenter(), Quaternion.identity, 0);
+            //how are we going to spawn enemies? we will spawn them accros the network! and only the server moves them
+            //that is not bad
+            //we can make that happen
+        }
+    }
+
 }
