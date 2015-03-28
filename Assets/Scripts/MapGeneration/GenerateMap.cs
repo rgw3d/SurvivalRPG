@@ -47,7 +47,6 @@ public class GenerateMap : Photon.MonoBehaviour {
         Map = new Map(MapWidth, MapHeight);
         createMap();
         createRooms();
-        createInitialRoom();
         createCorridors();
         createWalls();
         createGoal();
@@ -95,25 +94,6 @@ public class GenerateMap : Photon.MonoBehaviour {
         if (numberOfRooms > 0) {
             Debug.Log("Couldn't place all the rooms!");
         }
-    }
-
-    public void createInitialRoom() { // probably obsolete once we determine how we want the player to spawn in
-
-        photonView.RPC("PlacePlayer", PhotonTargets.OthersBuffered, Map.roomList[0].GetCenter());
-        GameObject player = PhotonNetwork.Instantiate(playerPrefab.name, Map.roomList[0].GetCenter(), Quaternion.identity, 0);
-        GameObject playerCamera = Instantiate(cameraPrefab) as GameObject;
-        playerCamera.transform.parent = player.transform;//set the camera to be a child of the player
-        playerCamera.transform.localPosition = new Vector3(0, 0, -10);
-
-    }
-
-    [RPC]
-    void PlacePlayer(Vector2 position) {
-        GameObject player = PhotonNetwork.Instantiate(playerPrefab.name, new Vector3(position.x, position.y), Quaternion.identity, 0);
-        GameObject playerCamera = Instantiate(cameraPrefab) as GameObject;
-        playerCamera.transform.parent = player.transform;//set the camera to be a child of the player
-        playerCamera.transform.localPosition = new Vector3(0, 0, -10);
-
     }
 
     public void createCorridors() {
