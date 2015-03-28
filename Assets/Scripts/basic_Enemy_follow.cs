@@ -18,13 +18,12 @@ public class basic_Enemy_follow : MonoBehaviour {
 
     void Start() {
         playerChar = GameObject.FindGameObjectWithTag("Player");
-        //DelegateHolder.OnPlayerAttack += PlayerAttackStance;//add the method to the event, and the event is made from the delegate
-		Map = GenerateMap.Map;
+
+        findPath();
         
 	}
 
 	void FixedUpdate () {
-        findPath();
 		moveTowardsPlayer ();
 	}
 

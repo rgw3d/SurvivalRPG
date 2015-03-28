@@ -50,7 +50,7 @@ public static class AStar {
 					}
 				}
 				else{
-					Debug.Log("something fucked up you dumbass");
+					Debug.Log("something fucked up you dumbass.... steven... that is harsh....");
 				}
 				openList.Sort(CompareTilesFScore);
 			}
