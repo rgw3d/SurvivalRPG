@@ -58,7 +58,8 @@ public static class AStar {
 
 		current = end;
 		while(current != start){
-			path.Insert(0,new Vector3(current.x,current.y));
+            Debug.Log(current.ToString());
+            path.Insert(0,new Vector3(current.x,current.y));
 			current = current.parent;
 		}
 
