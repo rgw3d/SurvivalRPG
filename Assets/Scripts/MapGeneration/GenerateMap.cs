@@ -31,9 +31,6 @@ public class GenerateMap : Photon.MonoBehaviour {
     public int NumberTriesToGenRooms = 150;
     public int RoomIntersectionOffset = 1;
 
-    public GameObject playerPrefab;
-    public GameObject cameraPrefab;
-
     void Start() {
         DontDestroyOnLoad(this);
         DelegateHolder.OnGenerateAndRenderMap += GenerateAndDisplayMap;

@@ -14,11 +14,12 @@ public class basic_Enemy_follow : MonoBehaviour {
 	int indexOfPath = 0;
 	bool isDonePathing = false;
 
-	public Map map;
+	public Map Map;
 
     void Start() {
+        playerChar = GameObject.FindGameObjectWithTag("Player");
         //DelegateHolder.OnPlayerAttack += PlayerAttackStance;//add the method to the event, and the event is made from the delegate
-		map = GenerateMap.Map;
+		Map = GenerateMap.Map;
         
 	}
 
@@ -39,15 +40,12 @@ public class basic_Enemy_follow : MonoBehaviour {
     }
 
 	void findPath(){
-        if (PhotonNetwork.connected && !_createdPath) {
-            currentPath = AStar.findABPath(transform.position, (GameObject.FindGameObjectWithTag("Player") as GameObject).transform.position);
+        currentPath = AStar.findABPath(transform.position, playerChar.transform.position);
 
-            foreach (Vector3 node in currentPath) {
-                Debug.Log(node.x + " " + node.y);
-            }
-            Debug.Log("current path is " + currentPath.Count);
-            _createdPath = true;
+        foreach (Vector3 node in currentPath) {
+            Debug.Log(node.x + " " + node.y);
         }
+        Debug.Log("current path is " + currentPath.Count);
 	}
 
 	void moveTowardsPlayer(){
