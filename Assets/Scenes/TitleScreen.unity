@@ -151,7 +151,7 @@ GameObject:
   - 114: {fileID: 1715526228}
   - 114: {fileID: 1715526227}
   m_Layer: 0
-  m_Name: Map Controller
+  m_Name: MapController
   m_TagString: Map Controller
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

@@ -35,6 +35,7 @@ public class GenerateMap : Photon.MonoBehaviour {
     public GameObject cameraPrefab;
 
     void Start() {
+        DontDestroyOnLoad(this);
         DelegateHolder.OnGenerateAndRenderMap += GenerateAndDisplayMap;
     }
 
