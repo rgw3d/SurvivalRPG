@@ -13,7 +13,7 @@ public class PhotonNetworkManager : MonoBehaviour {
         DelegateHolder.TriggerGenerateAndRenderMap();
     }
 
-    /*void OnGUI()
+    void OnGUI()
     {
         if (!PhotonNetwork.connected)
         {
@@ -37,7 +37,7 @@ public class PhotonNetworkManager : MonoBehaviour {
                 }
             }
         }
-    }*/
+    }
 
     void OnReceivedRoomListUpdate() {
         roomsList = PhotonNetwork.GetRoomList();

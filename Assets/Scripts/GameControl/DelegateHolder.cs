@@ -48,7 +48,7 @@ public static class DelegateHolder {
 
     public static void TriggerMapGenerated(bool isHost) {
         if (OnMapGenerated != null) {
-            Debug.Log("Delegate Called: Trigger Map Generated");
+            Debug.Log("Delegate Called: Trigger Map Generated - isHost:" + isHost);
             OnMapGenerated(isHost);
         }
     }
