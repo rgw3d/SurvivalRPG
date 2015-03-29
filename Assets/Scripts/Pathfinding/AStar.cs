@@ -35,7 +35,7 @@ public static class AStar {
 			Debug.Log (_currentTile.x + " " + _currentTile.y);
 			_closedList.Add(_currentTile);
 			_openList.Remove(_currentTile);
-			adjTiles = findAdjacentTiles(_currentTile);
+			adjTiles = FindAdjacentTiles(_currentTile);
 			foreach(MapTile tile in adjTiles){
 				if(tile.tileType != MapTile.TileType.red || _closedList.Contains(tile)){
 
@@ -82,39 +82,40 @@ public static class AStar {
 
 	private static void calculateScores(MapTile tile){
 		tile.G = calculateG(tile);
-		tile.H = calculateH(tile);
-		tile.F = calculateF(tile);
+		tile.H = CalculateH(tile);
+		tile.F = CalculateF(tile);
 	}
 
 	private static int calculateG(MapTile tile){
 		int i = 0;
-		if(tile.isDiagonalTo(_currentTile))
+		if(tile.IsDiagonalTo(_currentTile))
 			i = 14;
-		if(tile.isOrthogonalTo(_currentTile))
+		if(tile.IsOrthogonalTo(_currentTile))
 			i = 10;
 
 		return _currentTile.G + i;
 	}
 
-	private static int calculateH(MapTile tile){
+	private static int CalculateH(MapTile tile){
 		return (Mathf.Abs(_endTile.x - tile.x) + Mathf.Abs(_endTile.y - tile.y)) * 10;
 	}
 
-	private static int calculateF(MapTile tile){
+	private static int CalculateF(MapTile tile){
 		return tile.G + tile.H;
 	}
 
-	private static List<MapTile> findAdjacentTiles(MapTile center){
-		List<MapTile> tiles = new List<MapTile>();
-		tiles.Add(_mapTiles[center.x + 1, center.y]);
-		tiles.Add(_mapTiles[center.x + 1, center.y + 1]);
-		tiles.Add(_mapTiles[center.x, center.y + 1]);
-		tiles.Add(_mapTiles[center.x - 1, center.y + 1]);
-		tiles.Add(_mapTiles[center.x - 1, center.y]);
-		tiles.Add(_mapTiles[center.x - 1, center.y - 1]);
-		tiles.Add(_mapTiles[center.x, center.y - 1]);
-		tiles.Add(_mapTiles[center.x + 1, center.y - 1]);
-		return tiles;
+	private static List<MapTile> FindAdjacentTiles(MapTile center){
+		List<MapTile> adjacentTiles = new List<MapTile>();
+		adjacentTiles.Add(_mapTiles[center.x + 1, center.y]);
+		adjacentTiles.Add(_mapTiles[center.x + 1, center.y + 1]);
+        adjacentTiles.Add(_mapTiles[center.x + 1, center.y - 1]);
+        adjacentTiles.Add(_mapTiles[center.x - 1, center.y]);
+		adjacentTiles.Add(_mapTiles[center.x - 1, center.y + 1]);
+		adjacentTiles.Add(_mapTiles[center.x - 1, center.y - 1]);
+		adjacentTiles.Add(_mapTiles[center.x, center.y - 1]);
+        adjacentTiles.Add(_mapTiles[center.x, center.y + 1]);
+		
+		return adjacentTiles;
 	}
 
 	private static int CompareTilesFScore(MapTile tile1, MapTile tile2){
@@ -124,7 +125,6 @@ public static class AStar {
 			return 1;
 		else if(tile1.F == tile2.F)
 			return 0;
-		else
-			return 0;
+		return 0;
 	}
 }

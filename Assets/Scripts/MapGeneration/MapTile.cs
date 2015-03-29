@@ -61,8 +61,9 @@ public class MapTile {
                 return "blue";
             case TileType.green:
                 return "Green";
+            default:
+                return "white";
         }
-        return "white";
     }
 
     public override int GetHashCode() {
@@ -71,43 +72,29 @@ public class MapTile {
 
     public override bool Equals(System.Object obj) {
         // If parameter is null return false.
-        if (obj == null) {
+        if (obj == null) 
             return false;
-        }
 
         //can it be cast
         MapTile p = obj as MapTile;
-        if ((System.Object)p == null) {
+        if ((System.Object)p == null)
             return false;
-        }
 
         // Return true if the fields match:
         return (GetTileType() == p.GetTileType() && x == p.x && y == p.y);
     }
 
-	public bool isOrthogonalTo(MapTile otherTile){
-		if(x + 1 == otherTile.x && y == otherTile.y)
-			return true;
-		else if (x - 1 == otherTile.x && y == otherTile.y)
-			return true;
-		else if (x == otherTile.x && y - 1 == otherTile.y)
-			return true;
-		else if (x == otherTile.x && y + 1 == otherTile.y)
-			return true;
-		else
-			return false;
+	public bool IsOrthogonalTo(MapTile otherTile){
+        return (x + 1 == otherTile.x && y == otherTile.y)
+            || (x - 1 == otherTile.x && y == otherTile.y)
+            || (x == otherTile.x && y - 1 == otherTile.y)
+            || (x == otherTile.x && y + 1 == otherTile.y);
 	}
 	
-	public bool isDiagonalTo(MapTile otherTile){
-		if(x + 1 == otherTile.x && y + 1 == otherTile.y)
-			return true;
-		else if (x - 1 == otherTile.x && y + 1 == otherTile.y)
-			return true;
-		else if (x - 1 == otherTile.x && y - 1 == otherTile.y)
-			return true;
-		else if (x + 1 == otherTile.x && y - 1 == otherTile.y)
-			return true;
-		else
-			return false;
+	public bool IsDiagonalTo(MapTile otherTile){
+        return (x + 1 == otherTile.x && y + 1 == otherTile.y)
+            || (x - 1 == otherTile.x && y + 1 == otherTile.y)
+            || (x - 1 == otherTile.x && y - 1 == otherTile.y)
+            || (x + 1 == otherTile.x && y - 1 == otherTile.y);
 	}
 }
