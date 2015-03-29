@@ -13,6 +13,8 @@ public static class AStar {
 	private static MapTile _endTile;
 	private static MapTile _currentTile;
 
+    public static MapTile.TileType TileToPathThrough = MapTile.TileType.red;
+
 	public static List<Vector3> findABPath(Vector3 startPos, Vector3 endPos){
 
         ReInitalizeVariables();
@@ -112,6 +114,11 @@ public static class AStar {
 		adjacentTiles.Add(_mapTiles[center.X - 1, center.Y - 1]);
 		adjacentTiles.Add(_mapTiles[center.X, center.Y - 1]);
         adjacentTiles.Add(_mapTiles[center.X, center.Y + 1]);
+
+        /*foreach (MapTile mT in adjacentTiles) {
+            if (mT.GetTileType() != TileToPathThrough)
+                adjacentTiles.Remove(mT);
+        }*/
 		
 		return adjacentTiles;
 	}
