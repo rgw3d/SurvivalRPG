@@ -32,22 +32,16 @@ public static class AStar {
 			_openList.Remove(_currentTile);
 			adjTiles = FindAdjacentTiles(_currentTile);
 			foreach(MapTile tile in adjTiles){
-
-                if(!_openList.Contains(tile)){
-					AddToOpenList(tile);
-				}
-                else if (_openList.Contains(tile) && CalculateG(tile) < tile.G) {
-                    tile.Parent = _currentTile;
-                    CalculateScores(tile);
+                if (tile.GetTileType() == MapTile.TileType.red && !_closedList.Contains(tile)) {
+                    if (!_openList.Contains(tile)) {
+                        AddToOpenList(tile);
+                    }
+                    else if (_openList.Contains(tile) && CalculateG(tile) < tile.G) {
+                        tile.Parent = _currentTile;
+                        CalculateScores(tile);
+                    }
                 }
 
-				//if(tile.GetTileType() != MapTile.TileType.red || _closedList.Contains(tile)){
-
-				//}
-				
-				else{
-					Debug.Log("something fucked up you dumbass.... steven... that is harsh....");
-				}
 				_openList.Sort(CompareTilesFScore);
 			}
 		}
