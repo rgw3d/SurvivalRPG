@@ -10,9 +10,10 @@ public class PhotonNetworkManager : MonoBehaviour {
 
     void Start() {
         PhotonNetwork.ConnectUsingSettings("0.1");
+        DelegateHolder.TriggerGenerateAndRenderMap();
     }
 
-    void OnGUI()
+    /*void OnGUI()
     {
         if (!PhotonNetwork.connected)
         {
@@ -36,7 +37,7 @@ public class PhotonNetworkManager : MonoBehaviour {
                 }
             }
         }
-    }
+    }*/
 
     void OnReceivedRoomListUpdate() {
         roomsList = PhotonNetwork.GetRoomList();

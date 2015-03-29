@@ -22,8 +22,9 @@ public static class DelegateHolder {
 
 
     public static void TriggerPlayerStatChange(StatType statType, float amountChange) {
-        if(OnPlayerStatChange != null)
+        if (OnPlayerStatChange != null) {
             OnPlayerStatChange(statType, amountChange);
+        }
     }
 
     public static void TriggerPlayerAttack(bool isAttacking) {
@@ -32,25 +33,31 @@ public static class DelegateHolder {
     }
 
     public static void TriggerGameCreated() {
-        if (OnGameCreated != null) 
+        if (OnGameCreated != null) {
+            Debug.Log("Delegate Called: Trigger Game Created");
             OnGameCreated();
+        }
     }
 
     public static void TriggerGenerateAndRenderMap() {
         if (OnGenerateAndRenderMap != null) {
-            Debug.Log("Triggerd Generate And Render Map");
+            Debug.Log("Delegate Called: Trigger Generate Render Map");
             OnGenerateAndRenderMap();
         }
     }
 
     public static void TriggerMapGenerated(bool isHost) {
-        if(OnMapGenerated != null)
+        if (OnMapGenerated != null) {
+            Debug.Log("Delegate Called: Trigger Map Generated");
             OnMapGenerated(isHost);
+        }
     }
 
     public static void TriggerMapRendered(bool isHost) {
-        if(OnMapRendered != null)    
+        if (OnMapRendered != null) {
+            Debug.Log("Delegate Called: Trigger Map Rendered");
             OnMapRendered(isHost);
+        }
     }
 
 }

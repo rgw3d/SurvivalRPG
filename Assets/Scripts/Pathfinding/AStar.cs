@@ -14,21 +14,16 @@ public static class AStar {
 	private static MapTile _currentTile;
 
 	public static List<Vector3> findABPath(Vector3 startPos, Vector3 endPos){
-        //instantiate new versions of the static variables
-        _mapTiles = new MapTile[GenerateMap.Map.mapWidth,GenerateMap.Map.mapHeight];
-        System.Array.Copy(GenerateMap.Map.mapTiles, 0, _mapTiles, 0, GenerateMap.Map.mapTiles.Length); 
-	    _closedList = new List<MapTile>();
-	    _openList = new List<MapTile>();
-	    _finalPath = new List<Vector3>();
 
-	
+        ReInitalizeVariables();
+
 		_startTile = _mapTiles[Mathf.FloorToInt(startPos.x),Mathf.FloorToInt(startPos.y)];
 		_endTile = _mapTiles[Mathf.FloorToInt(endPos.x),Mathf.FloorToInt(endPos.y)];
 		_currentTile = _startTile;
 		_startTile.G = 0;
 		List<MapTile> adjTiles = new List<MapTile>();
 
-		addToOpenList(_startTile);
+		AddToOpenList(_startTile);
 
 		while(!_closedList.Contains(_endTile)){
 			_currentTile = _openList[0];
@@ -37,18 +32,19 @@ public static class AStar {
 			_openList.Remove(_currentTile);
 			adjTiles = FindAdjacentTiles(_currentTile);
 			foreach(MapTile tile in adjTiles){
-				if(tile._tileType != MapTile.TileType.red || _closedList.Contains(tile)){
 
+                if(!_openList.Contains(tile)){
+					AddToOpenList(tile);
 				}
-				else if(!_openList.Contains(tile)){
-					addToOpenList(tile);
-				}
-				else if(_openList.Contains(tile)){
-					if(calculateG(tile) < tile.G){
-						tile.Parent = _currentTile;
-						calculateScores(tile);
-					}
-				}
+                else if (_openList.Contains(tile) && CalculateG(tile) < tile.G) {
+                    tile.Parent = _currentTile;
+                    CalculateScores(tile);
+                }
+
+				//if(tile.GetTileType() != MapTile.TileType.red || _closedList.Contains(tile)){
+
+				//}
+				
 				else{
 					Debug.Log("something fucked up you dumbass.... steven... that is harsh....");
 				}
@@ -65,9 +61,18 @@ public static class AStar {
 		return _finalPath;
 	}
 
-	private static void addToOpenList(MapTile tile){
-		setParent(tile);
-		calculateScores(tile);
+    private static void ReInitalizeVariables() {
+        //instantiate new versions of the static variables and copy the map tiles
+        _mapTiles = new MapTile[GenerateMap.Map.mapWidth, GenerateMap.Map.mapHeight];
+        System.Array.Copy(GenerateMap.Map.mapTiles, 0, _mapTiles, 0, GenerateMap.Map.mapTiles.Length);
+        _closedList = new List<MapTile>();
+        _openList = new List<MapTile>();
+        _finalPath = new List<Vector3>();
+    }
+
+	private static void AddToOpenList(MapTile tile){
+		SetParent(tile);
+		CalculateScores(tile);
 		Debug.Log("Tile at " + tile.X + "," + tile.Y + " added, scores of GHF " + tile.G + " " + tile.H + " " + tile.F);
 
 		_openList.Add(tile);
@@ -76,17 +81,17 @@ public static class AStar {
 
 	}
 
-	private static void setParent(MapTile tile){
+	private static void SetParent(MapTile tile){
 		tile.Parent = _currentTile;
 	}
 
-	private static void calculateScores(MapTile tile){
-		tile.G = calculateG(tile);
+	private static void CalculateScores(MapTile tile){
+		tile.G = CalculateG(tile);
 		tile.H = CalculateH(tile);
 		tile.F = CalculateF(tile);
 	}
 
-	private static int calculateG(MapTile tile){
+	private static int CalculateG(MapTile tile){
 		int i = 0;
 		if(tile.IsDiagonalTo(_currentTile))
 			i = 14;
