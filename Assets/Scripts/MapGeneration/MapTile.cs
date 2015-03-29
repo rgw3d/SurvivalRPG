@@ -3,14 +3,14 @@ using System.Collections;
 
 public class MapTile {
 
-    public TileType tileType;
+    private TileType _tileType;
 
-	public int x;
-	public int y;
+	public int X;
+	public int Y;
 	public int F; //=G+H
 	public int G; //= Dist to init tile
 	public int H; //= Dist to goal/ladder tile
-	public MapTile parent; // the public
+	public MapTile Parent; // the public
 
     public enum TileType {
         red = 0,
@@ -20,39 +20,39 @@ public class MapTile {
 
     }
 
-    public MapTile(TileType TileType, int X, int Y) {
-        tileType = TileType;
-		x = X;
-		y = Y;
+    public MapTile(TileType tileType, int x, int y) {
+        _tileType = tileType;
+		X = x;
+		Y = y;
     }
 
     public MapTile(int tileValue) {
         switch (tileValue) {
             case 0:
-                tileType = TileType.red;
+                _tileType = TileType.red;
                 break;
             case 1:
-                tileType = TileType.white;
+                _tileType = TileType.white;
                 break;
             case 2:
-                tileType = TileType.blue;
+                _tileType = TileType.blue;
                 break;
             case 3:
-                tileType = TileType.green;
+                _tileType = TileType.green;
                 break;
         }
     }
 
     public void SetTileType(TileType TileType) {
-        tileType = TileType;
+        _tileType = TileType;
     }
 
     public TileType GetTileType() {
-        return tileType;
+        return _tileType;
     }
 
     public override string ToString() {
-        switch (tileType) {
+        switch (_tileType) {
             case TileType.red:
                 return "red";
             case TileType.white:
@@ -66,35 +66,35 @@ public class MapTile {
         }
     }
 
+	public bool IsOrthogonalTo(MapTile otherTile){
+        return (X + 1 == otherTile.X && Y == otherTile.Y)
+            || (X - 1 == otherTile.X && Y == otherTile.Y)
+            || (X == otherTile.X && Y - 1 == otherTile.Y)
+            || (X == otherTile.X && Y + 1 == otherTile.Y);
+	}
+	
+	public bool IsDiagonalTo(MapTile otherTile){
+        return (X + 1 == otherTile.X && Y + 1 == otherTile.Y)
+            || (X - 1 == otherTile.X && Y + 1 == otherTile.Y)
+            || (X - 1 == otherTile.X && Y - 1 == otherTile.Y)
+            || (X + 1 == otherTile.X && Y - 1 == otherTile.Y);
+	}
+
     public override int GetHashCode() {
-        return (int)tileType;
+        return (int)_tileType;
     }
 
     public override bool Equals(System.Object obj) {
         // If parameter is null return false.
-        if (obj == null) 
+        if (obj == null)
             return false;
 
         //can it be cast
-        MapTile p = obj as MapTile;
-        if ((System.Object)p == null)
+        MapTile  mt = obj as MapTile;
+        if ((System.Object)mt == null)
             return false;
 
         // Return true if the fields match:
-        return (GetTileType() == p.GetTileType() && x == p.x && y == p.y);
+        return (GetTileType() == mt.GetTileType() && X == mt.X && Y == mt.Y);
     }
-
-	public bool IsOrthogonalTo(MapTile otherTile){
-        return (x + 1 == otherTile.x && y == otherTile.y)
-            || (x - 1 == otherTile.x && y == otherTile.y)
-            || (x == otherTile.x && y - 1 == otherTile.y)
-            || (x == otherTile.x && y + 1 == otherTile.y);
-	}
-	
-	public bool IsDiagonalTo(MapTile otherTile){
-        return (x + 1 == otherTile.x && y + 1 == otherTile.y)
-            || (x - 1 == otherTile.x && y + 1 == otherTile.y)
-            || (x - 1 == otherTile.x && y - 1 == otherTile.y)
-            || (x + 1 == otherTile.x && y - 1 == otherTile.y);
-	}
 }

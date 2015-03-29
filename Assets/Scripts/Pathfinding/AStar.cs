@@ -32,12 +32,12 @@ public static class AStar {
 
 		while(!_closedList.Contains(_endTile)){
 			_currentTile = _openList[0];
-			Debug.Log (_currentTile.x + " " + _currentTile.y);
+			Debug.Log (_currentTile.X + " " + _currentTile.Y);
 			_closedList.Add(_currentTile);
 			_openList.Remove(_currentTile);
 			adjTiles = FindAdjacentTiles(_currentTile);
 			foreach(MapTile tile in adjTiles){
-				if(tile.tileType != MapTile.TileType.red || _closedList.Contains(tile)){
+				if(tile._tileType != MapTile.TileType.red || _closedList.Contains(tile)){
 
 				}
 				else if(!_openList.Contains(tile)){
@@ -45,7 +45,7 @@ public static class AStar {
 				}
 				else if(_openList.Contains(tile)){
 					if(calculateG(tile) < tile.G){
-						tile.parent = _currentTile;
+						tile.Parent = _currentTile;
 						calculateScores(tile);
 					}
 				}
@@ -58,8 +58,8 @@ public static class AStar {
 
 		_currentTile = _endTile;
 		while(_currentTile != _startTile){
-            _finalPath.Insert(0,new Vector3(_currentTile.x,_currentTile.y));
-			_currentTile = _currentTile.parent;
+            _finalPath.Insert(0,new Vector3(_currentTile.X,_currentTile.Y));
+			_currentTile = _currentTile.Parent;
 		}
 
 		return _finalPath;
@@ -68,7 +68,7 @@ public static class AStar {
 	private static void addToOpenList(MapTile tile){
 		setParent(tile);
 		calculateScores(tile);
-		Debug.Log("Tile at " + tile.x + "," + tile.y + " added, scores of GHF " + tile.G + " " + tile.H + " " + tile.F);
+		Debug.Log("Tile at " + tile.X + "," + tile.Y + " added, scores of GHF " + tile.G + " " + tile.H + " " + tile.F);
 
 		_openList.Add(tile);
 
@@ -77,7 +77,7 @@ public static class AStar {
 	}
 
 	private static void setParent(MapTile tile){
-		tile.parent = _currentTile;
+		tile.Parent = _currentTile;
 	}
 
 	private static void calculateScores(MapTile tile){
@@ -97,7 +97,7 @@ public static class AStar {
 	}
 
 	private static int CalculateH(MapTile tile){
-		return (Mathf.Abs(_endTile.x - tile.x) + Mathf.Abs(_endTile.y - tile.y)) * 10;
+		return (Mathf.Abs(_endTile.X - tile.X) + Mathf.Abs(_endTile.Y - tile.Y)) * 10;
 	}
 
 	private static int CalculateF(MapTile tile){
@@ -106,14 +106,14 @@ public static class AStar {
 
 	private static List<MapTile> FindAdjacentTiles(MapTile center){
 		List<MapTile> adjacentTiles = new List<MapTile>();
-		adjacentTiles.Add(_mapTiles[center.x + 1, center.y]);
-		adjacentTiles.Add(_mapTiles[center.x + 1, center.y + 1]);
-        adjacentTiles.Add(_mapTiles[center.x + 1, center.y - 1]);
-        adjacentTiles.Add(_mapTiles[center.x - 1, center.y]);
-		adjacentTiles.Add(_mapTiles[center.x - 1, center.y + 1]);
-		adjacentTiles.Add(_mapTiles[center.x - 1, center.y - 1]);
-		adjacentTiles.Add(_mapTiles[center.x, center.y - 1]);
-        adjacentTiles.Add(_mapTiles[center.x, center.y + 1]);
+		adjacentTiles.Add(_mapTiles[center.X + 1, center.Y]);
+		adjacentTiles.Add(_mapTiles[center.X + 1, center.Y + 1]);
+        adjacentTiles.Add(_mapTiles[center.X + 1, center.Y - 1]);
+        adjacentTiles.Add(_mapTiles[center.X - 1, center.Y]);
+		adjacentTiles.Add(_mapTiles[center.X - 1, center.Y + 1]);
+		adjacentTiles.Add(_mapTiles[center.X - 1, center.Y - 1]);
+		adjacentTiles.Add(_mapTiles[center.X, center.Y - 1]);
+        adjacentTiles.Add(_mapTiles[center.X, center.Y + 1]);
 		
 		return adjacentTiles;
 	}
