@@ -73,11 +73,9 @@ public static class AStar {
 	private static void AddToOpenList(MapTile tile){
 		SetParent(tile);
 		CalculateScores(tile);
-		Debug.Log("Tile at " + tile.X + "," + tile.Y + " added, scores of GHF " + tile.G + " " + tile.H + " " + tile.F);
-
+		//Debug.Log("Tile at " + tile.X + "," + tile.Y + " added, scores of GHF " + tile.G + " " + tile.H + " " + tile.F);
 		_openList.Add(tile);
-
-		Debug.Log ("openList is now " + _openList.Count);
+		//Debug.Log ("openList is now " + _openList.Count);
 
 	}
 
@@ -86,6 +84,7 @@ public static class AStar {
 	}
 
 	private static void CalculateScores(MapTile tile){
+
 		tile.G = CalculateG(tile);
 		tile.H = CalculateH(tile);
 		tile.F = CalculateF(tile);

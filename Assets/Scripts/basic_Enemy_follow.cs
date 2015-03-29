@@ -8,7 +8,6 @@ public class basic_Enemy_follow : MonoBehaviour {
 	public float speed=0.01f;
 
     private bool _isAttacking = false;
-    private bool _createdPath = false;
 
 	List<Vector3> currentPath = new List<Vector3>();
 	int indexOfPath = 0;
@@ -62,7 +61,6 @@ public class basic_Enemy_follow : MonoBehaviour {
 			if(Mathf.Abs(transform.position.x - currentPath[indexOfPath].x) < .03f && Mathf.Abs(transform.position.y - currentPath[indexOfPath].y) < .03f){
 				indexOfPath++;
 			
-
 			}
 			Debug.Log("indexOfPath is " + indexOfPath);
 			if(indexOfPath == currentPath.Count){
