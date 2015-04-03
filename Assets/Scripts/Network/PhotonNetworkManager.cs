@@ -14,17 +14,17 @@ public class PhotonNetworkManager : MonoBehaviour {
     private bool displayPopup = false;
 
     void Start() {
-        //PhotonNetwork.ConnectUsingSettings("0.1");
+        PhotonNetwork.ConnectUsingSettings("0.1");
         DelegateHolder.TriggerGenerateAndRenderMap();
         //PlayerPrefs.DeleteAll();
     }
 
     void OnGUI()
     {
-        NotConnectedToRoom();
+        //NotConnectedToRoom();
         if(displayPopup)
-        DisplayPopup();
-        /*
+            DisplayPopup();
+        
         if (!PhotonNetwork.connected)
         {
             GUILayout.Label(PhotonNetwork.connectionStateDetailed.ToString());
@@ -33,13 +33,14 @@ public class PhotonNetworkManager : MonoBehaviour {
         {
             NotConnectedToRoom();
         }
-         */
+        
     }
 
     private void NotConnectedToRoom() {
 
         GUILayout.BeginArea(new Rect(0, 0, Screen.width, Screen.height));
         GUILayout.BeginHorizontal();
+        GUILayout.FlexibleSpace();
 
             GUILayout.BeginVertical();
                 if (GUILayout.Button("Create Room")) {
@@ -50,8 +51,6 @@ public class PhotonNetworkManager : MonoBehaviour {
             GUILayout.EndVertical();
 
             GUILayout.BeginVertical();
-                GUILayout.FlexibleSpace();
-                GUILayout.FlexibleSpace();
                 if (roomsList != null) {
                     for (int i = 0; i < roomsList.Length; i++) {
                         if (GUILayout.Button("Join " + roomsList[i].name))
@@ -61,10 +60,8 @@ public class PhotonNetworkManager : MonoBehaviour {
             GUILayout.EndVertical();
 
             GUILayout.FlexibleSpace();
-            GUILayout.FlexibleSpace();
             
             //selected player
-
             GUILayout.BeginVertical(GUILayout.MinWidth(Screen.width / 4));
                 GUILayout.Label("Selected Player");
                 string[] allplayerNames = PlayerPrefs.GetString(GameControl.PLAYERNAMESKEY).Split(',');
@@ -79,7 +76,6 @@ public class PhotonNetworkManager : MonoBehaviour {
 
             GUILayout.EndVertical();
 
-            GUILayout.FlexibleSpace();
             GUILayout.FlexibleSpace();
             GUILayout.FlexibleSpace();
 
@@ -103,6 +99,7 @@ public class PhotonNetworkManager : MonoBehaviour {
                         break;
                 }
             GUILayout.EndVertical();
+            GUILayout.FlexibleSpace();
         GUILayout.EndHorizontal();
         GUILayout.EndArea();
 
