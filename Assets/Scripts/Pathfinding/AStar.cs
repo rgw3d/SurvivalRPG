@@ -29,7 +29,7 @@ public static class AStar {
 
 		while(!_closedList.Contains(_endTile)){
 			_currentTile = _openList[0];
-			Debug.Log (_currentTile.X + " " + _currentTile.Y);
+			//Debug.Log (_currentTile.X + " " + _currentTile.Y);
 			_closedList.Add(_currentTile);
 			_openList.Remove(_currentTile);
 			adjTiles = FindAdjacentTiles(_currentTile);
@@ -38,7 +38,7 @@ public static class AStar {
                     if (!_openList.Contains(tile)) {
                         AddToOpenList(tile);
                     }
-                    else if (_openList.Contains(tile) && CalculateG(tile) < tile.G) {
+                    else if (_openList.Contains(tile) && CalculateG(tile) < tile.G) {//optimizes the path
                         tile.Parent = _currentTile;
                         CalculateScores(tile);
                     }
@@ -86,7 +86,7 @@ public static class AStar {
 		tile.F = CalculateF(tile);
 	}
 
-	private static int CalculateG(MapTile tile){
+	private static int CalculateG(MapTile tile){//distance to start tile
 		int i = 0;
 		if(tile.IsDiagonalTo(_currentTile))
 			i = 14;
@@ -96,11 +96,11 @@ public static class AStar {
 		return _currentTile.G + i;
 	}
 
-	private static int CalculateH(MapTile tile){
+	private static int CalculateH(MapTile tile){//approximate (xDistance + yDistance) to the end tile 
 		return (Mathf.Abs(_endTile.X - tile.X) + Mathf.Abs(_endTile.Y - tile.Y)) * 10;
 	}
 
-	private static int CalculateF(MapTile tile){
+	private static int CalculateF(MapTile tile){// G + H
 		return tile.G + tile.H;
 	}
 

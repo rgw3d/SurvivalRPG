@@ -21,6 +21,7 @@ public class SpawnControl : Photon.MonoBehaviour {
             GameObject playerCamera = Instantiate(cameraPrefab) as GameObject;
             playerCamera.transform.parent = player.transform;//set the camera to be a child of the player
             playerCamera.transform.localPosition = new Vector3(0, 0, -10);
+            
 
             photonView.RPC("PlacePlayer", PhotonTargets.OthersBuffered, GenerateMap.Map.roomList[0].GetCenter());//Call all clients
         }
