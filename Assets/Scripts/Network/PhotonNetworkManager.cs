@@ -11,6 +11,7 @@ public class PhotonNetworkManager : MonoBehaviour {
     private float playerSelectSlider = 0;
     private RoomInfo[] roomsList;
     public static bool isHost = false;
+    private bool displayPopup = false;
 
     void Start() {
         //PhotonNetwork.ConnectUsingSettings("0.1");
@@ -20,7 +21,9 @@ public class PhotonNetworkManager : MonoBehaviour {
 
     void OnGUI()
     {
-        NotConnectedToRoom(); 
+        NotConnectedToRoom();
+        if(displayPopup)
+        DisplayPopup();
         /*
         if (!PhotonNetwork.connected)
         {
@@ -65,9 +68,6 @@ public class PhotonNetworkManager : MonoBehaviour {
             GUILayout.BeginVertical(GUILayout.MinWidth(Screen.width / 4));
                 GUILayout.Label("Selected Player");
                 string[] allplayerNames = PlayerPrefs.GetString(GameControl.PLAYERNAMESKEY).Split(',');
-                foreach (string s in allplayerNames) {
-                    Debug.Log(s);
-                }
                 playerSelectSlider = GUILayout.HorizontalSlider(playerSelectSlider, 0f, (float)allplayerNames.Length-1);
                 int playerIndex = (int)Mathf.Round(playerSelectSlider);
                 GUILayout.Box("Name: " +allplayerNames[playerIndex] + "\n" 
@@ -138,14 +138,15 @@ public class PhotonNetworkManager : MonoBehaviour {
     private void CreateCharacter() {
         //what do
         string[] allplayerNames = PlayerPrefs.GetString(GameControl.PLAYERNAMESKEY).Split(',');
-        Debug.Log(PlayerPrefs.GetString(GameControl.PLAYERNAMESKEY));
         foreach (string s in allplayerNames) {
             if (s.Equals(playerName)) {
-                //reject player name
+                StartCoroutine(TextPopup(.5f));
+                return;
             }
         }
         if (playerName.Contains(",") || playerName.Contains(" ")) {
-            //then do something that says make new player name
+
+            return;
         }
 
         if (PlayerPrefs.GetString(GameControl.PLAYERNAMESKEY).Equals("")) {
@@ -189,6 +190,17 @@ public class PhotonNetworkManager : MonoBehaviour {
     public void OnJoinedRoom() {
         Debug.Log("Joined Room");
     }
+
+    IEnumerator TextPopup(float waitTime) {
+        displayPopup = true;
+        yield return new WaitForSeconds(waitTime);
+        displayPopup = false;
+
+    }
+    void DisplayPopup(){
+        GUI.Box(new Rect(2 * Screen.width / 5, Screen.height / 2, Screen.width / 5, Screen.height / 10), "Bad Name");
+    }
+
 
     
 
