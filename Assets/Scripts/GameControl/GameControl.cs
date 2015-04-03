@@ -8,8 +8,12 @@ public class GameControl : MonoBehaviour {
     //Music when we have it
     //Any other settings
     public KeyCode ExitKey = KeyCode.Escape;
-    public readonly static string TITLESCREEN = "TitleScreen";
-    public readonly static string PLAYSCREEN = "PlayScreen";
+    public const string TITLESCREEN = "TitleScreen";
+    public const string PLAYSCREEN = "PlayScreen";
+
+    public const string PLAYERNAMESKEY = "PLAYERNAMESKEY";
+    public const string PLAYERCLASSKEY = "PLAYERCLASS";
+    public const string PLAYERMAXHEALTH = "PLAYERMAXHEALTH";
     
 
 

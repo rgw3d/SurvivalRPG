@@ -13,9 +13,9 @@ public class PlayerStats {
     private CharacterClass _characterClass;
 
     public enum CharacterClass {
-        op_fighter = 0,
-        squishy_mage = 1,
-        usless_other_than_the_fact_that_they_can_heal_healer = 2
+        Fighter = 0,
+        Mage = 1,
+        Healer = 2
     }
 
     public CharacterClass getClass() {

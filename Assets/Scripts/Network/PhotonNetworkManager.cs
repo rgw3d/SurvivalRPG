@@ -6,14 +6,16 @@ public class PhotonNetworkManager : MonoBehaviour {
 
     private string roomName = "Example Room Name";
     private string playerName = "Player Name";
-    private PlayerStats.CharacterClass playerClass = PlayerStats.CharacterClass.op_fighter;
-    private float sliderValue = 1;
+    private PlayerStats.CharacterClass playerClass = PlayerStats.CharacterClass.Fighter;
+    private float playerClassSlider = 1;
+    private float playerSelectSlider = 0;
     private RoomInfo[] roomsList;
     public static bool isHost = false;
 
     void Start() {
         //PhotonNetwork.ConnectUsingSettings("0.1");
         DelegateHolder.TriggerGenerateAndRenderMap();
+        //PlayerPrefs.DeleteAll();
     }
 
     void OnGUI()
@@ -35,19 +37,14 @@ public class PhotonNetworkManager : MonoBehaviour {
 
         GUILayout.BeginArea(new Rect(0, 0, Screen.width, Screen.height));
         GUILayout.BeginHorizontal();
-            GUILayout.Space(10);
 
             GUILayout.BeginVertical();
-                GUILayout.FlexibleSpace();
-                GUILayout.FlexibleSpace();
                 if (GUILayout.Button("Create Room")) {
                     RoomOptions roomOptions = new RoomOptions() { isVisible = true, maxPlayers = 4, isOpen = true };
                     PhotonNetwork.CreateRoom(roomName, roomOptions, TypedLobby.Default);
                 }
                 roomName = GUILayout.TextField(roomName, 20);
             GUILayout.EndVertical();
-
-            GUILayout.FlexibleSpace();
 
             GUILayout.BeginVertical();
                 GUILayout.FlexibleSpace();
@@ -62,32 +59,50 @@ public class PhotonNetworkManager : MonoBehaviour {
 
             GUILayout.FlexibleSpace();
             GUILayout.FlexibleSpace();
+            
+            //selected player
+
+            GUILayout.BeginVertical(GUILayout.MinWidth(Screen.width / 4));
+                GUILayout.Label("Selected Player");
+                string[] allplayerNames = PlayerPrefs.GetString(GameControl.PLAYERNAMESKEY).Split(',');
+                foreach (string s in allplayerNames) {
+                    Debug.Log(s);
+                }
+                playerSelectSlider = GUILayout.HorizontalSlider(playerSelectSlider, 0f, (float)allplayerNames.Length-1);
+                int playerIndex = (int)Mathf.Round(playerSelectSlider);
+                GUILayout.Box("Name: " +allplayerNames[playerIndex] + "\n" 
+                    + "Class: "+ PlayerPrefs.GetInt(GameControl.PLAYERCLASSKEY + allplayerNames[playerIndex]) +"\n"
+                    + "Max Health: " + PlayerPrefs.GetInt(GameControl.PLAYERMAXHEALTH + allplayerNames[playerIndex]));
+                    
+                
+                
+
+            GUILayout.EndVertical();
+
+            GUILayout.FlexibleSpace();
             GUILayout.FlexibleSpace();
             GUILayout.FlexibleSpace();
 
             GUILayout.BeginVertical();
                 if (GUILayout.Button("Create Character")) {
-                    //do something
+                    CreateCharacter();
                 }
                 playerName = GUILayout.TextField(playerName, 12);
                 
                 GUILayout.Box("Class:" + playerClass);
-                sliderValue = GUILayout.HorizontalSlider(sliderValue, 0f, 2f);
-                switch (Mathf.FloorToInt(sliderValue)) {
+                playerClassSlider = GUILayout.HorizontalSlider(playerClassSlider, 0f, 2f);
+                switch (Mathf.FloorToInt(playerClassSlider)) {
                     case 0:
-                        playerClass = PlayerStats.CharacterClass.op_fighter;
+                        playerClass = PlayerStats.CharacterClass.Fighter;
                         break;
                     case 1:
-                        playerClass = PlayerStats.CharacterClass.squishy_mage;
+                        playerClass = PlayerStats.CharacterClass.Mage;
                         break;
                     case 2:
-                        playerClass = PlayerStats.CharacterClass.usless_other_than_the_fact_that_they_can_heal_healer;
+                        playerClass = PlayerStats.CharacterClass.Healer;
                         break;
                 }
-                
-                
-
-            
+            GUILayout.EndVertical();
         GUILayout.EndHorizontal();
         GUILayout.EndArea();
 
@@ -117,6 +132,44 @@ public class PhotonNetworkManager : MonoBehaviour {
         GUI.
          * */
         
+
+    }
+
+    private void CreateCharacter() {
+        //what do
+        string[] allplayerNames = PlayerPrefs.GetString(GameControl.PLAYERNAMESKEY).Split(',');
+        Debug.Log(PlayerPrefs.GetString(GameControl.PLAYERNAMESKEY));
+        foreach (string s in allplayerNames) {
+            if (s.Equals(playerName)) {
+                //reject player name
+            }
+        }
+        if (playerName.Contains(",") || playerName.Contains(" ")) {
+            //then do something that says make new player name
+        }
+
+        if (PlayerPrefs.GetString(GameControl.PLAYERNAMESKEY).Equals("")) {
+            PlayerPrefs.SetString(GameControl.PLAYERNAMESKEY, playerName);
+        }
+        else {
+            PlayerPrefs.SetString(GameControl.PLAYERNAMESKEY, PlayerPrefs.GetString(GameControl.PLAYERNAMESKEY) +","+ playerName);
+        }
+        
+        PlayerPrefs.SetInt(GameControl.PLAYERCLASSKEY + playerName, (int)playerClass);
+
+        if (playerClass == PlayerStats.CharacterClass.Fighter) {
+            PlayerPrefs.SetInt(GameControl.PLAYERMAXHEALTH + playerName, 1000);
+            //do something 
+            //set base stats
+        }
+        else if (playerClass == PlayerStats.CharacterClass.Healer) {
+            //do something 
+        }
+        else if (playerClass == PlayerStats.CharacterClass.Mage) {
+            //do something 
+        }
+
+
 
     }
 
