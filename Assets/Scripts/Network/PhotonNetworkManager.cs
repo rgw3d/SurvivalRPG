@@ -15,10 +15,12 @@ public class PhotonNetworkManager : MonoBehaviour {
     private PlayerStats.CharacterClass _playerClass = PlayerStats.CharacterClass.Fighter;
 
     private string _chatUsername = "UserName";
-    private ChatBuffer _chatClient = null;
+    private ChatBuffer _chatClient;
+    private Vector2 scrollPosition;
 
     void Start() {
         PhotonNetwork.ConnectUsingSettings("0.1");
+        _chatClient = FindObjectOfType<ChatBuffer>();
     }
 
     void OnGUI() {
@@ -36,7 +38,7 @@ public class PhotonNetworkManager : MonoBehaviour {
 
         GUILayout.BeginArea(new Rect(0, 0, Screen.width, Screen.height));
             GUILayout.BeginVertical();
-                GUILayout.BeginHorizontal(GUILayout.MinHeight(2*Screen.height/3));
+                GUILayout.BeginHorizontal(GUILayout.MinHeight(Screen.height/3));
                 GUILayout.FlexibleSpace();
 
                     GUILayout.BeginVertical(GUILayout.MinWidth(Screen.width / 4));//Create Room
@@ -168,18 +170,23 @@ public class PhotonNetworkManager : MonoBehaviour {
     }
 
     void LobbyChatClient() {
-        if (_chatClient != null) {
+        if (_chatClient.Host.Equals("")) {
             GUILayout.Label("Chat Username: ");
             _chatUsername = GUILayout.TextField(_chatUsername);
             if (GUILayout.Button("Join ChatRoom")) {
                 if (!_chatUsername.Equals("UserName") && !_chatUsername.Equals("")) {
-                    _chatClient = new ChatBuffer(_chatUsername);
+                    _chatClient.Host = _chatUsername;
                 }
                 else {
                     StartCoroutine(TextPopup(.5f));
                 }
             }
-            
+        }
+        else {
+            scrollPosition = GUILayout.BeginScrollView(scrollPosition, GUILayout.MinWidth(Screen.width));
+            GUILayout.Label(_chatClient.TextOutput());
+            GUILayout.EndScrollView();
+            //GUILayout.Box(_chatClient.TextOutput(), GUILayout.MinWidth(Screen.width));
         }
     }
 

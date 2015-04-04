@@ -3,13 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 
-public class ChatBuffer : MonoBehaviour {
-
-    private string _chatUsername;
-
-    public ChatBuffer(string userName) {
-        _chatUsername = userName;
-    }
+public class ChatBuffer : Photon.MonoBehaviour {
 
     private string _buffer = "";
     private string _inputBuffer = "";
@@ -30,21 +24,23 @@ public class ChatBuffer : MonoBehaviour {
 
 
     public void Start() {
-
+        GetOutput = FindObjectOfType<ChatOutput>();
         ScreenWidth = Mathf.RoundToInt(53 / 1.731f * Screen.width / Screen.height);
         HidePrompt = true;
     }
 
     public void Update() {
-        AddInput(Input.inputString);
+        if (!Host.Equals("")) {
+            AddInput(Input.inputString);
 
-        //_text.text = ScrollBuffer(TextOutput(), _scrollIndex);
-        //TODO add something that will actually display the text
+            //_text.text = ScrollBuffer(TextOutput(), _scrollIndex);
+            //TODO add something that will actually display the text
 
-        
-        // Truncate buffer if longer than buffer limit
-        while (_buffer.Length > 10000) {
-            _buffer = _buffer.Substring(_buffer.IndexOf('\n'));
+
+            // Truncate buffer if longer than buffer limit
+            while (_buffer.Length > 10000) {
+                _buffer = _buffer.Substring(_buffer.IndexOf('\n'));
+            }
         }
     }
 
@@ -104,10 +100,13 @@ public class ChatBuffer : MonoBehaviour {
 
     public void AddLine(string text = "") {
 
+        photonView.RPC("RecieveChatText", PhotonTargets.OthersBuffered, Host + text);
+
         _buffer += "\n";
 
         _buffer +=  text;
         _buffer = InsertLineBreaks(_buffer);
+        
     }
 
     public string InsertLineBreaks(string text) {
@@ -121,6 +120,11 @@ public class ChatBuffer : MonoBehaviour {
         }
 
         return text;
+    }
+
+    [RPC]
+    void RecieveChatText(string text) {
+        AddLine(text);
     }
 
 

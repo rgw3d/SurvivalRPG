@@ -5,12 +5,12 @@ public class ChatOutput : MonoBehaviour {
 
     public ChatBuffer Output;
 
-    public void Awake() {
+    public void Start() {
         Output = FindObjectOfType<ChatBuffer>();
     }
 
     public void InitScreen() {
-        Output.AddText("Basic Chat room");
+        Output.AddLine("Basic Chat room");
     }
 
     public bool PrintInput() {
