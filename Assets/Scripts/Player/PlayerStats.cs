@@ -18,6 +18,20 @@ public class PlayerStats {
         Healer = 2
     }
 
+    public static CharacterClass IntToCharacterClass(int classInt){
+        switch (classInt) {
+            case 0:
+                return CharacterClass.Fighter;
+            case 1:
+                return CharacterClass.Mage;
+            case 2:
+                return CharacterClass.Healer;
+            default:
+                return CharacterClass.Fighter;
+        }
+        
+    }   
+
     public CharacterClass getClass() {
         return _characterClass;
     }

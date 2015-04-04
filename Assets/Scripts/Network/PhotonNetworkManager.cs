@@ -60,10 +60,13 @@ public class PhotonNetworkManager : MonoBehaviour {
                     GUILayout.Label("Selected Player");
                     string[] allplayerNames = PlayerPrefs.GetString(GameControl.PLAYERNAMESKEY).Split(',');
                     _playerSelectSlider = GUILayout.HorizontalSlider(_playerSelectSlider, 0f, (float)allplayerNames.Length-1);
-                    int playerIndex = (int)Mathf.Round(_playerSelectSlider);
+                    int playerIndex = Mathf.RoundToInt(_playerSelectSlider);
                     GUILayout.Box("Name: " +allplayerNames[playerIndex] + "\n" 
-                        + "Class: "+ PlayerPrefs.GetInt(GameControl.PLAYERCLASSKEY + allplayerNames[playerIndex]) +"\n"
-                        + "Max Health: " + PlayerPrefs.GetInt(GameControl.PLAYERMAXHEALTHKEY + allplayerNames[playerIndex]));
+                        + "Class: "+ PlayerStats.IntToCharacterClass(PlayerPrefs.GetInt(GameControl.PLAYERCLASSKEY + allplayerNames[playerIndex])) +"\n"
+                        + "Max Health: " + PlayerPrefs.GetInt(GameControl.PLAYERMAXHEALTHKEY + allplayerNames[playerIndex]) + "\n" 
+                        + "Max Mana: " + PlayerPrefs.GetInt(GameControl.PLAYERMAXMANAKEY + allplayerNames[playerIndex]) + "\n"
+                        + "Defense: " + PlayerPrefs.GetInt(GameControl.PLAYERDEFENSEKEY + allplayerNames[playerIndex]) + "\n"
+                        + "Attack: " + PlayerPrefs.GetInt(GameControl.PLAYERATTACKKEY + allplayerNames[playerIndex]));
                     
                 GUILayout.EndVertical();
 
@@ -75,17 +78,7 @@ public class PhotonNetworkManager : MonoBehaviour {
                 
                     GUILayout.Box("Class: " + _playerClass);
                     _playerClassSlider = GUILayout.HorizontalSlider(_playerClassSlider, 0f, 2f);
-                    switch ((int)Mathf.Round(_playerClassSlider)) {
-                        case 0:
-                            _playerClass = PlayerStats.CharacterClass.Fighter;
-                            break;
-                        case 1:
-                            _playerClass = PlayerStats.CharacterClass.Mage;
-                            break;
-                        case 2:
-                            _playerClass = PlayerStats.CharacterClass.Healer;
-                            break;
-                    }
+                    _playerClass = PlayerStats.IntToCharacterClass(Mathf.RoundToInt(_playerClassSlider));
                 GUILayout.EndVertical();
 
                 GUILayout.FlexibleSpace();
