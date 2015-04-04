@@ -56,19 +56,21 @@ public class PhotonNetworkManager : MonoBehaviour {
                         }
                     GUILayout.EndVertical();
            
-                    GUILayout.BeginVertical(GUILayout.MinWidth(Screen.width / 4));//Select Player
-                        GUILayout.Label("Selected Player");
-                        string[] allplayerNames = PlayerPrefs.GetString(GameControl.PLAYERNAMESKEY).Split(',');
-                        _playerSelectSlider = GUILayout.HorizontalSlider(_playerSelectSlider, 0f, (float)allplayerNames.Length-1);
-                        int playerIndex = Mathf.RoundToInt(_playerSelectSlider);
-                        GUILayout.Box("Name: " +allplayerNames[playerIndex] + "\n" 
-                            + "Class: "+ PlayerStats.IntToCharacterClass(PlayerPrefs.GetInt(GameControl.PLAYERCLASSKEY + allplayerNames[playerIndex])) +"\n"
-                            + "Max Health: " + PlayerPrefs.GetInt(GameControl.PLAYERMAXHEALTHKEY + allplayerNames[playerIndex]) + "\n" 
-                            + "Max Mana: " + PlayerPrefs.GetInt(GameControl.PLAYERMAXMANAKEY + allplayerNames[playerIndex]) + "\n"
-                            + "Defense: " + PlayerPrefs.GetInt(GameControl.PLAYERDEFENSEKEY + allplayerNames[playerIndex]) + "\n"
-                            + "Attack: " + PlayerPrefs.GetInt(GameControl.PLAYERATTACKKEY + allplayerNames[playerIndex]));
-                    
-                    GUILayout.EndVertical();
+                GUILayout.BeginVertical(GUILayout.MinWidth(Screen.width / 4));//Select Player
+                    GUILayout.Label("Selected Player");
+                    string[] allplayerNames = PlayerPrefs.GetString(GameControl.PLAYERNAMESKEY).Split(',');
+                    _playerSelectSlider = GUILayout.HorizontalSlider(_playerSelectSlider, 0f, (float)allplayerNames.Length-1);
+                    int playerIndex = Mathf.RoundToInt(_playerSelectSlider);
+                    GUILayout.Box("Name: " +allplayerNames[playerIndex] + "\n" 
+                        + "Class: "+ PlayerStats.IntToCharacterClass(PlayerPrefs.GetInt(GameControl.PLAYERCLASSKEY + allplayerNames[playerIndex])) +"\n"
+                        + "Max Health: " + PlayerPrefs.GetInt(GameControl.PLAYERMAXHEALTHKEY + allplayerNames[playerIndex]) + "\n" 
+                        + "Max Mana: " + PlayerPrefs.GetInt(GameControl.PLAYERMAXMANAKEY + allplayerNames[playerIndex]) + "\n"
+                        + "Defense: " + PlayerPrefs.GetInt(GameControl.PLAYERDEFENSEKEY + allplayerNames[playerIndex]) + "\n"
+                        + "Attack: " + PlayerPrefs.GetInt(GameControl.PLAYERATTACKKEY + allplayerNames[playerIndex]));
+					if (GUILayout.Button("Delete Character")) {
+						DeleteCharacter(allplayerNames[playerIndex]);
+					}
+                GUILayout.EndVertical();
 
                     GUILayout.BeginVertical(GUILayout.MinWidth(Screen.width / 4));//Create Player
                         if (GUILayout.Button("Create Character")) {
@@ -134,6 +136,25 @@ public class PhotonNetworkManager : MonoBehaviour {
                 break;
         }
     }
+
+	void DeleteCharacter (string deletedPlayerName){
+		string[] allPlayerNames = PlayerPrefs.GetString(GameControl.PLAYERNAMESKEY).Split(',');
+		string newAllPlayerNames = "";
+		foreach(string name in allPlayerNames){
+			if(!name.Equals(deletedPlayerName)){
+				if(newAllPlayerNames.Equals(""))
+					newAllPlayerNames += name;
+				else
+					newAllPlayerNames += "," + name;
+			}
+		}
+		PlayerPrefs.SetString(GameControl.PLAYERNAMESKEY,newAllPlayerNames);
+		PlayerPrefs.DeleteKey(GameControl.PLAYERCLASSKEY + deletedPlayerName);
+		PlayerPrefs.DeleteKey(GameControl.PLAYERMAXHEALTHKEY + deletedPlayerName);
+		PlayerPrefs.DeleteKey(GameControl.PLAYERMAXMANAKEY + deletedPlayerName);
+		PlayerPrefs.DeleteKey(GameControl.PLAYERDEFENSEKEY + deletedPlayerName);
+		PlayerPrefs.DeleteKey(GameControl.PLAYERATTACKKEY + deletedPlayerName);
+	}
 
     IEnumerator TextPopup(float waitTime) {
         _displayBadNamePopup = true;
