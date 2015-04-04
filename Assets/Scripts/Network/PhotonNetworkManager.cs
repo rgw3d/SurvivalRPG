@@ -42,7 +42,7 @@ public class PhotonNetworkManager : MonoBehaviour {
         GUILayout.BeginHorizontal();
         GUILayout.FlexibleSpace();
 
-            GUILayout.BeginVertical();
+            GUILayout.BeginVertical(GUILayout.MinWidth(Screen.width / 4));//Create Room
                 if (GUILayout.Button("Create Room")) {
                     RoomOptions roomOptions = new RoomOptions() { isVisible = true, maxPlayers = 4, isOpen = true };
                     PhotonNetwork.CreateRoom(roomName, roomOptions, TypedLobby.Default);
@@ -50,7 +50,7 @@ public class PhotonNetworkManager : MonoBehaviour {
                 roomName = GUILayout.TextField(roomName, 20);
             GUILayout.EndVertical();
 
-            GUILayout.BeginVertical();
+            GUILayout.BeginVertical(GUILayout.MinWidth(Screen.width / 4));//Join Room
                 if (roomsList != null) {
                     for (int i = 0; i < roomsList.Length; i++) {
                         if (GUILayout.Button("Join " + roomsList[i].name))
@@ -58,11 +58,8 @@ public class PhotonNetworkManager : MonoBehaviour {
                     }
                 }
             GUILayout.EndVertical();
-
-            GUILayout.FlexibleSpace();
-            
-            //selected player
-            GUILayout.BeginVertical(GUILayout.MinWidth(Screen.width / 4));
+           
+            GUILayout.BeginVertical(GUILayout.MinWidth(Screen.width / 4));//Select Player
                 GUILayout.Label("Selected Player");
                 string[] allplayerNames = PlayerPrefs.GetString(GameControl.PLAYERNAMESKEY).Split(',');
                 playerSelectSlider = GUILayout.HorizontalSlider(playerSelectSlider, 0f, (float)allplayerNames.Length-1);
@@ -71,15 +68,9 @@ public class PhotonNetworkManager : MonoBehaviour {
                     + "Class: "+ PlayerPrefs.GetInt(GameControl.PLAYERCLASSKEY + allplayerNames[playerIndex]) +"\n"
                     + "Max Health: " + PlayerPrefs.GetInt(GameControl.PLAYERMAXHEALTH + allplayerNames[playerIndex]));
                     
-                
-                
-
             GUILayout.EndVertical();
 
-            GUILayout.FlexibleSpace();
-            GUILayout.FlexibleSpace();
-
-            GUILayout.BeginVertical();
+            GUILayout.BeginVertical(GUILayout.MinWidth(Screen.width / 4));//Create Player
                 if (GUILayout.Button("Create Character")) {
                     CreateCharacter();
                 }
@@ -99,6 +90,7 @@ public class PhotonNetworkManager : MonoBehaviour {
                         break;
                 }
             GUILayout.EndVertical();
+
             GUILayout.FlexibleSpace();
         GUILayout.EndHorizontal();
         GUILayout.EndArea();
