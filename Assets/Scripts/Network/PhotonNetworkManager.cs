@@ -67,7 +67,9 @@ public class PhotonNetworkManager : MonoBehaviour {
                         + "Max Mana: " + PlayerPrefs.GetInt(GameControl.PLAYERMAXMANAKEY + allplayerNames[playerIndex]) + "\n"
                         + "Defense: " + PlayerPrefs.GetInt(GameControl.PLAYERDEFENSEKEY + allplayerNames[playerIndex]) + "\n"
                         + "Attack: " + PlayerPrefs.GetInt(GameControl.PLAYERATTACKKEY + allplayerNames[playerIndex]));
-                    
+					if (GUILayout.Button("Delete Character")) {
+						DeleteCharacter(allplayerNames[playerIndex]);
+					}
                 GUILayout.EndVertical();
 
                 GUILayout.BeginVertical(GUILayout.MinWidth(Screen.width / 4));//Create Player
@@ -129,6 +131,25 @@ public class PhotonNetworkManager : MonoBehaviour {
                 break;
         }
     }
+
+	void DeleteCharacter (string deletedPlayerName){
+		string[] allPlayerNames = PlayerPrefs.GetString(GameControl.PLAYERNAMESKEY).Split(',');
+		string newAllPlayerNames = "";
+		foreach(string name in allPlayerNames){
+			if(!name.Equals(deletedPlayerName)){
+				if(newAllPlayerNames.Equals(""))
+					newAllPlayerNames += name;
+				else
+					newAllPlayerNames += "," + name;
+			}
+		}
+		PlayerPrefs.SetString(GameControl.PLAYERNAMESKEY,newAllPlayerNames);
+		PlayerPrefs.DeleteKey(GameControl.PLAYERCLASSKEY + deletedPlayerName);
+		PlayerPrefs.DeleteKey(GameControl.PLAYERMAXHEALTHKEY + deletedPlayerName);
+		PlayerPrefs.DeleteKey(GameControl.PLAYERMAXMANAKEY + deletedPlayerName);
+		PlayerPrefs.DeleteKey(GameControl.PLAYERDEFENSEKEY + deletedPlayerName);
+		PlayerPrefs.DeleteKey(GameControl.PLAYERATTACKKEY + deletedPlayerName);
+	}
 
     IEnumerator TextPopup(float waitTime) {
         _displayBadNamePopup = true;
