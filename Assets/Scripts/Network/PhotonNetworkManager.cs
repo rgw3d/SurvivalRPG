@@ -15,7 +15,7 @@ public class PhotonNetworkManager : MonoBehaviour {
     private PlayerStats.CharacterClass _playerClass = PlayerStats.CharacterClass.Fighter;
 
     private string _chatUsername = "UserName";
-    private ChatReciever _chatClient = null;
+    private ChatBuffer _chatClient = null;
 
     void Start() {
         PhotonNetwork.ConnectUsingSettings("0.1");
@@ -173,7 +173,7 @@ public class PhotonNetworkManager : MonoBehaviour {
             _chatUsername = GUILayout.TextField(_chatUsername);
             if (GUILayout.Button("Join ChatRoom")) {
                 if (!_chatUsername.Equals("UserName") && !_chatUsername.Equals("")) {
-                    _chatClient = new ChatReciever(_chatUsername);
+                    _chatClient = new ChatBuffer(_chatUsername);
                 }
                 else {
                     StartCoroutine(TextPopup(.5f));
