@@ -69,6 +69,7 @@ public class PhotonNetworkManager : MonoBehaviour {
                         + "Attack: " + PlayerPrefs.GetInt(GameControl.PLAYERATTACKKEY + allplayerNames[playerIndex]));
 					if (GUILayout.Button("Delete Character")) {
 						DeleteCharacter(allplayerNames[playerIndex]);
+                        _playerSelectSlider = 0;
 					}
                 GUILayout.EndVertical();
 
@@ -137,7 +138,7 @@ public class PhotonNetworkManager : MonoBehaviour {
         }
     }
 
-	void DeleteCharacter (string deletedPlayerName){
+	void DeleteCharacter(string deletedPlayerName){
 		string[] allPlayerNames = PlayerPrefs.GetString(GameControl.PLAYERNAMESKEY).Split(',');
 		string newAllPlayerNames = "";
 		foreach(string name in allPlayerNames){
