@@ -9,17 +9,15 @@ public class ChatOutput : MonoBehaviour {
         Output = FindObjectOfType<ChatBuffer>();
     }
 
-    public abstract void ParseInput(string input);
-    public abstract void InitScreen();
-    public abstract bool PrintInput();
+    public void InitScreen() {
+        Output.AddText("Basic Chat room");
+    }
 
-	// Use this for initialization
-	void Start () {
-	
-	}
-	
-	// Update is called once per frame
-	void Update () {
-	
-	}
+    public bool PrintInput() {
+        return true;
+    }
+
+    public void ParseInput(string original) {
+        Output.AddLine(original);
+    }
 }
