@@ -63,7 +63,7 @@ public class PhotonNetworkManager : MonoBehaviour {
                     int playerIndex = (int)Mathf.Round(_playerSelectSlider);
                     GUILayout.Box("Name: " +allplayerNames[playerIndex] + "\n" 
                         + "Class: "+ PlayerPrefs.GetInt(GameControl.PLAYERCLASSKEY + allplayerNames[playerIndex]) +"\n"
-                        + "Max Health: " + PlayerPrefs.GetInt(GameControl.PLAYERMAXHEALTH + allplayerNames[playerIndex]));
+                        + "Max Health: " + PlayerPrefs.GetInt(GameControl.PLAYERMAXHEALTHKEY + allplayerNames[playerIndex]));
                     
                 GUILayout.EndVertical();
 
@@ -108,25 +108,32 @@ public class PhotonNetworkManager : MonoBehaviour {
         }
         
 
-        if (PlayerPrefs.GetString(GameControl.PLAYERNAMESKEY).Equals("")) {
+        if (PlayerPrefs.GetString(GameControl.PLAYERNAMESKEY).Equals("")) //first name that is being added
             PlayerPrefs.SetString(GameControl.PLAYERNAMESKEY, _playerName);
-        }
-        else {
+        else //every additional name
             PlayerPrefs.SetString(GameControl.PLAYERNAMESKEY, PlayerPrefs.GetString(GameControl.PLAYERNAMESKEY) +","+ _playerName);
-        }
         
         PlayerPrefs.SetInt(GameControl.PLAYERCLASSKEY + _playerName, (int)_playerClass);
 
-        if (_playerClass == PlayerStats.CharacterClass.Fighter) {
-            PlayerPrefs.SetInt(GameControl.PLAYERMAXHEALTH + _playerName, 1000);
-            //do something 
-            //set base stats
-        }
-        else if (_playerClass == PlayerStats.CharacterClass.Healer) {
-            //do something 
-        }
-        else if (_playerClass == PlayerStats.CharacterClass.Mage) {
-            //do something 
+        switch (_playerClass) {
+            case PlayerStats.CharacterClass.Fighter:
+                PlayerPrefs.SetInt(GameControl.PLAYERMAXHEALTHKEY + _playerName, 100);
+                PlayerPrefs.SetInt(GameControl.PLAYERMAXMANAKEY + _playerName, 20);
+                PlayerPrefs.SetInt(GameControl.PLAYERDEFENSEKEY + _playerName, 100);
+                PlayerPrefs.SetInt(GameControl.PLAYERATTACKKEY + _playerName, 100);
+                break;
+            case PlayerStats.CharacterClass.Mage:
+                PlayerPrefs.SetInt(GameControl.PLAYERMAXHEALTHKEY + _playerName, 1);
+                PlayerPrefs.SetInt(GameControl.PLAYERMAXMANAKEY + _playerName, 1000);
+                PlayerPrefs.SetInt(GameControl.PLAYERDEFENSEKEY + _playerName, 1);
+                PlayerPrefs.SetInt(GameControl.PLAYERATTACKKEY + _playerName, 100);
+                break;
+            case PlayerStats.CharacterClass.Healer:
+                PlayerPrefs.SetInt(GameControl.PLAYERMAXHEALTHKEY + _playerName, 50);
+                PlayerPrefs.SetInt(GameControl.PLAYERMAXMANAKEY + _playerName, 500);
+                PlayerPrefs.SetInt(GameControl.PLAYERDEFENSEKEY + _playerName, 20);
+                PlayerPrefs.SetInt(GameControl.PLAYERATTACKKEY + _playerName, 10);
+                break;
         }
     }
 

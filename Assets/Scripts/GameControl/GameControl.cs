@@ -12,8 +12,12 @@ public class GameControl : MonoBehaviour {
     public const string PLAYSCREEN = "PlayScreen";
 
     public const string PLAYERNAMESKEY = "PLAYERNAMESKEY";
-    public const string PLAYERCLASSKEY = "PLAYERCLASS";
-    public const string PLAYERMAXHEALTH = "PLAYERMAXHEALTH";
+    public const string PLAYERCLASSKEY = "PLAYERCLASSKEY";
+    public const string PLAYERMAXHEALTHKEY = "PLAYERMAXHEALTHKEY";
+    public const string PLAYERMAXMANAKEY = "PLAYERMAXMANAKEY";
+    public const string PLAYERDEFENSEKEY = "PLAYERDEFENSEKEY";
+    public const string PLAYERATTACKKEY = "PLAYERATTACKKEY";
+
     
 
 
