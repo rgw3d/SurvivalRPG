@@ -14,6 +14,9 @@ public class PhotonNetworkManager : MonoBehaviour {
     private string _playerName = "Player Name";
     private PlayerStats.CharacterClass _playerClass = PlayerStats.CharacterClass.Fighter;
 
+    private string _chatUsername = "UserName";
+    private ChatReciever _chatClient = null;
+
     void Start() {
         PhotonNetwork.ConnectUsingSettings("0.1");
     }
@@ -23,66 +26,68 @@ public class PhotonNetworkManager : MonoBehaviour {
             DisplayBadNamePopup();
         
         if (!PhotonNetwork.connected)
-        {
             GUILayout.Label(PhotonNetwork.connectionStateDetailed.ToString());
-        }
         else if (PhotonNetwork.room == null)
-        {
             NotConnectedToRoom();
-        }
         
     }
 
     private void NotConnectedToRoom() {
 
         GUILayout.BeginArea(new Rect(0, 0, Screen.width, Screen.height));
-            GUILayout.BeginHorizontal();
-            GUILayout.FlexibleSpace();
-
-                GUILayout.BeginVertical(GUILayout.MinWidth(Screen.width / 4));//Create Room
-                    if (GUILayout.Button("Create Room")) {
-                        RoomOptions roomOptions = new RoomOptions() { isVisible = true, maxPlayers = 4, isOpen = true };
-                        PhotonNetwork.CreateRoom(_roomName, roomOptions, TypedLobby.Default);
-                    }
-                    _roomName = GUILayout.TextField(_roomName, 20);
-                GUILayout.EndVertical();
-
-                GUILayout.BeginVertical(GUILayout.MinWidth(Screen.width / 4));//Join Room
-                    if (_roomsList != null) {
-                        for (int i = 0; i < _roomsList.Length; i++) {
-                            if (GUILayout.Button("Join " + _roomsList[i].name))
-                                PhotonNetwork.JoinRoom(_roomsList[i].name);
-                        }
-                    }
-                GUILayout.EndVertical();
-           
-                GUILayout.BeginVertical(GUILayout.MinWidth(Screen.width / 4));//Select Player
-                    GUILayout.Label("Selected Player");
-                    string[] allplayerNames = PlayerPrefs.GetString(GameControl.PLAYERNAMESKEY).Split(',');
-                    _playerSelectSlider = GUILayout.HorizontalSlider(_playerSelectSlider, 0f, (float)allplayerNames.Length-1);
-                    int playerIndex = Mathf.RoundToInt(_playerSelectSlider);
-                    GUILayout.Box("Name: " +allplayerNames[playerIndex] + "\n" 
-                        + "Class: "+ PlayerStats.IntToCharacterClass(PlayerPrefs.GetInt(GameControl.PLAYERCLASSKEY + allplayerNames[playerIndex])) +"\n"
-                        + "Max Health: " + PlayerPrefs.GetInt(GameControl.PLAYERMAXHEALTHKEY + allplayerNames[playerIndex]) + "\n" 
-                        + "Max Mana: " + PlayerPrefs.GetInt(GameControl.PLAYERMAXMANAKEY + allplayerNames[playerIndex]) + "\n"
-                        + "Defense: " + PlayerPrefs.GetInt(GameControl.PLAYERDEFENSEKEY + allplayerNames[playerIndex]) + "\n"
-                        + "Attack: " + PlayerPrefs.GetInt(GameControl.PLAYERATTACKKEY + allplayerNames[playerIndex]));
-                    
-                GUILayout.EndVertical();
-
-                GUILayout.BeginVertical(GUILayout.MinWidth(Screen.width / 4));//Create Player
-                    if (GUILayout.Button("Create Character")) {
-                        CreateCharacter();
-                    }
-                    _playerName = GUILayout.TextField(_playerName, 12);
-                
-                    GUILayout.Box("Class: " + _playerClass);
-                    _playerClassSlider = GUILayout.HorizontalSlider(_playerClassSlider, 0f, 2f);
-                    _playerClass = PlayerStats.IntToCharacterClass(Mathf.RoundToInt(_playerClassSlider));
-                GUILayout.EndVertical();
-
+            GUILayout.BeginVertical();
+                GUILayout.BeginHorizontal(GUILayout.MinHeight(2*Screen.height/3));
                 GUILayout.FlexibleSpace();
-            GUILayout.EndHorizontal();
+
+                    GUILayout.BeginVertical(GUILayout.MinWidth(Screen.width / 4));//Create Room
+                        if (GUILayout.Button("Create Room")) {
+                            RoomOptions roomOptions = new RoomOptions() { isVisible = true, maxPlayers = 4, isOpen = true };
+                            PhotonNetwork.CreateRoom(_roomName, roomOptions, TypedLobby.Default);
+                        }
+                        _roomName = GUILayout.TextField(_roomName, 20);
+                    GUILayout.EndVertical();
+
+                    GUILayout.BeginVertical(GUILayout.MinWidth(Screen.width / 4));//Join Room
+                        if (_roomsList != null) {
+                            for (int i = 0; i < _roomsList.Length; i++) {
+                                if (GUILayout.Button("Join " + _roomsList[i].name))
+                                    PhotonNetwork.JoinRoom(_roomsList[i].name);
+                            }
+                        }
+                    GUILayout.EndVertical();
+           
+                    GUILayout.BeginVertical(GUILayout.MinWidth(Screen.width / 4));//Select Player
+                        GUILayout.Label("Selected Player");
+                        string[] allplayerNames = PlayerPrefs.GetString(GameControl.PLAYERNAMESKEY).Split(',');
+                        _playerSelectSlider = GUILayout.HorizontalSlider(_playerSelectSlider, 0f, (float)allplayerNames.Length-1);
+                        int playerIndex = Mathf.RoundToInt(_playerSelectSlider);
+                        GUILayout.Box("Name: " +allplayerNames[playerIndex] + "\n" 
+                            + "Class: "+ PlayerStats.IntToCharacterClass(PlayerPrefs.GetInt(GameControl.PLAYERCLASSKEY + allplayerNames[playerIndex])) +"\n"
+                            + "Max Health: " + PlayerPrefs.GetInt(GameControl.PLAYERMAXHEALTHKEY + allplayerNames[playerIndex]) + "\n" 
+                            + "Max Mana: " + PlayerPrefs.GetInt(GameControl.PLAYERMAXMANAKEY + allplayerNames[playerIndex]) + "\n"
+                            + "Defense: " + PlayerPrefs.GetInt(GameControl.PLAYERDEFENSEKEY + allplayerNames[playerIndex]) + "\n"
+                            + "Attack: " + PlayerPrefs.GetInt(GameControl.PLAYERATTACKKEY + allplayerNames[playerIndex]));
+                    
+                    GUILayout.EndVertical();
+
+                    GUILayout.BeginVertical(GUILayout.MinWidth(Screen.width / 4));//Create Player
+                        if (GUILayout.Button("Create Character")) {
+                            CreateCharacter();
+                        }
+                        _playerName = GUILayout.TextField(_playerName, 12);
+                
+                        GUILayout.Box("Class: " + _playerClass);
+                        _playerClassSlider = GUILayout.HorizontalSlider(_playerClassSlider, 0f, 2f);
+                        _playerClass = PlayerStats.IntToCharacterClass(Mathf.RoundToInt(_playerClassSlider));
+                    GUILayout.EndVertical();
+
+                    GUILayout.FlexibleSpace();
+                GUILayout.EndHorizontal();
+
+                GUILayout.BeginHorizontal();
+                    LobbyChatClient();
+                GUILayout.EndHorizontal();
+            GUILayout.EndVertical();
         GUILayout.EndArea();
         
     }
@@ -140,6 +145,22 @@ public class PhotonNetworkManager : MonoBehaviour {
         GUI.Box(new Rect(2 * Screen.width / 5, Screen.height / 2, Screen.width / 5, Screen.height / 10), "Bad Name");
     }
 
+    void LobbyChatClient() {
+        if (_chatClient != null) {
+            GUILayout.Label("Chat Username: ");
+            _chatUsername = GUILayout.TextField(_chatUsername);
+            if (GUILayout.Button("Join ChatRoom")) {
+                if (!_chatUsername.Equals("UserName") && !_chatUsername.Equals("")) {
+                    _chatClient = new ChatReciever(_chatUsername);
+                }
+                else {
+                    StartCoroutine(TextPopup(.5f));
+                }
+            }
+            
+        }
+    }
+
     void OnReceivedRoomListUpdate() {
         _roomsList = PhotonNetwork.GetRoomList();
     }
@@ -156,10 +177,5 @@ public class PhotonNetworkManager : MonoBehaviour {
     public void OnJoinedRoom() {
         Debug.Log("Joined Room");
     }
-
-    
-
-
-    
 
 }
