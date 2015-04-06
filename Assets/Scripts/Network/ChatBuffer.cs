@@ -125,7 +125,7 @@ public class ChatBuffer : Photon.MonoBehaviour {
 
     [RPC]
     void RecieveChatText(string text) {
-        AddLine(text);
+        AddText(text);
     }
 
 
