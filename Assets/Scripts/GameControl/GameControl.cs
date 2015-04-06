@@ -58,7 +58,8 @@ public class GameControl : MonoBehaviour {
                 GUILayout.BeginHorizontal(GUILayout.MinHeight(3 * Screen.height / 4));
                 GUILayout.EndHorizontal();
                 GUILayout.BeginHorizontal();
-                    ChatClient();
+                    if(PhotonNetwork.room != null)
+                        ChatClient();
                 GUILayout.EndHorizontal();
             GUILayout.EndVertical();
         GUILayout.EndArea();
