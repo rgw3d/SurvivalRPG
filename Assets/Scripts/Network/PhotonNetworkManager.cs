@@ -8,7 +8,7 @@ public class PhotonNetworkManager : MonoBehaviour {
     private RoomInfo[] _roomsList;
     public static bool IsHost = false;
 
-    private static bool _displayBadNamePopup = false;
+    private bool _displayBadNamePopup = false;
     private float _playerClassSlider = 1;
     private float _playerSelectSlider = 0;
     private string _playerName = "Player Name";
@@ -159,7 +159,7 @@ public class PhotonNetworkManager : MonoBehaviour {
 		PlayerPrefs.DeleteKey(GameControl.PLAYERATTACKKEY + deletedPlayerName);
 	}
 
-    public static IEnumerator TextPopup(float waitTime) {
+    IEnumerator TextPopup(float waitTime) {
         _displayBadNamePopup = true;
         yield return new WaitForSeconds(waitTime);
         _displayBadNamePopup = false;

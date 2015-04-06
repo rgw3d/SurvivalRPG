@@ -25,14 +25,13 @@ public class ChatBuffer : Photon.MonoBehaviour {
 
     public void Start() {
         GetOutput = FindObjectOfType<ChatOutput>();
-        ScreenWidth = Mathf.RoundToInt(Screen.width);
+        ScreenWidth = Mathf.RoundToInt(53 / 1.731f * Screen.width / Screen.height);
         HidePrompt = true;
     }
 
     public void Update() {
-        if (!SuspendInput) 
+        if (!Host.Equals("")) {
             AddInput(Input.inputString);
-        
 
             //_text.text = ScrollBuffer(TextOutput(), _scrollIndex);
             //TODO add something that will actually display the text
@@ -42,7 +41,7 @@ public class ChatBuffer : Photon.MonoBehaviour {
             while (_buffer.Length > 10000) {
                 _buffer = _buffer.Substring(_buffer.IndexOf('\n'));
             }
-        
+        }
     }
 
     public void AddInput(string text) {
