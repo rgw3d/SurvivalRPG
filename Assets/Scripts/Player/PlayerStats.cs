@@ -1,8 +1,9 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class PlayerStats {
+public class PlayerStats: MonoBehaviour {
 
+	public string playerName;
 	public int MaxHealth;
 	public int CurrentHealth;
 	public int MaxMana;
