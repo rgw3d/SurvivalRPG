@@ -90,7 +90,7 @@ public class PhotonNetworkManager : MonoBehaviour {
                 GUILayout.EndHorizontal();
 
                 GUILayout.BeginHorizontal();
-                    LobbyChatClient();
+                    //LobbyChatClient();
                 GUILayout.EndHorizontal();
             GUILayout.EndVertical();
         GUILayout.EndArea();

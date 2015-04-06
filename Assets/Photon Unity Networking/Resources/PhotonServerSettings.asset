@@ -33,4 +33,5 @@ MonoBehaviour:
   - renderTile
   - SetMapFromServer
   - PlacePlayer
+  - RecieveChatText
   DisableAutoOpenWizard: 0

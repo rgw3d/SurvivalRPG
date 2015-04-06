@@ -175,6 +175,8 @@ GameObject:
   - 114: {fileID: 1492229320}
   - 114: {fileID: 1492229319}
   - 114: {fileID: 1492229318}
+  - 114: {fileID: 1492229323}
+  - 114: {fileID: 1492229322}
   m_Layer: 0
   m_Name: Game Controller
   m_TagString: Untagged
@@ -244,3 +246,33 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 0
+--- !u!114 &1492229322
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1492229317}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5f68d0f7217ea644fbe59e8580be6ec7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Output: {fileID: 0}
+--- !u!114 &1492229323
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1492229317}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bd8a97b073c1a484ba0dca82db4e8bdb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _scrollIndex: 0
+  ScreenWidth: 0
+  Host: 
+  Prompt: '>'
+  SuspendInput: 0
+  HidePrompt: 0
+  GetOutput: {fileID: 0}
