@@ -52,7 +52,7 @@ public class PlayerControl : Photon.MonoBehaviour{
         if (Input.GetKey(KeyCode.E)) { //just a test of the ability to work
             DelegateHolder.TriggerPlayerStatChange(StatType.Score, 1f);   
         }
-        if (photonView.isMine) {
+        if (photonView.isMine && !GameControl.IsChatting) {
             playerMovement();
             playerSprite();
             playerAttack();

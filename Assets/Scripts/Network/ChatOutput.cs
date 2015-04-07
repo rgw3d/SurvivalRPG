@@ -18,6 +18,7 @@ public class ChatOutput : MonoBehaviour {
     }
 
     public void ParseInput(string original) {
-        Output.AddLine(original);
+        //Output.AddLine(original);
+        //do any commands
     }
 }

@@ -22,7 +22,6 @@ public class ChatBuffer : Photon.MonoBehaviour {
 
     public ChatOutput GetOutput;
 
-
     public void Start() {
         GetOutput = FindObjectOfType<ChatOutput>();
         ScreenWidth = Mathf.RoundToInt(Screen.width);
@@ -58,10 +57,10 @@ public class ChatBuffer : Photon.MonoBehaviour {
             }
             else if (c == "\n"[0] || c == "\r"[0]) {//new line/ return
                 if (GetOutput.PrintInput()) {
-                    AddLine(InputTextOutput(true));
+                    AddLine(InputTextOutput(true), true);
                 }
 
-                GetOutput.ParseInput(_inputBuffer);
+                GetOutput.ParseInput(_inputBuffer);//commands
 
                 _inputBuffer = "";
             }
@@ -99,9 +98,10 @@ public class ChatBuffer : Photon.MonoBehaviour {
         _buffer = InsertLineBreaks(_buffer);
     }
 
-    public void AddLine(string text = "") {
+    public void AddLine(string text = "", bool sendRPC = false) {
 
-        photonView.RPC("RecieveChatText", PhotonTargets.OthersBuffered, Host + text);
+        if(sendRPC)
+            photonView.RPC("RecieveChatText", PhotonTargets.Others, text);
 
         _buffer += "\n";
 
@@ -109,6 +109,7 @@ public class ChatBuffer : Photon.MonoBehaviour {
         _buffer = InsertLineBreaks(_buffer);
         
     }
+
 
     public string InsertLineBreaks(string text) {
         var lastLineStart = text.LastIndexOf('\n');
@@ -125,7 +126,7 @@ public class ChatBuffer : Photon.MonoBehaviour {
 
     [RPC]
     void RecieveChatText(string text) {
-        AddText(text);
+        AddLine(text);
     }
 
 

@@ -4,7 +4,6 @@ using System.Collections;
 public class GameControl : MonoBehaviour {
 
     public static int Difficulty = 5; //Out of 0-10
-    public static string FilePath = "C/path/to/file";
     //Music when we have it
     //Any other settings
     public KeyCode ExitKey = KeyCode.Escape;
@@ -21,7 +20,7 @@ public class GameControl : MonoBehaviour {
     private ChatBuffer _chatClient;
     private string _chatUsername = "UserName";
     private Vector2 scrollPosition;
-    public bool IsChatting = false;
+    public static bool IsChatting = false;
     
 
     
@@ -47,16 +46,14 @@ public class GameControl : MonoBehaviour {
             IsChatting = true;
         }
         if (Input.GetKey(KeyCode.Return)) {
-
+            IsChatting = false;
         }
         
 	}
 
     void OnGUI() {
-        GUILayout.BeginArea(new Rect(0, 0, Screen.width, Screen.height));
+        GUILayout.BeginArea(new Rect(0, 5 * Screen.height/6, Screen.width, Screen.height));
             GUILayout.BeginVertical();
-                GUILayout.BeginHorizontal(GUILayout.MinHeight(3 * Screen.height / 4));
-                GUILayout.EndHorizontal();
                 GUILayout.BeginHorizontal();
                     if(PhotonNetwork.room != null)
                         ChatClient();
