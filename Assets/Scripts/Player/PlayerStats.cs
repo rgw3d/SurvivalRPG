@@ -10,7 +10,7 @@ public class PlayerStats: MonoBehaviour {
 	public int CurrentMana;
 	public int AttackDamage;
 	public int ArmorValue;
-	public float MovementSpeed;
+	public static float MovementSpeed;
     private CharacterClass _characterClass;
 
 	void Start(){
@@ -23,6 +23,7 @@ public class PlayerStats: MonoBehaviour {
 		ArmorValue = PlayerPrefs.GetInt(GameControl.PLAYERDEFENSEKEY + PhotonNetworkManager.selectedPlayerName);
 		_characterClass = (CharacterClass)PlayerPrefs.GetInt(GameControl.PLAYERCLASSKEY + PhotonNetworkManager.selectedPlayerName);
 		MovementSpeed = PlayerPrefs.GetFloat(GameControl.PLAYERMOVEMENTKEY + PhotonNetworkManager.selectedPlayerName);
+
 	}
 
 

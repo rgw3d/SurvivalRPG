@@ -71,7 +71,7 @@ public class PhotonNetworkManager : MonoBehaviour {
                         + "Max Mana: " + PlayerPrefs.GetInt(GameControl.PLAYERMAXMANAKEY + allplayerNames[playerIndex]) + "\n"
                         + "Attack: " + PlayerPrefs.GetInt(GameControl.PLAYERATTACKKEY + allplayerNames[playerIndex]) + "\n"
 		            	+ "Defense: " + PlayerPrefs.GetInt(GameControl.PLAYERDEFENSEKEY + allplayerNames[playerIndex]) + "\n"
-		             	+ "Movement Speed: " + PlayerPrefs.GetInt(GameControl.PLAYERMOVEMENTKEY + allplayerNames[playerIndex]));
+		             	+ "Movement Speed: " + PlayerPrefs.GetFloat(GameControl.PLAYERMOVEMENTKEY + allplayerNames[playerIndex]));
 					selectedPlayerName = allplayerNames[playerIndex];
 					if (GUILayout.Button("Delete Character")) {
 						DeleteCharacter(allplayerNames[playerIndex]);
@@ -135,7 +135,7 @@ public class PhotonNetworkManager : MonoBehaviour {
                 PlayerPrefs.SetInt(GameControl.PLAYERMAXMANAKEY + _playerName, 1000);
                 PlayerPrefs.SetInt(GameControl.PLAYERATTACKKEY + _playerName, 100);
 				PlayerPrefs.SetInt(GameControl.PLAYERDEFENSEKEY + _playerName, 1);
-				PlayerPrefs.SetFloat(GameControl.PLAYERMOVEMENTKEY + _playerName, 80f);
+				PlayerPrefs.SetFloat(GameControl.PLAYERMOVEMENTKEY + _playerName, 800f);
                 break;
             case PlayerStats.CharacterClass.Healer:
                 PlayerPrefs.SetInt(GameControl.PLAYERMAXHEALTHKEY + _playerName, 50);

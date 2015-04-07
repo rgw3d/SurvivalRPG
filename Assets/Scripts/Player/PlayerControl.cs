@@ -14,8 +14,7 @@ public class PlayerControl : Photon.MonoBehaviour{
     private Sprite _currentSprite;
 	private SpriteRenderer _spriteRenderer;
 
-    public float VerticalMovement = 15f;
-    public float HorizontalMovement = 15;
+	public float movementSpeed;
 
     public KeyCode UpKey;
     public KeyCode DownKey;
@@ -49,6 +48,7 @@ public class PlayerControl : Photon.MonoBehaviour{
 	
 	// Update is called once per frame
 	void FixedUpdate () {
+		movementSpeed = PlayerStats.MovementSpeed;
         if (Input.GetKey(KeyCode.E)) { //just a test of the ability to work
             DelegateHolder.TriggerPlayerStatChange(StatType.Score, 1f);   
         }
@@ -66,20 +66,20 @@ public class PlayerControl : Photon.MonoBehaviour{
 
     public void playerMovement() {
         if (Input.GetKey(UpKey)) {
-            rigidbody2D.AddForce(Vector2.up * VerticalMovement);
+            rigidbody2D.AddForce(Vector2.up * movementSpeed);
             _playerDirection = CardinalDirection.back;
         }
         if (Input.GetKey(DownKey)) {
-            rigidbody2D.AddForce(Vector2.up * -1 * VerticalMovement);
+            rigidbody2D.AddForce(Vector2.up * -1 * movementSpeed);
             _playerDirection = CardinalDirection.front;
         }
         if (Input.GetKey(LeftKey)) {
-            rigidbody2D.AddForce(Vector2.right * -1 * HorizontalMovement);
+			rigidbody2D.AddForce(Vector2.right * -1 * movementSpeed);
             _playerDirection = CardinalDirection.left;
 
         }
         if (Input.GetKey(RightKey)) {
-            rigidbody2D.AddForce(Vector2.right * HorizontalMovement);
+			rigidbody2D.AddForce(Vector2.right * movementSpeed);
             _playerDirection = CardinalDirection.right;
         }
         
