@@ -8,8 +8,6 @@ public class SpawnControl : Photon.MonoBehaviour {
     public GameObject enemyPrefab;
     public GameObject cameraPrefab;
 
-	public string playerName;
-
     public List<List<GameObject>> EnemyParties;//for the programmer to decide what types of groups of enemies you will see
 	
 	void Start () {
@@ -23,10 +21,6 @@ public class SpawnControl : Photon.MonoBehaviour {
             GameObject playerCamera = Instantiate(cameraPrefab) as GameObject;
             playerCamera.transform.parent = player.transform;//set the camera to be a child of the player
             playerCamera.transform.localPosition = new Vector3(0, 0, -10);
-		
-			playerName = PhotonNetworkManager.selectedPlayerName;
-			PlayerStats stats = player.GetComponent("PlayerStats") as PlayerStats;
-			stats.playerName = playerName;
 
             photonView.RPC("PlacePlayer", PhotonTargets.OthersBuffered, GenerateMap.Map.roomList[0].GetCenter());//Call all clients
         }

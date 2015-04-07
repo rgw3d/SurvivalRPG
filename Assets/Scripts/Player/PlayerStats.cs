@@ -14,7 +14,8 @@ public class PlayerStats: MonoBehaviour {
     private CharacterClass _characterClass;
 
 	void Start(){
-		MaxHealth = PlayerPrefs.GetInt(GameControl.PLAYERMAXHEALTHKEY + playerName);
+        playerName = PhotonNetworkManager.selectedPlayerName;
+        MaxHealth = PlayerPrefs.GetInt(GameControl.PLAYERMAXHEALTHKEY + PhotonNetworkManager.selectedPlayerName);
 		Debug.Log("Player Health is: " + MaxHealth);
 	}
 
