@@ -199,7 +199,6 @@ MonoBehaviour:
   playerPrefab: {fileID: 100000, guid: 324e7e8985f374349bf4127f48448169, type: 2}
   enemyPrefab: {fileID: 100000, guid: db6493934dc68c745983c14a68f21b2c, type: 2}
   cameraPrefab: {fileID: 100000, guid: b0674bb90435bb349a475d11394b5c56, type: 2}
-  playerName: 
 --- !u!114 &1492229319
 MonoBehaviour:
   m_ObjectHideFlags: 0
