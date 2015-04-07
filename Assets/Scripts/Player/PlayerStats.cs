@@ -16,7 +16,13 @@ public class PlayerStats: MonoBehaviour {
 	void Start(){
         playerName = PhotonNetworkManager.selectedPlayerName;
         MaxHealth = PlayerPrefs.GetInt(GameControl.PLAYERMAXHEALTHKEY + PhotonNetworkManager.selectedPlayerName);
-		Debug.Log("Player Health is: " + MaxHealth);
+		CurrentHealth = MaxHealth;
+		MaxMana = PlayerPrefs.GetInt(GameControl.PLAYERMAXMANAKEY + PhotonNetworkManager.selectedPlayerName);
+		CurrentMana = MaxMana;
+		AttackDamage = PlayerPrefs.GetInt(GameControl.PLAYERATTACKKEY + PhotonNetworkManager.selectedPlayerName);
+		ArmorValue = PlayerPrefs.GetInt(GameControl.PLAYERDEFENSEKEY + PhotonNetworkManager.selectedPlayerName);
+		_characterClass = (CharacterClass)PlayerPrefs.GetInt(GameControl.PLAYERCLASSKEY + PhotonNetworkManager.selectedPlayerName);
+		MovementSpeed = PlayerPrefs.GetFloat(GameControl.PLAYERMOVEMENTKEY + PhotonNetworkManager.selectedPlayerName);
 	}
 
 

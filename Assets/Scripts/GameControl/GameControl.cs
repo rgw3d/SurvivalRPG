@@ -16,6 +16,7 @@ public class GameControl : MonoBehaviour {
     public const string PLAYERMAXMANAKEY = "PLAYERMAXMANAKEY";
     public const string PLAYERDEFENSEKEY = "PLAYERDEFENSEKEY";
     public const string PLAYERATTACKKEY = "PLAYERATTACKKEY";
+	public const string PLAYERMOVEMENTKEY = "PLAYERMOVEMENTKEY";
 
     private ChatBuffer _chatClient;
     private string _chatUsername = "UserName";

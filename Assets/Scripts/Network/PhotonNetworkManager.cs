@@ -69,8 +69,9 @@ public class PhotonNetworkManager : MonoBehaviour {
                         + "Class: "+ PlayerStats.IntToCharacterClass(PlayerPrefs.GetInt(GameControl.PLAYERCLASSKEY + allplayerNames[playerIndex])) +"\n"
                         + "Max Health: " + PlayerPrefs.GetInt(GameControl.PLAYERMAXHEALTHKEY + allplayerNames[playerIndex]) + "\n" 
                         + "Max Mana: " + PlayerPrefs.GetInt(GameControl.PLAYERMAXMANAKEY + allplayerNames[playerIndex]) + "\n"
-                        + "Defense: " + PlayerPrefs.GetInt(GameControl.PLAYERDEFENSEKEY + allplayerNames[playerIndex]) + "\n"
-                        + "Attack: " + PlayerPrefs.GetInt(GameControl.PLAYERATTACKKEY + allplayerNames[playerIndex]));
+                        + "Attack: " + PlayerPrefs.GetInt(GameControl.PLAYERATTACKKEY + allplayerNames[playerIndex]) + "\n"
+		            	+ "Defense: " + PlayerPrefs.GetInt(GameControl.PLAYERDEFENSEKEY + allplayerNames[playerIndex]) + "\n"
+		             	+ "Movement Speed: " + PlayerPrefs.GetInt(GameControl.PLAYERMOVEMENTKEY + allplayerNames[playerIndex]));
 					selectedPlayerName = allplayerNames[playerIndex];
 					if (GUILayout.Button("Delete Character")) {
 						DeleteCharacter(allplayerNames[playerIndex]);
@@ -125,26 +126,30 @@ public class PhotonNetworkManager : MonoBehaviour {
             case PlayerStats.CharacterClass.Fighter:
                 PlayerPrefs.SetInt(GameControl.PLAYERMAXHEALTHKEY + _playerName, 100);
                 PlayerPrefs.SetInt(GameControl.PLAYERMAXMANAKEY + _playerName, 20);
+				PlayerPrefs.SetInt(GameControl.PLAYERATTACKKEY + _playerName, 100);
                 PlayerPrefs.SetInt(GameControl.PLAYERDEFENSEKEY + _playerName, 100);
-                PlayerPrefs.SetInt(GameControl.PLAYERATTACKKEY + _playerName, 100);
+				PlayerPrefs.SetFloat(GameControl.PLAYERMOVEMENTKEY + _playerName, 80f);
                 break;
             case PlayerStats.CharacterClass.Mage:
                 PlayerPrefs.SetInt(GameControl.PLAYERMAXHEALTHKEY + _playerName, 1);
                 PlayerPrefs.SetInt(GameControl.PLAYERMAXMANAKEY + _playerName, 1000);
-                PlayerPrefs.SetInt(GameControl.PLAYERDEFENSEKEY + _playerName, 1);
                 PlayerPrefs.SetInt(GameControl.PLAYERATTACKKEY + _playerName, 100);
+				PlayerPrefs.SetInt(GameControl.PLAYERDEFENSEKEY + _playerName, 1);
+				PlayerPrefs.SetFloat(GameControl.PLAYERMOVEMENTKEY + _playerName, 80f);
                 break;
             case PlayerStats.CharacterClass.Healer:
                 PlayerPrefs.SetInt(GameControl.PLAYERMAXHEALTHKEY + _playerName, 50);
                 PlayerPrefs.SetInt(GameControl.PLAYERMAXMANAKEY + _playerName, 500);
-                PlayerPrefs.SetInt(GameControl.PLAYERDEFENSEKEY + _playerName, 20);
                 PlayerPrefs.SetInt(GameControl.PLAYERATTACKKEY + _playerName, 10);
+				PlayerPrefs.SetInt(GameControl.PLAYERDEFENSEKEY + _playerName, 20);
+				PlayerPrefs.SetFloat(GameControl.PLAYERMOVEMENTKEY + _playerName, 80f);
                 break;
 			case PlayerStats.CharacterClass.Shrek:
 				PlayerPrefs.SetInt(GameControl.PLAYERMAXHEALTHKEY + _playerName, 9000);
 				PlayerPrefs.SetInt(GameControl.PLAYERMAXMANAKEY + _playerName, 0);
-				PlayerPrefs.SetInt(GameControl.PLAYERDEFENSEKEY + _playerName, 350);
 				PlayerPrefs.SetInt(GameControl.PLAYERATTACKKEY + _playerName, 411);
+				PlayerPrefs.SetInt(GameControl.PLAYERDEFENSEKEY + _playerName, 350);
+				PlayerPrefs.SetFloat(GameControl.PLAYERMOVEMENTKEY + _playerName, 80f);
 				break;
         }
     }

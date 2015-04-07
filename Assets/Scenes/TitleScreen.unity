@@ -290,4 +290,3 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   ExitKey: 27
-  IsChatting: 0
