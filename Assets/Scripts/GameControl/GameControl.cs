@@ -46,13 +46,13 @@ public class GameControl : MonoBehaviour {
             IsChatting = true;
         }
         if (Input.GetKey(KeyCode.Return)) {
-            IsChatting = false;
+            //IsChatting = false;
         }
         
 	}
 
     void OnGUI() {
-        GUILayout.BeginArea(new Rect(0, 5 * Screen.height/6, Screen.width, Screen.height));
+        GUILayout.BeginArea(new Rect(0, 4 * Screen.height/6, Screen.width, Screen.height));
             GUILayout.BeginVertical();
                 GUILayout.BeginHorizontal();
                     if(PhotonNetwork.room != null)
