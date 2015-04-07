@@ -13,10 +13,17 @@ public class PlayerStats: MonoBehaviour {
 	public float MovementSpeed;
     private CharacterClass _characterClass;
 
+	void Start(){
+		MaxHealth = PlayerPrefs.GetInt(GameControl.PLAYERMAXHEALTHKEY + playerName);
+		Debug.Log("Player Health is: " + MaxHealth);
+	}
+
+
     public enum CharacterClass {
         Fighter = 0,
         Mage = 1,
-        Healer = 2
+        Healer = 2,
+		Shrek = 3
     }
 
     public static CharacterClass IntToCharacterClass(int classInt){
@@ -27,6 +34,8 @@ public class PlayerStats: MonoBehaviour {
                 return CharacterClass.Mage;
             case 2:
                 return CharacterClass.Healer;
+			case 3:
+				return CharacterClass.Shrek;
             default:
                 return CharacterClass.Fighter;
         }

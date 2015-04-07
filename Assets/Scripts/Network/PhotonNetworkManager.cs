@@ -14,6 +14,8 @@ public class PhotonNetworkManager : MonoBehaviour {
     private string _playerName = "Player Name";
     private PlayerStats.CharacterClass _playerClass = PlayerStats.CharacterClass.Fighter;
 
+	public  static string selectedPlayerName = "";
+
     private string _chatUsername = "UserName";
     private ChatBuffer _chatClient;
     private Vector2 scrollPosition;
@@ -69,6 +71,7 @@ public class PhotonNetworkManager : MonoBehaviour {
                         + "Max Mana: " + PlayerPrefs.GetInt(GameControl.PLAYERMAXMANAKEY + allplayerNames[playerIndex]) + "\n"
                         + "Defense: " + PlayerPrefs.GetInt(GameControl.PLAYERDEFENSEKEY + allplayerNames[playerIndex]) + "\n"
                         + "Attack: " + PlayerPrefs.GetInt(GameControl.PLAYERATTACKKEY + allplayerNames[playerIndex]));
+					selectedPlayerName = allplayerNames[playerIndex];
 					if (GUILayout.Button("Delete Character")) {
 						DeleteCharacter(allplayerNames[playerIndex]);
                         _playerSelectSlider = 0;
@@ -82,7 +85,7 @@ public class PhotonNetworkManager : MonoBehaviour {
                         _playerName = GUILayout.TextField(_playerName, 12);
                 
                         GUILayout.Box("Class: " + _playerClass);
-                        _playerClassSlider = GUILayout.HorizontalSlider(_playerClassSlider, 0f, 2f);
+                        _playerClassSlider = GUILayout.HorizontalSlider(_playerClassSlider, 0f, 3f);
                         _playerClass = PlayerStats.IntToCharacterClass(Mathf.RoundToInt(_playerClassSlider));
                     GUILayout.EndVertical();
 
@@ -137,6 +140,12 @@ public class PhotonNetworkManager : MonoBehaviour {
                 PlayerPrefs.SetInt(GameControl.PLAYERDEFENSEKEY + _playerName, 20);
                 PlayerPrefs.SetInt(GameControl.PLAYERATTACKKEY + _playerName, 10);
                 break;
+			case PlayerStats.CharacterClass.Shrek:
+				PlayerPrefs.SetInt(GameControl.PLAYERMAXHEALTHKEY + _playerName, 9000);
+				PlayerPrefs.SetInt(GameControl.PLAYERMAXMANAKEY + _playerName, 0);
+				PlayerPrefs.SetInt(GameControl.PLAYERDEFENSEKEY + _playerName, 350);
+				PlayerPrefs.SetInt(GameControl.PLAYERATTACKKEY + _playerName, 411);
+				break;
         }
     }
 
