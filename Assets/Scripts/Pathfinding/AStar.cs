@@ -107,13 +107,25 @@ public static class AStar {
 	private static List<MapTile> FindAdjacentTiles(MapTile center){
 		List<MapTile> adjacentTiles = new List<MapTile>();
 		adjacentTiles.Add(_mapTiles[center.X + 1, center.Y]);
-		adjacentTiles.Add(_mapTiles[center.X + 1, center.Y + 1]);
-        adjacentTiles.Add(_mapTiles[center.X + 1, center.Y - 1]);
         adjacentTiles.Add(_mapTiles[center.X - 1, center.Y]);
-		adjacentTiles.Add(_mapTiles[center.X - 1, center.Y + 1]);
-		adjacentTiles.Add(_mapTiles[center.X - 1, center.Y - 1]);
 		adjacentTiles.Add(_mapTiles[center.X, center.Y - 1]);
         adjacentTiles.Add(_mapTiles[center.X, center.Y + 1]);
+		if(_mapTiles[center.X + 1, center.Y].GetTileType() != MapTile.TileType.blue &&
+		   _mapTiles[center.X, center.Y + 1].GetTileType() != MapTile.TileType.blue){
+			adjacentTiles.Add(_mapTiles[center.X + 1, center.Y + 1]);
+		}
+		if(_mapTiles[center.X + 1, center.Y].GetTileType() != MapTile.TileType.blue &&
+		   _mapTiles[center.X, center.Y - 1].GetTileType() != MapTile.TileType.blue){
+			adjacentTiles.Add(_mapTiles[center.X + 1, center.Y - 1]);
+		}
+		if(_mapTiles[center.X - 1, center.Y].GetTileType() != MapTile.TileType.blue &&
+		   _mapTiles[center.X, center.Y + 1].GetTileType() != MapTile.TileType.blue){
+			adjacentTiles.Add(_mapTiles[center.X - 1, center.Y + 1]);
+		}
+		if(_mapTiles[center.X - 1, center.Y].GetTileType() != MapTile.TileType.blue &&
+		   _mapTiles[center.X, center.Y - 1].GetTileType() != MapTile.TileType.blue){
+			adjacentTiles.Add(_mapTiles[center.X - 1, center.Y - 1]);
+		}
 
         /*foreach (MapTile mT in adjacentTiles) {
             if (mT.GetTileType() != TileToPathThrough)
