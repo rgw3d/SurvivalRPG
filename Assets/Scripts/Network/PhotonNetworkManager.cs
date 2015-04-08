@@ -197,10 +197,9 @@ public class PhotonNetworkManager : MonoBehaviour {
             }
         }
         else {
-            scrollPosition = GUILayout.BeginScrollView(scrollPosition, GUILayout.MinWidth(Screen.width));
+            scrollPosition = GUILayout.BeginScrollView(scrollPosition, GUILayout.MinWidth(Screen.width/3));
             GUILayout.Label(_chatClient.TextOutput());
             GUILayout.EndScrollView();
-            //GUILayout.Box(_chatClient.TextOutput(), GUILayout.MinWidth(Screen.width));
         }
     }
 

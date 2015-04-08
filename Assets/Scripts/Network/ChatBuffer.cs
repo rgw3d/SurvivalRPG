@@ -17,14 +17,14 @@ public class ChatBuffer : Photon.MonoBehaviour {
 
     public const int MaxBufferLength = 10000;
 
-    public bool SuspendInput;
+    public bool SuspendInput = true;
     public bool HidePrompt;
 
     public ChatOutput GetOutput;
 
     public void Start() {
         GetOutput = FindObjectOfType<ChatOutput>();
-        ScreenWidth = Mathf.RoundToInt(Screen.width);
+        ScreenWidth = GameControl.ChatBoxWidth;
         HidePrompt = true;
     }
 
@@ -59,7 +59,7 @@ public class ChatBuffer : Photon.MonoBehaviour {
                 if (GetOutput.PrintInput()) {
                     AddLine(InputTextOutput(true), true);
                 }
-
+                GameControl.IsChatting = false;
                 GetOutput.ParseInput(_inputBuffer);//commands
 
                 _inputBuffer = "";

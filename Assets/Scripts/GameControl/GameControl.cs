@@ -22,10 +22,8 @@ public class GameControl : MonoBehaviour {
     private string _chatUsername = "UserName";
     private Vector2 scrollPosition;
     public static bool IsChatting = false;
+    public static int ChatBoxWidth = Screen.width/3;
     
-
-    
-
 
 	void Start () {
         DontDestroyOnLoad(this);
@@ -79,10 +77,9 @@ public class GameControl : MonoBehaviour {
         }
         else {
             _chatClient.SuspendInput = !IsChatting;
-            scrollPosition = GUILayout.BeginScrollView(scrollPosition, GUILayout.MinWidth(Screen.width));
+            scrollPosition = GUILayout.BeginScrollView(scrollPosition, GUILayout.Width(ChatBoxWidth));
             GUILayout.Label(_chatClient.TextOutput());
             GUILayout.EndScrollView();
-            //GUILayout.Box(_chatClient.TextOutput(), GUILayout.MinWidth(Screen.width));
         }
     }
 }
