@@ -23,15 +23,21 @@ public class GameControl : MonoBehaviour {
     private Vector2 scrollPosition;
     public static bool IsChatting = false;
     public static int ChatBoxWidth = Screen.width/3;
+    public static ChattingState ChatState = ChattingState.NoUsername;
     
 
 	void Start () {
         DontDestroyOnLoad(this);
         _chatClient = FindObjectOfType<ChatBuffer>();
 	}
+
+    public enum ChattingState {
+        NoUsername,
+        ChatClosedButShowing,
+        ChatOpenAndTyping,
+    }
 	
 	void Update () {
-	    //use this to control what music is playing
         if (Input.GetKey(ExitKey)) {
             if (Application.loadedLevelName.Equals(TITLESCREEN)) {//escape key for when on Title Screen
                 Application.Quit();
@@ -42,10 +48,7 @@ public class GameControl : MonoBehaviour {
             }
         }
         if (Input.GetKey(KeyCode.T)) {
-            IsChatting = true;
-        }
-        if (Input.GetKey(KeyCode.Return)) {
-            //IsChatting = false;
+            ChatState = ChattingState.ChatOpenAndTyping;
         }
         
 	}
@@ -69,6 +72,7 @@ public class GameControl : MonoBehaviour {
             if (GUILayout.Button("Join ChatRoom")) {
                 if (!_chatUsername.Equals("UserName") && !_chatUsername.Equals("")) {
                     _chatClient.Host = _chatUsername;
+                    ChatState = ChattingState.ChatClosedButShowing;
                 }
                 else {
                     StartCoroutine(PhotonNetworkManager.TextPopup(.5f));
@@ -76,7 +80,6 @@ public class GameControl : MonoBehaviour {
             }
         }
         else {
-            _chatClient.SuspendInput = !IsChatting;
             scrollPosition = GUILayout.BeginScrollView(scrollPosition, GUILayout.Width(ChatBoxWidth));
             GUILayout.Label(_chatClient.TextOutput());
             GUILayout.EndScrollView();

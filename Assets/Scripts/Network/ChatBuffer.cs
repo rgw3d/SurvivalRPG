@@ -29,7 +29,7 @@ public class ChatBuffer : Photon.MonoBehaviour {
     }
 
     public void Update() {
-        if (!SuspendInput) 
+        if (GameControl.ChatState == GameControl.ChattingState.ChatOpenAndTyping) 
             AddInput(Input.inputString);
         
 
@@ -45,9 +45,6 @@ public class ChatBuffer : Photon.MonoBehaviour {
     }
 
     public void AddInput(string text) {
-        if (SuspendInput) {
-            return;
-        }
 
         foreach (var c in text) {
             if (c == "\b"[0]) {//backspace
@@ -59,7 +56,7 @@ public class ChatBuffer : Photon.MonoBehaviour {
                 if (GetOutput.PrintInput()) {
                     AddLine(InputTextOutput(true), true);
                 }
-                GameControl.IsChatting = false;
+                GameControl.ChatState = GameControl.ChattingState.ChatClosedButShowing;
                 GetOutput.ParseInput(_inputBuffer);//commands
 
                 _inputBuffer = "";
@@ -75,7 +72,7 @@ public class ChatBuffer : Photon.MonoBehaviour {
 
         output += "\n";
 
-        if (!SuspendInput) {// Not Suspending Input, display typing
+        if (GameControl.ChatState == GameControl.ChattingState.ChatOpenAndTyping) {// Not Suspending Input, display typing
             output += InsertLineBreaks(InputTextOutput());
         }
 
