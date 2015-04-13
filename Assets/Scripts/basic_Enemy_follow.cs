@@ -7,6 +7,8 @@ public class basic_Enemy_follow : MonoBehaviour {
 	public float healthValue=100;
 	public float speed=0.01f;
 
+	private int tick = 300;
+
     private bool _isAttacking = false;
 
 	List<Vector3> currentPath = new List<Vector3>();
@@ -20,11 +22,12 @@ public class basic_Enemy_follow : MonoBehaviour {
         if (playerChar == null) {
             Debug.Log("player char is null");
         }
-        findPath();
+        
         
 	}
 
 	void FixedUpdate () {
+		findPath();
 		moveTowardsPlayer ();
 	}
 
@@ -40,12 +43,16 @@ public class basic_Enemy_follow : MonoBehaviour {
     }
 
 	void findPath(){
-        currentPath = AStar.findABPath(transform.position, playerChar.transform.position);
-
-        foreach (Vector3 node in currentPath) {
+		if(tick == 300){
+			currentPath = AStar.findABPath(transform.position, playerChar.transform.position);
+			indexOfPath = 0;
+			tick = 0;
+		}
+		tick++;
+		/*foreach (Vector3 node in currentPath) {
             Debug.Log(node.x + " " + node.y);
-        }
-        Debug.Log("current path is " + currentPath.Count);
+        }*/
+        //Debug.Log("current path is " + currentPath.Count);
 	}
 
 	void moveTowardsPlayer(){
