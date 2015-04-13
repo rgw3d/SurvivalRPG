@@ -23,6 +23,7 @@ public class GameControl : MonoBehaviour {
     private Vector2 scrollPosition;
     public static bool IsChatting = false;
     public static int ChatBoxWidth = Screen.width/3;
+    public static int ChatBoxHeight = Screen.height / 3;
     public static ChattingState ChatState = ChattingState.NoUsername;
     
 
@@ -54,12 +55,10 @@ public class GameControl : MonoBehaviour {
 	}
 
     void OnGUI() {
-        GUILayout.BeginArea(new Rect(0, 4 * Screen.height/6, Screen.width, Screen.height));
+        GUILayout.BeginArea(new Rect(0,Screen.height-ChatBoxHeight, ChatBoxWidth, ChatBoxHeight));
             GUILayout.BeginVertical();
-                GUILayout.BeginHorizontal();
                     if(PhotonNetwork.room != null)
                         ChatClient();
-                GUILayout.EndHorizontal();
             GUILayout.EndVertical();
         GUILayout.EndArea();
 
@@ -80,7 +79,7 @@ public class GameControl : MonoBehaviour {
             }
         }
         else {
-            scrollPosition = GUILayout.BeginScrollView(scrollPosition, GUILayout.Width(ChatBoxWidth), GUILayout.Height(Screen.height/6));
+            scrollPosition = GUILayout.BeginScrollView(scrollPosition, GUILayout.Width(ChatBoxWidth), GUILayout.Height(ChatBoxHeight));
             GUILayout.Label(_chatClient.TextOutput());
             GUILayout.EndScrollView();
         }
