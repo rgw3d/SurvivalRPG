@@ -15,7 +15,7 @@ public class ChatBuffer : Photon.MonoBehaviour {
     public string Host = "";
     public string Prompt = ">";
 
-    public const int MaxBufferLength = 10000;
+    public const int MaxBufferLength = 5000;
 
     public bool SuspendInput = true;
     public bool HidePrompt;
@@ -31,11 +31,6 @@ public class ChatBuffer : Photon.MonoBehaviour {
     public void Update() {
         if (GameControl.ChatState == GameControl.ChattingState.ChatOpenAndTyping) 
             AddInput(Input.inputString);
-        
-
-            //_text.text = ScrollBuffer(TextOutput(), _scrollIndex);
-            //TODO add something that will actually display the text
-
 
             // Truncate buffer if longer than buffer limit
             while (_buffer.Length > 10000) {
