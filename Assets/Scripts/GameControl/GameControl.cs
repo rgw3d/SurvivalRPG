@@ -80,7 +80,7 @@ public class GameControl : MonoBehaviour {
             }
         }
         else {
-            scrollPosition = GUILayout.BeginScrollView(scrollPosition, GUILayout.Width(ChatBoxWidth));
+            scrollPosition = GUILayout.BeginScrollView(scrollPosition, GUILayout.Width(ChatBoxWidth), GUILayout.Height(Screen.height/6));
             GUILayout.Label(_chatClient.TextOutput());
             GUILayout.EndScrollView();
         }

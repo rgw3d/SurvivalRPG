@@ -52,10 +52,12 @@ public class PlayerControl : Photon.MonoBehaviour{
         if (Input.GetKey(KeyCode.E)) { //just a test of the ability to work
             DelegateHolder.TriggerPlayerStatChange(StatType.Score, 1f);   
         }
-        if (photonView.isMine && GameControl.ChatState == GameControl.ChattingState.ChatClosedButShowing || GameControl.ChatState == GameControl.ChattingState.NoUsername) {
-            playerMovement();
-            playerSprite();
-            playerAttack();
+        if (photonView.isMine) {
+            if (GameControl.ChatState == GameControl.ChattingState.ChatClosedButShowing || GameControl.ChatState == GameControl.ChattingState.NoUsername) { 
+                playerMovement();
+                playerSprite();
+                playerAttack();
+            }   
         }
         else {
             SyncedMovement();
