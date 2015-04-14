@@ -43,9 +43,11 @@ public class basic_Enemy_follow : MonoBehaviour {
     }
 
 	void findPath(){
-		if(tick == 300){
+		if(tick == 300 ){
 			currentPath = AStar.findABPath(transform.position, playerChar.transform.position);
 			indexOfPath = 0;
+
+			Debug.Log("Enemy:" + playerChar.transform.position.x + "," + playerChar.transform.position.y);
 			tick = 0;
 		}
 		tick++;
@@ -59,21 +61,15 @@ public class basic_Enemy_follow : MonoBehaviour {
 
 		//compare x of enemy to next tile
 		//compare y of enemy to next tile
-		if(!isDonePathing){
-			float angle = Mathf.Atan ( (transform.position.x - currentPath[indexOfPath].x )  / (transform.position.y - currentPath[indexOfPath].y));
-			if (transform.position.y - currentPath[indexOfPath].y >= 0)
-				angle += Mathf.PI;
-			transform.Translate (speed *Mathf.Sin(angle), speed *Mathf.Cos(angle), 0);
-
-			if(Mathf.Abs(transform.position.x - currentPath[indexOfPath].x) < .03f && Mathf.Abs(transform.position.y - currentPath[indexOfPath].y) < .03f){
-				indexOfPath++;
-			
-			}
-			Debug.Log("indexOfPath is " + indexOfPath);
-			if(indexOfPath == currentPath.Count){
-				isDonePathing = true;
-			}
-			
+		float angle = Mathf.Atan ( (transform.position.x - currentPath[indexOfPath].x )  / (transform.position.y - currentPath[indexOfPath].y));
+		if (transform.position.y - currentPath[indexOfPath].y >= 0)
+			angle += Mathf.PI;
+		transform.Translate (speed *Mathf.Sin(angle), speed *Mathf.Cos(angle), 0);
+	
+		if(Mathf.Abs(transform.position.x - currentPath[indexOfPath].x) < .03f && Mathf.Abs(transform.position.y - currentPath[indexOfPath].y) < .03f){
+			indexOfPath++;
+		}
+			//Debug.Log("indexOfPath is " + indexOfPath);
 		}
 	}
 
