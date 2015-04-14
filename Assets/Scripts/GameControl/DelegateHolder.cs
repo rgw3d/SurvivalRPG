@@ -8,6 +8,7 @@ public delegate void GameCreated();
 public delegate void GenerateAndRenderMap();
 public delegate void MapGenerated(bool isHost);
 public delegate void MapRendered(bool isHost);
+public delegate void ChatMessageSent(string message);
 
 
 public static class DelegateHolder {
@@ -19,7 +20,7 @@ public static class DelegateHolder {
     public static event GenerateAndRenderMap OnGenerateAndRenderMap;
     public static event MapGenerated OnMapGenerated;
     public static event MapRendered OnMapRendered;
-
+    public static event ChatMessageSent OnChatMessageSent;
 
     public static void TriggerPlayerStatChange(StatType statType, float amountChange) {
         if (OnPlayerStatChange != null) {
@@ -58,6 +59,14 @@ public static class DelegateHolder {
             Debug.Log("Delegate Called: Trigger Map Rendered");
             OnMapRendered(isHost);
         }
+    }
+
+    public static void TriggerChatMessageSent(string message) {
+        if (OnChatMessageSent != null) {
+            Debug.Log("Delegate Called: Chat Message Sent");
+            OnChatMessageSent(message);
+        }
+        
     }
 
 }

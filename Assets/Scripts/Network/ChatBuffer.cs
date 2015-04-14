@@ -20,10 +20,7 @@ public class ChatBuffer : Photon.MonoBehaviour {
     public bool SuspendInput = true;
     public bool HidePrompt;
 
-    public ChatOutput GetOutput;
-
     public void Start() {
-        GetOutput = FindObjectOfType<ChatOutput>();
         ScreenWidth = GameControl.ChatBoxWidth;
         HidePrompt = true;
     }
@@ -48,11 +45,9 @@ public class ChatBuffer : Photon.MonoBehaviour {
                 }
             }
             else if (c == "\n"[0] || c == "\r"[0]) {//new line/ return
-                if (GetOutput.PrintInput()) {
-                    AddLine(InputTextOutput(true), true);
-                }
+                AddLine(InputTextOutput(true), true);
+
                 GameControl.ChatState = GameControl.ChattingState.ChatClosedButShowing;
-                GetOutput.ParseInput(_inputBuffer);//commands
 
                 _inputBuffer = "";
             }
@@ -94,6 +89,7 @@ public class ChatBuffer : Photon.MonoBehaviour {
 
         if(sendRPC)
             photonView.RPC("RecieveChatText", PhotonTargets.Others, text);
+        DelegateHolder.TriggerChatMessageSent(text);
 
         _buffer += "\n";
 

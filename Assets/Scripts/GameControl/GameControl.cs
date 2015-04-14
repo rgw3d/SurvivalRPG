@@ -30,6 +30,7 @@ public class GameControl : MonoBehaviour {
 	void Start () {
         DontDestroyOnLoad(this);
         _chatClient = FindObjectOfType<ChatBuffer>();
+        DelegateHolder.OnChatMessageSent += ChatMessageSent;
 	}
 
     public enum ChattingState {
@@ -81,9 +82,13 @@ public class GameControl : MonoBehaviour {
              
         }
         else {
-            scrollPosition = GUILayout.BeginScrollView(scrollPosition, GUILayout.Width(ChatBoxWidth), GUILayout.Height(ChatBoxHeight));
+            scrollPosition = GUILayout.BeginScrollView(scrollPosition,false, true, GUILayout.Width(ChatBoxWidth), GUILayout.Height(ChatBoxHeight));
             GUILayout.Label(_chatClient.TextOutput());
             GUILayout.EndScrollView();
         }
+    }
+
+    void ChatMessageSent(string message) {
+        scrollPosition.y = Mathf.Infinity;//set scroll position equal to the bottom of the view area
     }
 }

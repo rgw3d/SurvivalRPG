@@ -7,6 +7,7 @@ public class ChatOutput : MonoBehaviour {
 
     public void Start() {
         Output = FindObjectOfType<ChatBuffer>();
+        DelegateHolder.OnChatMessageSent += ParseInput;
     }
 
     public void InitScreen() {
