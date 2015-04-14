@@ -70,7 +70,6 @@ public class basic_Enemy_follow : MonoBehaviour {
 			indexOfPath++;
 		}
 			//Debug.Log("indexOfPath is " + indexOfPath);
-		}
 	}
 
     /*void OnTriggerEnter2D(Collider2D col){
