@@ -69,7 +69,7 @@ public class GameControl : MonoBehaviour {
         if (_chatClient.Host.Equals("")) {
             GUILayout.Label("Chat Username: ");
             _chatUsername = GUILayout.TextField(_chatUsername);
-            if (GUILayout.Button("Join ChatRoom") || Input.inputString[0] == "\n"[0] || Input.inputString[0] == "\r"[0]) {
+            if (GUILayout.Button("Join ChatRoom")) {
                 if (!_chatUsername.Equals("UserName") && !_chatUsername.Equals("")) {
                     _chatClient.Host = _chatUsername;
                     ChatState = ChattingState.ChatClosedButShowing;
@@ -78,6 +78,7 @@ public class GameControl : MonoBehaviour {
                     StartCoroutine(PhotonNetworkManager.TextPopup(.5f));
                 }
             }
+             
         }
         else {
             scrollPosition = GUILayout.BeginScrollView(scrollPosition, GUILayout.Width(ChatBoxWidth), GUILayout.Height(ChatBoxHeight));
