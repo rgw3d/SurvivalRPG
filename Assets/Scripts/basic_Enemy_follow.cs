@@ -14,8 +14,15 @@ public class basic_Enemy_follow : MonoBehaviour {
 	List<Vector3> currentPath = new List<Vector3>();
 	int indexOfPath = 0;
 	bool isDonePathing = false;
+	pathfindingState currentState = pathfindingState.Inactive;
 
 	public Map Map;
+
+	public enum pathfindingState {
+		Inactive,
+		Active,
+		Nearby
+	}
 
     void Start() {
         playerChar = GameObject.FindGameObjectWithTag("Player") as GameObject;
@@ -27,8 +34,29 @@ public class basic_Enemy_follow : MonoBehaviour {
 	}
 
 	void FixedUpdate () {
-		findPath();
-		moveTowardsPlayer ();
+
+		float distance = Vector3.Distance(transform.position, playerChar.transform.position);
+
+		if(distance > 5 && distance <= 10){
+			if(currentState == pathfindingState.Nearby){
+				tick = 60;
+				currentState = pathfindingState.Active;
+			}
+
+		}
+
+		if(distance <= 5){
+			currentState = pathfindingState.Nearby;
+		}
+
+		if(currentState == pathfindingState.Active){
+			findPath();
+			moveToPlayerAlongPath();
+		}
+
+		if(currentState == pathfindingState.Nearby){
+			nearbyMoveToPlayer();
+		}
 	}
 
 	void OnTriggerEnter2D(Collider2D collider){
@@ -43,20 +71,16 @@ public class basic_Enemy_follow : MonoBehaviour {
     }
 
 	void findPath(){
-		if(tick == 60){
+		if(tick == 60){//recreate the path every x number of seconds where x is the tick / 60
 			currentPath = AStar.findABPath(transform.position, playerChar.transform.position);
 			indexOfPath = 0;
 			isDonePathing = false;
 			tick = 0;
 		}
 		tick++;
-		/*foreach (Vector3 node in currentPath) {
-            Debug.Log(node.x + " " + node.y);
-        }*/
-        //Debug.Log("current path is " + currentPath.Count);
 	}
 
-	void moveTowardsPlayer(){
+	void moveToPlayerAlongPath(){
 
 		//compare x of enemy to next tile
 		//compare y of enemy to next tile
@@ -76,6 +100,13 @@ public class basic_Enemy_follow : MonoBehaviour {
 			}
 			
 		}
+	}
+
+	void nearbyMoveToPlayer(){
+		float angle = Mathf.Atan ( (transform.position.x - playerChar.transform.position.x )  / (transform.position.y - playerChar.transform.position.y));
+		if (transform.position.y - playerChar.transform.position.y >= 0)
+			angle += Mathf.PI;
+		transform.Translate (speed *Mathf.Sin(angle), speed *Mathf.Cos(angle), 0);
 	}
 
     /*void OnTriggerEnter2D(Collider2D col){

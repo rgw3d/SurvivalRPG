@@ -276,7 +276,6 @@ MonoBehaviour:
   Prompt: '>'
   SuspendInput: 0
   HidePrompt: 0
-  GetOutput: {fileID: 0}
 --- !u!114 &1492229324
 MonoBehaviour:
   m_ObjectHideFlags: 0
