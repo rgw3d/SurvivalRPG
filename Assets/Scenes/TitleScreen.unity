@@ -130,13 +130,13 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   MapWidth: 100
   MapHeight: 100
-  NumberOfRooms: 30
+  NumberOfRooms: 45
   MinimumRoomWidth: 5
   MaximumRoomWidth: 12
   MinimumRoomHeight: 5
   MaximumRoomHeight: 12
   NumberTriesToGenRooms: 150
-  RoomIntersectionOffset: 1
+  RoomIntersectionOffset: 4
 --- !u!114 &585698495
 MonoBehaviour:
   m_ObjectHideFlags: 0
