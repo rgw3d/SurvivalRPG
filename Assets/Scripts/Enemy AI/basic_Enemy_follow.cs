@@ -39,7 +39,11 @@ public class basic_Enemy_follow : MonoBehaviour {
 
     bool InLineOfSight(GameObject target) {
         RaycastHit2D x = Physics2D.Linecast(transform.position, target.transform.position ,playerMask.value);
-		return x;
+		Debug.Log(x.collider);
+		if(x.collider == playerChar.collider2D){
+			return true;
+		}
+		return false;
     }
 
 	void FixedUpdate () {
@@ -50,25 +54,21 @@ public class basic_Enemy_follow : MonoBehaviour {
 			if(lineOfSight){
 				if(distance < 5){
 					currentState = pathfindingState.Attacking;
-					Debug.Log("State 1");
 				}
 				else{
 					tick = 60;
 					currentState = pathfindingState.Active;
-					Debug.Log("State 2");
 				}
 			}
 			else{
 				if(currentState == pathfindingState.Attacking){
 					tick = 60;
 					currentState = pathfindingState.Active;
-					Debug.Log("State 3");
 				}
 			}
 		}
 		else{
 			currentState = pathfindingState.Inactive;
-			Debug.Log("State 4");
 		}
 
 		if(currentState == pathfindingState.Active){

@@ -69,8 +69,8 @@ public class PlayerControl : Photon.MonoBehaviour{
 
 
     public void playerMovement() {
-        Debug.Log("movement method called");
-        Debug.Log(movementSpeed);
+        //Debug.Log("movement method called");
+        //Debug.Log(movementSpeed);
         if (Input.GetKey(UpKey)) {
             rigidbody2D.AddForce(Vector2.up * movementSpeed);
             _playerDirection = CardinalDirection.back;
