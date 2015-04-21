@@ -11,3 +11,5 @@ EditorBuildSettings:
     path: Assets/Scenes/PlayScene.unity
   - enabled: 0
     path: Assets/Scenes/testNetworkScene.unity
+  - enabled: 0
+    path: Assets/Photon Unity Networking/Demos/DemoSynchronization/DemoSynchronization-Scene.unity

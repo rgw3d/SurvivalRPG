@@ -13,7 +13,7 @@ public class PlayerStats: MonoBehaviour {
 	public static float MovementSpeed;
     private CharacterClass _characterClass;
 
-	void Start(){
+	void Awake(){
         playerName = PhotonNetworkManager.selectedPlayerName;
         MaxHealth = PlayerPrefs.GetInt(GameControl.PLAYERMAXHEALTHKEY + PhotonNetworkManager.selectedPlayerName);
 		CurrentHealth = MaxHealth;

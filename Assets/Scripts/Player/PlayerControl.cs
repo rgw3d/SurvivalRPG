@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 
+[RequireComponent(typeof(PhotonView))]
 public class PlayerControl : Photon.MonoBehaviour{
 
     public Sprite FrontSprite;
@@ -24,19 +25,20 @@ public class PlayerControl : Photon.MonoBehaviour{
 
     private CardinalDirection _playerDirection = CardinalDirection.front;
 
-    private float _lastSynchronizationTime = 0f;
-    private float _syncDelay = 0f;
-    private float _syncTime = 0f;
-    private Vector2 _syncStartPosition;
-    private Vector2 _syncEndPosition;
+    private Vector3 latestCorrectPos;
+    private Vector3 onUpdatePos;
+    private float fraction;
     
 
 	// Use this for initialization
 	void Start () {
+        latestCorrectPos = transform.position;
+        onUpdatePos = transform.position;
+
+        movementSpeed = PlayerStats.MovementSpeed;
+
         _spriteRenderer = GetComponent<SpriteRenderer>();
         _spriteRenderer.sprite = FrontSprite;
-        _syncStartPosition = transform.position;
-        _syncEndPosition = transform.position;
 	}
 
     private enum CardinalDirection {
@@ -48,16 +50,16 @@ public class PlayerControl : Photon.MonoBehaviour{
 	
 	// Update is called once per frame
 	void FixedUpdate () {
-		movementSpeed = PlayerStats.MovementSpeed;
-        if (Input.GetKey(KeyCode.E)) { //just a test of the ability to work
-            DelegateHolder.TriggerPlayerStatChange(StatType.Score, 1f);   
-        }
+        
         if (photonView.isMine) {
             if (GameControl.ChatState == GameControl.ChattingState.ChatClosedButShowing || GameControl.ChatState == GameControl.ChattingState.NoUsername) { 
                 playerMovement();
                 playerSprite();
                 playerAttack();
-            }   
+            }
+            if (Input.GetKey(KeyCode.E)) { //just a test of the ability to work
+                DelegateHolder.TriggerPlayerStatChange(StatType.Score, 1f);
+            }
         }
         else {
             SyncedMovement();
@@ -67,6 +69,8 @@ public class PlayerControl : Photon.MonoBehaviour{
 
 
     public void playerMovement() {
+        Debug.Log("movement method called");
+        Debug.Log(movementSpeed);
         if (Input.GetKey(UpKey)) {
             rigidbody2D.AddForce(Vector2.up * movementSpeed);
             _playerDirection = CardinalDirection.back;
@@ -120,22 +124,37 @@ public class PlayerControl : Photon.MonoBehaviour{
 
     void OnPhotonSerializeView(PhotonStream stream, PhotonMessageInfo info) {
         if (stream.isWriting) {
-            stream.SendNext(rigidbody2D.position);
+            Vector3 pos = transform.localPosition;
+            Quaternion rot = transform.localRotation;
+            stream.Serialize(ref pos);
+            stream.Serialize(ref rot);
         }
         else {
-            _syncEndPosition = (Vector2)stream.ReceiveNext();
-            _syncStartPosition = rigidbody2D.position;
+            // Receive latest state information
+            Vector3 pos = Vector3.zero;
+            Quaternion rot = Quaternion.identity;
 
-            _syncTime = 0f;
-            _syncDelay = Time.time - _lastSynchronizationTime;
-            _lastSynchronizationTime = Time.time;
+            stream.Serialize(ref pos);
+            stream.Serialize(ref rot);
 
+            latestCorrectPos = pos;                 // save this to move towards it in FixedUpdate()
+            onUpdatePos = transform.localPosition;  // we interpolate from here to latestCorrectPos
+            fraction = 0;                           // reset the fraction we alreay moved. see Update()
+
+            transform.localRotation = rot;          // this sample doesn't smooth rotation
         }
     }
 
     private void SyncedMovement() {
-        _syncTime += Time.deltaTime;
-        rigidbody2D.position = Vector2.Lerp(_syncStartPosition, _syncEndPosition, _syncTime / _syncDelay);
+        // We get 10 updates per sec. sometimes a few less or one or two more, depending on variation of lag.
+        // Due to that we want to reach the correct position in a little over 100ms. This way, we usually avoid a stop.
+        // Lerp() gets a fraction value between 0 and 1. This is how far we went from A to B.
+        //
+        // Our fraction variable would reach 1 in 100ms if we multiply deltaTime by 10.
+        // We want it to take a bit longer, so we multiply with 9 instead.
+
+        fraction = fraction + Time.deltaTime * 9;
+        transform.localPosition = Vector3.Lerp(onUpdatePos, latestCorrectPos, fraction);    // set our pos between A and B
     }
 
 }
