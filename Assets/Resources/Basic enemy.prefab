@@ -97,6 +97,7 @@ MonoBehaviour:
   playerChar: {fileID: 0}
   healthValue: 100
   speed: .0500000007
+  lineOfSight: 0
   playerMask:
     serializedVersion: 2
     m_Bits: 257
@@ -139,6 +140,10 @@ MonoBehaviour:
   playerChar: {fileID: 100000, guid: 324e7e8985f374349bf4127f48448169, type: 2}
   healthValue: 100
   speed: .00999999978
+  lineOfSight: 0
+  playerMask:
+    serializedVersion: 2
+    m_Bits: 0
 --- !u!212 &21200000
 SpriteRenderer:
   m_ObjectHideFlags: 1

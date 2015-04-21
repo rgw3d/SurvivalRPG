@@ -18,13 +18,16 @@ public class basic_Enemy_follow : MonoBehaviour {
 
 	public Map Map;
 
+	public bool lineOfSight = false;
     public LayerMask playerMask;
 
 	public enum pathfindingState {
 		Inactive,
 		Active,
-		Nearby
+		Attacking
 	}
+
+
 
     void Start() {
         playerChar = GameObject.FindGameObjectWithTag("Player") as GameObject;
@@ -32,31 +35,40 @@ public class basic_Enemy_follow : MonoBehaviour {
             Debug.Log("player char is null");
         }
         
-        
 	}
 
     bool InLineOfSight(GameObject target) {
-        RaycastHit2D x = Physics2D.Linecast(transform.position, target.transform.position,playerMask.value, 10f);
-        if (x)
-            return x.transform.tag == target.tag;
-        else
-            return false;
+        RaycastHit2D x = Physics2D.Linecast(transform.position, target.transform.position ,playerMask.value);
+		return x;
     }
 
 	void FixedUpdate () {
 
 		float distance = Vector3.Distance(transform.position, playerChar.transform.position);
-
-		if(distance > 5 && distance <= 10){
-			if(currentState == pathfindingState.Nearby || currentState == pathfindingState.Inactive){
-				tick = 60;
-				currentState = pathfindingState.Active;
+		if(distance < 25){ // good luck m8
+			lineOfSight = InLineOfSight(playerChar);
+			if(lineOfSight){
+				if(distance < 5){
+					currentState = pathfindingState.Attacking;
+					Debug.Log("State 1");
+				}
+				else{
+					tick = 60;
+					currentState = pathfindingState.Active;
+					Debug.Log("State 2");
+				}
 			}
-
+			else{
+				if(currentState == pathfindingState.Attacking){
+					tick = 60;
+					currentState = pathfindingState.Active;
+					Debug.Log("State 3");
+				}
+			}
 		}
-
-		if(distance <= 5){
-			currentState = pathfindingState.Nearby;
+		else{
+			currentState = pathfindingState.Inactive;
+			Debug.Log("State 4");
 		}
 
 		if(currentState == pathfindingState.Active){
@@ -64,13 +76,8 @@ public class basic_Enemy_follow : MonoBehaviour {
 			moveToPlayerAlongPath();
 		}
 
-		if(currentState == pathfindingState.Nearby){
-            if(InLineOfSight(playerChar))
-			    nearbyMoveToPlayer();
-            else {
-                findPath();
-                moveToPlayerAlongPath();
-            }
+		if(currentState == pathfindingState.Attacking){
+			nearbyMoveToPlayer();
 		}
 	}
 
