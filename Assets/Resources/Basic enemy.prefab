@@ -99,7 +99,7 @@ MonoBehaviour:
   speed: .0500000007
   playerMask:
     serializedVersion: 2
-    m_Bits: 256
+    m_Bits: 257
 --- !u!114 &11400002
 MonoBehaviour:
   m_ObjectHideFlags: 1

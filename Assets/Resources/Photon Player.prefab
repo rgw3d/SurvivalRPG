@@ -15,7 +15,7 @@ GameObject:
   - 60: {fileID: 6000000}
   - 114: {fileID: 11400004}
   - 114: {fileID: 11495896}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Photon Player
   m_TagString: Player
   m_Icon: {fileID: 0}
