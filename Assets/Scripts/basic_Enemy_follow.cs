@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections.Generic;
 
+
 public class basic_Enemy_follow : MonoBehaviour {
 
 	public GameObject playerChar;
@@ -44,7 +45,10 @@ public class basic_Enemy_follow : MonoBehaviour {
 
 	void findPath(){
 		if(tick == 300 ){
-			currentPath = AStar.findABPath(transform.position, playerChar.transform.position);
+            Debug.Log("Position of enemy that it sends: " + transform.position + "\n position of player: " + playerChar.transform.position);
+
+            #error TROLLOLOLOLOLOLOLOL
+            currentPath = AStar.findABPath(transform.position, playerChar.transform.position);
 			indexOfPath = 0;
 
 			Debug.Log("Enemy:" + playerChar.transform.position.x + "," + playerChar.transform.position.y);
