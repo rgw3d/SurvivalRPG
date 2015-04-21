@@ -80,7 +80,7 @@ public class GenerateMap : Photon.MonoBehaviour {
                 Map.roomList.Add(basicRoom);
                 for (int y = basicRoom.BottomY; y <= basicRoom.TopY; y++) {
                     for (int x = basicRoom.LeftX; x <= basicRoom.RightX; x++) {
-                        Map.mapTiles[x, y].SetTileType(MapTile.TileType.red);
+                        Map.mapTiles[x, y].SetTileType(MapTile.TileType.background);
                     }
                 }
                 numberOfRooms--;
@@ -104,11 +104,11 @@ public class GenerateMap : Photon.MonoBehaviour {
                 int r2Y = Random.Range(r2.BottomY, r2.TopY + 1);
 
                 while (r1X != r2X) {
-                    Map.mapTiles[r1X, r1Y].SetTileType(MapTile.TileType.red);
+                    Map.mapTiles[r1X, r1Y].SetTileType(MapTile.TileType.background);
                     r1X += (r1X < r2X) ? 1 : -1;
                 }
                 while (r1Y != r2Y) {
-                    Map.mapTiles[r1X, r1Y].SetTileType(MapTile.TileType.red);
+                    Map.mapTiles[r1X, r1Y].SetTileType(MapTile.TileType.background);
                     r1Y += (r1Y < r2Y) ? 1 : -1;
                 }
                 r1.isConnected = true;
@@ -138,30 +138,30 @@ public class GenerateMap : Photon.MonoBehaviour {
         for (int y = 0; y < MapHeight; y++) {
             for (int x = 0; x < MapWidth; x++) {
                 MapTile tile = Map.mapTiles[x, y];
-                if (tile.GetTileType() == MapTile.TileType.red) {
+                if (tile.GetTileType() == MapTile.TileType.background) {
                     if (Map.mapTiles[x - 1, y].GetTileType() == MapTile.TileType.white)//left
-                        Map.mapTiles[x - 1, y].SetTileType(MapTile.TileType.blue);
+                        Map.mapTiles[x - 1, y].SetTileType(MapTile.TileType.wall);
 
                     if (Map.mapTiles[x - 1, y + 1].GetTileType() == MapTile.TileType.white)//above left
-                        Map.mapTiles[x - 1, y + 1].SetTileType(MapTile.TileType.blue);
+                        Map.mapTiles[x - 1, y + 1].SetTileType(MapTile.TileType.wall);
 
                     if (Map.mapTiles[x, y + 1].GetTileType() == MapTile.TileType.white)//above
-                        Map.mapTiles[x, y + 1].SetTileType(MapTile.TileType.blue);
+                        Map.mapTiles[x, y + 1].SetTileType(MapTile.TileType.wall);
 
                     if (Map.mapTiles[x + 1, y + 1].GetTileType() == MapTile.TileType.white)//above right
-                        Map.mapTiles[x + 1, y + 1].SetTileType(MapTile.TileType.blue);
+                        Map.mapTiles[x + 1, y + 1].SetTileType(MapTile.TileType.wall);
 
                     if (Map.mapTiles[x + 1, y].GetTileType() == MapTile.TileType.white)//right
-                        Map.mapTiles[x + 1, y].SetTileType(MapTile.TileType.blue);
+                        Map.mapTiles[x + 1, y].SetTileType(MapTile.TileType.wall);
 
                     if (Map.mapTiles[x + 1, y - 1].GetTileType() == MapTile.TileType.white)//below right
-                        Map.mapTiles[x + 1, y - 1].SetTileType(MapTile.TileType.blue);
+                        Map.mapTiles[x + 1, y - 1].SetTileType(MapTile.TileType.wall);
 
                     if (Map.mapTiles[x, y - 1].GetTileType() == MapTile.TileType.white)//below
-                        Map.mapTiles[x, y - 1].SetTileType(MapTile.TileType.blue);
+                        Map.mapTiles[x, y - 1].SetTileType(MapTile.TileType.wall);
 
                     if (Map.mapTiles[x - 1, y - 1].GetTileType() == MapTile.TileType.white)//below left
-                        Map.mapTiles[x - 1, y - 1].SetTileType(MapTile.TileType.blue);
+                        Map.mapTiles[x - 1, y - 1].SetTileType(MapTile.TileType.wall);
                 }
             }
         }
@@ -170,7 +170,7 @@ public class GenerateMap : Photon.MonoBehaviour {
     public void createGoal() {
         Vector2 center = Map.roomList[Map.roomList.Count - 1].GetCenter();
         Debug.Log("Center: " + center.x + "  " + center.y);
-        Map.mapTiles[(int)center.x, (int)center.y].SetTileType(MapTile.TileType.green);
+        Map.mapTiles[(int)center.x, (int)center.y].SetTileType(MapTile.TileType.goal);
     }
 
 }

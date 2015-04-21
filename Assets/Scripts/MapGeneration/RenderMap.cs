@@ -47,16 +47,16 @@ public class RenderMap: Photon.MonoBehaviour {
                 MapTile.TileType tileType = tiles[x, y].GetTileType();
                 GameObject tile = null;
                 switch (tileType) {
-                    case MapTile.TileType.red:
+                    case MapTile.TileType.background:
                         tile = Ground;
                         break;
                     case MapTile.TileType.white:
                         tile = null;//we are not displaying the background tiles right now
                         break;
-                    case MapTile.TileType.blue:
+                    case MapTile.TileType.wall:
                         tile = Wall;
                         break;
-                    case MapTile.TileType.green:
+                    case MapTile.TileType.goal:
                         tile = ExitTile;
                         break;
                     default:

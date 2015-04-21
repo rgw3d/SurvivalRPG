@@ -15,8 +15,8 @@ public class MapTile {
     public enum TileType {
         background = 0,
         white = 1,
-        blue = 2,
-        green = 3
+        wall = 2,
+        goal = 3
 
     }
 
@@ -35,10 +35,10 @@ public class MapTile {
                 _tileType = TileType.white;
                 break;
             case 2:
-                _tileType = TileType.blue;
+                _tileType = TileType.wall;
                 break;
             case 3:
-                _tileType = TileType.green;
+                _tileType = TileType.goal;
                 break;
         }
     }
@@ -57,9 +57,9 @@ public class MapTile {
                 return "red";
             case TileType.white:
                 return "white";
-            case TileType.blue:
+            case TileType.wall:
                 return "blue";
-            case TileType.green:
+            case TileType.goal:
                 return "Green";
             default:
                 return "white";
