@@ -102,12 +102,12 @@ public class RangedEnemy : MonoBehaviour {
 		}
 	}
 	
-	void nearbyMoveToPlayer(){
+	/*void nearbyMoveToPlayer(){
 		float angle = Mathf.Atan ( (transform.position.x - playerChar.transform.position.x )  / (transform.position.y - playerChar.transform.position.y));
 		if (transform.position.y - playerChar.transform.position.y >= 0)
 			angle += Mathf.PI;
 		transform.Translate (speed *Mathf.Sin(angle), speed *Mathf.Cos(angle), 0);
-	}
+	}*/
 	
 	/*void OnTriggerEnter2D(Collider2D col){
         if (col.gameObject == playerChar && _isAttacking) {

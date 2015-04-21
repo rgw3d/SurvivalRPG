@@ -13,7 +13,7 @@ public class MapTile {
 	public MapTile Parent; // the public
 
     public enum TileType {
-        red = 0,
+        background = 0,
         white = 1,
         blue = 2,
         green = 3
@@ -24,12 +24,12 @@ public class MapTile {
         _tileType = tileType;
 		X = x;
 		Y = y;
-    }
+	}
 
     public MapTile(int tileValue) {
         switch (tileValue) {
             case 0:
-                _tileType = TileType.red;
+                _tileType = TileType.background;
                 break;
             case 1:
                 _tileType = TileType.white;
@@ -53,7 +53,7 @@ public class MapTile {
 
     public override string ToString() {
         switch (_tileType) {
-            case TileType.red:
+            case TileType.background:
                 return "red";
             case TileType.white:
                 return "white";
