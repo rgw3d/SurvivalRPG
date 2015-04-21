@@ -19,9 +19,8 @@ public static class AStar {
 
         ReInitalizeVariables();
 
-		_startTile = _mapTiles[Mathf.FloorToInt(startPos.x),Mathf.FloorToInt(startPos.y)];
-		_endTile = _mapTiles[Mathf.FloorToInt(endPos.x),Mathf.FloorToInt(endPos.y)];
-		Debug.Log("AStar:" + Mathf.FloorToInt(endPos.x) + "," + Mathf.FloorToInt(endPos.y));
+		_startTile = _mapTiles[Mathf.RoundToInt(startPos.x),Mathf.RoundToInt(startPos.y)];
+		_endTile = _mapTiles[Mathf.RoundToInt(endPos.x),Mathf.RoundToInt(endPos.y)];
 		_currentTile = _startTile;
 		_startTile.G = 0;
 		List<MapTile> adjTiles = new List<MapTile>();

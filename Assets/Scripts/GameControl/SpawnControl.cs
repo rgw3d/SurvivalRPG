@@ -39,12 +39,10 @@ public class SpawnControl : Photon.MonoBehaviour {
 
     public void SpawnEnemies(bool isHost) {
         if (isHost) {//to spawn enemy, just call PhotonNetwork.Instantiate() to do it
-            PhotonNetwork.Instantiate(enemyPrefab.name, GenerateMap.Map.roomList[6].GetCenter(), Quaternion.identity, 0);
-
+			PhotonNetwork.Instantiate(enemyPrefab.name, GenerateMap.Map.roomList[6].GetCenter(), Quaternion.identity, 0);
             //how are we going to spawn enemies? we will spawn them accros the network! and only the server moves them
             //that is not bad
             //we can make that happen
         }
     }
-
 }
