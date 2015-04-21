@@ -35,10 +35,12 @@ public class basic_Enemy_follow : MonoBehaviour {
         
 	}
 
-    bool IsGrounded() {
-        RaycastHit2D x = Physics2D.Linecast(transform.position, playerChar.transform.position,playerMask.value, 10f);
-
-        return false;
+    bool InLineOfSight(GameObject target) {
+        RaycastHit2D x = Physics2D.Linecast(transform.position, target.transform.position,playerMask.value, 10f);
+        if (x)
+            return x.transform.tag == target.tag;
+        else
+            return false;
     }
 
 	void FixedUpdate () {
@@ -63,7 +65,12 @@ public class basic_Enemy_follow : MonoBehaviour {
 		}
 
 		if(currentState == pathfindingState.Nearby){
-			nearbyMoveToPlayer();
+            if(InLineOfSight(playerChar))
+			    nearbyMoveToPlayer();
+            else {
+                findPath();
+                moveToPlayerAlongPath();
+            }
 		}
 	}
 
