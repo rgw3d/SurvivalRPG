@@ -34,4 +34,6 @@ MonoBehaviour:
   - SetMapFromServer
   - PlacePlayer
   - RecieveChatText
+  - ColorRpc
+  - DoJump
   DisableAutoOpenWizard: 0

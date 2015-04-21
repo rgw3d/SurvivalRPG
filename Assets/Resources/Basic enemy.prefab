@@ -96,6 +96,9 @@ MonoBehaviour:
   playerChar: {fileID: 0}
   healthValue: 100
   speed: .0500000007
+  playerMask:
+    serializedVersion: 2
+    m_Bits: 256
 --- !u!114 &11400002
 MonoBehaviour:
   m_ObjectHideFlags: 1

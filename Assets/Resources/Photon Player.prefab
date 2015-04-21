@@ -15,7 +15,7 @@ GameObject:
   - 60: {fileID: 6000000}
   - 114: {fileID: 11400004}
   - 114: {fileID: 11495896}
-  m_Layer: 8
+  m_Layer: 0
   m_Name: Photon Player
   m_TagString: Player
   m_Icon: {fileID: 0}
@@ -87,8 +87,7 @@ MonoBehaviour:
   BackAttack: {fileID: 21300148, guid: 0f491ec263b3953419c255895b4cb4ad, type: 3}
   LeftAttack: {fileID: 21300128, guid: 0f491ec263b3953419c255895b4cb4ad, type: 3}
   RightAttack: {fileID: 21300138, guid: 0f491ec263b3953419c255895b4cb4ad, type: 3}
-  VerticalMovement: 80
-  HorizontalMovement: 80
+  movementSpeed: 0
   UpKey: 119
   DownKey: 115
   LeftKey: 97
@@ -150,7 +149,6 @@ MonoBehaviour:
   CurrentMana: 0
   AttackDamage: 0
   ArmorValue: 0
-  MovementSpeed: 0
 --- !u!212 &21200000
 SpriteRenderer:
   m_ObjectHideFlags: 1

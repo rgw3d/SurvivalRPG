@@ -18,6 +18,8 @@ public class basic_Enemy_follow : MonoBehaviour {
 
 	public Map Map;
 
+    public LayerMask playerMask;
+
 	public enum pathfindingState {
 		Inactive,
 		Active,
@@ -32,6 +34,12 @@ public class basic_Enemy_follow : MonoBehaviour {
         
         
 	}
+
+    bool IsGrounded() {
+        RaycastHit2D x = Physics2D.Linecast(transform.position, playerChar.transform.position,playerMask.value, 10f);
+
+        return false;
+    }
 
 	void FixedUpdate () {
 
