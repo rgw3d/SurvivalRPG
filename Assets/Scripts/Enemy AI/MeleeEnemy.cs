@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections.Generic;
 
-public class basic_Enemy_follow : MonoBehaviour {
+public class MeleeEnemy : MonoBehaviour {
 
 	public GameObject playerChar;
 	public float healthValue=100;
@@ -39,7 +39,6 @@ public class basic_Enemy_follow : MonoBehaviour {
 
     bool InLineOfSight(GameObject target) {
         RaycastHit2D x = Physics2D.Linecast(transform.position, target.transform.position ,playerMask.value);
-		Debug.Log(x.collider);
 		if(x.collider == playerChar.collider2D){
 			return true;
 		}

@@ -91,16 +91,20 @@ MonoBehaviour:
   m_GameObject: {fileID: 100000}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 72b621f9a6d17b241beca290697eee14, type: 3}
+  m_Script: {fileID: 11500000, guid: 2f36aead8c51848b8941345a3e204399, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   playerChar: {fileID: 0}
   healthValue: 100
   speed: .0500000007
+  tick: 60
+  _isAttacking: 0
+  currentPath: []
+  indexOfPath: 0
+  isDonePathing: 0
+  currentState: 0
   lineOfSight: 0
-  playerMask:
-    serializedVersion: 2
-    m_Bits: 257
+  playerMask: {}
 --- !u!114 &11400002
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -132,18 +136,18 @@ MonoBehaviour:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 100000}
-  m_Enabled: 0
+  m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 4f5aca55208ea4b24b12258b762f47ae, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   playerChar: {fileID: 100000, guid: 324e7e8985f374349bf4127f48448169, type: 2}
   healthValue: 100
-  speed: .00999999978
+  speed: .0500000007
   lineOfSight: 0
   playerMask:
     serializedVersion: 2
-    m_Bits: 0
+    m_Bits: 257
 --- !u!212 &21200000
 SpriteRenderer:
   m_ObjectHideFlags: 1

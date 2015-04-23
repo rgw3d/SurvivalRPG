@@ -5,7 +5,7 @@ public class RangedEnemy : MonoBehaviour {
 	
 	public GameObject playerChar;
 	public float healthValue=100;
-	public float speed=0.01f;
+	public float speed=0.05f;
 	
 	private int tick = 60;
 	
@@ -37,22 +37,18 @@ public class RangedEnemy : MonoBehaviour {
 	}
 
 	bool InLineOfSight(GameObject target) {
-		RaycastHit2D x = Physics2D.Linecast(transform.position, target.transform.position,playerMask.value, 15f);
-		if (x)
-			return x.transform.tag == target.tag;
-		else
-			return false;
+		RaycastHit2D x = Physics2D.Linecast(transform.position, target.transform.position ,playerMask.value);
+		if(x.collider == playerChar.collider2D){
+			return true;
+		}
+		return false;
 	}
 	
 	void FixedUpdate () {
 		
 		float distance = Vector3.Distance(transform.position, playerChar.transform.position);
-		lineOfSight = InLineOfSight(playerChar);
-		if(lineOfSight){
-			Debug.Log("Player is in LOS");
-		}
-		
 		if(distance < 25){ // good luck m8
+			lineOfSight = InLineOfSight(playerChar);
 			if(lineOfSight){
 				if(distance < 5){
 					currentState = pathfindingState.Attacking;
@@ -79,7 +75,7 @@ public class RangedEnemy : MonoBehaviour {
 		}
 		
 		if(currentState == pathfindingState.Attacking){
-			//rangedAttackPlayer();
+			Debug.Log("Get range attacked m8");
 		}
 	}
 	
