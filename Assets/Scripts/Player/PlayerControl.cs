@@ -27,7 +27,7 @@ public class PlayerControl : Photon.MonoBehaviour{
 
     private Vector3 latestCorrectPos;
     private Vector3 onUpdatePos;
-    private float fraction;
+    private float lerpFraction;
     
 
 	// Use this for initialization
@@ -55,11 +55,13 @@ public class PlayerControl : Photon.MonoBehaviour{
             if (GameControl.ChatState == GameControl.ChattingState.ChatClosedButShowing || GameControl.ChatState == GameControl.ChattingState.NoUsername) { 
                 playerMovement();
                 playerSprite();
-                playerAttack();
             }
             if (Input.GetKey(KeyCode.E)) { //just a test of the ability to work
                 DelegateHolder.TriggerPlayerStatChange(StatType.Score, 1f);
             }
+			if (Input.GetKey(KeyCode.Space)){
+				playerAttack();
+			}
         }
         else {
             SyncedMovement();
@@ -119,7 +121,11 @@ public class PlayerControl : Photon.MonoBehaviour{
     }
 
     public void playerAttack() {
-       
+        //have all valid hitboxes spawned at the start of the map, and just move them to the proper location and back when we don't need them
+		//this way we save on having to instantiate and delete objects all the time
+
+		//on key hit, move the correct hitbox to the player, adjust for player rotation/click position, and move the hitbox, and then move it
+		//back to an area we can't see when its offscreen
     }
 
     void OnPhotonSerializeView(PhotonStream stream, PhotonMessageInfo info) {
@@ -139,7 +145,7 @@ public class PlayerControl : Photon.MonoBehaviour{
 
             latestCorrectPos = pos;                 // save this to move towards it in FixedUpdate()
             onUpdatePos = transform.localPosition;  // we interpolate from here to latestCorrectPos
-            fraction = 0;                           // reset the fraction we alreay moved. see Update()
+            lerpFraction = 0;                           // reset the fraction we alreay moved. see Update()
 
             transform.localRotation = rot;          // this sample doesn't smooth rotation
         }
@@ -153,8 +159,8 @@ public class PlayerControl : Photon.MonoBehaviour{
         // Our fraction variable would reach 1 in 100ms if we multiply deltaTime by 10.
         // We want it to take a bit longer, so we multiply with 9 instead.
 
-        fraction = fraction + Time.deltaTime * 9;
-        transform.localPosition = Vector3.Lerp(onUpdatePos, latestCorrectPos, fraction);    // set our pos between A and B
+        lerpFraction = lerpFraction + Time.deltaTime * 9;
+        transform.localPosition = Vector3.Lerp(onUpdatePos, latestCorrectPos, lerpFraction);    // set our pos between A and B
     }
 
 }

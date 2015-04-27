@@ -97,14 +97,10 @@ MonoBehaviour:
   playerChar: {fileID: 0}
   healthValue: 100
   speed: .0500000007
-  tick: 60
-  _isAttacking: 0
-  currentPath: []
-  indexOfPath: 0
-  isDonePathing: 0
-  currentState: 0
   lineOfSight: 0
-  playerMask: {}
+  playerMask:
+    serializedVersion: 2
+    m_Bits: 257
 --- !u!114 &11400002
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -136,7 +132,7 @@ MonoBehaviour:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 100000}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 4f5aca55208ea4b24b12258b762f47ae, type: 3}
   m_Name: 
