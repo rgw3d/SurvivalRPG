@@ -10,7 +10,7 @@ public class MeleeSword: MonoBehaviour {
 	}
 
 	void FixedUpdate(){
-		transform.position = new Vector2(player.transform.position.x - PlayerControl.leftAttackOffset, player.transform.position.y);
+		//transform.position = new Vector2(player.transform.position.x - PlayerControl.leftAttackOffset, player.transform.position.y);
 	}
 
 }
