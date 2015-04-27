@@ -23,6 +23,11 @@ public class PlayerControl : Photon.MonoBehaviour{
     public KeyCode RightKey;
     public KeyCode AttackKey;
 
+	public GameObject southSword;
+	public GameObject eastSword;
+	public GameObject northSword;
+	public GameObject westSword;
+
     private CardinalDirection _playerDirection = CardinalDirection.front;
 
     private Vector3 latestCorrectPos;
@@ -39,6 +44,11 @@ public class PlayerControl : Photon.MonoBehaviour{
 
         _spriteRenderer = GetComponent<SpriteRenderer>();
         _spriteRenderer.sprite = FrontSprite;
+
+		southSword = gameObject.transform.FindChild("SouthSword").gameObject;
+		eastSword = gameObject.transform.FindChild("EastSword").gameObject;
+		northSword = gameObject.transform.FindChild("NorthSword").gameObject;
+		westSword = gameObject.transform.FindChild("WestSword").gameObject;
 
 	}
 
@@ -128,7 +138,6 @@ public class PlayerControl : Photon.MonoBehaviour{
 		//on key hit, move the correct hitbox to the player, adjust for player rotation/click position, and move the hitbox, and then move it
 		//back to an area we can't see when its offscreen
 		if(_playerDirection == CardinalDirection.left){
-
 		}
     }
 
