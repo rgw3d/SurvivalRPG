@@ -45,8 +45,10 @@ public class ChatBuffer : Photon.MonoBehaviour {
                 }
             }
             else if (c == "\n"[0] || c == "\r"[0]) {//new line/ return
-                AddLine(InputTextOutput(true), true);
-
+                string output = InputTextOutput(true);
+                AddLine(output, true);
+                DelegateHolder.TriggerChatMessageSent(_inputBuffer);
+                
                 GameControl.ChatState = GameControl.ChattingState.ChatClosedButShowing;
 
                 _inputBuffer = "";
@@ -89,7 +91,6 @@ public class ChatBuffer : Photon.MonoBehaviour {
 
         if(sendRPC)
             photonView.RPC("RecieveChatText", PhotonTargets.Others, text);
-        DelegateHolder.TriggerChatMessageSent(text);
 
         _buffer += "\n";
 

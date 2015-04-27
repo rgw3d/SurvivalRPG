@@ -7,12 +7,15 @@ public class SpawnControl : Photon.MonoBehaviour {
     public GameObject playerPrefab;
     public GameObject enemyPrefab;
     public GameObject cameraPrefab;
+    private static string _enemyName;
+    private bool _isHost = false;
 
     public List<List<GameObject>> EnemyParties;//for the programmer to decide what types of groups of enemies you will see
 	
 	void Start () {
         DelegateHolder.OnMapGenerated += SpawnPlayers;
         DelegateHolder.OnMapGenerated += SpawnEnemies;
+        _enemyName = enemyPrefab.name;
 	}
 
     public void SpawnPlayers(bool isHost) {
@@ -39,10 +42,13 @@ public class SpawnControl : Photon.MonoBehaviour {
 
     public void SpawnEnemies(bool isHost) {
         if (isHost) {//to spawn enemy, just call PhotonNetwork.Instantiate() to do it
-			PhotonNetwork.Instantiate(enemyPrefab.name, GenerateMap.Map.roomList[6].GetCenter(), Quaternion.identity, 0);
+			PhotonNetwork.Instantiate(_enemyName, GenerateMap.Map.roomList[6].GetCenter(), Quaternion.identity, 0);
 		    //how are we going to spawn enemies? we will spawn them accros the network! and only the server moves them
             //that is not bad
             //we can make that happen
         }
+    }
+    public static void SpawnNewEnemies(int location = 6) {
+        PhotonNetwork.Instantiate(_enemyName, GenerateMap.Map.roomList[location].GetCenter(), Quaternion.identity, 0);
     }
 }
