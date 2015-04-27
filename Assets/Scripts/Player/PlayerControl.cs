@@ -23,6 +23,9 @@ public class PlayerControl : Photon.MonoBehaviour{
     public KeyCode RightKey;
     public KeyCode AttackKey;
 
+	public static float leftAttackOffset = .173f;
+	public MeleeSword currentWeapon;
+
     private CardinalDirection _playerDirection = CardinalDirection.front;
 
     private Vector3 latestCorrectPos;
@@ -39,6 +42,7 @@ public class PlayerControl : Photon.MonoBehaviour{
 
         _spriteRenderer = GetComponent<SpriteRenderer>();
         _spriteRenderer.sprite = FrontSprite;
+
 	}
 
     private enum CardinalDirection {
@@ -59,7 +63,7 @@ public class PlayerControl : Photon.MonoBehaviour{
             if (Input.GetKey(KeyCode.E)) { //just a test of the ability to work
                 DelegateHolder.TriggerPlayerStatChange(StatType.Score, 1f);
             }
-			if (Input.GetKey(KeyCode.Space)){
+			if (Input.GetKey(AttackKey)){
 				playerAttack();
 			}
         }
@@ -126,6 +130,7 @@ public class PlayerControl : Photon.MonoBehaviour{
 
 		//on key hit, move the correct hitbox to the player, adjust for player rotation/click position, and move the hitbox, and then move it
 		//back to an area we can't see when its offscreen
+		currentWeapon.player = gameObject;
     }
 
     void OnPhotonSerializeView(PhotonStream stream, PhotonMessageInfo info) {

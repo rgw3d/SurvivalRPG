@@ -93,6 +93,7 @@ MonoBehaviour:
   LeftKey: 97
   RightKey: 100
   AttackKey: 32
+  currentWeapon: {fileID: 0}
 --- !u!114 &11400002
 MonoBehaviour:
   m_ObjectHideFlags: 1

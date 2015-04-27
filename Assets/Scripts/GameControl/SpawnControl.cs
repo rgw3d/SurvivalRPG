@@ -7,12 +7,14 @@ public class SpawnControl : Photon.MonoBehaviour {
     public GameObject playerPrefab;
     public GameObject enemyPrefab;
     public GameObject cameraPrefab;
+	public GameObject swordPrefab;
 
     public List<List<GameObject>> EnemyParties;//for the programmer to decide what types of groups of enemies you will see
 	
 	void Start () {
         DelegateHolder.OnMapGenerated += SpawnPlayers;
         DelegateHolder.OnMapGenerated += SpawnEnemies;
+		DelegateHolder.OnMapGenerated += SpawnAbilities;
 	}
 
     public void SpawnPlayers(bool isHost) {
@@ -45,4 +47,11 @@ public class SpawnControl : Photon.MonoBehaviour {
             //we can make that happen
         }
     }
+
+	public void SpawnAbilities(bool isHost){
+		if(isHost){
+			GameObject sword = PhotonNetwork.Instantiate(swordPrefab.name, GenerateMap.Map.roomList[0].GetCenter(), Quaternion.identity, 0);
+
+		}
+	} 
 }
