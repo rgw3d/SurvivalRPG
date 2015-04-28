@@ -31,6 +31,7 @@ GameObject:
   m_Component:
   - 4: {fileID: 464512}
   - 60: {fileID: 6064512}
+  - 114: {fileID: 11443292}
   m_Layer: 0
   m_Name: SouthSword
   m_TagString: Untagged
@@ -47,6 +48,7 @@ GameObject:
   m_Component:
   - 4: {fileID: 464514}
   - 60: {fileID: 6064514}
+  - 114: {fileID: 11421882}
   m_Layer: 0
   m_Name: EastSword
   m_TagString: Untagged
@@ -63,6 +65,7 @@ GameObject:
   m_Component:
   - 4: {fileID: 464516}
   - 60: {fileID: 6064516}
+  - 114: {fileID: 11453450}
   m_Layer: 0
   m_Name: NorthSword
   m_TagString: Untagged
@@ -316,6 +319,17 @@ MonoBehaviour:
   viewIdField: 0
   instantiationId: -1
   isRuntimeInstantiated: 0
+--- !u!114 &11421882
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 164514}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 00048f48e4b7a4e88b682d42a69e002a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!114 &11422180
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -324,7 +338,29 @@ MonoBehaviour:
   m_GameObject: {fileID: 164518}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 5dbf525e454ad4fa89e484a588cb3619, type: 3}
+  m_Script: {fileID: 11500000, guid: c5b39ac3491c04611833177cc148cd81, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &11443292
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 164512}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c8947b6be953447a5a9de7b89e5ddd96, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &11453450
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 164516}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 02b85c8655c8b455ebf6f7be867c0d3a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!114 &11495896

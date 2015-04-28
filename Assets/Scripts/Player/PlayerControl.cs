@@ -23,11 +23,6 @@ public class PlayerControl : Photon.MonoBehaviour{
     public KeyCode RightKey;
     public KeyCode AttackKey;
 
-	public GameObject southSword;
-	public GameObject eastSword;
-	public GameObject northSword;
-	public GameObject westSword;
-
     private CardinalDirection _playerDirection = CardinalDirection.front;
 
     private Vector3 latestCorrectPos;
@@ -44,19 +39,14 @@ public class PlayerControl : Photon.MonoBehaviour{
 
         _spriteRenderer = GetComponent<SpriteRenderer>();
         _spriteRenderer.sprite = FrontSprite;
-
-		southSword = gameObject.transform.FindChild("SouthSword").gameObject;
-		eastSword = gameObject.transform.FindChild("EastSword").gameObject;
-		northSword = gameObject.transform.FindChild("NorthSword").gameObject;
-		westSword = gameObject.transform.FindChild("WestSword").gameObject;
-
+	
 	}
 
     private enum CardinalDirection {
-        front,
-        back,
-        left,
-        right
+        front = 3,
+        back = 1,
+        left = 4,
+        right = 2
     }
 	
 	// Update is called once per frame
@@ -72,6 +62,9 @@ public class PlayerControl : Photon.MonoBehaviour{
             }
 			if (Input.GetKey(AttackKey)){
 				playerAttack();
+			}
+			else{
+				DelegateHolder.TriggerPlayerAttack(_playerDirection, false);
 			}
         }
         else {
@@ -132,13 +125,7 @@ public class PlayerControl : Photon.MonoBehaviour{
     }
 
     public void playerAttack() {
-        //have all valid hitboxes spawned at the start of the map, and just move them to the proper location and back when we don't need them
-		//this way we save on having to instantiate and delete objects all the time
-
-		//on key hit, move the correct hitbox to the player, adjust for player rotation/click position, and move the hitbox, and then move it
-		//back to an area we can't see when its offscreen
-		if(_playerDirection == CardinalDirection.left){
-		}
+		DelegateHolder.TriggerPlayerAttack(_playerDirection, true);
     }
 
     void OnPhotonSerializeView(PhotonStream stream, PhotonMessageInfo info) {

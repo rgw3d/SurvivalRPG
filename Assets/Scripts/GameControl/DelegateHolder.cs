@@ -3,7 +3,7 @@ using System.Collections;
 
 
 public delegate float ChangePlayerStat(StatType statType, float amountChange);
-public delegate void PlayerAttack(bool isAttacking);
+public delegate void PlayerAttack(int direction, bool isAttacking);
 public delegate void GameCreated();
 public delegate void GenerateAndRenderMap();
 public delegate void MapGenerated(bool isHost);
@@ -28,7 +28,7 @@ public static class DelegateHolder {
         }
     }
 
-    public static void TriggerPlayerAttack(bool isAttacking) {
+    public static void TriggerPlayerAttack(int direction, bool isAttacking) {
         if(OnPlayerAttack != null)
             OnPlayerAttack(isAttacking);
     }
