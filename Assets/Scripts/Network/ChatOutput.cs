@@ -32,13 +32,15 @@ public class ChatOutput : MonoBehaviour {
             original = original.Substring(1);
             Options = new List<string>();
             string command = GetCommand(original);
-            if (!command.Equals("")) {
+            Debug.Log("got the command: " +command);
+            if (!command.Equals("") && original.IndexOf(" ")>0) {
+                Debug.Log("good command...now parsing options");
                 WashHands(original.Substring(original.IndexOf(" ")));
                 ParseCommands(command);
             }
             else {
                 Output.AddLine("Bad command");
-                Debug.Log("bad command");
+                Debug.Log("bad command " + !command.Equals("") + "  " + original.IndexOf(" "));
             }
         }
         else {
@@ -54,6 +56,7 @@ public class ChatOutput : MonoBehaviour {
                     int number = int.Parse(Options[1]); // second is number
                     for (int i = 0; i < number; i++) {
                         SpawnControl.SpawnNewEnemies(Random.Range(0, GenerateMap.Map.roomList.Count - 1));
+                        Debug.Log("Spawning enemeis");
                     }
                 }
                 catch {
