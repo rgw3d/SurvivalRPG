@@ -3,7 +3,7 @@ using System.Collections.Generic;
 
 public class Sword : MonoBehaviour {
 	
-	public swordDirection;
+	public int swordDirection;
 	public bool isAttacking = false;
 
 	void Start(){

@@ -23,6 +23,8 @@ public class PlayerControl : Photon.MonoBehaviour{
     public KeyCode RightKey;
     public KeyCode AttackKey;
 
+    private bool isAttacking = false;
+
     private CardinalDirection _playerDirection = CardinalDirection.front;
 
     private Vector3 latestCorrectPos;
@@ -60,12 +62,7 @@ public class PlayerControl : Photon.MonoBehaviour{
             if (Input.GetKey(KeyCode.E)) { //just a test of the ability to work
                 DelegateHolder.TriggerPlayerStatChange(StatType.Score, 1f);
             }
-			if (Input.GetKey(AttackKey)){
-				playerAttack();
-			}
-			else{
-				DelegateHolder.TriggerPlayerAttack(_playerDirection, false);
-			}
+            playerAttack();
         }
         else {
             SyncedMovement();
@@ -125,7 +122,14 @@ public class PlayerControl : Photon.MonoBehaviour{
     }
 
     public void playerAttack() {
-		DelegateHolder.TriggerPlayerAttack(_playerDirection, true);
+        if (Input.GetKey(AttackKey) && !isAttacking) {
+            isAttacking = true;
+            DelegateHolder.TriggerPlayerAttack((int)_playerDirection, isAttacking);
+        }
+        else if(!Input.GetKey(AttackKey) && isAttacking){
+            isAttacking = false;
+            DelegateHolder.TriggerPlayerAttack((int)_playerDirection, isAttacking);
+        }
     }
 
     void OnPhotonSerializeView(PhotonStream stream, PhotonMessageInfo info) {
