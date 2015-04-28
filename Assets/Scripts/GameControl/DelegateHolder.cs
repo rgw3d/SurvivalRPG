@@ -30,7 +30,7 @@ public static class DelegateHolder {
 
     public static void TriggerPlayerAttack(int direction, bool isAttacking) {
         if(OnPlayerAttack != null)
-            OnPlayerAttack(isAttacking);
+            OnPlayerAttack(direction, isAttacking);
     }
 
     public static void TriggerGameCreated() {

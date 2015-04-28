@@ -11,15 +11,18 @@ public class Sword : MonoBehaviour {
 	}
 
 	void OnTriggerEnter2D(Collider2D other){
-
-		if(other.tag == "Enemy"){
-			enemiesInHitbox.Add(other.gameObject);
-			Debug.Log("Added " + other.tag);
+		if(isAttacking){
+			if(other.tag == "Enemy"){
+				Debug.Log("Attacked an enemy in direction " + swordDirection);
+			}
 		}
+
 
 	}
 
 	void isPlayerAttacking(int direction, bool isAttacking){
-		this.isAttacking = isAttacking;
+		if(swordDirection == direction){
+			this.isAttacking = isAttacking;
+		}
 	}
 }

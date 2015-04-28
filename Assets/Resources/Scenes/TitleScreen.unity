@@ -103,6 +103,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c5b39ac3491c04611833177cc148cd81, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  swordDirection: 3
+  isAttacking: 0
 --- !u!60 &550243896
 PolygonCollider2D:
   m_ObjectHideFlags: 0
@@ -351,10 +353,6 @@ MonoBehaviour:
   LeftKey: 97
   RightKey: 100
   AttackKey: 32
-  southSword: {fileID: 0}
-  eastSword: {fileID: 0}
-  northSword: {fileID: 0}
-  westSword: {fileID: 0}
 --- !u!114 &819799062
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -449,6 +447,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c5b39ac3491c04611833177cc148cd81, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  swordDirection: 1
+  isAttacking: 0
 --- !u!60 &1067004579
 PolygonCollider2D:
   m_ObjectHideFlags: 0
@@ -631,6 +631,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c5b39ac3491c04611833177cc148cd81, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  swordDirection: 4
+  isAttacking: 0
 --- !u!60 &1595348241
 PolygonCollider2D:
   m_ObjectHideFlags: 0
@@ -689,6 +691,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c5b39ac3491c04611833177cc148cd81, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  swordDirection: 2
+  isAttacking: 0
 --- !u!60 &2145662686
 PolygonCollider2D:
   m_ObjectHideFlags: 0
