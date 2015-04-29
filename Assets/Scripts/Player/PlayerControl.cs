@@ -62,11 +62,11 @@ public class PlayerControl : Photon.MonoBehaviour{
 	void FixedUpdate () {
         if (photonView.isMine) {
             if (GameControl.ChatState == GameControl.ChattingState.ChatClosedButShowing 
-                || GameControl.ChatState == GameControl.ChattingState.NoUsername) { 
-                
-                if(_playerState != PlayerState.attacking)//only update movement if not attacking
-                    playerMovement();
-                playerSprite();
+                || GameControl.ChatState == GameControl.ChattingState.NoUsername) {
+
+                    if (_playerState != PlayerState.attacking) //only update movement if not attacking
+                        playerMovement();
+                    playerSprite();
             }
             if (Input.GetKey(KeyCode.E)) { //just a test of the ability to work
                 DelegateHolder.TriggerPlayerStatChange(StatType.Score, 1f);
@@ -107,25 +107,25 @@ public class PlayerControl : Photon.MonoBehaviour{
 
     public void playerSprite() {
         if (_playerDirection == CardinalDirection.back) {
-            if(Input.GetKey(AttackKey))
+            if(_playerState == PlayerState.attacking)
                 _spriteRenderer.sprite = BackAttack;
             else
                 _spriteRenderer.sprite = BackSprite;
         }
         if (_playerDirection == CardinalDirection.front) {
-            if(Input.GetKey(AttackKey))
+            if (_playerState == PlayerState.attacking)
                 _spriteRenderer.sprite = FrontAttack;
             else
                 _spriteRenderer.sprite = FrontSprite;
         }
         if (_playerDirection == CardinalDirection.left) {
-            if(Input.GetKey(AttackKey))
+            if (_playerState == PlayerState.attacking)
                 _spriteRenderer.sprite = LeftAttack;
             else
                 _spriteRenderer.sprite = LeftSprite;
         }
         if (_playerDirection == CardinalDirection.right) {
-            if(Input.GetKey(AttackKey))
+            if (_playerState == PlayerState.attacking)
                 _spriteRenderer.sprite = RightAttack;
             else
                 _spriteRenderer.sprite = RightSprite;
@@ -141,7 +141,8 @@ public class PlayerControl : Photon.MonoBehaviour{
         else if(_attackCooldown > 0){
             _attackCooldown--;
         }
-        else if (_attackCooldown == 0 && _playerState == PlayerState.attacking) {
+        
+        if (_attackCooldown == 0 && _playerState == PlayerState.attacking) {
             _playerState = PlayerState.standing;
             DelegateHolder.TriggerPlayerAttack((int)_playerDirection, false);
         }
