@@ -97,7 +97,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 100000}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 43.3770866, y: 58.7924156, z: 0}
+  m_LocalPosition: {x: 47.9478874, y: 41.0472832, z: 0}
   m_LocalScale: {x: 4, y: 4, z: 1}
   m_Children:
   - {fileID: 464512}
@@ -277,10 +277,6 @@ MonoBehaviour:
   LeftKey: 97
   RightKey: 100
   AttackKey: 32
-  southSword: {fileID: 0}
-  eastSword: {fileID: 0}
-  northSword: {fileID: 0}
-  westSword: {fileID: 0}
 --- !u!114 &11400002
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -327,9 +323,11 @@ MonoBehaviour:
   m_GameObject: {fileID: 164514}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 00048f48e4b7a4e88b682d42a69e002a, type: 3}
+  m_Script: {fileID: 11500000, guid: c5b39ac3491c04611833177cc148cd81, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  swordDirection: 2
+  isAttacking: 0
 --- !u!114 &11422180
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -341,6 +339,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c5b39ac3491c04611833177cc148cd81, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  swordDirection: 4
+  isAttacking: 0
 --- !u!114 &11443292
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -349,9 +349,11 @@ MonoBehaviour:
   m_GameObject: {fileID: 164512}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c8947b6be953447a5a9de7b89e5ddd96, type: 3}
+  m_Script: {fileID: 11500000, guid: c5b39ac3491c04611833177cc148cd81, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  swordDirection: 3
+  isAttacking: 0
 --- !u!114 &11453450
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -360,9 +362,11 @@ MonoBehaviour:
   m_GameObject: {fileID: 164516}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 02b85c8655c8b455ebf6f7be867c0d3a, type: 3}
+  m_Script: {fileID: 11500000, guid: c5b39ac3491c04611833177cc148cd81, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  swordDirection: 1
+  isAttacking: 0
 --- !u!114 &11495896
 MonoBehaviour:
   m_ObjectHideFlags: 1

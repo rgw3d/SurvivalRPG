@@ -122,14 +122,10 @@ public class PlayerControl : Photon.MonoBehaviour{
     }
 
     public void playerAttack() {
-        if (Input.GetKey(AttackKey) && !isAttacking) {
-            isAttacking = true;
-            DelegateHolder.TriggerPlayerAttack((int)_playerDirection, isAttacking);
-        }
-        else if(!Input.GetKey(AttackKey) && isAttacking){
-            isAttacking = false;
-            DelegateHolder.TriggerPlayerAttack((int)_playerDirection, isAttacking);
-        }
+		if(Input.GetKey(AttackKey)){
+			isAttacking = true;
+			DelegateHolder.TriggerPlayerAttack((int)_playerDirection, isAttacking);
+		}
     }
 
     void OnPhotonSerializeView(PhotonStream stream, PhotonMessageInfo info) {

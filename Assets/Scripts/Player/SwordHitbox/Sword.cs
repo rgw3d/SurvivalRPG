@@ -10,7 +10,7 @@ public class Sword : MonoBehaviour {
 		DelegateHolder.OnPlayerAttack += isPlayerAttacking;
 	}
 
-	void OnTriggerEnter2D(Collider2D other){
+	void OnTriggerStay2D(Collider2D other){
 		if(isAttacking){
 			if(other.tag == "Enemy"){
 				Debug.Log("Attacked an enemy in direction " + swordDirection);
@@ -23,6 +23,9 @@ public class Sword : MonoBehaviour {
 	void isPlayerAttacking(int direction, bool isAttacking){
 		if(swordDirection == direction){
 			this.isAttacking = isAttacking;
+		}
+		else{
+			this.isAttacking = false;
 		}
 	}
 }
