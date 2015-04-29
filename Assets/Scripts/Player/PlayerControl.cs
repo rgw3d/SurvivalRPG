@@ -23,9 +23,11 @@ public class PlayerControl : Photon.MonoBehaviour{
     public KeyCode RightKey;
     public KeyCode AttackKey;
 
-    private bool isAttacking = false;
-
     private CardinalDirection _playerDirection = CardinalDirection.front;
+    private PlayerState _playerState = PlayerState.standing;
+
+    public int AttackCooldownValue = 30;
+    private int _attackCooldown = 0;
 
     private Vector3 latestCorrectPos;
     private Vector3 onUpdatePos;
@@ -50,13 +52,20 @@ public class PlayerControl : Photon.MonoBehaviour{
         left = 4,
         right = 2
     }
+    private enum PlayerState {
+        attacking,
+        walking,
+        standing,
+    }
 	
 	// Update is called once per frame
 	void FixedUpdate () {
-        
         if (photonView.isMine) {
-            if (GameControl.ChatState == GameControl.ChattingState.ChatClosedButShowing || GameControl.ChatState == GameControl.ChattingState.NoUsername) { 
-                playerMovement();
+            if (GameControl.ChatState == GameControl.ChattingState.ChatClosedButShowing 
+                || GameControl.ChatState == GameControl.ChattingState.NoUsername) { 
+                
+                if(_playerState != PlayerState.attacking)//only update movement if not attacking
+                    playerMovement();
                 playerSprite();
             }
             if (Input.GetKey(KeyCode.E)) { //just a test of the ability to work
@@ -72,24 +81,26 @@ public class PlayerControl : Photon.MonoBehaviour{
 
 
     public void playerMovement() {
-        //Debug.Log("movement method called");
-        //Debug.Log(movementSpeed);
         if (Input.GetKey(UpKey)) {
             rigidbody2D.AddForce(Vector2.up * movementSpeed);
             _playerDirection = CardinalDirection.back;
+            _playerState = PlayerState.walking;
         }
         if (Input.GetKey(DownKey)) {
             rigidbody2D.AddForce(Vector2.up * -1 * movementSpeed);
             _playerDirection = CardinalDirection.front;
+            _playerState = PlayerState.walking;
         }
         if (Input.GetKey(LeftKey)) {
 			rigidbody2D.AddForce(Vector2.right * -1 * movementSpeed);
             _playerDirection = CardinalDirection.left;
+            _playerState = PlayerState.walking;
 
         }
         if (Input.GetKey(RightKey)) {
 			rigidbody2D.AddForce(Vector2.right * movementSpeed);
             _playerDirection = CardinalDirection.right;
+            _playerState = PlayerState.walking;
         }
         
     }
@@ -122,10 +133,18 @@ public class PlayerControl : Photon.MonoBehaviour{
     }
 
     public void playerAttack() {
-		if(Input.GetKey(AttackKey)){
-			isAttacking = true;
-			DelegateHolder.TriggerPlayerAttack((int)_playerDirection, isAttacking);
-		}
+        if (_attackCooldown == 0 && Input.GetKeyDown(AttackKey) && _playerState != PlayerState.attacking) {
+            DelegateHolder.TriggerPlayerAttack((int)_playerDirection, true);
+            _attackCooldown = AttackCooldownValue;
+            _playerState = PlayerState.attacking;
+        }
+        else if(_attackCooldown > 0){
+            _attackCooldown--;
+        }
+        else if (_attackCooldown == 0 && _playerState == PlayerState.attacking) {
+            _playerState = PlayerState.standing;
+            DelegateHolder.TriggerPlayerAttack((int)_playerDirection, false);
+        }
     }
 
     void OnPhotonSerializeView(PhotonStream stream, PhotonMessageInfo info) {

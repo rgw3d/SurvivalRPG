@@ -17,7 +17,6 @@ public class Sword : MonoBehaviour {
 			}
 		}
 
-
 	}
 
 	void isPlayerAttacking(int direction, bool isAttacking){
