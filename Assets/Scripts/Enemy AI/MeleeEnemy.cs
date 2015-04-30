@@ -5,7 +5,7 @@ public class MeleeEnemy : MonoBehaviour {
 
 	public GameObject playerChar;
 	public float healthValue=100;
-	public float speed=0.01f;
+	public float speed=0.05f;
 
 	private int tick = 60;
 

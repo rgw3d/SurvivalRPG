@@ -26,7 +26,7 @@ public class PlayerControl : Photon.MonoBehaviour{
     private CardinalDirection _playerDirection = CardinalDirection.front;
     private PlayerState _playerState = PlayerState.standing;
 
-    public int AttackCooldownValue = 30;
+    public int AttackCooldownValue = 15;
     private int _attackCooldown = 0;
 
     private Vector3 latestCorrectPos;
@@ -138,7 +138,7 @@ public class PlayerControl : Photon.MonoBehaviour{
             _attackCooldown = AttackCooldownValue;
             _playerState = PlayerState.attacking;
         }
-        else if(_attackCooldown > 0){
+        if(_attackCooldown > 0){
             _attackCooldown--;
         }
         
