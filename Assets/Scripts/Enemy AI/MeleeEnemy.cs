@@ -39,14 +39,13 @@ public class MeleeEnemy : MonoBehaviour {
 
     bool InLineOfSight(GameObject target) {
         RaycastHit2D x = Physics2D.Linecast(transform.position, target.transform.position ,playerMask.value);
-		if(x.collider == playerChar.collider2D){
+		if(x.transform.collider2D == playerChar.collider2D){
 			return true;
 		}
 		return false;
     }
 
 	void FixedUpdate () {
-
 		float distance = Vector3.Distance(transform.position, playerChar.transform.position);
 		if(distance < 25){ // good luck m8
 			lineOfSight = InLineOfSight(playerChar);
@@ -102,7 +101,6 @@ public class MeleeEnemy : MonoBehaviour {
 	}
 
 	void moveToPlayerAlongPath(){
-
 		//compare x of enemy to next tile
 		//compare y of enemy to next tile
 		if(!isDonePathing){

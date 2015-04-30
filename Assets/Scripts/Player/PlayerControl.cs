@@ -23,12 +23,6 @@ public class PlayerControl : Photon.MonoBehaviour{
     public KeyCode RightKey;
     public KeyCode AttackKey;
 
-<<<<<<< Updated upstream
-=======
-    private bool isAttacking = false;
-	private bool hasLockedDirection = false;
-
->>>>>>> Stashed changes
     private CardinalDirection _playerDirection = CardinalDirection.front;
     private PlayerState _playerState = PlayerState.standing;
 
@@ -139,7 +133,6 @@ public class PlayerControl : Photon.MonoBehaviour{
     }
 
     public void playerAttack() {
-<<<<<<< Updated upstream
         if (_attackCooldown == 0 && Input.GetKeyDown(AttackKey) && _playerState != PlayerState.attacking) {
             DelegateHolder.TriggerPlayerAttack((int)_playerDirection, true);
             _attackCooldown = AttackCooldownValue;
@@ -153,36 +146,6 @@ public class PlayerControl : Photon.MonoBehaviour{
             _playerState = PlayerState.standing;
             DelegateHolder.TriggerPlayerAttack((int)_playerDirection, false);
         }
-=======
-
-		if(Input.GetKey(AttackKey)){
-
-			CardinalDirection lockedCurrentDirection = 0;
-			if(!hasLockedDirection){
-				lockedCurrentDirection = _playerDirection;
-				hasLockedDirection = true;
-			}
-			if(_playerDirection == lockedCurrentDirection){
-				isAttacking = true;
-				DelegateHolder.TriggerPlayerAttack((int)_playerDirection, true);
-			}
-			else{
-				isAttacking = false;
-				hasLockedDirection = false;
-				DelegateHolder.TriggerPlayerAttack(1, false);
-				DelegateHolder.TriggerPlayerAttack(2, false);
-				DelegateHolder.TriggerPlayerAttack(3, false);
-				DelegateHolder.TriggerPlayerAttack(4, false);
-			}
-		}
-		else{
-			isAttacking = false;
-			DelegateHolder.TriggerPlayerAttack(1, false);
-			DelegateHolder.TriggerPlayerAttack(2, false);
-			DelegateHolder.TriggerPlayerAttack(3, false);
-			DelegateHolder.TriggerPlayerAttack(4, false);
-		}
->>>>>>> Stashed changes
     }
 
     void OnPhotonSerializeView(PhotonStream stream, PhotonMessageInfo info) {

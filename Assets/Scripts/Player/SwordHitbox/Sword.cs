@@ -11,6 +11,8 @@ public class Sword : MonoBehaviour {
 	}
 
 	void OnTriggerStay2D(Collider2D other){
+        if(other.tag == "Enemy")
+        Debug.Log("Is Collission");
 		if(isAttacking){
 			if(other.tag == "Enemy"){
 				Debug.Log("Attacked an enemy in direction " + swordDirection);
