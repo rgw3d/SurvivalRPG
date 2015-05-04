@@ -53,9 +53,9 @@ public class PlayerControl : Photon.MonoBehaviour{
         right = 2
     }
     private enum PlayerState {
-        attacking,
-        walking,
-        standing,
+        attacking = 0,
+        walking = 1,
+        standing = 2,
     }
 	
 	// Update is called once per frame
@@ -152,8 +152,13 @@ public class PlayerControl : Photon.MonoBehaviour{
         if (stream.isWriting) {
             Vector3 pos = transform.localPosition;
             Quaternion rot = transform.localRotation;
+            short dir = (short)_playerDirection;
+            short ste = (short)_playerState;
+
             stream.Serialize(ref pos);
             stream.Serialize(ref rot);
+            stream.Serialize(ref dir);
+            stream.Serialize(ref ste);
         }
         else {
             // Receive latest state information
@@ -168,6 +173,17 @@ public class PlayerControl : Photon.MonoBehaviour{
             lerpFraction = 0;                           // reset the fraction we alreay moved. see Update()
 
             transform.localRotation = rot;          // this sample doesn't smooth rotation
+
+            short dir = 1;
+            short ste = 1;
+
+            stream.Serialize(ref dir);
+            stream.Serialize(ref ste);
+
+            _playerDirection = (CardinalDirection)dir;
+            _playerState = (PlayerState)ste;
+
+
         }
     }
 

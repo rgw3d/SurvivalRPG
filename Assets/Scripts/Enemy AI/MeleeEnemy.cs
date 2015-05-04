@@ -27,8 +27,6 @@ public class MeleeEnemy : MonoBehaviour {
 		Attacking
 	}
 
-
-
     void Start() {
         playerChar = GameObject.FindGameObjectWithTag("Player") as GameObject;
         if (playerChar == null) {
@@ -39,7 +37,7 @@ public class MeleeEnemy : MonoBehaviour {
 
     bool InLineOfSight(GameObject target) {
         RaycastHit2D x = Physics2D.Linecast(transform.position, target.transform.position ,playerMask.value);
-		if(x.transform.collider2D == playerChar.collider2D){
+		if(x.transform.gameObject == playerChar){
 			return true;
 		}
 		return false;
