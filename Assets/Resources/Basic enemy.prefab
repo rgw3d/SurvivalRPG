@@ -94,7 +94,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2f36aead8c51848b8941345a3e204399, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  playerChar: {fileID: 0}
+  playerChar: {fileID: 100000, guid: 324e7e8985f374349bf4127f48448169, type: 2}
   healthValue: 100
   speed: .0500000007
   lineOfSight: 0

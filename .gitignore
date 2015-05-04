@@ -16,3 +16,5 @@ temporaryBuildForNetworkTesting_Data/
 temporaryBuildForNetworkTesting1_Data/
 Assets/Photon Unity Networking/Demos/
 Assets/Photon Unity Networking/Demos.meta
+
+Assets/Scripts/Abilities/MeleeSword.cs

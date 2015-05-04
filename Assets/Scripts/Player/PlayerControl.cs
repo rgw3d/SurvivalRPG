@@ -24,6 +24,10 @@ public class PlayerControl : Photon.MonoBehaviour{
     public KeyCode AttackKey;
 
     private CardinalDirection _playerDirection = CardinalDirection.front;
+    private PlayerState _playerState = PlayerState.standing;
+
+    public int AttackCooldownValue = 15;
+    private int _attackCooldown = 0;
 
     private Vector3 latestCorrectPos;
     private Vector3 onUpdatePos;
@@ -39,81 +43,92 @@ public class PlayerControl : Photon.MonoBehaviour{
 
         _spriteRenderer = GetComponent<SpriteRenderer>();
         _spriteRenderer.sprite = FrontSprite;
+	
 	}
 
     private enum CardinalDirection {
-        front,
-        back,
-        left,
-        right
+        front = 3,
+        back = 1,
+        left = 4,
+        right = 2
+    }
+    private enum PlayerState {
+        attacking = 0,
+        walking = 1,
+        standing = 2,
     }
 	
 	// Update is called once per frame
 	void FixedUpdate () {
-        
         if (photonView.isMine) {
-            if (GameControl.ChatState == GameControl.ChattingState.ChatClosedButShowing || GameControl.ChatState == GameControl.ChattingState.NoUsername) { 
-                playerMovement();
-                playerSprite();
+            if (GameControl.ChatState == GameControl.ChattingState.ChatClosedButShowing 
+                || GameControl.ChatState == GameControl.ChattingState.NoUsername) {
+
+                    if (_playerState != PlayerState.attacking) //only update movement if not attacking
+                        playerMovement();
             }
             if (Input.GetKey(KeyCode.E)) { //just a test of the ability to work
                 DelegateHolder.TriggerPlayerStatChange(StatType.Score, 1f);
             }
-			if (Input.GetKey(KeyCode.Space)){
-				playerAttack();
-			}
+            playerAttack();
         }
         else {
             SyncedMovement();
         }
 
+        playerSprite();
 	}
 
 
     public void playerMovement() {
-        //Debug.Log("movement method called");
-        //Debug.Log(movementSpeed);
         if (Input.GetKey(UpKey)) {
             rigidbody2D.AddForce(Vector2.up * movementSpeed);
             _playerDirection = CardinalDirection.back;
+            _playerState = PlayerState.walking;
         }
         if (Input.GetKey(DownKey)) {
             rigidbody2D.AddForce(Vector2.up * -1 * movementSpeed);
             _playerDirection = CardinalDirection.front;
+            _playerState = PlayerState.walking;
         }
         if (Input.GetKey(LeftKey)) {
 			rigidbody2D.AddForce(Vector2.right * -1 * movementSpeed);
             _playerDirection = CardinalDirection.left;
+            _playerState = PlayerState.walking;
 
         }
         if (Input.GetKey(RightKey)) {
 			rigidbody2D.AddForce(Vector2.right * movementSpeed);
             _playerDirection = CardinalDirection.right;
+            _playerState = PlayerState.walking;
+        }
+        if (!Input.GetKey(UpKey) && !Input.GetKey(DownKey) && !Input.GetKey(LeftKey) && !Input.GetKey(RightKey)) {
+            _playerState = PlayerState.standing;
         }
         
     }
 
     public void playerSprite() {
         if (_playerDirection == CardinalDirection.back) {
-            if(Input.GetKey(AttackKey))
+            if(_playerState == PlayerState.attacking)
                 _spriteRenderer.sprite = BackAttack;
             else
                 _spriteRenderer.sprite = BackSprite;
         }
         if (_playerDirection == CardinalDirection.front) {
-            if(Input.GetKey(AttackKey))
+            if (_playerState == PlayerState.attacking)
                 _spriteRenderer.sprite = FrontAttack;
             else
                 _spriteRenderer.sprite = FrontSprite;
         }
         if (_playerDirection == CardinalDirection.left) {
-            if(Input.GetKey(AttackKey))
+            if (_playerState == PlayerState.attacking)
                 _spriteRenderer.sprite = LeftAttack;
             else
                 _spriteRenderer.sprite = LeftSprite;
         }
         if (_playerDirection == CardinalDirection.right) {
-            if(Input.GetKey(AttackKey))
+            if (_playerState == PlayerState.attacking)
                 _spriteRenderer.sprite = RightAttack;
             else
                 _spriteRenderer.sprite = RightSprite;
@@ -121,19 +136,32 @@ public class PlayerControl : Photon.MonoBehaviour{
     }
 
     public void playerAttack() {
-        //have all valid hitboxes spawned at the start of the map, and just move them to the proper location and back when we don't need them
-		//this way we save on having to instantiate and delete objects all the time
-
-		//on key hit, move the correct hitbox to the player, adjust for player rotation/click position, and move the hitbox, and then move it
-		//back to an area we can't see when its offscreen
+        if (_attackCooldown == 0 && Input.GetKeyDown(AttackKey) && _playerState != PlayerState.attacking) {
+            DelegateHolder.TriggerPlayerAttack((int)_playerDirection, true);
+            _attackCooldown = AttackCooldownValue;
+            _playerState = PlayerState.attacking;
+        }
+        if(_attackCooldown > 0){
+            _attackCooldown--;
+        }
+        
+        if (_attackCooldown == 0 && _playerState == PlayerState.attacking) {
+            _playerState = PlayerState.standing;
+            DelegateHolder.TriggerPlayerAttack((int)_playerDirection, false);
+        }
     }
 
     void OnPhotonSerializeView(PhotonStream stream, PhotonMessageInfo info) {
         if (stream.isWriting) {
             Vector3 pos = transform.localPosition;
             Quaternion rot = transform.localRotation;
+            short dir = (short)_playerDirection;
+            short ste = (short)_playerState;
+
             stream.Serialize(ref pos);
             stream.Serialize(ref rot);
+            stream.Serialize(ref dir);
+            stream.Serialize(ref ste);
         }
         else {
             // Receive latest state information
@@ -148,6 +176,17 @@ public class PlayerControl : Photon.MonoBehaviour{
             lerpFraction = 0;                           // reset the fraction we alreay moved. see Update()
 
             transform.localRotation = rot;          // this sample doesn't smooth rotation
+
+            short dir = 1;
+            short ste = 1;
+
+            stream.Serialize(ref dir);
+            stream.Serialize(ref ste);
+
+            _playerDirection = (CardinalDirection)dir;
+            _playerState = (PlayerState)ste;
+
+
         }
     }
 

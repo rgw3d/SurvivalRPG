@@ -5,7 +5,7 @@ public class MeleeEnemy : MonoBehaviour {
 
 	public GameObject playerChar;
 	public float healthValue=100;
-	public float speed=0.01f;
+	public float speed=0.05f;
 
 	private int tick = 60;
 
@@ -27,8 +27,6 @@ public class MeleeEnemy : MonoBehaviour {
 		Attacking
 	}
 
-
-
     void Start() {
         playerChar = GameObject.FindGameObjectWithTag("Player") as GameObject;
         if (playerChar == null) {
@@ -39,14 +37,13 @@ public class MeleeEnemy : MonoBehaviour {
 
     bool InLineOfSight(GameObject target) {
         RaycastHit2D x = Physics2D.Linecast(transform.position, target.transform.position ,playerMask.value);
-		if(x.collider == playerChar.collider2D){
+		if(x.transform.gameObject == playerChar){
 			return true;
 		}
 		return false;
     }
 
 	void FixedUpdate () {
-
 		float distance = Vector3.Distance(transform.position, playerChar.transform.position);
 		if(distance < 25){ // good luck m8
 			lineOfSight = InLineOfSight(playerChar);
@@ -81,9 +78,9 @@ public class MeleeEnemy : MonoBehaviour {
 	}
 
 	void OnTriggerEnter2D(Collider2D collider){
-		if(collider.gameObject == GameObject.FindGameObjectWithTag("Player")){
+		/*if(collider.gameObject == GameObject.FindGameObjectWithTag("Player")){
 			Destroy(GameObject.FindGameObjectWithTag("Enemy"));
-		}
+		}*/
 
 	}
 
@@ -102,7 +99,6 @@ public class MeleeEnemy : MonoBehaviour {
 	}
 
 	void moveToPlayerAlongPath(){
-
 		//compare x of enemy to next tile
 		//compare y of enemy to next tile
 		if(!isDonePathing){
