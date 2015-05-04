@@ -29,15 +29,15 @@ public class PlayerControl : Photon.MonoBehaviour{
     public int AttackCooldownValue = 15;
     private int _attackCooldown = 0;
 
-    private Vector3 latestCorrectPos;
-    private Vector3 onUpdatePos;
-    private float lerpFraction;
+    private Vector3 _latestCorrectPos;
+    private Vector3 _onUpdatePos;
+    private float _lerpFraction;
     
 
 	// Use this for initialization
 	void Start () {
-        latestCorrectPos = transform.position;
-        onUpdatePos = transform.position;
+        _latestCorrectPos = transform.position;
+        _onUpdatePos = transform.position;
 
         movementSpeed = PlayerStats.MovementSpeed;
 
@@ -171,9 +171,9 @@ public class PlayerControl : Photon.MonoBehaviour{
             stream.Serialize(ref pos);
             stream.Serialize(ref rot);
 
-            latestCorrectPos = pos;                 // save this to move towards it in FixedUpdate()
-            onUpdatePos = transform.localPosition;  // we interpolate from here to latestCorrectPos
-            lerpFraction = 0;                           // reset the fraction we alreay moved. see Update()
+            _latestCorrectPos = pos;                 // save this to move towards it in FixedUpdate()
+            _onUpdatePos = transform.localPosition;  // we interpolate from here to latestCorrectPos
+            _lerpFraction = 0;                           // reset the fraction we alreay moved. see Update()
 
             transform.localRotation = rot;          // this sample doesn't smooth rotation
 
@@ -198,8 +198,8 @@ public class PlayerControl : Photon.MonoBehaviour{
         // Our fraction variable would reach 1 in 100ms if we multiply deltaTime by 10.
         // We want it to take a bit longer, so we multiply with 9 instead.
 
-        lerpFraction = lerpFraction + Time.deltaTime * 9;
-        transform.localPosition = Vector3.Lerp(onUpdatePos, latestCorrectPos, lerpFraction);    // set our pos between A and B
+        _lerpFraction = _lerpFraction + Time.deltaTime * 9;
+        transform.localPosition = Vector3.Lerp(_onUpdatePos, _latestCorrectPos, _lerpFraction);    // set our pos between A and B
     }
 
 }

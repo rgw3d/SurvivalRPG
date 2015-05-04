@@ -1,13 +1,14 @@
 ﻿using UnityEngine;
 using System.Collections.Generic;
 
-public class MeleeEnemy : MonoBehaviour {
+public class MeleeEnemy : Photon.MonoBehaviour {
 
 	public GameObject playerChar;
 	public float healthValue=100;
 	public float speed=0.05f;
 
-	private int tick = 60;
+	private int _pathfindTick = 0;
+    public int PathfindCooldownValue = 60;
 
     private bool _isAttacking = false;
 
@@ -16,10 +17,12 @@ public class MeleeEnemy : MonoBehaviour {
 	bool isDonePathing = false;
 	pathfindingState currentState = pathfindingState.Inactive;
 
-	public Map Map;
+	public bool CanSeePlayer = false;
+    public LayerMask LineOfSightMask;
 
-	public bool lineOfSight = false;
-    public LayerMask playerMask;
+    private Vector3 _latestCorrectPos;
+    private Vector3 _onUpdatePos;
+    private float _lerpFraction;
 
 	public enum pathfindingState {
 		Inactive,
@@ -36,7 +39,7 @@ public class MeleeEnemy : MonoBehaviour {
 	}
 
     bool InLineOfSight(GameObject target) {
-        RaycastHit2D x = Physics2D.Linecast(transform.position, target.transform.position ,playerMask.value);
+        RaycastHit2D x = Physics2D.Linecast(transform.position, target.transform.position ,LineOfSightMask.value);
 		if(x.transform.gameObject == playerChar){
 			return true;
 		}
@@ -44,37 +47,44 @@ public class MeleeEnemy : MonoBehaviour {
     }
 
 	void FixedUpdate () {
-		float distance = Vector3.Distance(transform.position, playerChar.transform.position);
-		if(distance < 25){ // good luck m8
-			lineOfSight = InLineOfSight(playerChar);
-			if(lineOfSight){
-				if(distance < 5){
-					currentState = pathfindingState.Attacking;
-				}
-				else{
-					tick = 60;
-					currentState = pathfindingState.Active;
-				}
-			}
-			else{
-				if(currentState == pathfindingState.Attacking){
-					tick = 60;
-					currentState = pathfindingState.Active;
-				}
-			}
-		}
-		else{
-			currentState = pathfindingState.Inactive;
-		}
 
-		if(currentState == pathfindingState.Active){
-			findPath();
-			moveToPlayerAlongPath();
-		}
+        if (photonView.isMine) {
+            float distance = Vector3.Distance(transform.position, playerChar.transform.position);
+            if (distance < 25) { // good luck m8
+                CanSeePlayer = InLineOfSight(playerChar);
+                if (CanSeePlayer) {
+                    if (distance < 5) {
+                        currentState = pathfindingState.Attacking;
+                    }
+                    else {
+                        _pathfindTick = PathfindCooldownValue;
+                        currentState = pathfindingState.Active;
+                    }
+                }
+                else {
+                    if (currentState == pathfindingState.Attacking) {
+                        _pathfindTick = PathfindCooldownValue;
+                        currentState = pathfindingState.Active;
+                    }
+                }
+            }
+            else {
+                currentState = pathfindingState.Inactive;
+            }
 
-		if(currentState == pathfindingState.Attacking){
-			nearbyMoveToPlayer();
-		}
+            if (currentState == pathfindingState.Active) {
+                findPath();
+                moveToPlayerAlongPath();
+            }
+
+            if (currentState == pathfindingState.Attacking) {
+                nearbyMoveToPlayer();
+            } 
+        }
+        else {
+            SyncedMovement();
+        }
+
 	}
 
 	void OnTriggerEnter2D(Collider2D collider){
@@ -89,13 +99,13 @@ public class MeleeEnemy : MonoBehaviour {
     }
 
 	void findPath(){
-		if(tick == 60){//recreate the path every x number of seconds where x is the tick / 60
+		if(_pathfindTick >= PathfindCooldownValue){//recreate the path every x number of seconds where x is the tick / 60
 			currentPath = AStar.findABPath(transform.position, playerChar.transform.position);
 			indexOfPath = 0;
 			isDonePathing = false;
-			tick = 0;
+			_pathfindTick = 0;
 		}
-		tick++;
+		_pathfindTick++;
 	}
 
 	void moveToPlayerAlongPath(){
@@ -147,6 +157,39 @@ public class MeleeEnemy : MonoBehaviour {
 	void setGameObject(GameObject x) {
 		playerChar = x;
 	}
+
+
+    void OnPhotonSerializeView(PhotonStream stream, PhotonMessageInfo info) {
+        if (stream.isWriting) {
+            Vector3 pos = transform.localPosition;
+            Quaternion rot = transform.localRotation;
+
+            stream.Serialize(ref pos);
+            stream.Serialize(ref rot);
+        }
+        else {
+            // Receive latest state information
+            Vector3 pos = Vector3.zero;
+            Quaternion rot = Quaternion.identity;
+
+            stream.Serialize(ref pos);
+            stream.Serialize(ref rot);
+
+            _latestCorrectPos = pos;                 // save this to move towards it in FixedUpdate()
+            _onUpdatePos = transform.localPosition;  // we interpolate from here to latestCorrectPos
+            _lerpFraction = 0;                           // reset the fraction we alreay moved. see Update()
+
+            transform.localRotation = rot;          // this sample doesn't smooth rotation
+
+
+        }
+    }
+
+    private void SyncedMovement() {
+
+        _lerpFraction = _lerpFraction + Time.deltaTime * 9;
+        transform.localPosition = Vector3.Lerp(_onUpdatePos, _latestCorrectPos, _lerpFraction);    // set our pos between A and B
+    }
 	
 
 

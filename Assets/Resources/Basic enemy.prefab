@@ -97,10 +97,11 @@ MonoBehaviour:
   playerChar: {fileID: 100000, guid: 324e7e8985f374349bf4127f48448169, type: 2}
   healthValue: 100
   speed: .0500000007
-  lineOfSight: 0
-  playerMask:
+  PathfindCooldownValue: 60
+  CanSeePlayer: 0
+  LineOfSightMask:
     serializedVersion: 2
-    m_Bits: 257
+    m_Bits: 0
 --- !u!114 &11400002
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -115,7 +116,7 @@ MonoBehaviour:
   ownerId: 0
   group: 0
   prefixBackup: -1
-  observed: {fileID: 0}
+  observed: {fileID: 11400000}
   synchronization: 1
   onSerializeTransformOption: 3
   onSerializeRigidBodyOption: 2
