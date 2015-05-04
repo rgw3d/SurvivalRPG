@@ -78,9 +78,9 @@ public class MeleeEnemy : MonoBehaviour {
 	}
 
 	void OnTriggerEnter2D(Collider2D collider){
-		if(collider.gameObject == GameObject.FindGameObjectWithTag("Player")){
+		/*if(collider.gameObject == GameObject.FindGameObjectWithTag("Player")){
 			Destroy(GameObject.FindGameObjectWithTag("Enemy"));
-		}
+		}*/
 
 	}
 
