@@ -66,7 +66,6 @@ public class PlayerControl : Photon.MonoBehaviour{
 
                     if (_playerState != PlayerState.attacking) //only update movement if not attacking
                         playerMovement();
-                    playerSprite();
             }
             if (Input.GetKey(KeyCode.E)) { //just a test of the ability to work
                 DelegateHolder.TriggerPlayerStatChange(StatType.Score, 1f);
@@ -77,6 +76,7 @@ public class PlayerControl : Photon.MonoBehaviour{
             SyncedMovement();
         }
 
+        playerSprite();
 	}
 
 
@@ -101,6 +101,9 @@ public class PlayerControl : Photon.MonoBehaviour{
 			rigidbody2D.AddForce(Vector2.right * movementSpeed);
             _playerDirection = CardinalDirection.right;
             _playerState = PlayerState.walking;
+        }
+        if (!Input.GetKey(UpKey) && !Input.GetKey(DownKey) && !Input.GetKey(LeftKey) && !Input.GetKey(RightKey)) {
+            _playerState = PlayerState.standing;
         }
         
     }
