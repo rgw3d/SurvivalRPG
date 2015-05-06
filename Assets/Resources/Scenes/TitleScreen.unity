@@ -259,6 +259,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Output: {fileID: 0}
+  AcceptedCommands:
+  - spawnenemy
+  AcceptedOptions:
+  - '['
 --- !u!114 &1492229323
 MonoBehaviour:
   m_ObjectHideFlags: 0

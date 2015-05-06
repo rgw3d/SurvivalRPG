@@ -4,27 +4,28 @@ using System.Collections.Generic;
 public class MeleeEnemy : Photon.MonoBehaviour {
 
 	public GameObject playerChar;
-	public float healthValue=100;
-	public float speed=0.05f;
+	public float HealthStartingValue=100;
+    public float HealthValue;
+	public float Speed=0.05f;
 
 	private int _pathfindTick = 0;
     public int PathfindCooldownValue = 60;
+    public int LineOfSightDistance = 5;
+    public int ActivationDistance = 25;
 
-    private bool _isAttacking = false;
+	private List<Vector3> _currentPath = new List<Vector3>();
+	private int _indexOfPath = 0;
+	private bool _isDonePathing = false;
+	private PathfindingState _currentPathfindingState = PathfindingState.Inactive;
 
-	List<Vector3> currentPath = new List<Vector3>();
-	int indexOfPath = 0;
-	bool isDonePathing = false;
-	pathfindingState currentState = pathfindingState.Inactive;
-
-	public bool CanSeePlayer = false;
+	private bool _isInLineOfSight = false;
     public LayerMask LineOfSightMask;
 
-    private Vector3 _latestCorrectPos;
-    private Vector3 _onUpdatePos;
-    private float _lerpFraction;
+    private Vector3 _latestCorrectPos;//for networking
+    private Vector3 _onUpdatePos;//networking
+    private float _lerpFraction;//networking
 
-	public enum pathfindingState {
+	public enum PathfindingState {
 		Inactive,
 		Active,
 		Attacking
@@ -35,49 +36,47 @@ public class MeleeEnemy : Photon.MonoBehaviour {
         if (playerChar == null) {
             Debug.Log("player char is null");
         }
+        HealthValue = HealthStartingValue;
         
 	}
 
     bool InLineOfSight(GameObject target) {
         RaycastHit2D x = Physics2D.Linecast(transform.position, target.transform.position ,LineOfSightMask.value);
-		if(x.transform.gameObject == playerChar){
-			return true;
-		}
-		return false;
+        return x.transform.gameObject == playerChar;
     }
 
 	void FixedUpdate () {
 
         if (photonView.isMine) {
             float distance = Vector3.Distance(transform.position, playerChar.transform.position);
-            if (distance < 25) { // good luck m8
-                CanSeePlayer = InLineOfSight(playerChar);
-                if (CanSeePlayer) {
-                    if (distance < 5) {
-                        currentState = pathfindingState.Attacking;
+            if (distance < ActivationDistance) { // good luck m8
+                _isInLineOfSight = InLineOfSight(playerChar);
+                if (_isInLineOfSight) {
+                    if (distance < LineOfSightDistance) {
+                        _currentPathfindingState = PathfindingState.Attacking;
                     }
                     else {
                         _pathfindTick = PathfindCooldownValue;
-                        currentState = pathfindingState.Active;
+                        _currentPathfindingState = PathfindingState.Active;
                     }
                 }
                 else {
-                    if (currentState == pathfindingState.Attacking) {
+                    if (_currentPathfindingState == PathfindingState.Attacking) {
                         _pathfindTick = PathfindCooldownValue;
-                        currentState = pathfindingState.Active;
+                        _currentPathfindingState = PathfindingState.Active;
                     }
                 }
             }
             else {
-                currentState = pathfindingState.Inactive;
+                _currentPathfindingState = PathfindingState.Inactive;
             }
 
-            if (currentState == pathfindingState.Active) {
+            if (_currentPathfindingState == PathfindingState.Active) {
                 findPath();
                 moveToPlayerAlongPath();
             }
 
-            if (currentState == pathfindingState.Attacking) {
+            if (_currentPathfindingState == PathfindingState.Attacking) {
                 nearbyMoveToPlayer();
             } 
         }
@@ -94,15 +93,11 @@ public class MeleeEnemy : Photon.MonoBehaviour {
 
 	}
 
-    void PlayerAttackStance(bool isAttacking) {
-        _isAttacking = isAttacking;
-    }
-
 	void findPath(){
 		if(_pathfindTick >= PathfindCooldownValue){//recreate the path every x number of seconds where x is the tick / 60
-			currentPath = AStar.findABPath(transform.position, playerChar.transform.position);
-			indexOfPath = 0;
-			isDonePathing = false;
+			_currentPath = AStar.findABPath(transform.position, playerChar.transform.position);
+			_indexOfPath = 0;
+			_isDonePathing = false;
 			_pathfindTick = 0;
 		}
 		_pathfindTick++;
@@ -111,19 +106,18 @@ public class MeleeEnemy : Photon.MonoBehaviour {
 	void moveToPlayerAlongPath(){
 		//compare x of enemy to next tile
 		//compare y of enemy to next tile
-		if(!isDonePathing){
-			float angle = Mathf.Atan ( (transform.position.x - currentPath[indexOfPath].x )  / (transform.position.y - currentPath[indexOfPath].y));
-			if (transform.position.y - currentPath[indexOfPath].y >= 0)
+		if(!_isDonePathing){
+			float angle = Mathf.Atan ( (transform.position.x - _currentPath[_indexOfPath].x )  / (transform.position.y - _currentPath[_indexOfPath].y));
+			if (transform.position.y - _currentPath[_indexOfPath].y >= 0)
 				angle += Mathf.PI;
-			transform.Translate (speed *Mathf.Sin(angle), speed *Mathf.Cos(angle), 0);
+			transform.Translate (Speed *Mathf.Sin(angle), Speed *Mathf.Cos(angle), 0);
 
-			if(Mathf.Abs(transform.position.x - currentPath[indexOfPath].x) < .03f && Mathf.Abs(transform.position.y - currentPath[indexOfPath].y) < .03f){
-				indexOfPath++;
-			
+			if(Mathf.Abs(transform.position.x - _currentPath[_indexOfPath].x) < .03f && Mathf.Abs(transform.position.y - _currentPath[_indexOfPath].y) < .03f){
+				_indexOfPath++;
 			}
 			//Debug.Log("indexOfPath is " + indexOfPath);
-			if(indexOfPath == currentPath.Count){
-				isDonePathing = true;
+			if(_indexOfPath == _currentPath.Count){
+				_isDonePathing = true;
 			}
 			
 		}
@@ -133,7 +127,7 @@ public class MeleeEnemy : Photon.MonoBehaviour {
 		float angle = Mathf.Atan ( (transform.position.x - playerChar.transform.position.x )  / (transform.position.y - playerChar.transform.position.y));
 		if (transform.position.y - playerChar.transform.position.y >= 0)
 			angle += Mathf.PI;
-		transform.Translate (speed *Mathf.Sin(angle), speed *Mathf.Cos(angle), 0);
+		transform.Translate (Speed *Mathf.Sin(angle), Speed *Mathf.Cos(angle), 0);
 	}
 
     /*void OnTriggerEnter2D(Collider2D col){
@@ -148,7 +142,7 @@ public class MeleeEnemy : Photon.MonoBehaviour {
     }*/
 
     void OnTriggerStay2D(Collider2D col) {
-        if (col.gameObject == playerChar && _isAttacking) {
+        if (col.gameObject == playerChar) {
             rigidbody2D.AddForce(col.gameObject.rigidbody2D.velocity * 10);
         }
     }
@@ -180,8 +174,6 @@ public class MeleeEnemy : Photon.MonoBehaviour {
             _lerpFraction = 0;                           // reset the fraction we alreay moved. see Update()
 
             transform.localRotation = rot;          // this sample doesn't smooth rotation
-
-
         }
     }
 
