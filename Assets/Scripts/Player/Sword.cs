@@ -18,6 +18,10 @@ public class Sword : MonoBehaviour {
 		if(isAttacking){
 			if(other.tag =="Enemy"){
 				Debug.Log("Attacked an enemy in direction " + swordDirection);
+				//DelegateHolder.TriggerPlayerStatChange // why do we need delegates? We only need to tell the one GO about the change
+
+				EnemyBase enemyBase = other.GetComponent("EnemyBase") as EnemyBase;
+				enemyBase.OnAttacked(20);
 			}
 		}
 

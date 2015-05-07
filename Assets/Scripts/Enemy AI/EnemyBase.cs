@@ -7,6 +7,8 @@ public abstract class EnemyBase : Photon.MonoBehaviour {
     public GameObject playerChar;
     public float HealthStartingValue = 100;
     public float HealthValue;
+	private int _damageInvulnerabilityMaxTicks = 20;
+	private int _damageInvulnerabilityTick;
     public float Speed = 0.05f;
 
     private int _pathfindTick = 0;
@@ -38,10 +40,13 @@ public abstract class EnemyBase : Photon.MonoBehaviour {
             Debug.Log("player char is null");
         }
         HealthValue = HealthStartingValue;
-
+		_damageInvulnerabilityTick = _damageInvulnerabilityMaxTicks;
     }
 
     void FixedUpdate() {
+		if(_damageInvulnerabilityTick > 0){
+			_damageInvulnerabilityTick--;
+		}
 
         if (photonView.isMine) {
             float distance = Vector3.Distance(transform.position, playerChar.transform.position);
@@ -119,6 +124,13 @@ public abstract class EnemyBase : Photon.MonoBehaviour {
 
     public abstract void AttackBehavior();
 
+	public void OnAttacked(int damageTaken){
+		if(_damageInvulnerabilityTick == 0){
+			HealthValue += -damageTaken;
+			_damageInvulnerabilityTick = _damageInvulnerabilityMaxTicks;
+		}
+
+	}
 
     public void OnPhotonSerializeView(PhotonStream stream, PhotonMessageInfo info) {
         if (stream.isWriting) {
