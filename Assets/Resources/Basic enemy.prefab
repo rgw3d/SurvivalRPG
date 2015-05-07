@@ -95,13 +95,15 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   playerChar: {fileID: 100000, guid: 324e7e8985f374349bf4127f48448169, type: 2}
-  healthValue: 100
-  speed: .0500000007
+  HealthStartingValue: 100
+  HealthValue: 0
+  Speed: .0500000007
   PathfindCooldownValue: 60
-  CanSeePlayer: 0
+  LineOfSightDistance: 5
+  ActivationDistance: 25
   LineOfSightMask:
     serializedVersion: 2
-    m_Bits: 0
+    m_Bits: 257
 --- !u!114 &11400002
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -139,12 +141,15 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   playerChar: {fileID: 100000, guid: 324e7e8985f374349bf4127f48448169, type: 2}
-  healthValue: 100
-  speed: .0500000007
-  lineOfSight: 0
-  playerMask:
+  HealthStartingValue: 100
+  HealthValue: 0
+  Speed: .0500000007
+  PathfindCooldownValue: 60
+  LineOfSightDistance: 5
+  ActivationDistance: 25
+  LineOfSightMask:
     serializedVersion: 2
-    m_Bits: 257
+    m_Bits: 0
 --- !u!212 &21200000
 SpriteRenderer:
   m_ObjectHideFlags: 1
