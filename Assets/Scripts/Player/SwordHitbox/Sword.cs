@@ -18,6 +18,7 @@ public class Sword : MonoBehaviour {
 		if(isAttacking){
 			if(other.tag =="Enemy"){
 				Debug.Log("Attacked an enemy in direction " + swordDirection);
+
 			}
 		}
 

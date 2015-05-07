@@ -10,7 +10,6 @@ public delegate void MapGenerated(bool isHost);
 public delegate void MapRendered(bool isHost);
 public delegate void ChatMessageSent(string message);
 
-
 public static class DelegateHolder {
 
 

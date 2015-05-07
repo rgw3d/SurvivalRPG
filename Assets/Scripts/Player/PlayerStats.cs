@@ -26,6 +26,10 @@ public class PlayerStats: MonoBehaviour {
 
 	}
 
+	void Start(){
+		DelegateHolder.
+	}
+
 
     public enum CharacterClass {
         Fighter = 0,
