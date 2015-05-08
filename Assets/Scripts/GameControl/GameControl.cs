@@ -68,24 +68,16 @@ public class GameControl : MonoBehaviour {
     }
     void ChatClient() {
         if (_chatClient.Host.Equals("")) {
-            GUILayout.Label("Chat Username: ");
-            _chatUsername = GUILayout.TextField(_chatUsername);
-            if (GUILayout.Button("Join ChatRoom")) {
-                if (!_chatUsername.Equals("UserName") && !_chatUsername.Equals("")) {
-                    _chatClient.Host = _chatUsername;
-                    ChatState = ChattingState.ChatClosedButShowing;
-                }
-                else {
-                    StartCoroutine(PhotonNetworkManager.TextPopup(.5f));
-                }
-            }
-             
+            _chatClient.Host = PlayerStats.PlayerName;
+            _chatClient.AddLine(_chatClient.Host + " Has Joined",true);
         }
         else {
-            scrollPosition = GUILayout.BeginScrollView(scrollPosition,false, false, GUILayout.Width(ChatBoxWidth), GUILayout.Height(ChatBoxHeight));
+            scrollPosition = GUILayout.BeginScrollView(scrollPosition, false, false, GUILayout.Width(ChatBoxWidth), GUILayout.Height(ChatBoxHeight));
             GUILayout.Label(_chatClient.TextOutput());
             GUILayout.EndScrollView();
         }
+        
+       
     }
 
     void ChatMessageSent(string message) {

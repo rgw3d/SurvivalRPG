@@ -3,18 +3,18 @@ using System.Collections;
 
 public class PlayerStats: MonoBehaviour {
 
-	public string playerName;
-	public int MaxHealth;
-	public int CurrentHealth;
-	public int MaxMana;
-	public int CurrentMana;
-	public int AttackDamage;
-	public int ArmorValue;
+	public static string PlayerName;
+	public static int MaxHealth;
+	public static int CurrentHealth;
+	public static int MaxMana;
+	public static int CurrentMana;
+	public static int AttackDamage;
+	public static int ArmorValue;
 	public static float MovementSpeed;
     private CharacterClass _characterClass;
 
 	void Awake(){
-        playerName = PhotonNetworkManager.selectedPlayerName;
+        PlayerName = PhotonNetworkManager.selectedPlayerName;
         MaxHealth = PlayerPrefs.GetInt(GameControl.PLAYERMAXHEALTHKEY + PhotonNetworkManager.selectedPlayerName);
 		CurrentHealth = MaxHealth;
 		MaxMana = PlayerPrefs.GetInt(GameControl.PLAYERMAXMANAKEY + PhotonNetworkManager.selectedPlayerName);

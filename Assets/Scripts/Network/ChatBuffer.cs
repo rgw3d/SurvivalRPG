@@ -87,7 +87,8 @@ public class ChatBuffer : Photon.MonoBehaviour {
         _buffer = InsertLineBreaks(_buffer);
     }
 
-    public void AddLine(string text = "", bool sendRPC = false) {
+    public void AddLine(string text = "", bool sendRPC = false) {//Adds a line to the buffer.  
+        //set sendRPC to true if this message should be displayed to all people.
 
         if(sendRPC)
             photonView.RPC("RecieveChatText", PhotonTargets.Others, text);
