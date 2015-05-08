@@ -24,27 +24,25 @@ public class ChatOutput : MonoBehaviour {
     }
 
     public void ParseInput(string original) {
-        
-        Debug.Log("Parsing Input");
-        Debug.Log(original.Substring(1));
-        Debug.Log(original);
-        if (original[0]=='/') {
-            original = original.Substring(1);
-            Options = new List<string>();
-            string command = GetCommand(original);
-            Debug.Log("got the command: " +command);
-            if (!command.Equals("") && original.IndexOf(" ")>0) {
-                Debug.Log("good command...now parsing options");
-                WashHands(original.Substring(original.IndexOf(" ")));
-                ParseCommands(command);
+        if (original.Length > 0) {
+
+            Debug.Log(original.Substring(1));
+            Debug.Log(original);
+            if (original[0] == '/') {
+                original = original.Substring(1);
+                Options = new List<string>();
+                string command = GetCommand(original);
+                //Debug.Log("got the command: " +command);
+                if (!command.Equals("") && original.IndexOf(" ") > 0) {
+                    //Debug.Log("good command...now parsing options");
+                    WashHands(original.Substring(original.IndexOf(" ")));
+                    ParseCommands(command);
+                }
+                else {
+                    Output.AddLine("Bad command");
+                    Debug.Log("bad command " + !command.Equals("") + "  " + original.IndexOf(" "));
+                }
             }
-            else {
-                Output.AddLine("Bad command");
-                Debug.Log("bad command " + !command.Equals("") + "  " + original.IndexOf(" "));
-            }
-        }
-        else {
-            Output.AddLine("not a command");
         }
     }
 

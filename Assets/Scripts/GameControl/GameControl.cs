@@ -49,7 +49,7 @@ public class GameControl : MonoBehaviour {
                 Application.LoadLevel(TITLESCREEN);
             }
         }
-        if (Input.GetKey(KeyCode.T)) {
+        if (Input.GetKey(KeyCode.T) || Input.GetKey(KeyCode.Slash)) {
             ChatState = ChattingState.ChatOpenAndTyping;
 
         }

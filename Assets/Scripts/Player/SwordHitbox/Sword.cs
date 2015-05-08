@@ -17,6 +17,9 @@ public class Sword : MonoBehaviour {
 	void OnTriggerStay2D(Collider2D other){
 		if(isAttacking){
 			if(other.tag =="Enemy"){
+                float angle = Vector3.Angle(gameObject.transform.parent.transform.position,other.transform.position ) *180 /Mathf.PI;
+                Debug.Log("Angle: " + angle);
+                other.rigidbody2D.AddForce(new Vector2(100 * Mathf.Sin(angle), 100 * Mathf.Cos(angle)));
 				Debug.Log("Attacked an enemy in direction " + swordDirection);
 			}
 		}
