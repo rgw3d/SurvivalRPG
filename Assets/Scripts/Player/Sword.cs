@@ -21,6 +21,10 @@ public class Sword : MonoBehaviour {
                 Debug.Log("Angle: " + angle);
                 other.rigidbody2D.AddForce(new Vector2(100 * Mathf.Sin(angle), 100 * Mathf.Cos(angle)));
 				Debug.Log("Attacked an enemy in direction " + swordDirection);
+				//DelegateHolder.TriggerPlayerStatChange // why do we need delegates? We only need to tell the one GO about the change
+
+				EnemyBase enemyBase = other.GetComponent("EnemyBase") as EnemyBase;
+				enemyBase.OnAttacked(20);
 			}
 		}
 

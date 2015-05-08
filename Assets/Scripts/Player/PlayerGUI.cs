@@ -10,7 +10,7 @@ public class PlayerGUI : MonoBehaviour {
     
 
     void Start() {
-        DelegateHolder.OnPlayerStatChange += UpdateGUIStats;//add the method to the event, and the event is made from the delegate
+        DelegateHolder.StatChange += UpdateGUIStats;//add the method to the event, and the event is made from the delegate
     }
 
     void OnGUI() {

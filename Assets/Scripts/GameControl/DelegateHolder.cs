@@ -2,7 +2,7 @@
 using System.Collections;
 
 
-public delegate float ChangePlayerStat(StatType statType, float amountChange);
+public delegate float ChangeStat(StatType statType, float amountChange);
 public delegate void PlayerAttack(int direction, bool isAttacking);
 public delegate void GameCreated();
 public delegate void GenerateAndRenderMap();
@@ -14,7 +14,7 @@ public delegate void ChatMessageSent(string message);
 public static class DelegateHolder {
 
 
-    public static event ChangePlayerStat OnPlayerStatChange;
+    public static event ChangeStat StatChange;
     public static event PlayerAttack OnPlayerAttack;
     public static event GameCreated OnGameCreated;
     public static event GenerateAndRenderMap OnGenerateAndRenderMap;
@@ -23,8 +23,8 @@ public static class DelegateHolder {
     public static event ChatMessageSent OnChatMessageSent;
 
     public static void TriggerPlayerStatChange(StatType statType, float amountChange) {
-        if (OnPlayerStatChange != null) {
-            OnPlayerStatChange(statType, amountChange);
+        if (StatChange != null) {
+            StatChange(statType, amountChange);
         }
     }
 
