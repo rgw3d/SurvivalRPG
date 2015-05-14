@@ -19,7 +19,6 @@ public class GameControl : MonoBehaviour {
 	public const string PLAYERMOVEMENTKEY = "PLAYERMOVEMENTKEY";
 
     private ChatBuffer _chatClient;
-    private string _chatUsername = "UserName";
     private Vector2 scrollPosition;
     public static bool IsChatting = false;
     public static int ChatBoxWidth = Screen.width/3;

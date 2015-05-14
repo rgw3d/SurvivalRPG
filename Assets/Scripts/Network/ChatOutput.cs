@@ -53,7 +53,7 @@ public class ChatOutput : MonoBehaviour {
                     int type = int.Parse(Options[0]); //first is type
                     int number = int.Parse(Options[1]); // second is number
                     for (int i = 0; i < number; i++) {
-                        SpawnControl.SpawnNewEnemies(Random.Range(0, GenerateMap.Map.roomList.Count - 1));
+                        SpawnControl.SpawnNewEnemies(Random.Range(0, GenerateMap.Map.roomList.Count - 1), type);
                         Debug.Log("Spawning enemeis");
                     }
                 }
