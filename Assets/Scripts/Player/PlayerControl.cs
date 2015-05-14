@@ -58,15 +58,15 @@ public class PlayerControl : Photon.MonoBehaviour{
         standing = 2,
     }
 
-	void Update(){
 
-		Vector3 mousePos = new Vector3(Input.mousePosition.x, 10 ,Input.mousePosition.z);
-		Vector3 lookPos = Camera.main.ScreenToWorldPoint(mousePos);
-		lookPos = lookPos - transform.position;
-		float angle = Mathf.Atan2(lookPos.z, lookPos.x) * Mathf.Rad2Deg;
-		transform.rotation = Quaternion.AngleAxis(angle, Vector3.forward);
-	}	
-	// Update is called once per frame
+    void Update() {
+        Vector2 positionOnScreen = Camera.main.WorldToViewportPoint(transform.position);
+        Vector2 mouseOnScreen = (Vector2)Camera.main.ScreenToViewportPoint(Input.mousePosition);
+        float angle = Mathf.Atan2(positionOnScreen.y - mouseOnScreen.y, positionOnScreen.x - mouseOnScreen.x) * Mathf.Rad2Deg;
+        transform.rotation = Quaternion.Euler(new Vector3(0f, 0f, angle));
+        Camera.main.transform.rotation = Quaternion.EulerRotation(0, 0, 0);
+    }
+
 	void FixedUpdate () {
         if (photonView.isMine) {
             if (GameControl.ChatState == GameControl.ChattingState.ChatClosedButShowing 
