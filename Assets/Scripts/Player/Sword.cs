@@ -5,6 +5,7 @@ public class Sword : MonoBehaviour {
 	
 	public int swordDirection;
 	public bool isAttacking = false;
+	private List<int> enemyIDs;
 
 
 	void Start(){
@@ -17,14 +18,12 @@ public class Sword : MonoBehaviour {
 	void OnTriggerStay2D(Collider2D other){
 		if(isAttacking){
 			if(other.tag =="Enemy"){
-                float angle = Vector3.Angle(gameObject.transform.parent.transform.position,other.transform.position ) *180 /Mathf.PI;
-                Debug.Log("Angle: " + angle);
-                other.rigidbody2D.AddForce(new Vector2(100 * Mathf.Sin(angle), 100 * Mathf.Cos(angle)));
-				Debug.Log("Attacked an enemy in direction " + swordDirection);
-				//DelegateHolder.TriggerPlayerStatChange // why do we need delegates? We only need to tell the one GO about the change
-
-				EnemyBase enemyBase = other.GetComponent("EnemyBase") as EnemyBase;
-				enemyBase.OnAttacked(20);
+				if(!enemyIDs.Contains(other.transform.GetInstanceID())){
+					Debug.Log("Attacked an enemy in direction " + swordDirection);
+					EnemyBase enemyBase = other.GetComponent("EnemyBase") as EnemyBase;
+					enemyBase.OnAttacked(20);
+					enemyIDs.Add(other.transform.GetInstanceID());
+				}
 			}
 		}
 
@@ -33,6 +32,7 @@ public class Sword : MonoBehaviour {
 	void isPlayerAttacking(int direction, bool isAttacking){
 		if(swordDirection == direction){
 			this.isAttacking = isAttacking;
+			enemyIDs = new List<int>();
 		}
 		else{
 			this.isAttacking = false;
