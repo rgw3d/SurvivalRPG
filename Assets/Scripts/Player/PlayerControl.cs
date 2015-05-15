@@ -64,12 +64,14 @@ public class PlayerControl : Photon.MonoBehaviour{
 
 
     void Update() {
-        Vector2 positionOnScreen = Camera.main.WorldToViewportPoint(transform.position);
-        Vector2 mouseOnScreen = (Vector2)Camera.main.ScreenToViewportPoint(Input.mousePosition);
-        float angle = Mathf.Atan2(positionOnScreen.y - mouseOnScreen.y, positionOnScreen.x - mouseOnScreen.x) * Mathf.Rad2Deg;
-        //transform.rotation = Quaternion.Euler(new Vector3(0f, 0f, angle));
-        transform.rotation = Quaternion.Lerp(transform.rotation, Quaternion.Euler(new Vector3(0f, 0f, angle)), RotationSpeed * Time.deltaTime);
-        Camera.main.transform.rotation = Quaternion.EulerRotation(0, 0, 0);
+        if (photonView.isMine) { 
+            Vector2 positionOnScreen = Camera.main.WorldToViewportPoint(transform.position);
+            Vector2 mouseOnScreen = (Vector2)Camera.main.ScreenToViewportPoint(Input.mousePosition);
+            float angle = Mathf.Atan2(positionOnScreen.y - mouseOnScreen.y, positionOnScreen.x - mouseOnScreen.x) * Mathf.Rad2Deg;
+            //transform.rotation = Quaternion.Euler(new Vector3(0f, 0f, angle));
+            transform.rotation = Quaternion.Lerp(transform.rotation, Quaternion.Euler(new Vector3(0f, 0f, angle)), RotationSpeed * Time.deltaTime);
+            Camera.main.transform.rotation = Quaternion.EulerRotation(0, 0, 0);
+        }
 
     }
 
@@ -96,70 +98,36 @@ public class PlayerControl : Photon.MonoBehaviour{
 
     public void playerMovement() {
         if (Input.GetKey(UpKey)) {
-            //rigidbody2D.AddForce(Vector2.up * movementSpeed);
-            rigidbody2D.AddForce(transform.right * movementSpeed);
+            rigidbody2D.AddForce(Vector2.up * movementSpeed);
             //_playerDirection = CardinalDirection.back;
             _playerState = PlayerState.walking;
         }
         if (Input.GetKey(DownKey)) {
-            //rigidbody2D.AddRelativeForce(Vector2.up * -1 * movementSpeed);
-            rigidbody2D.AddRelativeForce(transform.right * -1 * movementSpeed);
-            //_playerDirection = CardinalDirection.front;
+            rigidbody2D.AddForce(Vector2.up * -1 * movementSpeed);
             _playerState = PlayerState.walking;
         }
         if (Input.GetKey(LeftKey)) {
-			rigidbody2D.AddRelativeForce(Vector2.right * -1 * movementSpeed);
-            //_playerDirection = CardinalDirection.left;
+            rigidbody2D.AddForce(Vector2.right * -1 * movementSpeed);
             _playerState = PlayerState.walking;
 
         }
         if (Input.GetKey(RightKey)) {
-			rigidbody2D.AddRelativeForce(Vector2.right * movementSpeed);
-            //_playerDirection = CardinalDirection.right;
+            rigidbody2D.AddForce(Vector2.right * movementSpeed);
             _playerState = PlayerState.walking;
         }
-        if (!Input.GetKey(UpKey) && !Input.GetKey(DownKey) && !Input.GetKey(LeftKey) && !Input.GetKey(RightKey)) {
-            _playerState = PlayerState.standing;
-        }
-        
     }
+
 
     public void playerSprite() {
             if (_playerState == PlayerState.attacking)
                 _spriteRenderer.sprite = AttackSprite;
             else
                 _spriteRenderer.sprite = NormalSprite;
-        /*
-        if (_playerDirection == CardinalDirection.back) {
-            if(_playerState == PlayerState.attacking)
-                _spriteRenderer.sprite = BackAttack;
-            else
-                _spriteRenderer.sprite = BackSprite;
-        }
-        if (_playerDirection == CardinalDirection.front) {
-            if (_playerState == PlayerState.attacking)
-                _spriteRenderer.sprite = FrontAttack;
-            else
-                _spriteRenderer.sprite = FrontSprite;
-        }
-        if (_playerDirection == CardinalDirection.left) {
-            if (_playerState == PlayerState.attacking)
-                _spriteRenderer.sprite = LeftAttack;
-            else
-                _spriteRenderer.sprite = LeftSprite;
-        }
-        if (_playerDirection == CardinalDirection.right) {
-            if (_playerState == PlayerState.attacking)
-                _spriteRenderer.sprite = RightAttack;
-            else
-                _spriteRenderer.sprite = RightSprite;
-        }
-         * */
     }
 
     public void playerAttack() {
         if (_attackCooldown == 0 && Input.GetKeyDown(AttackKey) && _playerState != PlayerState.attacking) {
-            DelegateHolder.TriggerPlayerAttack((int)_playerDirection, true);
+            DelegateHolder.TriggerPlayerAttack(true);
             _attackCooldown = AttackCooldownValue;
             _playerState = PlayerState.attacking;
         }
@@ -169,7 +137,7 @@ public class PlayerControl : Photon.MonoBehaviour{
         
         if (_attackCooldown == 0 && _playerState == PlayerState.attacking) {
             _playerState = PlayerState.standing;
-            DelegateHolder.TriggerPlayerAttack((int)_playerDirection, false);
+            DelegateHolder.TriggerPlayerAttack(false);
         }
     }
 
@@ -197,7 +165,7 @@ public class PlayerControl : Photon.MonoBehaviour{
             _onUpdatePos = transform.localPosition;  // we interpolate from here to latestCorrectPos
             _lerpFraction = 0;                           // reset the fraction we alreay moved. see Update()
 
-            transform.localRotation = rot;          // this sample doesn't smooth rotation
+            transform.rotation = Quaternion.Slerp(transform.rotation, rot, RotationSpeed * Time.deltaTime);
 
             short dir = 1;
             short ste = 1;
