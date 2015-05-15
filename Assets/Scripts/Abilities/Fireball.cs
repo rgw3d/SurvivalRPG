@@ -8,6 +8,12 @@ public class Fireball: Spell {
 
 
 	void FixedUpdate () {
-		transform.Translate(new Vector3(velocity * transform.)));
+		//transform.Translate();
+	}
+
+	void OnTriggerStay(Collider2D other){
+		if(other.tag == "Enemy" || other.tag == "Wall"){
+			Destroy(gameObject);
+		}
 	}
 }
