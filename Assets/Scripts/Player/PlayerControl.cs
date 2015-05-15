@@ -62,6 +62,7 @@ public class PlayerControl : Photon.MonoBehaviour{
         standing = 2,
     }
 
+
     void Update() {
         Vector2 positionOnScreen = Camera.main.WorldToViewportPoint(transform.position);
         Vector2 mouseOnScreen = (Vector2)Camera.main.ScreenToViewportPoint(Input.mousePosition);
@@ -71,7 +72,6 @@ public class PlayerControl : Photon.MonoBehaviour{
         Camera.main.transform.rotation = Quaternion.EulerRotation(0, 0, 0);
 
     }
-
 
 	void FixedUpdate () {
         if (photonView.isMine) {
