@@ -4,6 +4,9 @@ using System.Collections;
 [RequireComponent(typeof(PhotonView))]
 public class PlayerControl : Photon.MonoBehaviour{
 
+    public Sprite NormalSprite;
+    public Sprite AttackSprite;
+
     public Sprite FrontSprite;
     public Sprite BackSprite;
     public Sprite LeftSprite;
@@ -28,6 +31,7 @@ public class PlayerControl : Photon.MonoBehaviour{
 
     public int AttackCooldownValue = 15;
     private int _attackCooldown = 0;
+    public float RotationSpeed = 5;
 
     private Vector3 _latestCorrectPos;
     private Vector3 _onUpdatePos;
@@ -42,7 +46,7 @@ public class PlayerControl : Photon.MonoBehaviour{
         movementSpeed = PlayerStats.MovementSpeed;
 
         _spriteRenderer = GetComponent<SpriteRenderer>();
-        _spriteRenderer.sprite = FrontSprite;
+        _spriteRenderer.sprite = NormalSprite;
 	
 	}
 
@@ -62,8 +66,10 @@ public class PlayerControl : Photon.MonoBehaviour{
         Vector2 positionOnScreen = Camera.main.WorldToViewportPoint(transform.position);
         Vector2 mouseOnScreen = (Vector2)Camera.main.ScreenToViewportPoint(Input.mousePosition);
         float angle = Mathf.Atan2(positionOnScreen.y - mouseOnScreen.y, positionOnScreen.x - mouseOnScreen.x) * Mathf.Rad2Deg;
-        transform.rotation = Quaternion.Euler(new Vector3(0f, 0f, angle));
+        //transform.rotation = Quaternion.Euler(new Vector3(0f, 0f, angle));
+        transform.rotation = Quaternion.Lerp(transform.rotation, Quaternion.Euler(new Vector3(0f, 0f, angle)), RotationSpeed * Time.deltaTime);
         Camera.main.transform.rotation = Quaternion.EulerRotation(0, 0, 0);
+
     }
 
 
@@ -90,24 +96,26 @@ public class PlayerControl : Photon.MonoBehaviour{
 
     public void playerMovement() {
         if (Input.GetKey(UpKey)) {
-            rigidbody2D.AddForce(Vector2.up * movementSpeed);
-            _playerDirection = CardinalDirection.back;
+            //rigidbody2D.AddForce(Vector2.up * movementSpeed);
+            rigidbody2D.AddForce(transform.right * movementSpeed);
+            //_playerDirection = CardinalDirection.back;
             _playerState = PlayerState.walking;
         }
         if (Input.GetKey(DownKey)) {
-            rigidbody2D.AddForce(Vector2.up * -1 * movementSpeed);
-            _playerDirection = CardinalDirection.front;
+            //rigidbody2D.AddRelativeForce(Vector2.up * -1 * movementSpeed);
+            rigidbody2D.AddRelativeForce(transform.right * -1 * movementSpeed);
+            //_playerDirection = CardinalDirection.front;
             _playerState = PlayerState.walking;
         }
         if (Input.GetKey(LeftKey)) {
-			rigidbody2D.AddForce(Vector2.right * -1 * movementSpeed);
-            _playerDirection = CardinalDirection.left;
+			rigidbody2D.AddRelativeForce(Vector2.right * -1 * movementSpeed);
+            //_playerDirection = CardinalDirection.left;
             _playerState = PlayerState.walking;
 
         }
         if (Input.GetKey(RightKey)) {
-			rigidbody2D.AddForce(Vector2.right * movementSpeed);
-            _playerDirection = CardinalDirection.right;
+			rigidbody2D.AddRelativeForce(Vector2.right * movementSpeed);
+            //_playerDirection = CardinalDirection.right;
             _playerState = PlayerState.walking;
         }
         if (!Input.GetKey(UpKey) && !Input.GetKey(DownKey) && !Input.GetKey(LeftKey) && !Input.GetKey(RightKey)) {
@@ -117,6 +125,11 @@ public class PlayerControl : Photon.MonoBehaviour{
     }
 
     public void playerSprite() {
+            if (_playerState == PlayerState.attacking)
+                _spriteRenderer.sprite = AttackSprite;
+            else
+                _spriteRenderer.sprite = NormalSprite;
+        /*
         if (_playerDirection == CardinalDirection.back) {
             if(_playerState == PlayerState.attacking)
                 _spriteRenderer.sprite = BackAttack;
@@ -141,6 +154,7 @@ public class PlayerControl : Photon.MonoBehaviour{
             else
                 _spriteRenderer.sprite = RightSprite;
         }
+         * */
     }
 
     public void playerAttack() {

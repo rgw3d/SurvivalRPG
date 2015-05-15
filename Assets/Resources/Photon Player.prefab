@@ -263,6 +263,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8e719ebe997e4264fbf08a6a401c9c84, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  NormalSprite: {fileID: 21300000, guid: 0485e2d3d22dbc149b672eec28f2ac65, type: 3}
+  AttackSprite: {fileID: 21300000, guid: 55183ee4f286914469909f430124674f, type: 3}
   FrontSprite: {fileID: 21300000, guid: 0f491ec263b3953419c255895b4cb4ad, type: 3}
   BackSprite: {fileID: 21300040, guid: 0f491ec263b3953419c255895b4cb4ad, type: 3}
   LeftSprite: {fileID: 21300024, guid: 0f491ec263b3953419c255895b4cb4ad, type: 3}
@@ -277,6 +279,8 @@ MonoBehaviour:
   LeftKey: 97
   RightKey: 100
   AttackKey: 32
+  AttackCooldownValue: 15
+  RotationSpeed: 5
 --- !u!114 &11400002
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -378,13 +382,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 26a41c83a96d34d97aebeef73f4afc7c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  playerName: 
-  MaxHealth: 0
-  CurrentHealth: 0
-  MaxMana: 0
-  CurrentMana: 0
-  AttackDamage: 0
-  ArmorValue: 0
 --- !u!212 &21200000
 SpriteRenderer:
   m_ObjectHideFlags: 1
