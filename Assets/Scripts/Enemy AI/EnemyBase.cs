@@ -25,6 +25,7 @@ public abstract class EnemyBase : Photon.MonoBehaviour {
     private Vector3 _latestCorrectPos;//for networking
     private Vector3 _onUpdatePos;//networking
     private float _lerpFraction;//networking
+    private float _healthDelta;
 
     public enum PathfindingState {
         Inactive,
@@ -34,15 +35,12 @@ public abstract class EnemyBase : Photon.MonoBehaviour {
 
     void Start() {
         playerChar = GameObject.FindGameObjectWithTag("Player") as GameObject;
-        if (playerChar == null) {
-            Debug.Log("player char is null");
-        }
         HealthValue = HealthStartingValue;
     }
 
 	void Update(){
 		if(HealthValue <= 0){
-			Destroy(gameObject);
+			PhotonView.Destroy(gameObject);
 		}
 	}
 
@@ -125,20 +123,25 @@ public abstract class EnemyBase : Photon.MonoBehaviour {
 
 	public void OnAttacked(int damageTaken){
 			HealthValue += -damageTaken;
+            _healthDelta += -damageTaken;
 	}
 
     public void OnPhotonSerializeView(PhotonStream stream, PhotonMessageInfo info) {
         if (stream.isWriting) {
             Vector3 pos = transform.localPosition;
             Quaternion rot = transform.localRotation;
+            float deltaHealth = _healthDelta;
 
             stream.Serialize(ref pos);
             stream.Serialize(ref rot);
+            stream.Serialize(ref deltaHealth);
+            _healthDelta = 0;
         }
         else {
             // Receive latest state information
             Vector3 pos = Vector3.zero;
             Quaternion rot = Quaternion.identity;
+            float deltaHealth = 0;
 
             stream.Serialize(ref pos);
             stream.Serialize(ref rot);
@@ -148,6 +151,10 @@ public abstract class EnemyBase : Photon.MonoBehaviour {
             _lerpFraction = 0;                           // reset the fraction we alreay moved. see Update()
 
             transform.localRotation = rot;          // this sample doesn't smooth rotation
+
+            stream.Serialize(ref deltaHealth);
+            HealthValue += deltaHealth;
+
         }
     }
 
