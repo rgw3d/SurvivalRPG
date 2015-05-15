@@ -40,9 +40,12 @@ public abstract class EnemyBase : Photon.MonoBehaviour {
 
 	void Update(){
 		if(HealthValue <= 0){
-			PhotonView.Destroy(gameObject);
+            Debug.Log("Destroying object");
+            if(photonView.isMine)
+                PhotonNetwork.Destroy(this.gameObject);
 		}
 	}
+
 
     void FixedUpdate() {
         if (photonView.isMine) {
