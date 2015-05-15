@@ -10,7 +10,7 @@ public class RenderMap: Photon.MonoBehaviour {
     public GameObject ExitTile;
 
     private GameObject[,] _displayedMapArray;
-    private Map _gameMap;
+    public static Map Map;
 
     void Start() {
         DelegateHolder.OnMapGenerated += ReRenderMap;//set ReRenderMap() to trigger when the map has been generated
@@ -18,14 +18,14 @@ public class RenderMap: Photon.MonoBehaviour {
 
     public void ReRenderMap(bool isHost) {
         if (isHost) {//if we are the host, then we go to the mapGenerator to get the map
-            _gameMap = GenerateMap.Map;//set the map
+            Map = GenerateMap.Map;//set the map
         }
 
         if (_displayedMapArray != null)
             DestroyOldMap();
 
-        _displayedMapArray = new GameObject[_gameMap.mapWidth, _gameMap.mapHeight];
-        RenderTiles(_gameMap.mapTiles, isHost);
+        _displayedMapArray = new GameObject[Map.mapWidth, Map.mapHeight];
+        RenderTiles(Map.mapTiles, isHost);
         DelegateHolder.TriggerMapRendered(isHost);
     }
 
@@ -39,11 +39,11 @@ public class RenderMap: Photon.MonoBehaviour {
     void RenderTiles(MapTile[,] tiles, bool isHost) {
         if (isHost) {//brodcast data
             Debug.Log("Sending RPC to set map tiles");
-            photonView.RPC("SetMapFromServer", PhotonTargets.OthersBuffered, new System.Object[] { _gameMap.mapWidth, _gameMap.mapHeight, _gameMap.SerializeMapTiles() });
+            photonView.RPC("SetMapFromServer", PhotonTargets.OthersBuffered, new System.Object[] { Map.mapWidth, Map.mapHeight, Map.SerializeMapTiles() });
         }
 
-        for (int y = 0; y < _gameMap.mapHeight; y++) {
-            for (int x = 0; x < _gameMap.mapWidth; x++) {
+        for (int y = 0; y < Map.mapHeight; y++) {
+            for (int x = 0; x < Map.mapWidth; x++) {
                 MapTile.TileType tileType = tiles[x, y].GetTileType();
                 GameObject tile = null;
                 switch (tileType) {
@@ -81,7 +81,7 @@ public class RenderMap: Photon.MonoBehaviour {
                 mapTiles[x, y] = new MapTile((int)System.Char.GetNumericValue((mapString[stringindx++])));
         }
 
-        _gameMap = new Map(mapWidth, mapHeight, mapTiles);
+        Map = new Map(mapWidth, mapHeight, mapTiles);
         DelegateHolder.TriggerMapGenerated(false);//false because it is not the host
     }
 

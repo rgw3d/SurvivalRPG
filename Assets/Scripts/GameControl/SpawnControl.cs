@@ -7,7 +7,8 @@ public class SpawnControl : Photon.MonoBehaviour {
     public GameObject PlayerPrefab;
     public GameObject CameraPrefab;
     public List<GameObject> EnemyTypes;
-    private static List<string> _enemyNames;	
+    private static List<string> _enemyNames = new List<string>();
+
 	void Start () {
         DelegateHolder.OnMapGenerated += SpawnPlayers;
         DelegateHolder.OnMapGenerated += SpawnEnemies;
@@ -47,6 +48,12 @@ public class SpawnControl : Photon.MonoBehaviour {
         }
     }
     public static void SpawnNewEnemies(int location = 6, int type = 0) {
-        PhotonNetwork.Instantiate(_enemyNames[type], GenerateMap.Map.roomList[location].GetCenter(), Quaternion.identity, 0);
+        Debug.Log("Spawning new enemies");
+        if (GenerateMap.Map == null) {
+            PhotonNetwork.Instantiate(_enemyNames[type], RenderMap.Map.roomList[location].GetCenter(), Quaternion.identity, 0);
+        }
+        else
+            PhotonNetwork.Instantiate(_enemyNames[type], GenerateMap.Map.roomList[location].GetCenter(), Quaternion.identity, 0);
     }
+
 }

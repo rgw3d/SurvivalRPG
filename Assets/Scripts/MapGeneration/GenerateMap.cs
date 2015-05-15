@@ -19,7 +19,7 @@ public class GenerateMap : Photon.MonoBehaviour {
     //		CreateCorridors:
     //Return Map to MapRenderer
 
-    public static Map Map;
+    public static Map Map = null;
 
     public int MapWidth = 100;
     public int MapHeight = 100;

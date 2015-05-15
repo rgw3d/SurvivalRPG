@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 
@@ -53,12 +54,13 @@ public class ChatOutput : MonoBehaviour {
                     int type = int.Parse(Options[0]); //first is type
                     int number = int.Parse(Options[1]); // second is number
                     for (int i = 0; i < number; i++) {
-                        SpawnControl.SpawnNewEnemies(Random.Range(0, GenerateMap.Map.roomList.Count - 1), type);
-                        Debug.Log("Spawning enemeis");
+                        SpawnControl.SpawnNewEnemies(UnityEngine.Random.Range(0, 30 - 1), type);
+                        //Debug.Log("Spawning enemeis");
                     }
                 }
-                catch {
+                catch (Exception e) {
                     Output.AddLine("Incorrect Syntax: SpawnEnemy -type -number");
+                    Debug.Log(e.Message + "\n" + e.StackTrace);
                 }
 
             }
