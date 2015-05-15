@@ -4,6 +4,9 @@ using System.Collections;
 [RequireComponent(typeof(PhotonView))]
 public class PlayerControl : Photon.MonoBehaviour{
 
+    public Sprite NormalSprite;
+    public Sprite AttackSprite;
+
     public Sprite FrontSprite;
     public Sprite BackSprite;
     public Sprite LeftSprite;
@@ -23,17 +26,23 @@ public class PlayerControl : Photon.MonoBehaviour{
     public KeyCode RightKey;
     public KeyCode AttackKey;
 
+	public Spell Ability1;
+	public int Ability1Cooldown = 0;
+
     private CardinalDirection _playerDirection = CardinalDirection.front;
     private PlayerState _playerState = PlayerState.standing;
 
     public int AttackCooldownValue = 15;
     private int _attackCooldown = 0;
+    public float RotationSpeed = 5;
 
     private Vector3 _latestCorrectPos;
     private Vector3 _onUpdatePos;
+    private Quaternion _latestCorrectRot;
+    private Quaternion _onUpdateRot;
     private float _lerpFraction;
-    
 
+    
 	// Use this for initialization
 	void Start () {
         _latestCorrectPos = transform.position;
@@ -42,7 +51,7 @@ public class PlayerControl : Photon.MonoBehaviour{
         movementSpeed = PlayerStats.MovementSpeed;
 
         _spriteRenderer = GetComponent<SpriteRenderer>();
-        _spriteRenderer.sprite = FrontSprite;
+        _spriteRenderer.sprite = NormalSprite;
 	
 	}
 
@@ -57,8 +66,20 @@ public class PlayerControl : Photon.MonoBehaviour{
         walking = 1,
         standing = 2,
     }
-	
-	// Update is called once per frame
+
+
+    void Update() {
+        if (photonView.isMine) { 
+            Vector2 positionOnScreen = Camera.main.WorldToViewportPoint(transform.position);
+            Vector2 mouseOnScreen = (Vector2)Camera.main.ScreenToViewportPoint(Input.mousePosition);
+            float angle = Mathf.Atan2(positionOnScreen.y - mouseOnScreen.y, positionOnScreen.x - mouseOnScreen.x) * Mathf.Rad2Deg;
+            //transform.rotation = Quaternion.Euler(new Vector3(0f, 0f, angle));
+            transform.rotation = Quaternion.Lerp(transform.rotation, Quaternion.Euler(new Vector3(0f, 0f, angle)), RotationSpeed * Time.deltaTime);
+            Camera.main.transform.rotation = Quaternion.EulerRotation(0, 0, 0);
+        }
+
+    }
+
 	void FixedUpdate () {
         if (photonView.isMine) {
             if (GameControl.ChatState == GameControl.ChattingState.ChatClosedButShowing 
@@ -70,7 +91,11 @@ public class PlayerControl : Photon.MonoBehaviour{
             if (Input.GetKey(KeyCode.E)) { //just a test of the ability to work
                 DelegateHolder.TriggerPlayerStatChange(StatType.Score, 1f);
             }
+			if (Input.GetKey(KeyCode.F)){
+				playerAbility(1);
+			}
             playerAttack();
+			lowerCooldowns();
         }
         else {
             SyncedMovement();
@@ -83,61 +108,35 @@ public class PlayerControl : Photon.MonoBehaviour{
     public void playerMovement() {
         if (Input.GetKey(UpKey)) {
             rigidbody2D.AddForce(Vector2.up * movementSpeed);
-            _playerDirection = CardinalDirection.back;
+            //_playerDirection = CardinalDirection.back;
             _playerState = PlayerState.walking;
         }
         if (Input.GetKey(DownKey)) {
             rigidbody2D.AddForce(Vector2.up * -1 * movementSpeed);
-            _playerDirection = CardinalDirection.front;
             _playerState = PlayerState.walking;
         }
         if (Input.GetKey(LeftKey)) {
-			rigidbody2D.AddForce(Vector2.right * -1 * movementSpeed);
-            _playerDirection = CardinalDirection.left;
+            rigidbody2D.AddForce(Vector2.right * -1 * movementSpeed);
             _playerState = PlayerState.walking;
 
         }
         if (Input.GetKey(RightKey)) {
-			rigidbody2D.AddForce(Vector2.right * movementSpeed);
-            _playerDirection = CardinalDirection.right;
+            rigidbody2D.AddForce(Vector2.right * movementSpeed);
             _playerState = PlayerState.walking;
         }
-        if (!Input.GetKey(UpKey) && !Input.GetKey(DownKey) && !Input.GetKey(LeftKey) && !Input.GetKey(RightKey)) {
-            _playerState = PlayerState.standing;
-        }
-        
     }
 
+
     public void playerSprite() {
-        if (_playerDirection == CardinalDirection.back) {
-            if(_playerState == PlayerState.attacking)
-                _spriteRenderer.sprite = BackAttack;
-            else
-                _spriteRenderer.sprite = BackSprite;
-        }
-        if (_playerDirection == CardinalDirection.front) {
             if (_playerState == PlayerState.attacking)
-                _spriteRenderer.sprite = FrontAttack;
+                _spriteRenderer.sprite = AttackSprite;
             else
-                _spriteRenderer.sprite = FrontSprite;
-        }
-        if (_playerDirection == CardinalDirection.left) {
-            if (_playerState == PlayerState.attacking)
-                _spriteRenderer.sprite = LeftAttack;
-            else
-                _spriteRenderer.sprite = LeftSprite;
-        }
-        if (_playerDirection == CardinalDirection.right) {
-            if (_playerState == PlayerState.attacking)
-                _spriteRenderer.sprite = RightAttack;
-            else
-                _spriteRenderer.sprite = RightSprite;
-        }
+                _spriteRenderer.sprite = NormalSprite;
     }
 
     public void playerAttack() {
         if (_attackCooldown == 0 && Input.GetKeyDown(AttackKey) && _playerState != PlayerState.attacking) {
-            DelegateHolder.TriggerPlayerAttack((int)_playerDirection, true);
+            DelegateHolder.TriggerPlayerAttack(true);
             _attackCooldown = AttackCooldownValue;
             _playerState = PlayerState.attacking;
         }
@@ -147,20 +146,36 @@ public class PlayerControl : Photon.MonoBehaviour{
         
         if (_attackCooldown == 0 && _playerState == PlayerState.attacking) {
             _playerState = PlayerState.standing;
-            DelegateHolder.TriggerPlayerAttack((int)_playerDirection, false);
+            DelegateHolder.TriggerPlayerAttack(false);
         }
     }
+
+	void playerAbility(int abilityNumber){
+		switch(abilityNumber){
+		case 1:
+			if(Ability1Cooldown == 0 && _playerState != PlayerState.attacking){
+				PhotonNetwork.Instantiate(Ability1.name, transform.position, Quaternion.Inverse(transform.localRotation), 0);
+				Ability1Cooldown = Ability1.cooldown;
+			}
+			break;
+		}
+	}
+
+	void lowerCooldowns(){
+		if(Ability1Cooldown > 0){
+			Ability1Cooldown--;
+		}
+	}
+
 
     void OnPhotonSerializeView(PhotonStream stream, PhotonMessageInfo info) {
         if (stream.isWriting) {
             Vector3 pos = transform.localPosition;
             Quaternion rot = transform.localRotation;
-            short dir = (short)_playerDirection;
             short ste = (short)_playerState;
 
             stream.Serialize(ref pos);
             stream.Serialize(ref rot);
-            stream.Serialize(ref dir);
             stream.Serialize(ref ste);
         }
         else {
@@ -173,19 +188,15 @@ public class PlayerControl : Photon.MonoBehaviour{
 
             _latestCorrectPos = pos;                 // save this to move towards it in FixedUpdate()
             _onUpdatePos = transform.localPosition;  // we interpolate from here to latestCorrectPos
+            _latestCorrectRot = rot;
+            _onUpdateRot = transform.rotation;
             _lerpFraction = 0;                           // reset the fraction we alreay moved. see Update()
 
-            transform.localRotation = rot;          // this sample doesn't smooth rotation
 
-            short dir = 1;
             short ste = 1;
 
-            stream.Serialize(ref dir);
             stream.Serialize(ref ste);
-
-            _playerDirection = (CardinalDirection)dir;
             _playerState = (PlayerState)ste;
-
 
         }
     }
@@ -200,6 +211,8 @@ public class PlayerControl : Photon.MonoBehaviour{
 
         _lerpFraction = _lerpFraction + Time.deltaTime * 9;
         transform.localPosition = Vector3.Lerp(_onUpdatePos, _latestCorrectPos, _lerpFraction);    // set our pos between A and B
+        transform.rotation = Quaternion.Slerp(_onUpdateRot, _latestCorrectRot, _lerpFraction);
+
     }
 
 }

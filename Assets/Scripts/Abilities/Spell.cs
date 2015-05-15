@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public interface Spell {
+public class Spell: MonoBehaviour {
 
-	void onSpellCreate();
+	public int cooldown;
 }

@@ -29,6 +29,9 @@ public class GameControl : MonoBehaviour {
 	void Start () {
         DontDestroyOnLoad(this);
         _chatClient = FindObjectOfType<ChatBuffer>();
+        if (_chatClient == null) {
+            Debug.Log("_chatClient is null");
+        }
         DelegateHolder.OnChatMessageSent += ChatMessageSent;
 	}
 
