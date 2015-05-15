@@ -1,17 +1,19 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class Fireball : MonoBehaviour {
+public class Fireball: Spell {
 
 	public int damage;
 	public float velocity;
 
 
-	void Start () {
-	
+	void FixedUpdate () {
+		//transform.Translate();
 	}
 
-	void Update () {
-	
+	void OnTriggerStay(Collider2D other){
+		if(other.tag == "Enemy" || other.tag == "Wall"){
+			Destroy(gameObject);
+		}
 	}
 }

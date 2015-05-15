@@ -141,6 +141,7 @@ MonoBehaviour:
   LeftKey: 97
   RightKey: 100
   AttackKey: 32
+  Ability1: {fileID: 11405138, guid: 7f2023a2a81dc4908938732c3b19a115, type: 2}
   AttackCooldownValue: 15
   RotationSpeed: 5
 --- !u!114 &11400002
