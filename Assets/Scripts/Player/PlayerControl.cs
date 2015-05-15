@@ -35,7 +35,12 @@ public class PlayerControl : Photon.MonoBehaviour{
 
     private Vector3 _latestCorrectPos;
     private Vector3 _onUpdatePos;
+    private Quaternion _latestCorrectRot;
+    private Quaternion _onUpdateRot;
     private float _lerpFraction;
+
+    
+    
     
 
 	// Use this for initialization
@@ -148,12 +153,10 @@ public class PlayerControl : Photon.MonoBehaviour{
         if (stream.isWriting) {
             Vector3 pos = transform.localPosition;
             Quaternion rot = transform.localRotation;
-            short dir = (short)_playerDirection;
             short ste = (short)_playerState;
 
             stream.Serialize(ref pos);
             stream.Serialize(ref rot);
-            stream.Serialize(ref dir);
             stream.Serialize(ref ste);
         }
         else {
@@ -166,17 +169,14 @@ public class PlayerControl : Photon.MonoBehaviour{
 
             _latestCorrectPos = pos;                 // save this to move towards it in FixedUpdate()
             _onUpdatePos = transform.localPosition;  // we interpolate from here to latestCorrectPos
+            _latestCorrectRot = rot;
+            _onUpdateRot = transform.rotation;
             _lerpFraction = 0;                           // reset the fraction we alreay moved. see Update()
 
-            transform.rotation = Quaternion.Slerp(transform.rotation, rot, RotationSpeed * Time.deltaTime);
 
-            short dir = 1;
             short ste = 1;
 
-            stream.Serialize(ref dir);
             stream.Serialize(ref ste);
-
-            _playerDirection = (CardinalDirection)dir;
             _playerState = (PlayerState)ste;
 
 
@@ -193,6 +193,8 @@ public class PlayerControl : Photon.MonoBehaviour{
 
         _lerpFraction = _lerpFraction + Time.deltaTime * 9;
         transform.localPosition = Vector3.Lerp(_onUpdatePos, _latestCorrectPos, _lerpFraction);    // set our pos between A and B
+        transform.rotation = Quaternion.Slerp(_onUpdateRot, _latestCorrectRot, _lerpFraction);
+
     }
 
 }
