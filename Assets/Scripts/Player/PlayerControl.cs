@@ -26,6 +26,9 @@ public class PlayerControl : Photon.MonoBehaviour{
     public KeyCode RightKey;
     public KeyCode AttackKey;
 
+	public Spell Ability1;
+	public int Ability1Cooldown = 0;
+
     private CardinalDirection _playerDirection = CardinalDirection.front;
     private PlayerState _playerState = PlayerState.standing;
 
@@ -40,9 +43,6 @@ public class PlayerControl : Photon.MonoBehaviour{
     private float _lerpFraction;
 
     
-    
-    
-
 	// Use this for initialization
 	void Start () {
         _latestCorrectPos = transform.position;
@@ -91,10 +91,11 @@ public class PlayerControl : Photon.MonoBehaviour{
             if (Input.GetKey(KeyCode.E)) { //just a test of the ability to work
                 DelegateHolder.TriggerPlayerStatChange(StatType.Score, 1f);
             }
-			if (Input.GetKey(KeyCode.Keypad1)){
-
+			if (Input.GetKey(KeyCode.F)){
+				playerAbility(1);
 			}
             playerAttack();
+			lowerCooldowns();
         }
         else {
             SyncedMovement();
@@ -149,6 +150,24 @@ public class PlayerControl : Photon.MonoBehaviour{
         }
     }
 
+	void playerAbility(int abilityNumber){
+		switch(abilityNumber){
+		case 1:
+			if(Ability1Cooldown == 0 && _playerState != PlayerState.attacking){
+				PhotonNetwork.Instantiate(Ability1.name, transform.position, Quaternion.Inverse(transform.localRotation), 0);
+				Ability1Cooldown = Ability1.cooldown;
+			}
+			break;
+		}
+	}
+
+	void lowerCooldowns(){
+		if(Ability1Cooldown > 0){
+			Ability1Cooldown--;
+		}
+	}
+
+
     void OnPhotonSerializeView(PhotonStream stream, PhotonMessageInfo info) {
         if (stream.isWriting) {
             Vector3 pos = transform.localPosition;
@@ -178,7 +197,6 @@ public class PlayerControl : Photon.MonoBehaviour{
 
             stream.Serialize(ref ste);
             _playerState = (PlayerState)ste;
-
 
         }
     }
