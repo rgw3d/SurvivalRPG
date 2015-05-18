@@ -124,32 +124,31 @@ public abstract class EnemyBase : Photon.MonoBehaviour {
 
     public abstract void AttackBehavior();
 
-	public void OnAttacked(int damageTaken){
+	public void OnEnemyAttacked(float damageTaken){
 			HealthValue += -damageTaken;
-            _healthDelta += -damageTaken;
+            photonView.RPC("OnEnemyAttackedRPC", PhotonTargets.Others, damageTaken);
 	}
+    [RPC]
+    public void OnEnemyAttackedRPC(float damageTaken) {
+        HealthValue += -damageTaken;
+    }
 
     public void OnPhotonSerializeView(PhotonStream stream, PhotonMessageInfo info) {
         if (stream.isWriting) {
             Vector3 pos = transform.localPosition;
             Quaternion rot = transform.localRotation;
-            float healthDelta = _healthDelta;
-            _healthDelta = 0;
 
             stream.Serialize(ref pos);
             stream.Serialize(ref rot);
-            stream.Serialize(ref healthDelta);
             
         }
         else {
             // Receive latest state information
             Vector3 pos = Vector3.zero;
             Quaternion rot = Quaternion.identity;
-            float healthDelta = 0;
 
             stream.Serialize(ref pos);
             stream.Serialize(ref rot);
-            stream.Serialize(ref healthDelta);
 
             _latestCorrectPos = pos;                 // save this to move towards it in FixedUpdate()
             _onUpdatePos = transform.localPosition;  // we interpolate from here to latestCorrectPos
@@ -157,8 +156,6 @@ public abstract class EnemyBase : Photon.MonoBehaviour {
             _onUpdateRot = transform.rotation;
             _lerpFraction = 0;                           // reset the fraction we alreay moved. see Update()
 
-            
-            HealthValue += healthDelta;
 
         }
     }

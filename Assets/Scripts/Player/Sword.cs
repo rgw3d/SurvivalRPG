@@ -20,7 +20,7 @@ public class Sword : MonoBehaviour {
 				if(!enemyIDs.Contains(other.transform.GetInstanceID())){
 					Debug.Log("Attacked an enemy in direction " + swordDirection);
 					EnemyBase enemyBase = other.GetComponent("EnemyBase") as EnemyBase;
-					enemyBase.OnAttacked(20);
+					enemyBase.OnEnemyAttacked(20);
 					enemyIDs.Add(other.transform.GetInstanceID());
 				}
 			}

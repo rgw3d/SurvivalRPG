@@ -36,4 +36,6 @@ MonoBehaviour:
   - RecieveChatText
   - ColorRpc
   - DoJump
+  - OnEnemyAttacked
+  - OnEnemyAttackedRPC
   DisableAutoOpenWizard: 0
