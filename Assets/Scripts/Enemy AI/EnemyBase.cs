@@ -44,6 +44,7 @@ public abstract class EnemyBase : Photon.MonoBehaviour {
             if(photonView.isMine)
                 PhotonNetwork.Destroy(this.gameObject);
 		}
+
 	}
 
 
@@ -133,21 +134,22 @@ public abstract class EnemyBase : Photon.MonoBehaviour {
         if (stream.isWriting) {
             Vector3 pos = transform.localPosition;
             Quaternion rot = transform.localRotation;
-            float deltaHealth = _healthDelta;
+            float healthDelta = _healthDelta;
 
             stream.Serialize(ref pos);
             stream.Serialize(ref rot);
-            stream.Serialize(ref deltaHealth);
+            stream.Serialize(ref healthDelta);
             _healthDelta = 0;
         }
         else {
             // Receive latest state information
             Vector3 pos = Vector3.zero;
             Quaternion rot = Quaternion.identity;
-            float deltaHealth = 0;
+            float healthDelta = 0;
 
             stream.Serialize(ref pos);
             stream.Serialize(ref rot);
+            stream.Serialize(ref healthDelta);
 
             _latestCorrectPos = pos;                 // save this to move towards it in FixedUpdate()
             _onUpdatePos = transform.localPosition;  // we interpolate from here to latestCorrectPos
@@ -155,14 +157,13 @@ public abstract class EnemyBase : Photon.MonoBehaviour {
 
             transform.localRotation = rot;          // this sample doesn't smooth rotation
 
-            stream.Serialize(ref deltaHealth);
-            HealthValue += deltaHealth;
+            
+            HealthValue += healthDelta;
 
         }
     }
 
     public void SyncedMovement() {
-
         _lerpFraction = _lerpFraction + Time.deltaTime * 9;
         transform.localPosition = Vector3.Lerp(_onUpdatePos, _latestCorrectPos, _lerpFraction);    // set our pos between A and B
     }

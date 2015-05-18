@@ -29,7 +29,6 @@ public class PlayerControl : Photon.MonoBehaviour{
 	public Spell Ability1;
 	public int Ability1Cooldown = 0;
 
-    private CardinalDirection _playerDirection = CardinalDirection.front;
     private PlayerState _playerState = PlayerState.standing;
 
     public int AttackCooldownValue = 15;
@@ -75,7 +74,7 @@ public class PlayerControl : Photon.MonoBehaviour{
             float angle = Mathf.Atan2(positionOnScreen.y - mouseOnScreen.y, positionOnScreen.x - mouseOnScreen.x) * Mathf.Rad2Deg;
             //transform.rotation = Quaternion.Euler(new Vector3(0f, 0f, angle));
             transform.rotation = Quaternion.Lerp(transform.rotation, Quaternion.Euler(new Vector3(0f, 0f, angle)), RotationSpeed * Time.deltaTime);
-            Camera.main.transform.rotation = Quaternion.EulerRotation(0, 0, 0);
+            Camera.main.transform.rotation = Quaternion.Euler(0, 0, 0);
         }
 
     }
