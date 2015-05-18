@@ -24,7 +24,10 @@ public abstract class EnemyBase : Photon.MonoBehaviour {
 
     private Vector3 _latestCorrectPos;//for networking
     private Vector3 _onUpdatePos;//networking
+    private Quaternion _latestCorrectRot; //networking
+    private Quaternion _onUpdateRot; //networking
     private float _lerpFraction;//networking
+
     private float _healthDelta;
 
     public enum PathfindingState {
@@ -135,11 +138,12 @@ public abstract class EnemyBase : Photon.MonoBehaviour {
             Vector3 pos = transform.localPosition;
             Quaternion rot = transform.localRotation;
             float healthDelta = _healthDelta;
+            _healthDelta = 0;
 
             stream.Serialize(ref pos);
             stream.Serialize(ref rot);
             stream.Serialize(ref healthDelta);
-            _healthDelta = 0;
+            
         }
         else {
             // Receive latest state information
@@ -153,9 +157,9 @@ public abstract class EnemyBase : Photon.MonoBehaviour {
 
             _latestCorrectPos = pos;                 // save this to move towards it in FixedUpdate()
             _onUpdatePos = transform.localPosition;  // we interpolate from here to latestCorrectPos
+            _latestCorrectRot = rot;
+            _onUpdateRot = transform.rotation;
             _lerpFraction = 0;                           // reset the fraction we alreay moved. see Update()
-
-            transform.localRotation = rot;          // this sample doesn't smooth rotation
 
             
             HealthValue += healthDelta;
@@ -166,5 +170,6 @@ public abstract class EnemyBase : Photon.MonoBehaviour {
     public void SyncedMovement() {
         _lerpFraction = _lerpFraction + Time.deltaTime * 9;
         transform.localPosition = Vector3.Lerp(_onUpdatePos, _latestCorrectPos, _lerpFraction);    // set our pos between A and B
+        transform.rotation = Quaternion.Slerp(_onUpdateRot, _latestCorrectRot, _lerpFraction);
     }
 }
