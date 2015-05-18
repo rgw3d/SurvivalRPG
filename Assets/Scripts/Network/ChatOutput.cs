@@ -59,7 +59,7 @@ public class ChatOutput : MonoBehaviour {
                     }
                 }
                 catch (Exception e) {
-                    Output.AddLine("Incorrect Syntax: SpawnEnemy -type -number");
+                    Output.AddLine("Incorrect Syntax: SpawnEnemy -type -number \n Or need to be host");
                     Debug.Log(e.Message + "\n" + e.StackTrace);
                 }
 

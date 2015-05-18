@@ -49,10 +49,6 @@ public class SpawnControl : Photon.MonoBehaviour {
     }
     public static void SpawnNewEnemies(int location = 6, int type = 0) {
         Debug.Log("Spawning new enemies");
-        if (GenerateMap.Map == null) {
-            PhotonNetwork.Instantiate(_enemyNames[type], RenderMap.Map.roomList[location].GetCenter(), Quaternion.identity, 0);
-        }
-        else
             PhotonNetwork.Instantiate(_enemyNames[type], GenerateMap.Map.roomList[location].GetCenter(), Quaternion.identity, 0);
     }
 

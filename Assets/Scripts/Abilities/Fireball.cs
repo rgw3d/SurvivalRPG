@@ -11,7 +11,7 @@ public class Fireball: Spell {
 		//transform.Translate();
 	}
 
-	void OnTriggerStay(Collider2D other){
+	void OnTriggerStay2D(Collider2D other){
 		if(other.tag == "Enemy" || other.tag == "Wall"){
 			Destroy(gameObject);
 		}
