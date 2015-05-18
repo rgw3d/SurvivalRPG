@@ -41,15 +41,6 @@ public abstract class EnemyBase : Photon.MonoBehaviour {
         HealthValue = HealthStartingValue;
     }
 
-	void Update(){
-		if(HealthValue <= 0){
-            Debug.Log("Destroying object");
-            if(photonView.isMine)
-                PhotonNetwork.Destroy(this.gameObject);
-		}
-
-	}
-
 
     void FixedUpdate() {
         if (photonView.isMine) {
@@ -89,6 +80,11 @@ public abstract class EnemyBase : Photon.MonoBehaviour {
             SyncedMovement();
         }
 
+        if (HealthValue <= 0) {
+            Debug.Log("Destroying object");
+            if (photonView.isMine)
+                PhotonNetwork.Destroy(this.gameObject);
+        }
     }
 
     public bool InLineOfSight(GameObject target) {
