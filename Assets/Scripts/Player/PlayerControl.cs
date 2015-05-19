@@ -26,8 +26,12 @@ public class PlayerControl : Photon.MonoBehaviour{
     public KeyCode RightKey;
     public KeyCode AttackKey;
 
-	public Spell Ability1;
+	public Fireball Ability1;
 	public int Ability1Cooldown = 0;
+	public Chipmunk2Lunge Ability2;
+	public int lungeForce = -3300;
+	public int Ability2Cooldown = 0;
+	public int Ability2RecoverTime = 0;
 
     private PlayerState _playerState = PlayerState.standing;
 
@@ -64,6 +68,7 @@ public class PlayerControl : Photon.MonoBehaviour{
         attacking = 0,
         walking = 1,
         standing = 2,
+		lunging = 3
     }
 
 
@@ -72,7 +77,6 @@ public class PlayerControl : Photon.MonoBehaviour{
             Vector2 positionOnScreen = Camera.main.WorldToViewportPoint(transform.position);
             Vector2 mouseOnScreen = (Vector2)Camera.main.ScreenToViewportPoint(Input.mousePosition);
             float angle = Mathf.Atan2(positionOnScreen.y - mouseOnScreen.y, positionOnScreen.x - mouseOnScreen.x) * Mathf.Rad2Deg;
-            //transform.rotation = Quaternion.Euler(new Vector3(0f, 0f, angle));
             transform.rotation = Quaternion.Lerp(transform.rotation, Quaternion.Euler(new Vector3(0f, 0f, angle)), RotationSpeed * Time.deltaTime);
             Camera.main.transform.rotation = Quaternion.Euler(0, 0, 0);
         }
@@ -84,7 +88,7 @@ public class PlayerControl : Photon.MonoBehaviour{
             if (GameControl.ChatState == GameControl.ChattingState.ChatClosedButShowing 
                 || GameControl.ChatState == GameControl.ChattingState.NoUsername) {
 
-                    if (_playerState != PlayerState.attacking) //only update movement if not attacking
+                    if (_playerState != PlayerState.attacking && _playerState != PlayerState.lunging) //only update movement if not attacking
                         playerMovement();
             }
             if (Input.GetKey(KeyCode.E)) { //just a test of the ability to work
@@ -92,6 +96,9 @@ public class PlayerControl : Photon.MonoBehaviour{
             }
 			if (Input.GetKey(KeyCode.F)){
 				playerAbility(1);
+			}
+			if (Input.GetKey(KeyCode.G)){
+				playerAbility(2);
 			}
             playerAttack();
 			lowerCooldowns();
@@ -134,7 +141,7 @@ public class PlayerControl : Photon.MonoBehaviour{
     }
 
     public void playerAttack() {
-        if (_attackCooldown == 0 && Input.GetKeyDown(AttackKey) && _playerState != PlayerState.attacking) {
+		if (_attackCooldown == 0 && Input.GetKeyDown(AttackKey) && _playerState != PlayerState.attacking && _playerState != PlayerState.lunging) {
             DelegateHolder.TriggerPlayerAttack(true);
             _attackCooldown = AttackCooldownValue;
             _playerState = PlayerState.attacking;
@@ -157,12 +164,30 @@ public class PlayerControl : Photon.MonoBehaviour{
 				Ability1Cooldown = Ability1.cooldown;
 			}
 			break;
+		case 2:
+			if(Ability2Cooldown == 0 && _playerState != PlayerState.attacking){
+				rigidbody2D.AddForce(Vector2.zero);
+				rigidbody2D.AddRelativeForce(lungeForce * Vector2.right);
+				_playerState = PlayerState.lunging;
+				Ability2Cooldown = 120;
+				Ability2RecoverTime = 30;
+			}
+			break;
 		}
 	}
 
 	void lowerCooldowns(){
 		if(Ability1Cooldown > 0){
 			Ability1Cooldown--;
+		}
+		if(Ability2Cooldown > 0){
+			Ability2Cooldown--;
+		}
+		if(Ability2RecoverTime > 0){
+			Ability2RecoverTime--;
+		}
+		if(Ability2RecoverTime == 0 && _playerState == PlayerState.lunging) {
+			_playerState = PlayerState.standing;
 		}
 	}
 

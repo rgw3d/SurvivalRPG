@@ -2,8 +2,7 @@
 using System.Collections.Generic;
 
 public class Sword : MonoBehaviour {
-	
-	public int swordDirection;
+
 	public bool isAttacking = false;
 	private List<int> enemyIDs;
 
@@ -18,7 +17,6 @@ public class Sword : MonoBehaviour {
 		if(isAttacking){
 			if(other.tag =="Enemy"){
 				if(!enemyIDs.Contains(other.transform.GetInstanceID())){
-					Debug.Log("Attacked an enemy in direction " + swordDirection);
 					EnemyBase enemyBase = other.GetComponent("EnemyBase") as EnemyBase;
 					enemyBase.OnEnemyAttacked(20);
 					enemyIDs.Add(other.transform.GetInstanceID());

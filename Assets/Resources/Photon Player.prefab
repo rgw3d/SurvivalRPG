@@ -15,6 +15,7 @@ GameObject:
   - 60: {fileID: 6000000}
   - 114: {fileID: 11400004}
   - 114: {fileID: 11495896}
+  - 114: {fileID: 11441412}
   m_Layer: 8
   m_Name: Photon Player
   m_TagString: Player
@@ -142,6 +143,9 @@ MonoBehaviour:
   RightKey: 100
   AttackKey: 32
   Ability1: {fileID: 11405138, guid: 7f2023a2a81dc4908938732c3b19a115, type: 2}
+  Ability1Cooldown: 0
+  Ability2: {fileID: 0}
+  Ability2Cooldown: 0
   AttackCooldownValue: 15
   RotationSpeed: 5
 --- !u!114 &11400002
@@ -193,8 +197,20 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c5b39ac3491c04611833177cc148cd81, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  swordDirection: 4
   isAttacking: 0
+--- !u!114 &11441412
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 100000}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3ffb2fa50052a4651809aaf4da79ad45, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  cooldown: 180
+  lungeForce: 100
 --- !u!114 &11495896
 MonoBehaviour:
   m_ObjectHideFlags: 1
