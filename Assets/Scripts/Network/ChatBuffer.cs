@@ -37,7 +37,6 @@ public class ChatBuffer : Photon.MonoBehaviour {
     }
 
     public void AddInput(string text) {
-
         foreach (var c in text) {
             if (c == "\b"[0]) {//backspace
                 if (_inputBuffer.Length != 0) {

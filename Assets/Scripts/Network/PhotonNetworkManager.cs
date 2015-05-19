@@ -4,9 +4,8 @@ using System;
 
 public class PhotonNetworkManager : MonoBehaviour {
 
-    private string _roomName = "Example Room Name";
+    private string _roomName = "Blank Room Name";
     private RoomInfo[] _roomsList;
-    public static bool IsHost = false;
 
     private static bool _displayBadNamePopup = false;
     private float _playerClassSlider = 1;
@@ -14,15 +13,12 @@ public class PhotonNetworkManager : MonoBehaviour {
     private string _playerName = "Player Name";
     private PlayerStats.CharacterClass _playerClass = PlayerStats.CharacterClass.Fighter;
 
-	public  static string selectedPlayerName = "";
-
-    private string _chatUsername = "UserName";
-    private ChatBuffer _chatClient;
+	public static string selectedPlayerName = "";
     private Vector2 scrollPosition;
 
     void Start() {
+        DontDestroyOnLoad(gameObject);
         PhotonNetwork.ConnectUsingSettings("0.1");
-        _chatClient = FindObjectOfType<ChatBuffer>();
     }
 
     void OnGUI() {
@@ -94,7 +90,6 @@ public class PhotonNetworkManager : MonoBehaviour {
                 GUILayout.EndHorizontal();
 
                 GUILayout.BeginHorizontal();
-                    //LobbyChatClient();
                 GUILayout.EndHorizontal();
             GUILayout.EndVertical();
         GUILayout.EndArea();
@@ -183,39 +178,28 @@ public class PhotonNetworkManager : MonoBehaviour {
         GUI.Box(new Rect(2 * Screen.width / 5, Screen.height / 2, Screen.width / 5, Screen.height / 10), "Bad Name");
     }
 
-    void LobbyChatClient() {
-        if (_chatClient.Host.Equals("")) {
-            GUILayout.Label("Chat Username: ");
-            _chatUsername = GUILayout.TextField(_chatUsername);
-            if (GUILayout.Button("Join ChatRoom")) {
-                if (!_chatUsername.Equals("UserName") && !_chatUsername.Equals("")) {
-                    _chatClient.Host = _chatUsername;
-                }
-                else {
-                    StartCoroutine(TextPopup(.5f));
-                }
-            }
-        }
-        else {
-            scrollPosition = GUILayout.BeginScrollView(scrollPosition, GUILayout.MinWidth(Screen.width/3));
-            GUILayout.Label(_chatClient.TextOutput());
-            GUILayout.EndScrollView();
-        }
-    }
-
     void OnReceivedRoomListUpdate() {
         _roomsList = PhotonNetwork.GetRoomList();
     }
 
     void OnCreatedRoom() {//if this user created the room, then this is called
         Debug.Log("Created Room. Connected to room");
-        IsHost = true;
-        DelegateHolder.TriggerGenerateAndRenderMap();
+        Application.LoadLevel(GameControl.PLAYSCREEN);//load play screen
+        Debug.Log("after loaded play scene");
+        DelegateHolder.TriggerGenerateAndRenderMap(); //Generate map
+        DelegateHolder.TriggerPlayerHasConnected(); // Boadcast that the player has connected
     }
 
     void OnPhotonPlayerConnected() {
+        DelegateHolder.TriggerPlayerHasConnected();
         Debug.Log("Player has connected");
     }
+
+    void OnPhotonPlayerDisconnected() {
+        DelegateHolder.TriggerPlayerHasDisconnected();
+        Debug.Log("Player has disconnected");
+    }
+
     public void OnJoinedRoom() {
         Debug.Log("Joined Room");
     }
