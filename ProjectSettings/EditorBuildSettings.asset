@@ -7,7 +7,7 @@ EditorBuildSettings:
   m_Scenes:
   - enabled: 1
     path: Assets/Resources/Scenes/TitleScreen.unity
-  - enabled: 0
+  - enabled: 1
     path: Assets/Resources/Scenes/PlayScene.unity
   - enabled: 0
     path: Assets/Resources/Scenes/testNetworkScene.unity

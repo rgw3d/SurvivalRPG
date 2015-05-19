@@ -13,6 +13,7 @@ public class PhotonNetworkManager : MonoBehaviour {
     private string _playerName = "Player Name";
     private PlayerStats.CharacterClass _playerClass = PlayerStats.CharacterClass.Fighter;
 
+    public static bool IsHost = false;
 	public static string selectedPlayerName = "";
     private Vector2 scrollPosition;
 
@@ -184,10 +185,9 @@ public class PhotonNetworkManager : MonoBehaviour {
 
     void OnCreatedRoom() {//if this user created the room, then this is called
         Debug.Log("Created Room. Connected to room");
+        IsHost = true;
         Application.LoadLevel(GameControl.PLAYSCREEN);//load play screen
-        Debug.Log("after loaded play scene");
-        DelegateHolder.TriggerGenerateAndRenderMap(); //Generate map
-        DelegateHolder.TriggerPlayerHasConnected(); // Boadcast that the player has connected
+        StartCoroutine(WaitForSceneToLoad(2f));
     }
 
     void OnPhotonPlayerConnected() {
@@ -202,6 +202,12 @@ public class PhotonNetworkManager : MonoBehaviour {
 
     public void OnJoinedRoom() {
         Debug.Log("Joined Room");
+    }
+
+    IEnumerator WaitForSceneToLoad(float timeDelay) {
+        yield return new WaitForSeconds(timeDelay);
+        DelegateHolder.TriggerGenerateAndRenderMap(); //Generate map
+        DelegateHolder.TriggerPlayerHasConnected(); // Boadcast that the player has connected
     }
 
 }

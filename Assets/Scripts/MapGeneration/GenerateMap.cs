@@ -37,20 +37,20 @@ public class GenerateMap : Photon.MonoBehaviour {
     }
 
     public void GenerateAndDisplayMap() {
-        generateMap();
+        GenMap();
         DelegateHolder.TriggerMapGenerated(true);//assume that if the map is generated this way, then it is the host
     }
 
-    public void generateMap() {
+    public void GenMap() {
         Map = new Map(MapWidth, MapHeight);
-        createMap();
-        createRooms();
-        createCorridors();
+        CreateMap();
+        CreateRooms();
+        CreateCorridors();
         createWalls();
-        createGoal();
+        CreateGoal();
     }
 
-    public void createMap() {//This fills the entire map with white tiles (blank tiles)
+    public void CreateMap() {//This fills the entire map with white tiles (blank tiles)
         for (int y = 0; y < MapHeight; y++) {
             for (int x = 0; x < MapWidth; x++) {
                 Map.mapTiles[x, y] = new MapTile(MapTile.TileType.white, x, y);
@@ -59,7 +59,7 @@ public class GenerateMap : Photon.MonoBehaviour {
     }
 
 
-    public void createRooms() {//this creates the rooms, 
+    public void CreateRooms() {//this creates the rooms, 
         int maxTries = NumberTriesToGenRooms;//and also changes the tiles to have the appropriate color (from white to red)
         int numberOfRooms = NumberOfRooms;
         for (int tries = 0; tries < maxTries; tries++) {
@@ -94,7 +94,7 @@ public class GenerateMap : Photon.MonoBehaviour {
         }
     }
 
-    public void createCorridors() {
+    public void CreateCorridors() {
         foreach (MapRoom r1 in Map.roomList) {
             if (!r1.isConnected) {
                 MapRoom r2 = FindNearestNonConnectedRoom(r1);
@@ -167,7 +167,7 @@ public class GenerateMap : Photon.MonoBehaviour {
         }
     }
 
-    public void createGoal() {
+    public void CreateGoal() {
         Vector2 center = Map.roomList[Map.roomList.Count - 1].GetCenter();
         Debug.Log("Center: " + center.x + "  " + center.y);
         Map.mapTiles[(int)center.x, (int)center.y].SetTileType(MapTile.TileType.goal);

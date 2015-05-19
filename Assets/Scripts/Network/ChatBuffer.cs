@@ -21,12 +21,12 @@ public class ChatBuffer : Photon.MonoBehaviour {
     public bool HidePrompt;
 
     public void Start() {
-        ScreenWidth = GameControl.ChatBoxWidth;
+        ScreenWidth = ChatDisplay.ChatBoxWidth;
         HidePrompt = true;
     }
 
     public void Update() {
-        if (GameControl.ChatState == GameControl.ChattingState.ChatOpenAndTyping) 
+        if (ChatDisplay.ChatState == ChatDisplay.ChattingState.ChatOpenAndTyping) 
             AddInput(Input.inputString);
 
             // Truncate buffer if longer than buffer limit
@@ -47,8 +47,8 @@ public class ChatBuffer : Photon.MonoBehaviour {
                 string output = InputTextOutput(true);
                 AddLine(output, true);
                 DelegateHolder.TriggerChatMessageSent(_inputBuffer);
-                
-                GameControl.ChatState = GameControl.ChattingState.ChatClosedButShowing;
+
+                ChatDisplay.ChatState = ChatDisplay.ChattingState.ChatClosedButShowing;
 
                 _inputBuffer = "";
             }
@@ -63,7 +63,7 @@ public class ChatBuffer : Photon.MonoBehaviour {
 
         output += "\n";
 
-        if (GameControl.ChatState == GameControl.ChattingState.ChatOpenAndTyping) {// Not Suspending Input, display typing
+        if (ChatDisplay.ChatState == ChatDisplay.ChattingState.ChatOpenAndTyping) {// Not Suspending Input, display typing
             output += InsertLineBreaks(InputTextOutput());
         }
 
