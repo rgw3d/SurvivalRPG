@@ -84,8 +84,8 @@ public class PlayerControl : Photon.MonoBehaviour{
 
 	void FixedUpdate () {
         if (photonView.isMine) {
-            if (GameControl.ChatState == GameControl.ChattingState.ChatClosedButShowing 
-                || GameControl.ChatState == GameControl.ChattingState.NoUsername) {
+            if (ChatDisplay.ChatState == ChatDisplay.ChattingState.ChatClosedButShowing
+                || ChatDisplay.ChatState == ChatDisplay.ChattingState.NoUsername) {
 
                     if (_playerState != PlayerState.attacking && _playerState != PlayerState.lunging) //only update movement if not attacking
                         playerMovement();

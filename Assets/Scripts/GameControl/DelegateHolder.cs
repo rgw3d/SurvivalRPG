@@ -9,6 +9,8 @@ public delegate void GenerateAndRenderMap();
 public delegate void MapGenerated(bool isHost);
 public delegate void MapRendered(bool isHost);
 public delegate void ChatMessageSent(string message);
+public delegate void PlayerHasConnected();
+public delegate void PlayerHasDisconnected();
 
 
 public static class DelegateHolder {
@@ -21,6 +23,8 @@ public static class DelegateHolder {
     public static event MapGenerated OnMapGenerated;
     public static event MapRendered OnMapRendered;
     public static event ChatMessageSent OnChatMessageSent;
+    public static event PlayerHasConnected OnPlayerHasConnected;
+    public static event PlayerHasDisconnected OnPlayerHasDisconnected;
 
     public static void TriggerPlayerStatChange(StatType statType, float amountChange) {
         if (StatChange != null) {
@@ -67,6 +71,20 @@ public static class DelegateHolder {
             OnChatMessageSent(message);
         }
         
+    }
+
+    public static void TriggerPlayerHasConnected(){
+        if(OnPlayerHasConnected != null){
+            Debug.Log("Delegate Called: Player has joined");
+            OnPlayerHasConnected();
+        }
+    }
+
+    public static void TriggerPlayerHasDisconnected(){
+        if(OnPlayerHasDisconnected != null){
+            Debug.Log("Delegate Called: Player has disconnected");
+            OnPlayerHasDisconnected();
+        }
     }
 
 }

@@ -3,12 +3,12 @@ using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 
-public class ChatOutput : MonoBehaviour {
+public class ChatCommands : MonoBehaviour {
 
     public ChatBuffer Output;
 
     public string[] AcceptedCommands = new[] { "spawnenemy" };
-    public string[] AcceptedOptions = new[] { "["};
+    public string[] AcceptedOptions = new[] { "[" };
     List<string> Options;
 
     public void Start() {
@@ -101,5 +101,5 @@ public class ChatOutput : MonoBehaviour {
 
     }
 
-   
+
 }

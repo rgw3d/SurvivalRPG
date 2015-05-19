@@ -1,14 +1,13 @@
 ﻿using UnityEngine;
 using System.Collections;
+using System;
 
 public class GameControl : MonoBehaviour {
 
     public static int Difficulty = 5; //Out of 0-10
-    //Music when we have it
-    //Any other settings
     public KeyCode ExitKey = KeyCode.Escape;
     public const string TITLESCREEN = "TitleScreen";
-    public const string PLAYSCREEN = "PlayScreen";
+    public const string PLAYSCREEN = "PlayScene";
 
     public const string PLAYERNAMESKEY = "PLAYERNAMESKEY";
     public const string PLAYERCLASSKEY = "PLAYERCLASSKEY";
@@ -18,28 +17,20 @@ public class GameControl : MonoBehaviour {
     public const string PLAYERATTACKKEY = "PLAYERATTACKKEY";
 	public const string PLAYERMOVEMENTKEY = "PLAYERMOVEMENTKEY";
 
-    private ChatBuffer _chatClient;
-    private Vector2 scrollPosition;
-    public static bool IsChatting = false;
-    public static int ChatBoxWidth = Screen.width/3;
-    public static int ChatBoxHeight = Screen.height / 3;
-    public static ChattingState ChatState = ChattingState.NoUsername;
     
 
 	void Start () {
         DontDestroyOnLoad(this);
-        _chatClient = FindObjectOfType<ChatBuffer>();
-        if (_chatClient == null) {
-            Debug.Log("_chatClient is null");
-        }
-        DelegateHolder.OnChatMessageSent += ChatMessageSent;
-	}
-
-    public enum ChattingState {
-        NoUsername,
-        ChatClosedButShowing,
-        ChatOpenAndTyping,
+        DelegateHolder.OnPlayerHasConnected += PlayerConnected;
+        DelegateHolder.OnPlayerHasDisconnected += PlayerDisconnected;
     }
+
+    public void PlayerConnected() {
+    }
+
+    public void PlayerDisconnected() {
+    }
+
 	
 	void Update () {
         if (Input.GetKey(ExitKey)) {
@@ -52,37 +43,11 @@ public class GameControl : MonoBehaviour {
             }
         }
         if (Input.GetKey(KeyCode.T) || Input.GetKey(KeyCode.Slash)) {
-            ChatState = ChattingState.ChatOpenAndTyping;
+            ChatDisplay.ChatState = ChatDisplay.ChattingState.ChatOpenAndTyping;
 
         }
         
 	}
 
-    void OnGUI() {
-        GUILayout.BeginArea(new Rect(0,Screen.height-ChatBoxHeight, ChatBoxWidth, ChatBoxHeight));
-            GUILayout.BeginVertical();
-                    if(PhotonNetwork.room != null)
-                        ChatClient();
-            GUILayout.EndVertical();
-        GUILayout.EndArea();
-
-
-    }
-    void ChatClient() {
-        if (_chatClient.Host.Equals("")) {
-            _chatClient.Host = PlayerStats.PlayerName;
-            _chatClient.AddLine(_chatClient.Host + " Has Joined",true);
-        }
-        else {
-            scrollPosition = GUILayout.BeginScrollView(scrollPosition, false, false, GUILayout.Width(ChatBoxWidth), GUILayout.Height(ChatBoxHeight));
-            GUILayout.Label(_chatClient.TextOutput());
-            GUILayout.EndScrollView();
-        }
-        
-       
-    }
-
-    void ChatMessageSent(string message) {
-        scrollPosition.y = Mathf.Infinity;//set scroll position equal to the bottom of the view area
-    }
+    
 }

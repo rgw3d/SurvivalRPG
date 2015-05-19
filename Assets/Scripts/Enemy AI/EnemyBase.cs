@@ -4,7 +4,8 @@ using System.Collections.Generic;
 
 public abstract class EnemyBase : Photon.MonoBehaviour {
 
-    public GameObject playerChar;
+    public List<GameObject> PlayerList;
+    public GameObject Target;
     public float HealthStartingValue = 100;
     public float HealthValue;
     public float Speed = 0.05f;
@@ -13,6 +14,7 @@ public abstract class EnemyBase : Photon.MonoBehaviour {
     public int PathfindCooldownValue = 60;
     public int LineOfSightDistance = 5;
     public int ActivationDistance = 25;
+    public float ResetTargetCooldown = .25f;
 
     private bool _isInLineOfSight = false;
     public LayerMask LineOfSightMask;
@@ -21,14 +23,13 @@ public abstract class EnemyBase : Photon.MonoBehaviour {
     private int _indexOfPath = 0;
     private bool _isDonePathing = false;
     private PathfindingState _currentPathfindingState = PathfindingState.Inactive;
+    private static Transform _staticTransform;
 
     private Vector3 _latestCorrectPos;//for networking
     private Vector3 _onUpdatePos;//networking
     private Quaternion _latestCorrectRot; //networking
     private Quaternion _onUpdateRot; //networking
     private float _lerpFraction;//networking
-
-    private float _healthDelta;
 
     public enum PathfindingState {
         Inactive,
@@ -37,16 +38,27 @@ public abstract class EnemyBase : Photon.MonoBehaviour {
     }
 
     void Start() {
-        playerChar = GameObject.FindGameObjectWithTag("Player") as GameObject;
+        PlayerList = new List<GameObject>(GameObject.FindGameObjectsWithTag("Player"));
         HealthValue = HealthStartingValue;
+        InvokeRepeating("SetTarget", 1, ResetTargetCooldown);//Set it to find a new target 
+        DelegateHolder.OnPlayerHasConnected += PlayerConnected;
+        DelegateHolder.OnPlayerHasDisconnected += PlayerDisconnected;
+    }
+
+    public void PlayerConnected() {
+        PlayerList = new List<GameObject>(GameObject.FindGameObjectsWithTag("Player"));
+    }
+
+    public void PlayerDisconnected() {
+        PlayerList = new List<GameObject>(GameObject.FindGameObjectsWithTag("Player"));
     }
 
 
     void FixedUpdate() {
-        if (photonView.isMine) {
-            float distance = Vector3.Distance(transform.position, playerChar.transform.position);
+        if (photonView.isMine && Target != null) {
+            float distance = Vector3.Distance(transform.position, Target.transform.position);
             if (distance < ActivationDistance) { // good luck m8
-                _isInLineOfSight = InLineOfSight(playerChar);
+                _isInLineOfSight = InLineOfSight(Target);
                 if (_isInLineOfSight) {
                     if (distance < LineOfSightDistance) {
                         _currentPathfindingState = PathfindingState.Attacking;
@@ -81,20 +93,42 @@ public abstract class EnemyBase : Photon.MonoBehaviour {
         }
 
         if (HealthValue <= 0) {
-            Debug.Log("Destroying object");
+            Debug.Log("Enemy Health < 0 \nDestroying");
             if (photonView.isMine)
                 PhotonNetwork.Destroy(this.gameObject);
         }
     }
 
+    public void SetTarget() {
+        _staticTransform = transform;
+        if (PlayerList != null && PlayerList.Count > 0) {
+            PlayerList.Sort(ComparePlayerDistances);
+            Target = PlayerList[0];
+        }
+        else {
+            Target = null;
+        }
+    }
+
+       
+     
+
+    private static int ComparePlayerDistances(GameObject player1, GameObject player2) {
+        float dist1 = Vector3.Distance(_staticTransform.position, player1.transform.position);
+        float dist2 = Vector3.Distance(_staticTransform.position, player2.transform.position);
+        return Mathf.RoundToInt(dist1 - dist2);
+    }
+
+
+
     public bool InLineOfSight(GameObject target) {
         RaycastHit2D x = Physics2D.Linecast(transform.position, target.transform.position, LineOfSightMask.value);
-        return x.transform.gameObject == playerChar;
+        return x.transform.gameObject == target;
     }
 
     public void PathFind() {
         if (_pathfindTick >= PathfindCooldownValue) {//recreate the path every x number of seconds where x is the tick / 60
-            _currentPath = AStar.findABPath(transform.position, playerChar.transform.position);
+            _currentPath = AStar.findABPath(transform.position, Target.transform.position);
             _indexOfPath = 0;
             _isDonePathing = false;
             _pathfindTick = 0;
@@ -128,6 +162,7 @@ public abstract class EnemyBase : Photon.MonoBehaviour {
 			HealthValue += -damageTaken;
             photonView.RPC("OnEnemyAttackedRPC", PhotonTargets.Others, damageTaken);
 	}
+
     [RPC]
     public void OnEnemyAttackedRPC(float damageTaken) {
         HealthValue += -damageTaken;
