@@ -15,7 +15,6 @@ GameObject:
   - 60: {fileID: 6000000}
   - 114: {fileID: 11400004}
   - 114: {fileID: 11495896}
-  - 114: {fileID: 11441412}
   m_Layer: 8
   m_Name: Photon Player
   m_TagString: Player
@@ -34,7 +33,24 @@ GameObject:
   - 60: {fileID: 6064518}
   - 114: {fileID: 11422180}
   m_Layer: 0
-  m_Name: WestSword
+  m_Name: Sword
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!1 &198532
+GameObject:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  serializedVersion: 4
+  m_Component:
+  - 4: {fileID: 498532}
+  - 60: {fileID: 6098532}
+  - 114: {fileID: 11498532}
+  m_Layer: 0
+  m_Name: LungeSword
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -47,9 +63,10 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 100000}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 44.2632179, y: 90.0488739, z: 0}
+  m_LocalPosition: {x: 63.5266266, y: 94.4194717, z: 0}
   m_LocalScale: {x: 4, y: 4, z: 1}
   m_Children:
+  - {fileID: 498532}
   - {fileID: 464518}
   m_Father: {fileID: 0}
   m_RootOrder: 0
@@ -61,6 +78,18 @@ Transform:
   m_GameObject: {fileID: 164518}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: -11.1854525, y: -14.869112, z: -4.94999981}
+  m_LocalScale: {x: .25, y: .25, z: 1}
+  m_Children: []
+  m_Father: {fileID: 400000}
+  m_RootOrder: 1
+--- !u!4 &498532
+Transform:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 198532}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -.0500000007, y: -.0700000003, z: -4.9000001}
   m_LocalScale: {x: .25, y: .25, z: 1}
   m_Children: []
   m_Father: {fileID: 400000}
@@ -115,6 +144,21 @@ PolygonCollider2D:
       - {x: 43.8987236, y: 59.6902542}
       - {x: 44.0628777, y: 60.0302353}
       - {x: 44.7430687, y: 59.4316559}
+--- !u!60 &6098532
+PolygonCollider2D:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 198532}
+  m_Enabled: 1
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_Poly:
+    m_Paths:
+    - - {x: -1.16077113, y: -.00892516971}
+      - {x: -1.16368556, y: .569573641}
+      - {x: .247866824, y: .699635744}
+      - {x: .252947986, y: -.121462554}
 --- !u!114 &11400000
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -144,8 +188,9 @@ MonoBehaviour:
   AttackKey: 32
   Ability1: {fileID: 11405138, guid: 7f2023a2a81dc4908938732c3b19a115, type: 2}
   Ability1Cooldown: 0
-  Ability2: {fileID: 0}
+  Ability2: {fileID: 11498532}
   Ability2Cooldown: 0
+  Ability2RecoverTime: 0
   AttackCooldownValue: 15
   RotationSpeed: 5
 --- !u!114 &11400002
@@ -198,19 +243,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   isAttacking: 0
---- !u!114 &11441412
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 100000}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 3ffb2fa50052a4651809aaf4da79ad45, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  cooldown: 180
-  lungeForce: 100
 --- !u!114 &11495896
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -222,6 +254,22 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 26a41c83a96d34d97aebeef73f4afc7c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &11498532
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 198532}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3ffb2fa50052a4651809aaf4da79ad45, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  cooldown: 120
+  lungeForce: -3300
+  recoverTime: 30
+  damage: 25
+  isLunging: 0
 --- !u!212 &21200000
 SpriteRenderer:
   m_ObjectHideFlags: 1

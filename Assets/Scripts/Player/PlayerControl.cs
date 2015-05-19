@@ -29,7 +29,6 @@ public class PlayerControl : Photon.MonoBehaviour{
 	public Fireball Ability1;
 	public int Ability1Cooldown = 0;
 	public Chipmunk2Lunge Ability2;
-	public int lungeForce = -3300;
 	public int Ability2Cooldown = 0;
 	public int Ability2RecoverTime = 0;
 
@@ -167,10 +166,11 @@ public class PlayerControl : Photon.MonoBehaviour{
 		case 2:
 			if(Ability2Cooldown == 0 && _playerState != PlayerState.attacking){
 				rigidbody2D.AddForce(Vector2.zero);
-				rigidbody2D.AddRelativeForce(lungeForce * Vector2.right);
+				rigidbody2D.AddRelativeForce(Ability2.lungeForce * Vector2.right);
 				_playerState = PlayerState.lunging;
-				Ability2Cooldown = 120;
-				Ability2RecoverTime = 30;
+				Ability2.isLunging = true;
+				Ability2Cooldown = Ability2.cooldown;
+				Ability2RecoverTime = Ability2.recoverTime;
 			}
 			break;
 		}
@@ -188,6 +188,8 @@ public class PlayerControl : Photon.MonoBehaviour{
 		}
 		if(Ability2RecoverTime == 0 && _playerState == PlayerState.lunging) {
 			_playerState = PlayerState.standing;
+			Ability2.isLunging = false;
+			Ability2.resetEnemyIDs();
 		}
 	}
 
