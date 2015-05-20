@@ -84,6 +84,8 @@ GameObject:
   - 4: {fileID: 1153397444}
   - 114: {fileID: 1153397443}
   - 114: {fileID: 1153397442}
+  - 114: {fileID: 1153397445}
+  - 114: {fileID: 1153397446}
   m_Layer: 0
   m_Name: Chat Client
   m_TagString: Untagged
@@ -116,10 +118,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 1153397441}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 5f68d0f7217ea644fbe59e8580be6ec7, type: 3}
+  m_Script: {fileID: 11500000, guid: 06a00665a6d5b6d4bbb945a6b69bedbb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Output: {fileID: 0}
+  Output: {fileID: 1153397442}
   AcceptedCommands:
   - spawnenemy
   AcceptedOptions:
@@ -136,6 +138,43 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 1
+--- !u!114 &1153397445
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1153397441}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4589ace1180d6e248938d404f651cc50, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ChatBuff: {fileID: 1153397442}
+--- !u!114 &1153397446
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1153397441}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: aa584fbee541324448dd18d8409c7a41, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ownerId: 0
+  group: 0
+  prefixBackup: -1
+  observed: {fileID: 0}
+  synchronization: 0
+  onSerializeTransformOption: 3
+  onSerializeRigidBodyOption: 2
+  ownershipTransfer: 0
+  ObservedComponents:
+  - {fileID: 0}
+  ObservedComponentsFoldoutOpen: 1
+  viewIdField: 2
+  instantiationId: 2
+  isRuntimeInstantiated: 0
 --- !u!1 &1592794448
 GameObject:
   m_ObjectHideFlags: 0

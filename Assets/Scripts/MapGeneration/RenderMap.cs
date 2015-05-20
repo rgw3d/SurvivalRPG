@@ -12,8 +12,13 @@ public class RenderMap: Photon.MonoBehaviour {
     private GameObject[,] _displayedMapArray;
     public static Map Map;
 
+
     void Start() {
         DelegateHolder.OnMapGenerated += ReRenderMap;//set ReRenderMap() to trigger when the map has been generated
+        DelegateHolder.OnPlayerHasConnected += PlayerConnected;
+    }
+    public void PlayerConnected() {
+       // photonView.RPC("SetMapFromServer", PhotonTargets.OthersBuffered, new System.Object[] { Map.mapWidth, Map.mapHeight, Map.SerializeMapTiles() });
     }
 
     public void ReRenderMap(bool isHost) {
@@ -41,7 +46,6 @@ public class RenderMap: Photon.MonoBehaviour {
             Debug.Log("Sending RPC to set map tiles");
             photonView.RPC("SetMapFromServer", PhotonTargets.OthersBuffered, new System.Object[] { Map.mapWidth, Map.mapHeight, Map.SerializeMapTiles() });
         }
-
         for (int y = 0; y < Map.mapHeight; y++) {
             for (int x = 0; x < Map.mapWidth; x++) {
                 MapTile.TileType tileType = tiles[x, y].GetTileType();

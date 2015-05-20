@@ -101,8 +101,11 @@ public abstract class EnemyBase : Photon.MonoBehaviour {
 
     public void SetTarget() {
         _staticTransform = transform;
-        if (PlayerList != null && PlayerList.Count > 0) {
+        if (PlayerList != null && PlayerList.Count > 1) {
             PlayerList.Sort(ComparePlayerDistances);
+            Target = PlayerList[0];
+        }
+        else if(PlayerList.Count == 1) {
             Target = PlayerList[0];
         }
         else {

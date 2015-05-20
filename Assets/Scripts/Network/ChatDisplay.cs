@@ -3,7 +3,7 @@ using System.Collections;
 
 public class ChatDisplay : MonoBehaviour {
 
-    private ChatBuffer _chatClient;
+    public ChatBuffer ChatBuff;
     private Vector2 scrollPosition;
     public static bool IsChatting = false;
     public static int ChatBoxWidth = Screen.width / 3;
@@ -12,7 +12,6 @@ public class ChatDisplay : MonoBehaviour {
 
 
     void Start() {
-        _chatClient = FindObjectOfType<ChatBuffer>();
         DelegateHolder.OnChatMessageSent += ChatMessageSent;
     }
 
@@ -40,13 +39,13 @@ public class ChatDisplay : MonoBehaviour {
 
     }
     void ChatClient() {
-        if (_chatClient.Host.Equals("")) {
-            _chatClient.Host = PlayerStats.PlayerName;
-            _chatClient.AddLine(_chatClient.Host + " Has Joined", true);
+        if (System.String.IsNullOrEmpty(ChatBuff.Host)) {
+            ChatBuff.Host = PlayerStats.PlayerName;
+            ChatBuff.AddLine(ChatBuff.Host + " Has Joined", true);
         }
         else {
             scrollPosition = GUILayout.BeginScrollView(scrollPosition, false, false, GUILayout.Width(ChatBoxWidth), GUILayout.Height(ChatBoxHeight));
-            GUILayout.Label(_chatClient.TextOutput());
+            GUILayout.Label(ChatBuff.TextOutput());
             GUILayout.EndScrollView();
         }
 

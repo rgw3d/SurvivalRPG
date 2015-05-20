@@ -12,7 +12,7 @@ public class ChatBuffer : Photon.MonoBehaviour {
     public const int ScreenHeight = 24;
     public int ScreenWidth;
 
-    public string Host = "";
+    public string Host;
     public string Prompt = ">";
 
     public const int MaxBufferLength = 5000;
@@ -23,6 +23,7 @@ public class ChatBuffer : Photon.MonoBehaviour {
     public void Start() {
         ScreenWidth = ChatDisplay.ChatBoxWidth;
         HidePrompt = true;
+        Host = "";
     }
 
     public void Update() {

@@ -44,6 +44,8 @@ public class PhotonNetworkManager : MonoBehaviour {
                         if (GUILayout.Button("Create Room")) {
                             RoomOptions roomOptions = new RoomOptions() { isVisible = true, maxPlayers = 4, isOpen = true };
                             PhotonNetwork.CreateRoom(_roomName, roomOptions, TypedLobby.Default);
+                            Application.LoadLevel(GameControl.PLAYSCREEN);//load play screen
+                            IsHost = true;
                         }
                         _roomName = GUILayout.TextField(_roomName, 20);
                     GUILayout.EndVertical();
@@ -51,8 +53,12 @@ public class PhotonNetworkManager : MonoBehaviour {
                     GUILayout.BeginVertical(GUILayout.MinWidth(Screen.width / 4));//Join Room
                         if (_roomsList != null) {
                             for (int i = 0; i < _roomsList.Length; i++) {
-                                if (GUILayout.Button("Join " + _roomsList[i].name))
-                                    PhotonNetwork.JoinRoom(_roomsList[i].name);
+                                if (GUILayout.Button("Join " + _roomsList[i].name)) {
+                                    Application.LoadLevel(GameControl.PLAYSCREEN);//load play screen
+                                    StartCoroutine(WaitForSceneToLoad(1f));
+                                    PhotonNetwork.JoinRoom(_roomsList[i].name);//Connect to Room
+                                    //Invoke("JoinRoom",0);
+                                }
                             }
                         }
                     GUILayout.EndVertical();
@@ -169,6 +175,10 @@ public class PhotonNetworkManager : MonoBehaviour {
 		PlayerPrefs.DeleteKey(GameControl.PLAYERATTACKKEY + deletedPlayerName);
 	}
 
+    private void JoinRoom() {
+        
+    }
+
     public static IEnumerator TextPopup(float waitTime) {
         _displayBadNamePopup = true;
         yield return new WaitForSeconds(waitTime);
@@ -185,9 +195,6 @@ public class PhotonNetworkManager : MonoBehaviour {
 
     void OnCreatedRoom() {//if this user created the room, then this is called
         Debug.Log("Created Room. Connected to room");
-        IsHost = true;
-        Application.LoadLevel(GameControl.PLAYSCREEN);//load play screen
-        StartCoroutine(WaitForSceneToLoad(2f));
     }
 
     void OnPhotonPlayerConnected() {
@@ -204,10 +211,16 @@ public class PhotonNetworkManager : MonoBehaviour {
         Debug.Log("Joined Room");
     }
 
+    void OnLevelWasLoaded(int indx){
+        if(IsHost){
+            DelegateHolder.TriggerGenerateAndRenderMap(); //Generate map
+            DelegateHolder.TriggerPlayerHasConnected(); // Boadcast that the player has connected
+        }
+    }
+
     IEnumerator WaitForSceneToLoad(float timeDelay) {
         yield return new WaitForSeconds(timeDelay);
-        DelegateHolder.TriggerGenerateAndRenderMap(); //Generate map
-        DelegateHolder.TriggerPlayerHasConnected(); // Boadcast that the player has connected
+        
     }
 
 }

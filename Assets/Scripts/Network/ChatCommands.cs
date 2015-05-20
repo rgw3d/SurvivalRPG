@@ -12,7 +12,6 @@ public class ChatCommands : MonoBehaviour {
     List<string> Options;
 
     public void Start() {
-        Output = FindObjectOfType<ChatBuffer>();
         DelegateHolder.OnChatMessageSent += ParseInput;
     }
 
