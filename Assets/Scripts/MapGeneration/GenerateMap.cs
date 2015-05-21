@@ -46,14 +46,15 @@ public class GenerateMap : Photon.MonoBehaviour {
         CreateMap();
         CreateRooms();
         CreateCorridors();
-        createWalls();
+        CreateWalls();
         CreateGoal();
+		CreateObstacles();
     }
 
     public void CreateMap() {//This fills the entire map with white tiles (blank tiles)
         for (int y = 0; y < MapHeight; y++) {
             for (int x = 0; x < MapWidth; x++) {
-                Map.mapTiles[x, y] = new MapTile(MapTile.TileType.white, x, y);
+                Map.mapTiles[x, y] = new MapTile(MapTile.TileType.Background, x, y);
             }
         }
     }
@@ -80,7 +81,7 @@ public class GenerateMap : Photon.MonoBehaviour {
                 Map.roomList.Add(basicRoom);
                 for (int y = basicRoom.BottomY; y <= basicRoom.TopY; y++) {
                     for (int x = basicRoom.LeftX; x <= basicRoom.RightX; x++) {
-                        Map.mapTiles[x, y].SetTileType(MapTile.TileType.background);
+                        Map.mapTiles[x, y].SetTileType(MapTile.TileType.Ground);
                     }
                 }
                 numberOfRooms--;
@@ -104,11 +105,11 @@ public class GenerateMap : Photon.MonoBehaviour {
                 int r2Y = Random.Range(r2.BottomY, r2.TopY + 1);
 
                 while (r1X != r2X) {
-                    Map.mapTiles[r1X, r1Y].SetTileType(MapTile.TileType.background);
+                    Map.mapTiles[r1X, r1Y].SetTileType(MapTile.TileType.Ground);
                     r1X += (r1X < r2X) ? 1 : -1;
                 }
                 while (r1Y != r2Y) {
-                    Map.mapTiles[r1X, r1Y].SetTileType(MapTile.TileType.background);
+                    Map.mapTiles[r1X, r1Y].SetTileType(MapTile.TileType.Ground);
                     r1Y += (r1Y < r2Y) ? 1 : -1;
                 }
                 r1.isConnected = true;
@@ -134,43 +135,66 @@ public class GenerateMap : Photon.MonoBehaviour {
         return nearestRoom;
     }
 
-    public void createWalls() {
+    public void CreateWalls() {
         for (int y = 0; y < MapHeight; y++) {
             for (int x = 0; x < MapWidth; x++) {
                 MapTile tile = Map.mapTiles[x, y];
-                if (tile.GetTileType() == MapTile.TileType.background) {
-                    if (Map.mapTiles[x - 1, y].GetTileType() == MapTile.TileType.white)//left
-                        Map.mapTiles[x - 1, y].SetTileType(MapTile.TileType.wall);
+                if (tile.GetTileType() == MapTile.TileType.Ground) {
+                    if (Map.mapTiles[x - 1, y].GetTileType() == MapTile.TileType.Background)//left
+                        Map.mapTiles[x - 1, y].SetTileType(MapTile.TileType.Wall);
 
-                    if (Map.mapTiles[x - 1, y + 1].GetTileType() == MapTile.TileType.white)//above left
-                        Map.mapTiles[x - 1, y + 1].SetTileType(MapTile.TileType.wall);
+                    if (Map.mapTiles[x - 1, y + 1].GetTileType() == MapTile.TileType.Background)//above left
+                        Map.mapTiles[x - 1, y + 1].SetTileType(MapTile.TileType.Wall);
 
-                    if (Map.mapTiles[x, y + 1].GetTileType() == MapTile.TileType.white)//above
-                        Map.mapTiles[x, y + 1].SetTileType(MapTile.TileType.wall);
+                    if (Map.mapTiles[x, y + 1].GetTileType() == MapTile.TileType.Background)//above
+                        Map.mapTiles[x, y + 1].SetTileType(MapTile.TileType.Wall);
 
-                    if (Map.mapTiles[x + 1, y + 1].GetTileType() == MapTile.TileType.white)//above right
-                        Map.mapTiles[x + 1, y + 1].SetTileType(MapTile.TileType.wall);
+                    if (Map.mapTiles[x + 1, y + 1].GetTileType() == MapTile.TileType.Background)//above right
+                        Map.mapTiles[x + 1, y + 1].SetTileType(MapTile.TileType.Wall);
 
-                    if (Map.mapTiles[x + 1, y].GetTileType() == MapTile.TileType.white)//right
-                        Map.mapTiles[x + 1, y].SetTileType(MapTile.TileType.wall);
+                    if (Map.mapTiles[x + 1, y].GetTileType() == MapTile.TileType.Background)//right
+                        Map.mapTiles[x + 1, y].SetTileType(MapTile.TileType.Wall);
 
-                    if (Map.mapTiles[x + 1, y - 1].GetTileType() == MapTile.TileType.white)//below right
-                        Map.mapTiles[x + 1, y - 1].SetTileType(MapTile.TileType.wall);
+                    if (Map.mapTiles[x + 1, y - 1].GetTileType() == MapTile.TileType.Background)//below right
+                        Map.mapTiles[x + 1, y - 1].SetTileType(MapTile.TileType.Wall);
 
-                    if (Map.mapTiles[x, y - 1].GetTileType() == MapTile.TileType.white)//below
-                        Map.mapTiles[x, y - 1].SetTileType(MapTile.TileType.wall);
+                    if (Map.mapTiles[x, y - 1].GetTileType() == MapTile.TileType.Background)//below
+                        Map.mapTiles[x, y - 1].SetTileType(MapTile.TileType.Wall);
 
-                    if (Map.mapTiles[x - 1, y - 1].GetTileType() == MapTile.TileType.white)//below left
-                        Map.mapTiles[x - 1, y - 1].SetTileType(MapTile.TileType.wall);
+                    if (Map.mapTiles[x - 1, y - 1].GetTileType() == MapTile.TileType.Background)//below left
+                        Map.mapTiles[x - 1, y - 1].SetTileType(MapTile.TileType.Wall);
                 }
             }
         }
     }
 
+	public void CreateObstacles(){
+		foreach(MapRoom room in Map.roomList){
+			int NumObstaclesPercent = Random.Range(1,10);
+			if(NumObstaclesPercent <= 2){
+				return;
+			}
+			else if(NumObstaclesPercent > 2 && NumObstaclesPercent <= 8){
+				int r1X = Random.Range(room.LeftX, room.RightX + 1);
+				int r1Y = Random.Range(room.BottomY, room.TopY + 1);
+				Map.mapTiles[r1X, r1Y].SetTileType(MapTile.TileType.Obstacle);
+			}
+			else if(NumObstaclesPercent > 8){
+				int r1X = Random.Range(room.LeftX, room.RightX + 1);
+				int r1Y = Random.Range(room.BottomY, room.TopY + 1);
+				Map.mapTiles[r1X, r1Y].SetTileType(MapTile.TileType.Obstacle);
+				r1X = Random.Range(room.LeftX, room.RightX + 1);
+				r1Y = Random.Range(room.BottomY, room.TopY + 1);
+				Map.mapTiles[r1X, r1Y].SetTileType(MapTile.TileType.Obstacle);
+
+			}
+		}
+	}
+
     public void CreateGoal() {
         Vector2 center = Map.roomList[Map.roomList.Count - 1].GetCenter();
         Debug.Log("Center: " + center.x + "  " + center.y);
-        Map.mapTiles[(int)center.x, (int)center.y].SetTileType(MapTile.TileType.goal);
+        Map.mapTiles[(int)center.x, (int)center.y].SetTileType(MapTile.TileType.ExitTile);
     }
 
 }

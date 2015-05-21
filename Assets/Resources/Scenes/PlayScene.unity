@@ -253,6 +253,8 @@ MonoBehaviour:
   Background: {fileID: 100000, guid: 6ba3345f47afce747966b6b983293480, type: 2}
   Wall: {fileID: 158572, guid: fae218158c9684dbdb39e64ae4898e89, type: 2}
   ExitTile: {fileID: 140764, guid: 3ded492cc3de944b49ca4dd51bf32a6b, type: 2}
+  Doorway: {fileID: 149376, guid: 0a2cff97191774c0bb9b46192c3a0231, type: 2}
+  Obstacle: {fileID: 126952, guid: 58e0738d480054ffca1f37577dd21e3b, type: 2}
 --- !u!4 &1592794452
 Transform:
   m_ObjectHideFlags: 0
