@@ -12,6 +12,7 @@ public class PlayerGUI : MonoBehaviour {
     }
 
     void OnGUI() {
+        //Draw rectangle on top or score
         drawScore();
     }
 

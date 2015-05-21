@@ -39,6 +39,10 @@ public class PlayerStats: MonoBehaviour {
         return (CharacterClass)PlayerPrefs.GetInt(GameControl.PLAYERCLASSKEY + PhotonNetworkManager.selectedPlayerName);
     }
 
+    public static int GetPlayerLevel() {
+        return PlayerPrefs.GetInt(GameControl.PLAYERLEVELKEY + PhotonNetworkManager.selectedPlayerName);
+    }
+
    
     /* Set Methods */
     public static void SetMaxHealth(int maxHealth) {
@@ -54,7 +58,13 @@ public class PlayerStats: MonoBehaviour {
     }
 
     public static void SetBaseDefenseValue(int baseDefense) {
-        PlayerPrefs.SetInt(GameControl.PLAYERDEFENSEKEY + PhotonNetworkManager.selectedPlayerName,baseDefense);
+        PlayerPrefs.SetInt(GameControl.PLAYERDEFENSEKEY + PhotonNetworkManager.selectedPlayerName, baseDefense);
     }
+
+    public static void SetPlayerLevel(int level) {
+        PlayerPrefs.SetInt(GameControl.PLAYERLEVELKEY + PhotonNetworkManager.selectedPlayerName, level);
+    }
+
+    
 
 }

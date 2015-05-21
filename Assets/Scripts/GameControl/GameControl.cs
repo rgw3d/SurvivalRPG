@@ -19,6 +19,7 @@ public class GameControl : MonoBehaviour {
     public const string PLAYERDEFENSEKEY = "PLAYERDEFENSEKEY";
     public const string PLAYERATTACKKEY = "PLAYERATTACKKEY";
 	public const string PLAYERMOVEMENTKEY = "PLAYERMOVEMENTKEY";
+    public const string PLAYERLEVELKEY = "PLAYERLEVELKEY";
 
     
 

@@ -67,8 +67,9 @@ public class PhotonNetworkManager : MonoBehaviour {
                     string[] allplayerNames = PlayerPrefs.GetString(GameControl.PLAYERNAMESKEY).Split(',');
                     _playerSelectSlider = GUILayout.HorizontalSlider(_playerSelectSlider, 0f, (float)allplayerNames.Length-1);
                     int playerIndex = Mathf.RoundToInt(_playerSelectSlider);
-                    GUILayout.Box("Name: " +allplayerNames[playerIndex] + "\n" 
-                        + "Class: "+ (PlayerStats.CharacterClass)PlayerPrefs.GetInt(GameControl.PLAYERCLASSKEY + allplayerNames[playerIndex]) +"\n"
+                    GUILayout.Box("Name: " +allplayerNames[playerIndex] + "\n"
+                        + "Level " + (PlayerPrefs.GetInt(GameControl.PLAYERLEVELKEY + allplayerNames[playerIndex]))
+                        + " " + (PlayerStats.CharacterClass)PlayerPrefs.GetInt(GameControl.PLAYERCLASSKEY + allplayerNames[playerIndex]) + "\n"
                         + "Max Health: " + PlayerPrefs.GetInt(GameControl.PLAYERMAXHEALTHKEY + allplayerNames[playerIndex]) + "\n" 
                         + "Max Mana: " + PlayerPrefs.GetInt(GameControl.PLAYERMAXMANAKEY + allplayerNames[playerIndex]) + "\n"
                         + "Attack: " + PlayerPrefs.GetInt(GameControl.PLAYERATTACKKEY + allplayerNames[playerIndex]) + "\n"
@@ -125,6 +126,7 @@ public class PhotonNetworkManager : MonoBehaviour {
 
         switch (_playerClass) {
             case PlayerStats.CharacterClass.Fighter:
+                PlayerPrefs.SetInt(GameControl.PLAYERLEVELKEY + _playerName, 0);
                 PlayerPrefs.SetInt(GameControl.PLAYERMAXHEALTHKEY + _playerName, 100);
                 PlayerPrefs.SetInt(GameControl.PLAYERMAXMANAKEY + _playerName, 20);
 				PlayerPrefs.SetInt(GameControl.PLAYERATTACKKEY + _playerName, 100);
@@ -132,6 +134,7 @@ public class PhotonNetworkManager : MonoBehaviour {
 				PlayerPrefs.SetFloat(GameControl.PLAYERMOVEMENTKEY + _playerName, 80f);
                 break;
             case PlayerStats.CharacterClass.Mage:
+                PlayerPrefs.SetInt(GameControl.PLAYERLEVELKEY + _playerName, 0);
                 PlayerPrefs.SetInt(GameControl.PLAYERMAXHEALTHKEY + _playerName, 1);
                 PlayerPrefs.SetInt(GameControl.PLAYERMAXMANAKEY + _playerName, 1000);
                 PlayerPrefs.SetInt(GameControl.PLAYERATTACKKEY + _playerName, 100);
@@ -139,6 +142,7 @@ public class PhotonNetworkManager : MonoBehaviour {
 				PlayerPrefs.SetFloat(GameControl.PLAYERMOVEMENTKEY + _playerName, 400f);
                 break;
             case PlayerStats.CharacterClass.Healer:
+                PlayerPrefs.SetInt(GameControl.PLAYERLEVELKEY + _playerName, 0);
                 PlayerPrefs.SetInt(GameControl.PLAYERMAXHEALTHKEY + _playerName, 50);
                 PlayerPrefs.SetInt(GameControl.PLAYERMAXMANAKEY + _playerName, 500);
                 PlayerPrefs.SetInt(GameControl.PLAYERATTACKKEY + _playerName, 10);
@@ -146,6 +150,7 @@ public class PhotonNetworkManager : MonoBehaviour {
 				PlayerPrefs.SetFloat(GameControl.PLAYERMOVEMENTKEY + _playerName, 80f);
                 break;
 			case PlayerStats.CharacterClass.Shrek:
+                PlayerPrefs.SetInt(GameControl.PLAYERLEVELKEY + _playerName, 0);
 				PlayerPrefs.SetInt(GameControl.PLAYERMAXHEALTHKEY + _playerName, 9000);
 				PlayerPrefs.SetInt(GameControl.PLAYERMAXMANAKEY + _playerName, 0);
 				PlayerPrefs.SetInt(GameControl.PLAYERATTACKKEY + _playerName, 411);
@@ -167,6 +172,7 @@ public class PhotonNetworkManager : MonoBehaviour {
 			}
 		}
 		PlayerPrefs.SetString(GameControl.PLAYERNAMESKEY,newAllPlayerNames);
+        PlayerPrefs.DeleteKey(GameControl.PLAYERLEVELKEY + deletedPlayerName);
 		PlayerPrefs.DeleteKey(GameControl.PLAYERCLASSKEY + deletedPlayerName);
 		PlayerPrefs.DeleteKey(GameControl.PLAYERMAXHEALTHKEY + deletedPlayerName);
 		PlayerPrefs.DeleteKey(GameControl.PLAYERMAXMANAKEY + deletedPlayerName);

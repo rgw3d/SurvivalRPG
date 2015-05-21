@@ -18,7 +18,7 @@ public class PlayerControl : Photon.MonoBehaviour{
     private Sprite _currentSprite;
 	private SpriteRenderer _spriteRenderer;
 
-	public float movementSpeed;
+	private float _movementSpeed;
 
     public KeyCode UpKey;
     public KeyCode DownKey;
@@ -52,7 +52,7 @@ public class PlayerControl : Photon.MonoBehaviour{
         _latestCorrectPos = transform.position;
         _onUpdatePos = transform.position;
 
-        movementSpeed = PlayerStats.GetBaseMovementSpeed();
+        _movementSpeed = PlayerStats.GetBaseMovementSpeed();
 
         _spriteRenderer = GetComponent<SpriteRenderer>();
         _spriteRenderer.sprite = NormalSprite;
@@ -115,21 +115,21 @@ public class PlayerControl : Photon.MonoBehaviour{
 
     public void PlayerMovement() {
         if (Input.GetKey(UpKey)) {
-            rigidbody2D.AddForce(Vector2.up * movementSpeed);
+            rigidbody2D.AddForce(Vector2.up * _movementSpeed);
             //_playerDirection = CardinalDirection.back;
             _playerState = PlayerState.walking;
         }
         if (Input.GetKey(DownKey)) {
-            rigidbody2D.AddForce(Vector2.up * -1 * movementSpeed);
+            rigidbody2D.AddForce(Vector2.up * -1 * _movementSpeed);
             _playerState = PlayerState.walking;
         }
         if (Input.GetKey(LeftKey)) {
-            rigidbody2D.AddForce(Vector2.right * -1 * movementSpeed);
+            rigidbody2D.AddForce(Vector2.right * -1 * _movementSpeed);
             _playerState = PlayerState.walking;
 
         }
         if (Input.GetKey(RightKey)) {
-            rigidbody2D.AddForce(Vector2.right * movementSpeed);
+            rigidbody2D.AddForce(Vector2.right * _movementSpeed);
             _playerState = PlayerState.walking;
         }
     }
@@ -199,11 +199,6 @@ public class PlayerControl : Photon.MonoBehaviour{
 			Ability2.resetEnemyIDs();
 		}
 	}
-
-    void SavePlayerData() {
-
-    }
-
 
     void OnPhotonSerializeView(PhotonStream stream, PhotonMessageInfo info) {
         if (stream.isWriting) {
