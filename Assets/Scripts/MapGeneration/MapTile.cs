@@ -13,11 +13,11 @@ public class MapTile {
 	public MapTile Parent; // the public
 
     public enum TileType {
-        background = 0,
-        white = 1,
-        wall = 2,
-        goal = 3,
-		doorway = 4
+        Ground = 0,
+        Background = 1,
+        Wall = 2,
+        ExitTile = 3,
+		Doorway = 4
 
     }
 
@@ -67,6 +67,7 @@ public class MapTile {
                 return "Green";
 			case TileType.doorway:
 				return "Yellow";
+
             default:
                 return "white";
         }
