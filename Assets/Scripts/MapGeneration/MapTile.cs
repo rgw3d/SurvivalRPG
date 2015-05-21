@@ -16,7 +16,8 @@ public class MapTile {
         background = 0,
         white = 1,
         wall = 2,
-        goal = 3
+        goal = 3,
+		doorway = 4
 
     }
 
@@ -40,6 +41,9 @@ public class MapTile {
             case 3:
                 _tileType = TileType.goal;
                 break;
+			case 4:
+				_tileType = TileType.goal;
+				break;
         }
     }
 
@@ -61,6 +65,8 @@ public class MapTile {
                 return "blue";
             case TileType.goal:
                 return "Green";
+			case TileType.doorway:
+				return "Yellow";
             default:
                 return "white";
         }
