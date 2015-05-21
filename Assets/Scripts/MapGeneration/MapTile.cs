@@ -16,7 +16,8 @@ public class MapTile {
         Ground = 0,
         Background = 1,
         Wall = 2,
-        ExitTile = 3
+        ExitTile = 3,
+		Doorway = 4
 
     }
 
@@ -29,17 +30,20 @@ public class MapTile {
     public MapTile(int tileValue) {
         switch (tileValue) {
             case 0:
-                _tileType = TileType.Ground;
+                _tileType = TileType.background;
                 break;
             case 1:
-                _tileType = TileType.Background;
+                _tileType = TileType.white;
                 break;
             case 2:
-                _tileType = TileType.Wall;
+                _tileType = TileType.wall;
                 break;
             case 3:
-                _tileType = TileType.ExitTile;
+                _tileType = TileType.goal;
                 break;
+			case 4:
+				_tileType = TileType.goal;
+				break;
         }
     }
 
@@ -53,14 +57,17 @@ public class MapTile {
 
     public override string ToString() {
         switch (_tileType) {
-            case TileType.Ground:
+            case TileType.background:
                 return "red";
-            case TileType.Background:
+            case TileType.white:
                 return "white";
-            case TileType.Wall:
+            case TileType.wall:
                 return "blue";
-            case TileType.ExitTile:
+            case TileType.goal:
                 return "Green";
+			case TileType.doorway:
+				return "Yellow";
+
             default:
                 return "white";
         }

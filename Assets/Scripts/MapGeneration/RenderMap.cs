@@ -8,6 +8,7 @@ public class RenderMap: Photon.MonoBehaviour {
     public GameObject Background;
     public GameObject Wall;
     public GameObject ExitTile;
+	public GameObject Doorway;
 
     private GameObject[,] _displayedMapArray;
     public static Map Map;
