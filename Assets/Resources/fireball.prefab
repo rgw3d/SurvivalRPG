@@ -12,7 +12,8 @@ GameObject:
   - 114: {fileID: 11405138}
   - 58: {fileID: 5880190}
   - 114: {fileID: 11440000}
-  m_Layer: 0
+  - 50: {fileID: 5051542}
+  m_Layer: 10
   m_Name: fireball
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -26,11 +27,26 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 100634}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 90.9144516, y: 76.1175461, z: 0}
+  m_LocalPosition: {x: -19.8313179, y: 68.9341583, z: 0}
   m_LocalScale: {x: .5, y: .5, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 0
+--- !u!50 &5051542
+Rigidbody2D:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 100634}
+  m_Mass: 1
+  m_LinearDrag: 0
+  m_AngularDrag: .0500000007
+  m_GravityScale: 0
+  m_FixedAngle: 1
+  m_IsKinematic: 0
+  m_Interpolate: 0
+  m_SleepingMode: 1
+  m_CollisionDetection: 0
 --- !u!58 &5880190
 CircleCollider2D:
   m_ObjectHideFlags: 1
@@ -39,7 +55,7 @@ CircleCollider2D:
   m_GameObject: {fileID: 100634}
   m_Enabled: 1
   m_Material: {fileID: 0}
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_Radius: 1.14999998
   m_Center: {x: 1.25, y: 0}
 --- !u!114 &11405138
@@ -53,9 +69,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 81ea5c39fdcbc4fdf88c5b98e897efa1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  cooldown: 60
+  cooldown: 90
   damage: 30
-  velocity: 10
+  velocity: 750
+  activated: 0
 --- !u!114 &11440000
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -99,7 +116,7 @@ SpriteRenderer:
   m_LightProbeAnchor: {fileID: 0}
   m_ScaleInLightmap: 1
   m_SortingLayerID: 0
-  m_SortingOrder: 0
+  m_SortingOrder: 1
   m_Sprite: {fileID: 21300000, guid: d2957cfedc336403ab3648c3faa376e2, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
 --- !u!1001 &100100000
