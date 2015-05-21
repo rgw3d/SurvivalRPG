@@ -68,7 +68,7 @@ public class PhotonNetworkManager : MonoBehaviour {
                     _playerSelectSlider = GUILayout.HorizontalSlider(_playerSelectSlider, 0f, (float)allplayerNames.Length-1);
                     int playerIndex = Mathf.RoundToInt(_playerSelectSlider);
                     GUILayout.Box("Name: " +allplayerNames[playerIndex] + "\n" 
-                        + "Class: "+ PlayerStats.IntToCharacterClass(PlayerPrefs.GetInt(GameControl.PLAYERCLASSKEY + allplayerNames[playerIndex])) +"\n"
+                        + "Class: "+ (PlayerStats.CharacterClass)PlayerPrefs.GetInt(GameControl.PLAYERCLASSKEY + allplayerNames[playerIndex]) +"\n"
                         + "Max Health: " + PlayerPrefs.GetInt(GameControl.PLAYERMAXHEALTHKEY + allplayerNames[playerIndex]) + "\n" 
                         + "Max Mana: " + PlayerPrefs.GetInt(GameControl.PLAYERMAXMANAKEY + allplayerNames[playerIndex]) + "\n"
                         + "Attack: " + PlayerPrefs.GetInt(GameControl.PLAYERATTACKKEY + allplayerNames[playerIndex]) + "\n"
@@ -89,7 +89,7 @@ public class PhotonNetworkManager : MonoBehaviour {
                 
                         GUILayout.Box("Class: " + _playerClass);
                         _playerClassSlider = GUILayout.HorizontalSlider(_playerClassSlider, 0f, 3f);
-                        _playerClass = PlayerStats.IntToCharacterClass(Mathf.RoundToInt(_playerClassSlider));
+                        _playerClass = (PlayerStats.CharacterClass)Mathf.RoundToInt(_playerClassSlider);
                     GUILayout.EndVertical();
 
                     GUILayout.FlexibleSpace();

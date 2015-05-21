@@ -4,7 +4,10 @@ using System;
 
 public class GameControl : MonoBehaviour {
 
-    public static int Difficulty = 5; //Out of 0-10
+    public static int Difficulty = 5; //from 1-10;
+    public static float LevelUpScoreBase = 100;
+    public static float LevelUpMultiplier = 2;// exp to get to level x = LevelUpScoreMultilier * LevelUpMultiplier * x
+
     public KeyCode ExitKey = KeyCode.Escape;
     public const string TITLESCREEN = "TitleScreen";
     public const string PLAYSCREEN = "PlayScene";

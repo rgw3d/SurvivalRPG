@@ -3,11 +3,9 @@ using System.Collections;
 
 public class PlayerGUI : MonoBehaviour {
 
-
-    public float playerScore = 0;
-    public float playerHealth = 0;
-
+    public float PlayerScore = 0;
     
+    public float PlayerHealth = 0;
 
     void Start() {
         DelegateHolder.StatChange += UpdateGUIStats;//add the method to the event, and the event is made from the delegate
@@ -18,7 +16,7 @@ public class PlayerGUI : MonoBehaviour {
     }
 
     void drawScore() {
-        string scoreNum = (int)(playerScore) + "";
+        string scoreNum = (int)(PlayerScore) + "";
         GUIStyle style = new GUIStyle();
         style.richText = true;
         style.alignment = TextAnchor.UpperCenter;
@@ -28,7 +26,7 @@ public class PlayerGUI : MonoBehaviour {
     }
 
     void drawHealth() {
-        string scoreNum = (int)(playerHealth) + "";
+        string scoreNum = (int)(PlayerHealth) + "";
         GUIStyle style = new GUIStyle();
         style.richText = true;
         style.alignment = TextAnchor.UpperCenter;
@@ -39,12 +37,12 @@ public class PlayerGUI : MonoBehaviour {
 
     float UpdateGUIStats(StatType statType, float change) {
         if (statType == StatType.Score) {
-            playerScore += change;
-            return playerScore;
+            PlayerScore += change;
+            return PlayerScore;
         }
         else if (statType == StatType.Health) {
-            playerHealth += change;
-            return playerHealth;
+            PlayerHealth += change;
+            return PlayerHealth;
         }
         else
             return -1;

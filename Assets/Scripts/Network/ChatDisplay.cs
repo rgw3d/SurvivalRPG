@@ -40,7 +40,7 @@ public class ChatDisplay : MonoBehaviour {
     }
     void ChatClient() {
         if (System.String.IsNullOrEmpty(ChatBuff.Host)) {
-            ChatBuff.Host = PlayerStats.PlayerName;
+            ChatBuff.Host = PlayerStats.GetPlayerName();
             ChatBuff.AddLine(ChatBuff.Host + " Has Joined", true);
         }
         else {
