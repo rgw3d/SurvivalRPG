@@ -32,19 +32,15 @@ public class GenerateMap : Photon.MonoBehaviour {
     public int RoomIntersectionOffset = 1;
 
     void Start() {
-        DontDestroyOnLoad(this);
-        print("start message generate map");
         DelegateHolder.OnGenerateAndRenderMap += GenerateAndDisplayMap;
     }
 
     public void GenerateAndDisplayMap() {
-        print("generateAndDisplayMap");
         GenMap();
         DelegateHolder.TriggerMapGenerated(true);//assume that if the map is generated this way, then it is the host
     }
 
     public void GenMap() {
-        print("generating map");
         Map = new Map(MapWidth, MapHeight);
         CreateMap();
         CreateRooms();
@@ -201,4 +197,3 @@ public class GenerateMap : Photon.MonoBehaviour {
     }
 
 }
-

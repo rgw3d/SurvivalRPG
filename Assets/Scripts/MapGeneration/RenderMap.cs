@@ -79,7 +79,7 @@ public class RenderMap: Photon.MonoBehaviour {
     void SetMapFromServer(int mapWidth, int mapHeight, string mapString) {
         Debug.Log("Recieved Map Data via RPC call");
         int stringindx = 0;
-        if (_displayedMapArray != null)
+        if (_displayedMapArray != null)//Destroy old map
             DestroyOldMap();
         MapTile[,] mapTiles = new MapTile[mapWidth, mapHeight];
         for (int y = 0; y < mapHeight; y++) {
