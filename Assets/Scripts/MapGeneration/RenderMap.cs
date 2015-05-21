@@ -8,7 +8,7 @@ public class RenderMap: Photon.MonoBehaviour {
     public GameObject Background;
     public GameObject Wall;
     public GameObject ExitTile;
-	public GameObject Doorway;
+	public GameObject Obstacle;
 
     private GameObject[,] _displayedMapArray;
     public static Map Map;
@@ -60,6 +60,9 @@ public class RenderMap: Photon.MonoBehaviour {
                     case MapTile.TileType.ExitTile:
                         tile = ExitTile;
                         break;
+					case MapTile.TileType.Obstacle:
+						tile = Obstacle;
+						break;
                     default:
                         tile = Background;
                         break;
