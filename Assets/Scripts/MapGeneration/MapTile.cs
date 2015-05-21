@@ -30,19 +30,19 @@ public class MapTile {
     public MapTile(int tileValue) {
         switch (tileValue) {
             case 0:
-                _tileType = TileType.background;
+                _tileType = TileType.Ground;
                 break;
             case 1:
-                _tileType = TileType.white;
+                _tileType = TileType.Background;
                 break;
             case 2:
-                _tileType = TileType.wall;
+                _tileType = TileType.Wall;
                 break;
             case 3:
-                _tileType = TileType.goal;
+                _tileType = TileType.ExitTile;
                 break;
 			case 4:
-				_tileType = TileType.goal;
+				_tileType = TileType.Doorway;
 				break;
         }
     }
@@ -57,19 +57,19 @@ public class MapTile {
 
     public override string ToString() {
         switch (_tileType) {
-            case TileType.background:
-                return "red";
-            case TileType.white:
-                return "white";
-            case TileType.wall:
-                return "blue";
-            case TileType.goal:
-                return "Green";
-			case TileType.doorway:
-				return "Yellow";
+            case TileType.Ground:
+                return "Ground";
+            case TileType.Background:
+                return "Background";
+            case TileType.Wall:
+                return "Wall";
+            case TileType.ExitTile:
+                return "Exit";
+			case TileType.Doorway:
+				return "Doorway";
 
             default:
-                return "white";
+                return "not a valid tiletype";
         }
     }
 
