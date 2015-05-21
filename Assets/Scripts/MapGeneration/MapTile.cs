@@ -17,7 +17,7 @@ public class MapTile {
         Background = 1,
         Wall = 2,
         ExitTile = 3,
-		Doorway = 4
+		Obstacle = 4
 
     }
 
@@ -42,7 +42,7 @@ public class MapTile {
                 _tileType = TileType.ExitTile;
                 break;
 			case 4:
-				_tileType = TileType.Doorway;
+				_tileType = TileType.Obstacle;
 				break;
         }
     }
@@ -65,8 +65,8 @@ public class MapTile {
                 return "Wall";
             case TileType.ExitTile:
                 return "Exit";
-			case TileType.Doorway:
-				return "Doorway";
+			case TileType.Obstacle:
+				return "Obstacle";
 
             default:
                 return "not a valid tiletype";
