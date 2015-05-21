@@ -101,28 +101,21 @@ public abstract class EnemyBase : Photon.MonoBehaviour {
 
     public void SetTarget() {
         _staticTransform = transform;
-        if (PlayerList != null && PlayerList.Count > 1) {
-            PlayerList.Sort(ComparePlayerDistances);
-            Target = PlayerList[0];
-        }
-        else if(PlayerList.Count == 1) {
-            Target = PlayerList[0];
+        if (PlayerList != null && PlayerList.Count != 0) {//not null and at least one player
+            if (PlayerList.Count > 1) //more than one player. sort list
+                PlayerList.Sort(ComparePlayerDistances);
+            Target = PlayerList[0];//always select first index
         }
         else {
             Target = null;
         }
     }
 
-       
-     
-
     private static int ComparePlayerDistances(GameObject player1, GameObject player2) {
         float dist1 = Vector3.Distance(_staticTransform.position, player1.transform.position);
         float dist2 = Vector3.Distance(_staticTransform.position, player2.transform.position);
         return Mathf.RoundToInt(dist1 - dist2);
     }
-
-
 
     public bool InLineOfSight(GameObject target) {
         RaycastHit2D x = Physics2D.Linecast(transform.position, target.transform.position, LineOfSightMask.value);
