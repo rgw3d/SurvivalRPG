@@ -30,6 +30,7 @@ public class GameControl : MonoBehaviour {
 
     public void PlayerDisconnected() {
     }
+
 	
 	void Update () {
         if (Input.GetKey(ExitKey)) {

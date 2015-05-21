@@ -26,9 +26,7 @@ public class PlayerControl : Photon.MonoBehaviour{
     public KeyCode RightKey;
     public KeyCode AttackKey;
 
-	public Fireball Ability1Prefab;
-	GameObject ability1;
-	Fireball ability1script;
+	public Fireball Ability1;
 	public int Ability1Cooldown = 0;
 	public Chipmunk2Lunge Ability2;
 	public int Ability2Cooldown = 0;
@@ -57,8 +55,6 @@ public class PlayerControl : Photon.MonoBehaviour{
         _spriteRenderer = GetComponent<SpriteRenderer>();
         _spriteRenderer.sprite = NormalSprite;
 	
-		ability1 = PhotonNetwork.Instantiate(Ability1Prefab.name, new Vector2(-100,-100), Quaternion.identity, 0);
-		ability1script = ability1.GetComponent("Fireball") as Fireball;
 	}
 
     private enum CardinalDirection {
@@ -163,12 +159,8 @@ public class PlayerControl : Photon.MonoBehaviour{
 		switch(abilityNumber){
 		case 1:
 			if(Ability1Cooldown == 0 && _playerState != PlayerState.attacking){
-				ability1.transform.position = transform.position;
-				ability1.transform.rotation = transform.rotation;
-				ability1.rigidbody2D.velocity = Vector3.zero;
-				ability1.rigidbody2D.AddRelativeForce(ability1script.velocity * -1 * Vector2.right);
-				ability1script.activated = true;
-				Ability1Cooldown = Ability1Prefab.cooldown;
+				PhotonNetwork.Instantiate(Ability1.name, transform.position, Quaternion.Inverse(transform.localRotation), 0);
+				Ability1Cooldown = Ability1.cooldown;
 			}
 			break;
 		case 2:

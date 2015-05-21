@@ -8,7 +8,6 @@ public class RenderMap: Photon.MonoBehaviour {
     public GameObject Background;
     public GameObject Wall;
     public GameObject ExitTile;
-	public GameObject Obstacle;
 
     private GameObject[,] _displayedMapArray;
     public static Map Map;
@@ -16,6 +15,10 @@ public class RenderMap: Photon.MonoBehaviour {
 
     void Start() {
         DelegateHolder.OnMapGenerated += ReRenderMap;//set ReRenderMap() to trigger when the map has been generated
+        DelegateHolder.OnPlayerHasConnected += PlayerConnected;
+    }
+    public void PlayerConnected() {
+       // photonView.RPC("SetMapFromServer", PhotonTargets.OthersBuffered, new System.Object[] { Map.mapWidth, Map.mapHeight, Map.SerializeMapTiles() });
     }
 
     public void ReRenderMap(bool isHost) {
@@ -48,21 +51,18 @@ public class RenderMap: Photon.MonoBehaviour {
                 MapTile.TileType tileType = tiles[x, y].GetTileType();
                 GameObject tile = null;
                 switch (tileType) {
-                    case MapTile.TileType.Ground:
+                    case MapTile.TileType.background:
                         tile = Ground;
                         break;
-                    case MapTile.TileType.Background:
+                    case MapTile.TileType.white:
                         tile = null;//we are not displaying the background tiles right now
                         break;
-                    case MapTile.TileType.Wall:
+                    case MapTile.TileType.wall:
                         tile = Wall;
                         break;
-                    case MapTile.TileType.ExitTile:
+                    case MapTile.TileType.goal:
                         tile = ExitTile;
                         break;
-					case MapTile.TileType.Obstacle:
-						tile = Obstacle;
-						break;
                     default:
                         tile = Background;
                         break;
@@ -79,8 +79,6 @@ public class RenderMap: Photon.MonoBehaviour {
     void SetMapFromServer(int mapWidth, int mapHeight, string mapString) {
         Debug.Log("Recieved Map Data via RPC call");
         int stringindx = 0;
-        if (_displayedMapArray != null)
-            DestroyOldMap();
         MapTile[,] mapTiles = new MapTile[mapWidth, mapHeight];
         for (int y = 0; y < mapHeight; y++) {
             for (int x = 0; x < mapWidth; x++) 

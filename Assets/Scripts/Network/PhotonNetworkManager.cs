@@ -57,6 +57,7 @@ public class PhotonNetworkManager : MonoBehaviour {
                                     Application.LoadLevel(GameControl.PLAYSCREEN);//load play screen
                                     StartCoroutine(WaitForSceneToLoad(1f));
                                     PhotonNetwork.JoinRoom(_roomsList[i].name);//Connect to Room
+                                    //Invoke("JoinRoom",0);
                                 }
                             }
                         }
@@ -174,13 +175,16 @@ public class PhotonNetworkManager : MonoBehaviour {
 		PlayerPrefs.DeleteKey(GameControl.PLAYERATTACKKEY + deletedPlayerName);
 	}
 
+    private void JoinRoom() {
+        
+    }
+
     public static IEnumerator TextPopup(float waitTime) {
         _displayBadNamePopup = true;
         yield return new WaitForSeconds(waitTime);
         _displayBadNamePopup = false;
 
     }
-
     void DisplayBadNamePopup() {
         GUI.Box(new Rect(2 * Screen.width / 5, Screen.height / 2, Screen.width / 5, Screen.height / 10), "Bad Name");
     }
@@ -216,6 +220,7 @@ public class PhotonNetworkManager : MonoBehaviour {
 
     IEnumerator WaitForSceneToLoad(float timeDelay) {
         yield return new WaitForSeconds(timeDelay);
+        
     }
 
 }

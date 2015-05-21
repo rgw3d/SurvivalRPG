@@ -13,7 +13,7 @@ public static class AStar {
 	private static MapTile _endTile;
 	private static MapTile _currentTile;
 
-    public static MapTile.TileType TileToPathThrough = MapTile.TileType.Ground;
+    public static MapTile.TileType TileToPathThrough = MapTile.TileType.background;
 
 	public static List<Vector3> findABPath(Vector3 startPos, Vector3 endPos){
 
@@ -34,7 +34,7 @@ public static class AStar {
 			_openList.Remove(_currentTile);
 			adjTiles = FindAdjacentTiles(_currentTile);
 			foreach(MapTile tile in adjTiles){
-                if (tile.GetTileType() == MapTile.TileType.Ground && !_closedList.Contains(tile)) {
+                if (tile.GetTileType() == MapTile.TileType.background && !_closedList.Contains(tile)) {
                     if (!_openList.Contains(tile)) {
                         AddToOpenList(tile);
                     }
@@ -110,20 +110,20 @@ public static class AStar {
         adjacentTiles.Add(_mapTiles[center.X - 1, center.Y]);
 		adjacentTiles.Add(_mapTiles[center.X, center.Y - 1]);
         adjacentTiles.Add(_mapTiles[center.X, center.Y + 1]);
-		if(_mapTiles[center.X + 1, center.Y].GetTileType() != MapTile.TileType.Wall &&
-		   _mapTiles[center.X, center.Y + 1].GetTileType() != MapTile.TileType.Wall){
+		if(_mapTiles[center.X + 1, center.Y].GetTileType() != MapTile.TileType.wall &&
+		   _mapTiles[center.X, center.Y + 1].GetTileType() != MapTile.TileType.wall){
 			adjacentTiles.Add(_mapTiles[center.X + 1, center.Y + 1]);
 		}
-		if(_mapTiles[center.X + 1, center.Y].GetTileType() != MapTile.TileType.Wall &&
-		   _mapTiles[center.X, center.Y - 1].GetTileType() != MapTile.TileType.Wall){
+		if(_mapTiles[center.X + 1, center.Y].GetTileType() != MapTile.TileType.wall &&
+		   _mapTiles[center.X, center.Y - 1].GetTileType() != MapTile.TileType.wall){
 			adjacentTiles.Add(_mapTiles[center.X + 1, center.Y - 1]);
 		}
-		if(_mapTiles[center.X - 1, center.Y].GetTileType() != MapTile.TileType.Wall &&
-		   _mapTiles[center.X, center.Y + 1].GetTileType() != MapTile.TileType.Wall){
+		if(_mapTiles[center.X - 1, center.Y].GetTileType() != MapTile.TileType.wall &&
+		   _mapTiles[center.X, center.Y + 1].GetTileType() != MapTile.TileType.wall){
 			adjacentTiles.Add(_mapTiles[center.X - 1, center.Y + 1]);
 		}
-		if(_mapTiles[center.X - 1, center.Y].GetTileType() != MapTile.TileType.Wall &&
-		   _mapTiles[center.X, center.Y - 1].GetTileType() != MapTile.TileType.Wall){
+		if(_mapTiles[center.X - 1, center.Y].GetTileType() != MapTile.TileType.wall &&
+		   _mapTiles[center.X, center.Y - 1].GetTileType() != MapTile.TileType.wall){
 			adjacentTiles.Add(_mapTiles[center.X - 1, center.Y - 1]);
 		}
 
