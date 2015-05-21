@@ -13,10 +13,10 @@ public class MapTile {
 	public MapTile Parent; // the public
 
     public enum TileType {
-        background = 0,
-        white = 1,
-        wall = 2,
-        goal = 3
+        Ground = 0,
+        Background = 1,
+        Wall = 2,
+        ExitTile = 3
 
     }
 
@@ -29,16 +29,16 @@ public class MapTile {
     public MapTile(int tileValue) {
         switch (tileValue) {
             case 0:
-                _tileType = TileType.background;
+                _tileType = TileType.Ground;
                 break;
             case 1:
-                _tileType = TileType.white;
+                _tileType = TileType.Background;
                 break;
             case 2:
-                _tileType = TileType.wall;
+                _tileType = TileType.Wall;
                 break;
             case 3:
-                _tileType = TileType.goal;
+                _tileType = TileType.ExitTile;
                 break;
         }
     }
@@ -53,13 +53,13 @@ public class MapTile {
 
     public override string ToString() {
         switch (_tileType) {
-            case TileType.background:
+            case TileType.Ground:
                 return "red";
-            case TileType.white:
+            case TileType.Background:
                 return "white";
-            case TileType.wall:
+            case TileType.Wall:
                 return "blue";
-            case TileType.goal:
+            case TileType.ExitTile:
                 return "Green";
             default:
                 return "white";
