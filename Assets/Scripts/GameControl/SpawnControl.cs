@@ -9,7 +9,10 @@ public class SpawnControl : Photon.MonoBehaviour {
     public List<GameObject> EnemyTypes;
     private static List<string> _enemyNames = new List<string>();
 
+    public GameObject Player;
+
 	void Start () {
+        Player = null;
         DelegateHolder.OnMapGenerated += SpawnPlayers;
         DelegateHolder.OnMapGenerated += SpawnEnemies;
 
@@ -20,11 +23,15 @@ public class SpawnControl : Photon.MonoBehaviour {
 	}
 
     public void SpawnPlayers(bool isHost) {
-        if (isHost) {//Only spawn a player/call the RPC if this is the Host who has generated the map
-            GameObject player = PhotonNetwork.Instantiate(PlayerPrefab.name, GenerateMap.Map.roomList[0].GetCenter(), Quaternion.identity, 0);
+        if (isHost && Player == null) {//Only spawn a player/call the RPC if this is the Host who has generated the map and there is not one already
+            Player = PhotonNetwork.Instantiate(PlayerPrefab.name, GenerateMap.Map.roomList[0].GetCenter(), Quaternion.identity, 0);
             GameObject playerCamera = Instantiate(CameraPrefab) as GameObject;
-            playerCamera.transform.parent = player.transform;//set the camera to be a child of the player
+            playerCamera.transform.parent = Player.transform;//set the camera to be a child of the player
             playerCamera.transform.localPosition = new Vector3(0, 0, -10);
+            photonView.RPC("PlacePlayer", PhotonTargets.OthersBuffered, GenerateMap.Map.roomList[0].GetCenter());//Call all clients
+        }
+        else if (isHost && Player != null) {
+            Player.transform.position = GenerateMap.Map.roomList[0].GetCenter();//just set the locaiton - don't create a new player
             photonView.RPC("PlacePlayer", PhotonTargets.OthersBuffered, GenerateMap.Map.roomList[0].GetCenter());//Call all clients
         }
 
@@ -32,10 +39,15 @@ public class SpawnControl : Photon.MonoBehaviour {
 
     [RPC]
     void PlacePlayer(Vector2 position) {
-        GameObject player = PhotonNetwork.Instantiate(PlayerPrefab.name, new Vector3(position.x, position.y), Quaternion.identity, 0);
-        GameObject playerCamera = Instantiate(CameraPrefab) as GameObject;
-        playerCamera.transform.parent = player.transform;//set the camera to be a child of the player
-        playerCamera.transform.localPosition = new Vector3(0, 0, -10);
+        if (Player == null) {
+            Player = PhotonNetwork.Instantiate(PlayerPrefab.name, position, Quaternion.identity, 0);
+            GameObject playerCamera = Instantiate(CameraPrefab) as GameObject;
+            playerCamera.transform.parent = Player.transform;//set the camera to be a child of the player
+            playerCamera.transform.localPosition = new Vector3(0, 0, -10);
+        }
+        else {
+            Player.transform.position = position;
+        }
     }
 
 

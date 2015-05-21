@@ -33,21 +33,27 @@ public class GenerateMap : Photon.MonoBehaviour {
 
     void Start() {
         DontDestroyOnLoad(this);
+        print("start message generate map");
         DelegateHolder.OnGenerateAndRenderMap += GenerateAndDisplayMap;
     }
 
     public void GenerateAndDisplayMap() {
+        print("generateAndDisplayMap");
         GenMap();
         DelegateHolder.TriggerMapGenerated(true);//assume that if the map is generated this way, then it is the host
     }
 
     public void GenMap() {
+        print("generating map");
         Map = new Map(MapWidth, MapHeight);
         CreateMap();
         CreateRooms();
         CreateCorridors();
         createWalls();
         CreateGoal();
+        print("it generated the map");
+        print(Map.SerializeMapTiles());
+
     }
 
     public void CreateMap() {//This fills the entire map with white tiles (blank tiles)

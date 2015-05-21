@@ -67,13 +67,13 @@ public class PlayerControl : Photon.MonoBehaviour{
         left = 4,
         right = 2
     }
+
     private enum PlayerState {
         attacking = 0,
         walking = 1,
         standing = 2,
 		lunging = 3
     }
-
 
     void Update() {
         if (photonView.isMine) { 
@@ -90,31 +90,30 @@ public class PlayerControl : Photon.MonoBehaviour{
         if (photonView.isMine) {
             if (ChatDisplay.ChatState == ChatDisplay.ChattingState.ChatClosedButShowing
                 || ChatDisplay.ChatState == ChatDisplay.ChattingState.NoUsername) {
-
                     if (_playerState != PlayerState.attacking && _playerState != PlayerState.lunging) //only update movement if not attacking
-                        playerMovement();
+                        PlayerMovement();
             }
             if (Input.GetKey(KeyCode.E)) { //just a test of the ability to work
                 DelegateHolder.TriggerPlayerStatChange(StatType.Score, 1f);
             }
 			if (Input.GetKey(KeyCode.F)){
-				playerAbility(1);
+				PlayerAbility(1);
 			}
 			if (Input.GetKey(KeyCode.G)){
-				playerAbility(2);
+				PlayerAbility(2);
 			}
-            playerAttack();
-			lowerCooldowns();
+            PlayerAttack();
+			LowerCooldowns();
         }
         else {
             SyncedMovement();
         }
 
-        playerSprite();
+        PlayerSprite();
 	}
 
 
-    public void playerMovement() {
+    public void PlayerMovement() {
         if (Input.GetKey(UpKey)) {
             rigidbody2D.AddForce(Vector2.up * movementSpeed);
             //_playerDirection = CardinalDirection.back;
@@ -136,14 +135,14 @@ public class PlayerControl : Photon.MonoBehaviour{
     }
 
 
-    public void playerSprite() {
+    public void PlayerSprite() {
             if (_playerState == PlayerState.attacking)
                 _spriteRenderer.sprite = AttackSprite;
             else
                 _spriteRenderer.sprite = NormalSprite;
     }
 
-    public void playerAttack() {
+    public void PlayerAttack() {
 		if (_attackCooldown == 0 && Input.GetKeyDown(AttackKey) && _playerState != PlayerState.attacking && _playerState != PlayerState.lunging) {
             DelegateHolder.TriggerPlayerAttack(true);
             _attackCooldown = AttackCooldownValue;
@@ -159,7 +158,7 @@ public class PlayerControl : Photon.MonoBehaviour{
         }
     }
 
-	void playerAbility(int abilityNumber){
+	void PlayerAbility(int abilityNumber){
 		switch(abilityNumber){
 		case 1:
 			if(Ability1Cooldown == 0 && _playerState != PlayerState.attacking){
@@ -184,7 +183,7 @@ public class PlayerControl : Photon.MonoBehaviour{
 		}
 	}
 
-	void lowerCooldowns(){
+	void LowerCooldowns(){
 		if(Ability1Cooldown > 0){
 			Ability1Cooldown--;
 		}
@@ -200,6 +199,10 @@ public class PlayerControl : Photon.MonoBehaviour{
 			Ability2.resetEnemyIDs();
 		}
 	}
+
+    void SavePlayerData() {
+
+    }
 
 
     void OnPhotonSerializeView(PhotonStream stream, PhotonMessageInfo info) {

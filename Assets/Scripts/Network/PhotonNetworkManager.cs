@@ -18,7 +18,7 @@ public class PhotonNetworkManager : MonoBehaviour {
     private Vector2 scrollPosition;
 
     void Start() {
-        DontDestroyOnLoad(gameObject);
+        DontDestroyOnLoad(this);
         PhotonNetwork.ConnectUsingSettings("0.1");
     }
 
@@ -44,8 +44,8 @@ public class PhotonNetworkManager : MonoBehaviour {
                         if (GUILayout.Button("Create Room")) {
                             RoomOptions roomOptions = new RoomOptions() { isVisible = true, maxPlayers = 4, isOpen = true };
                             PhotonNetwork.CreateRoom(_roomName, roomOptions, TypedLobby.Default);
-                            Application.LoadLevel(GameControl.PLAYSCREEN);//load play screen
                             IsHost = true;
+                            Application.LoadLevel(GameControl.PLAYSCREEN);//load play screen
                         }
                         _roomName = GUILayout.TextField(_roomName, 20);
                     GUILayout.EndVertical();
@@ -190,7 +190,7 @@ public class PhotonNetworkManager : MonoBehaviour {
     }
 
     void OnCreatedRoom() {//if this user created the room, then this is called
-        Debug.Log("Created Room. Connected to room");
+        Debug.Log("Host created Room. Connected to room");
     }
 
     void OnPhotonPlayerConnected() {
@@ -204,14 +204,11 @@ public class PhotonNetworkManager : MonoBehaviour {
     }
 
     public void OnJoinedRoom() {
-        Debug.Log("Joined Room");
-    }
-
-    void OnLevelWasLoaded(int indx){
-        if(IsHost){
+        if (IsHost) {
             DelegateHolder.TriggerGenerateAndRenderMap(); //Generate map
             DelegateHolder.TriggerPlayerHasConnected(); // Boadcast that the player has connected
         }
+        Debug.Log("Joined Room");
     }
 
     IEnumerator WaitForSceneToLoad(float timeDelay) {

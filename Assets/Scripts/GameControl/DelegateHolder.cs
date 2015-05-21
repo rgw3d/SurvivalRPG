@@ -76,7 +76,7 @@ public static class DelegateHolder {
     public static void TriggerPlayerHasConnected(){
         if(OnPlayerHasConnected != null){
             Debug.Log("Delegate Called: Player has joined");
-            OnPlayerHasConnected();
+            //OnPlayerHasConnected();
         }
     }
 

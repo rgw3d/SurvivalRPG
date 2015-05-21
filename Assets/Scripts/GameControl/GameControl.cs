@@ -45,8 +45,15 @@ public class GameControl : MonoBehaviour {
             ChatDisplay.ChatState = ChatDisplay.ChattingState.ChatOpenAndTyping;
 
         }
-        
 	}
+
+    public static void ClearMap() {
+        foreach (GameObject enemy in GameObject.FindGameObjectsWithTag("Enemy")) {
+            Destroy(enemy);
+        }
+    }
+
+
 
     
 }
