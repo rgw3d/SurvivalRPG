@@ -96,6 +96,12 @@ public class PlayerControl : Photon.MonoBehaviour{
             if (Input.GetKey(KeyCode.E)) {
                 PlayerStats.PlayerScore++;
             }
+            if (Input.GetKey(KeyCode.Q)) {
+                PlayerStats.PlayerHealth--;
+            }
+            if (Input.GetKey(KeyCode.Z)) {
+                PlayerStats.PlayerHealth++;
+            }
 			if (Input.GetKey(KeyCode.F)){
 				PlayerAbility(1);
 			}

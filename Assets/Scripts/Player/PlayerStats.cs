@@ -132,10 +132,11 @@ public class PlayerStats: MonoBehaviour {
             return _playerHealth;
         }
         set {
-            _playerHealth += value;
+            _playerHealth = value;
             if (_playerHealth <= 0)
                 print("YOU DEAD SON");
-            //figure out what to do when dead
+            if (_playerHealth > MaxHealth)
+                _playerHealth = MaxHealth;
         }
     }
 
