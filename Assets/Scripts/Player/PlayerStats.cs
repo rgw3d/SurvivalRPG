@@ -94,6 +94,7 @@ public class PlayerStats: MonoBehaviour {
             return _characterClass;
         }
     }
+
     private static int _playerLevel = -1;
     public static int PlayerLevel {
         get {
@@ -102,9 +103,11 @@ public class PlayerStats: MonoBehaviour {
             return _playerLevel;
         }
         set {
+            _playerLevel = value;
             PlayerPrefs.SetInt(GameControl.PLAYER_LEVEL_KEY + PlayerName, value);
         }
     }
+
     private static int _playerScore = -1;
     public static int PlayerScore {
         get {
@@ -113,11 +116,26 @@ public class PlayerStats: MonoBehaviour {
             return _playerScore;
         }
         set {
-            _playerScore += value;
+            _playerScore = value;
             if (_playerScore >= CalculateLevelUpXP()) {
                 _playerScore -= CalculateLevelUpXP();
                 PlayerLevel++;
             }
+        }
+    }
+
+    private static float _playerHealth = -1;
+    public static float PlayerHealth {
+        get {
+            if (_playerHealth == -1)
+                _playerHealth = MaxHealth;
+            return _playerHealth;
+        }
+        set {
+            _playerHealth += value;
+            if (_playerHealth <= 0)
+                print("YOU DEAD SON");
+            //figure out what to do when dead
         }
     }
 

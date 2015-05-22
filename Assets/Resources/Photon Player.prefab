@@ -179,7 +179,6 @@ MonoBehaviour:
   BackAttack: {fileID: 21300148, guid: 0f491ec263b3953419c255895b4cb4ad, type: 3}
   LeftAttack: {fileID: 21300128, guid: 0f491ec263b3953419c255895b4cb4ad, type: 3}
   RightAttack: {fileID: 21300138, guid: 0f491ec263b3953419c255895b4cb4ad, type: 3}
-  movementSpeed: 0
   UpKey: 119
   DownKey: 115
   LeftKey: 97
@@ -203,8 +202,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a9619d1f4d378284e8755eee718429df, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  PlayerScore: 0
-  PlayerHealth: 0
+  XPBarEmpty: {fileID: 2800000, guid: ac34608897b99bb40bdddf3f45572286, type: 3}
+  XPBarFull: {fileID: 2800000, guid: ec2e711c034976444bee33c352ceae97, type: 3}
+  XPBarVerticalSize: .0500000007
 --- !u!114 &11400004
 MonoBehaviour:
   m_ObjectHideFlags: 1

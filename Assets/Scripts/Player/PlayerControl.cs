@@ -93,6 +93,9 @@ public class PlayerControl : Photon.MonoBehaviour{
                     if (_playerState != PlayerState.attacking && _playerState != PlayerState.lunging) //only update movement if not attacking
                         PlayerMovement();
             }
+            if (Input.GetKey(KeyCode.E)) {
+                PlayerStats.PlayerScore++;
+            }
 			if (Input.GetKey(KeyCode.F)){
 				PlayerAbility(1);
 			}
@@ -108,7 +111,6 @@ public class PlayerControl : Photon.MonoBehaviour{
 
         PlayerSprite();
 	}
-
 
     public void PlayerMovement() {
         if (Input.GetKey(UpKey)) {
@@ -130,7 +132,6 @@ public class PlayerControl : Photon.MonoBehaviour{
             _playerState = PlayerState.walking;
         }
     }
-
 
     public void PlayerSprite() {
             if (_playerState == PlayerState.attacking)
