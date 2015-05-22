@@ -20,6 +20,7 @@ public class Fireball: Spell {
 			if(other.tag =="Enemy"){
 				EnemyBase enemyBase = other.GetComponent("EnemyBase") as EnemyBase;
 				enemyBase.OnEnemyAttacked(damage);
+				other.rigidbody2D.AddRelativeForce(velocity * -1 * Vector2.right);
 			}
 
 		}
