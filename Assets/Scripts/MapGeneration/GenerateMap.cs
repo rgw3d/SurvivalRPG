@@ -191,7 +191,7 @@ public class GenerateMap : Photon.MonoBehaviour {
 
     public void CreateGoal() {
         Vector2 center = Map.roomList[Map.roomList.Count - 1].GetCenter();
-        Debug.Log("Center: " + center.x + "  " + center.y);
+        //Debug.Log("Center: " + center.x + "  " + center.y);
         Map.mapTiles[(int)center.x, (int)center.y].SetTileType(MapTile.TileType.ExitTile);
     }
 

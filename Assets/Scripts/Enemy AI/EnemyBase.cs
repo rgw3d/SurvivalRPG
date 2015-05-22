@@ -41,16 +41,16 @@ public abstract class EnemyBase : Photon.MonoBehaviour {
         PlayerList = new List<GameObject>(GameObject.FindGameObjectsWithTag("Player"));
         HealthValue = HealthStartingValue;
         InvokeRepeating("SetTarget", 1, ResetTargetCooldown);//Set it to find a new target 
-        DelegateHolder.OnPlayerHasConnected += PlayerConnected;
-        DelegateHolder.OnPlayerHasDisconnected += PlayerDisconnected;
+        DelegateHolder.OnPlayerHasConnected += PlayerConnectionChange;
+        DelegateHolder.OnPlayerHasDisconnected += PlayerConnectionChange;
     }
 
-    public void PlayerConnected() {
+    public void UpdatePlayerList() {
         PlayerList = new List<GameObject>(GameObject.FindGameObjectsWithTag("Player"));
     }
 
-    public void PlayerDisconnected() {
-        PlayerList = new List<GameObject>(GameObject.FindGameObjectsWithTag("Player"));
+    public void PlayerConnectionChange() {
+        UpdatePlayerList();
     }
 
 
@@ -88,7 +88,7 @@ public abstract class EnemyBase : Photon.MonoBehaviour {
                 AttackBehavior();
             }
         }
-        else {
+        else if(!photonView.isMine) {
             SyncedMovement();
         }
 
@@ -102,8 +102,16 @@ public abstract class EnemyBase : Photon.MonoBehaviour {
     public void SetTarget() {
         _staticTransform = transform;
         if (PlayerList != null && PlayerList.Count != 0) {//not null and at least one player
-            if (PlayerList.Count > 1) //more than one player. sort list
-                PlayerList.Sort(ComparePlayerDistances);
+            if (PlayerList.Count > 1) { //more than one player. sort list
+                try {
+                    PlayerList.Sort(ComparePlayerDistances);
+                }
+                catch (MissingReferenceException e) {
+                    print(e.Message);
+                    UpdatePlayerList();
+                    Target = null;
+                }
+            }
             Target = PlayerList[0];//always select first index
         }
         else {

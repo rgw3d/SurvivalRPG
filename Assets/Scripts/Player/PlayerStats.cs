@@ -3,73 +3,163 @@ using System.Collections;
 
 public class PlayerStats: MonoBehaviour {
 
-	public static string PlayerName;
-	public static int MaxHealth;
-	public static int CurrentHealth;
-	public static int MaxMana;
-	public static int CurrentMana;
-	public static int AttackDamage;
-	public static int ArmorValue;
-	public static float MovementSpeed;
-    private CharacterClass _characterClass;
+    public static int LevelUpScoreBase = 100;
 
-	void Awake(){
-        PlayerName = PhotonNetworkManager.selectedPlayerName;
-        MaxHealth = PlayerPrefs.GetInt(GameControl.PLAYERMAXHEALTHKEY + PhotonNetworkManager.selectedPlayerName);
-		CurrentHealth = MaxHealth;
-		MaxMana = PlayerPrefs.GetInt(GameControl.PLAYERMAXMANAKEY + PhotonNetworkManager.selectedPlayerName);
-		CurrentMana = MaxMana;
-		AttackDamage = PlayerPrefs.GetInt(GameControl.PLAYERATTACKKEY + PhotonNetworkManager.selectedPlayerName);
-		ArmorValue = PlayerPrefs.GetInt(GameControl.PLAYERDEFENSEKEY + PhotonNetworkManager.selectedPlayerName);
-		_characterClass = (CharacterClass)PlayerPrefs.GetInt(GameControl.PLAYERCLASSKEY + PhotonNetworkManager.selectedPlayerName);
-		MovementSpeed = PlayerPrefs.GetFloat(GameControl.PLAYERMOVEMENTKEY + PhotonNetworkManager.selectedPlayerName);
+    private static string _playerName;
+    public static string PlayerName {
+        get {
+            if (System.String.IsNullOrEmpty(_playerName))
+                _playerName = PhotonNetworkManager.selectedPlayerName;
+            return _playerName;
+        }
+    }
 
-	}
+    private static int _maxHealth = -1;
+    public static int MaxHealth {
+        get {
+            if (_maxHealth == -1)
+                _maxHealth = PlayerPrefs.GetInt(GameControl.PLAYER_MAX_HEALTH_KEY + PlayerName);
+            return _maxHealth;
+        }
+        set {
+            PlayerPrefs.SetInt(GameControl.PLAYER_MAX_HEALTH_KEY + PlayerName, value);
+        }
+    }
 
+    private static int _maxMana = -1;
+    public static int MaxMana {
+        get {
+            if (_maxMana == -1)
+                _maxMana = PlayerPrefs.GetInt(GameControl.PLAYER_MAX_MANA_KEY + PlayerName);
+            return _maxMana;
+        }
+        set {
+            PlayerPrefs.SetInt(GameControl.PLAYER_MAX_MANA_KEY + PlayerName, value);
+        }
+    }
+
+    private static int _attackValue = -1;
+    public static int AttackValue {
+        get {
+            if (_attackValue == -1)
+                _attackValue = PlayerPrefs.GetInt(GameControl.PLAYER_ATTACK_KEY + PlayerName);
+            return _attackValue;
+        }
+        set {
+            PlayerPrefs.SetInt(GameControl.PLAYER_ATTACK_KEY + PlayerName, value);
+        }
+    }
+
+    private static int _rangedAttackValue = -1;
+    public static int RangedAttackValue {
+        get {
+            if (_rangedAttackValue == -1)
+                _rangedAttackValue = PlayerPrefs.GetInt(GameControl.PLAYER_RANGED_ATTACK_KEY + PlayerName);
+            return _rangedAttackValue;
+        }
+        set {
+            PlayerPrefs.SetInt(GameControl.PLAYER_RANGED_ATTACK_KEY + PlayerName, value);
+        }
+    }
+
+    private static int _defenseValue = -1;
+    public static int DefenseValue {
+        get {
+            if (_defenseValue == -1)
+                _defenseValue = PlayerPrefs.GetInt(GameControl.PLAYER_DEFENSE_KEY + PlayerName);
+            return _defenseValue;
+        }
+        set {
+            PlayerPrefs.SetInt(GameControl.PLAYER_DEFENSE_KEY + PlayerName, value);
+        }
+    }
+
+    private static float _movementSpeed = -1;
+    public static float MovementSpeed {
+        get {
+            if (_movementSpeed == -1)
+                _movementSpeed = PlayerPrefs.GetFloat(GameControl.PLAYER_MOVEMENT_KEY + PlayerName);
+            return _movementSpeed;
+        }
+        set {
+            PlayerPrefs.SetFloat(GameControl.PLAYER_MOVEMENT_KEY + PlayerName, value);
+        }
+    }
+
+    private static CharacterClass _characterClass = CharacterClass.None;
+    public static CharacterClass PlayerClass {
+        get {
+            if (_characterClass == CharacterClass.None)
+                _characterClass = (CharacterClass)PlayerPrefs.GetInt(GameControl.PLAYER_CLASS_KEY + PlayerName);
+            return _characterClass;
+        }
+    }
+
+    private static int _playerLevel = -1;
+    public static int PlayerLevel {
+        get {
+            if (_playerLevel == -1)
+                _playerLevel = PlayerPrefs.GetInt(GameControl.PLAYER_LEVEL_KEY + PlayerName);
+            return _playerLevel;
+        }
+        set {
+            _playerLevel = value;
+            PlayerPrefs.SetInt(GameControl.PLAYER_LEVEL_KEY + PlayerName, value);
+        }
+    }
+
+    private static int _playerScore = -1;
+    public static int PlayerScore {
+        get {
+            if (_playerScore == -1)
+                _playerScore = PlayerPrefs.GetInt(GameControl.PLAYER_SCORE_KEY + PlayerName);
+            return _playerScore;
+        }
+        set {
+            _playerScore = value;
+            if (_playerScore >= CalculateLevelUpXP()) {
+                _playerScore -= CalculateLevelUpXP();
+                PlayerLevel++;
+            }
+        }
+    }
+
+    private static float _playerHealth = -1;
+    public static float PlayerHealth {
+        get {
+            if (_playerHealth == -1)
+                _playerHealth = MaxHealth;
+            return _playerHealth;
+        }
+        set {
+            _playerHealth = value;
+            if (_playerHealth <= 0)
+                print("YOU DEAD SON");
+            if (_playerHealth > MaxHealth)
+                _playerHealth = MaxHealth;
+        }
+    }
+
+    public static void SavePlayerScore() {
+        PlayerPrefs.SetInt(GameControl.PLAYER_SCORE_KEY + PhotonNetworkManager.selectedPlayerName, PlayerScore);
+    }
+
+    public static int CalculateLevelUpXP() {
+        return LevelUpScoreBase * PlayerLevel;
+    }
 
     public enum CharacterClass {
-        Fighter = 0,
-        Mage = 1,
-        Healer = 2,
-		Shrek = 3
+        None = 0,
+        Fighter = 1,
+        Mage = 2,
+        Healer = 3,
+        Shrek = 4
     }
 
-    public static CharacterClass IntToCharacterClass(int classInt){
-        switch (classInt) {
-            case 0:
-                return CharacterClass.Fighter;
-            case 1:
-                return CharacterClass.Mage;
-            case 2:
-                return CharacterClass.Healer;
-			case 3:
-				return CharacterClass.Shrek;
-            default:
-                return CharacterClass.Fighter;
-        }
-        
-    }   
 
-    public CharacterClass getClass() {
-        return _characterClass;
-    }
+    
 
-    public int GetHealth() {
-        return CurrentHealth;
-    }
-    public void ChangeHealth(int change) {
-        CurrentHealth += change;
-        if (CurrentHealth <= 0) {
-            //This calls a delegat saying that the player is dead. ouch
-        }
-        if (CurrentHealth >= MaxHealth) {
-            CurrentHealth = MaxHealth;
-        }
-    }
-
-	public string getSerializedStats(){
-		string serial = MaxHealth + "," + CurrentHealth + "," + MaxMana + "," + CurrentMana + "," + AttackDamage + "," + ArmorValue + "," + MovementSpeed;
-		return serial;
-	}
+    
+    
 
 }

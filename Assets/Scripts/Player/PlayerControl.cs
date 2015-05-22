@@ -50,6 +50,18 @@ public class PlayerControl : Photon.MonoBehaviour{
 
     
 	// Use this for initialization
+	void Start () {
+        _latestCorrectPos = transform.position;
+        _onUpdatePos = transform.position;
+
+        movementSpeed = PlayerStats.MovementSpeed;
+
+        _spriteRenderer = GetComponent<SpriteRenderer>();
+        _spriteRenderer.sprite = NormalSprite;
+	
+		ability1 = PhotonNetwork.Instantiate(Ability1Prefab.name, new Vector2(-100,-100), Quaternion.identity, 0);
+		ability1script = ability1.GetComponent("Fireball") as Fireball;
+	}
 
 	private enum CardinalDirection {
 		front = 3,
@@ -98,8 +110,14 @@ public class PlayerControl : Photon.MonoBehaviour{
                     if (_playerState != PlayerState.attacking && _playerState != PlayerState.lunging) //only update movement if not attacking
                         PlayerMovement();
             }
-            if (Input.GetKey(KeyCode.E)) { //just a test of the ability to work
-                DelegateHolder.TriggerPlayerStatChange(StatType.Score, 1f);
+            if (Input.GetKey(KeyCode.E)) {
+                PlayerStats.PlayerScore++;
+            }
+            if (Input.GetKey(KeyCode.Q)) {
+                PlayerStats.PlayerHealth--;
+            }
+            if (Input.GetKey(KeyCode.Z)) {
+                PlayerStats.PlayerHealth++;
             }
 			if (Input.GetKey(KeyCode.Alpha1)){
 				PlayerAbility(1);
@@ -116,7 +134,6 @@ public class PlayerControl : Photon.MonoBehaviour{
 
         PlayerSprite();
 	}
-
 
     public void PlayerMovement() {
         if (Input.GetKey(UpKey)) {
@@ -243,11 +260,6 @@ public class PlayerControl : Photon.MonoBehaviour{
 			Ability2.resetEnemyIDs();
 		}
 	}
-
-    void SavePlayerData() {
-
-    }
-
 
     void OnPhotonSerializeView(PhotonStream stream, PhotonMessageInfo info) {
         if (stream.isWriting) {
