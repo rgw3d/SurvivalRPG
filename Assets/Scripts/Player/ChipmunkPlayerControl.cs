@@ -8,7 +8,7 @@ public class ChipmunkPlayerControl : Photon.MonoBehaviour{
 	private SpriteRenderer _spriteRenderer;
     private PlayerState _playerState = PlayerState.Standing;
 
-    public float ChargedMovementSpeedMultiplier;
+    public float ChargedSpeedMult;
     public float RotationSpeed = 5;
 
     public KeyCode UpKey;
@@ -20,7 +20,7 @@ public class ChipmunkPlayerControl : Photon.MonoBehaviour{
 	public Chipmunk1AcornSpit Ability1Prefab;
 	private GameObject _ability1GameObject;
 	private Chipmunk1AcornSpit _ability1Script;
-	public int Ability1Cooldown = 0;
+	private int _ability1Cooldown = 0;
 
 	public Chipmunk2Lunge Ability2;
     public int Ability2CooldownValue = 15;
@@ -103,7 +103,7 @@ public class ChipmunkPlayerControl : Photon.MonoBehaviour{
     public void PlayerMovement() {
         if (Input.GetKey(UpKey)) {
 			if(_playerState == PlayerState.Charging){
-                rigidbody2D.AddForce(Vector2.up * PlayerStats.MovementSpeed * ChargedMovementSpeedMultiplier);
+                rigidbody2D.AddForce(Vector2.up * PlayerStats.MovementSpeed * ChargedSpeedMult);
 			}
 			else{
 				rigidbody2D.AddForce(Vector2.up * PlayerStats.MovementSpeed);
@@ -112,7 +112,7 @@ public class ChipmunkPlayerControl : Photon.MonoBehaviour{
         }
         if (Input.GetKey(DownKey)) {
 			if(_playerState == PlayerState.Charging){
-                rigidbody2D.AddForce(Vector2.up * -1 * PlayerStats.MovementSpeed * ChargedMovementSpeedMultiplier);
+                rigidbody2D.AddForce(Vector2.up * -1 * PlayerStats.MovementSpeed * ChargedSpeedMult);
 			}
 			else{
                 rigidbody2D.AddForce(Vector2.up * -1 * PlayerStats.MovementSpeed);
@@ -121,7 +121,7 @@ public class ChipmunkPlayerControl : Photon.MonoBehaviour{
         }
         if (Input.GetKey(LeftKey)) {
 			if(_playerState == PlayerState.Charging){
-                rigidbody2D.AddForce(Vector2.right * -1 * PlayerStats.MovementSpeed * ChargedMovementSpeedMultiplier);
+                rigidbody2D.AddForce(Vector2.right * -1 * PlayerStats.MovementSpeed * ChargedSpeedMult);
 			}
 			else{
                 rigidbody2D.AddForce(Vector2.right * -1 * PlayerStats.MovementSpeed);
@@ -131,7 +131,7 @@ public class ChipmunkPlayerControl : Photon.MonoBehaviour{
         }
         if (Input.GetKey(RightKey)) {
 			if(_playerState == PlayerState.Charging){
-                rigidbody2D.AddForce(Vector2.right * PlayerStats.MovementSpeed * ChargedMovementSpeedMultiplier);
+                rigidbody2D.AddForce(Vector2.right * PlayerStats.MovementSpeed * ChargedSpeedMult);
 			}
 			else{
                 rigidbody2D.AddForce(Vector2.right * PlayerStats.MovementSpeed);
@@ -187,13 +187,13 @@ public class ChipmunkPlayerControl : Photon.MonoBehaviour{
 	void PlayerAbility(int abilityNumber){
 		switch(abilityNumber){
 		case 1:
-			if(Ability1Cooldown == 0 && _playerState != PlayerState.Attacking){
+			if(_ability1Cooldown == 0 && _playerState != PlayerState.Attacking){
 				_ability1GameObject.transform.position = transform.position;
 				_ability1GameObject.transform.rotation = transform.rotation;
 				_ability1GameObject.rigidbody2D.velocity = Vector3.zero;
 				_ability1GameObject.rigidbody2D.AddRelativeForce(_ability1Script.velocity * -1 * Vector2.right);
 				_ability1Script.activated = true;
-				Ability1Cooldown = Ability1Prefab.cooldown;
+				_ability1Cooldown = Ability1Prefab.cooldown;
 			}
 			break;
 		case 2:
@@ -210,8 +210,8 @@ public class ChipmunkPlayerControl : Photon.MonoBehaviour{
 	}
 
 	void LowerCooldowns(){
-		if(Ability1Cooldown > 0){
-			Ability1Cooldown--;
+		if(_ability1Cooldown > 0){
+			_ability1Cooldown--;
 		}
 		if(_ability2Cooldown > 0){
 			_ability2Cooldown--;
