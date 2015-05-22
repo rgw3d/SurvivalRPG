@@ -6,11 +6,14 @@ public class PlayerGUI : MonoBehaviour {
     public Texture XPBarEmpty;
     public Texture XPBarFull;
     public float XPBarVerticalSize = 1 / 10;
+    private GUIStyle GUIBox = null;
     private GUIStyle LevelBoxStyle = null;
     private GUIStyle HealthStyle = null;
 
     public Texture HealthBarEmpty;
     public Texture HealthBarFull;
+
+    public Vector2 Bounds;
 
     private Vector2 _scoreBarStart = new Vector2(Screen.width/10, 0);
     private Vector2 _scoreBarDims;
@@ -21,6 +24,7 @@ public class PlayerGUI : MonoBehaviour {
     private Vector2 _manaBarDims = new Vector2(Screen.width / 40, Screen.height * 4 / 10);
 
     void Start() {
+        Bounds = new Vector2(Screen.width / 6, Screen.height/4 );
         _scoreBarDims = new Vector2(Screen.width/8, Screen.height * XPBarVerticalSize);
 
         _healthBarStart = new Vector2(Screen.width / 60, Screen.height * 2 / 10);
@@ -32,20 +36,27 @@ public class PlayerGUI : MonoBehaviour {
 
     void OnGUI() {
         InitStyles();
-        DrawScore();
-        DrawHealth();
+        GUI.BeginGroup(new Rect(0, 0, Bounds.x, Bounds.y), GUIBox);//set the box
+            //Top of box there is the Level # and XP -- takes up a 1/5th of the height
+            DrawScore();
+            //Then The health bar on the left under the level/xp
+            DrawHealth();
+
+        GUI.EndGroup();
     }
 
     void DrawScore() {
-        //Draw bar
+        float height = Bounds.y / 5;
+        //Draw Level: # . This will take up a third of the score
+        GUI.Box(new Rect(0, 0, Bounds.x/3, height), "Level: " + PlayerStats.PlayerLevel, LevelBoxStyle);
+
+        //Draw xp bar
         float progress = (float)PlayerStats.PlayerScore / PlayerStats.CalculateLevelUpXP();
-        GUI.DrawTexture(new Rect(_scoreBarStart.x, _scoreBarStart.y, _scoreBarDims.x, _scoreBarDims.y), XPBarEmpty);
-        GUI.BeginGroup(new Rect(_scoreBarStart.x, _scoreBarStart.y, _scoreBarDims.x * Mathf.Clamp(progress,0,1), _scoreBarDims.y));
-        GUI.DrawTexture(new Rect(0, 0, _scoreBarDims.x, _scoreBarDims.y), XPBarFull);
+        GUI.DrawTexture(new Rect(Bounds.x / 3, 0, Bounds.x * 2 / 3, height), XPBarEmpty);
+        GUI.BeginGroup(new Rect(Bounds.x / 3, 0, Bounds.x * 2 / 3 * Mathf.Clamp(progress, 0, 1), height));
+        GUI.DrawTexture(new Rect(0, 0, Bounds.x * 2 / 3, height), XPBarFull);
         GUI.EndGroup();
 
-        //Draw Level    
-        GUI.Box(new Rect(0, 0, _scoreBarStart.x, _scoreBarDims.y), "Level: " + PlayerStats.PlayerLevel, LevelBoxStyle);
     }
 
     void DrawHealth() {
@@ -64,13 +75,17 @@ public class PlayerGUI : MonoBehaviour {
     
 
     private void InitStyles() {
+        if (GUIBox == null) {
+            GUIBox = new GUIStyle(GUI.skin.box);
+            GUIBox.normal.background = MakeTex(2, 2, new Color(1f, 1f, 1f, .25f));
+        }
         if (LevelBoxStyle == null) {
             LevelBoxStyle = new GUIStyle(GUI.skin.box);
             LevelBoxStyle.normal.background = MakeTex(2, 2, Color.cyan);
             LevelBoxStyle.normal.textColor = Color.black;
             LevelBoxStyle.richText = true;
             LevelBoxStyle.alignment = TextAnchor.UpperCenter;
-            LevelBoxStyle.fontSize = (int)(_scoreBarDims.y * 0.6f);
+            LevelBoxStyle.fontSize = (int)(Bounds.y * 0.1f);
 
         }
         if (HealthStyle == null) {
