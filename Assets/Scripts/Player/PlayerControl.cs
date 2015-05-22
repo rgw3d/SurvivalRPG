@@ -2,7 +2,8 @@
 using System.Collections;
 
 [RequireComponent(typeof(PhotonView))]
-public class ChipmunkPlayerControl : Photon.MonoBehaviour{
+public class PlayerControl : Photon.MonoBehaviour{
+
     public Sprite NormalSprite;
     public Sprite AttackSprite;
 
@@ -26,9 +27,9 @@ public class ChipmunkPlayerControl : Photon.MonoBehaviour{
     public KeyCode RightKey;
     public KeyCode AttackKey;
 
-	public Chipmunk1AcornSpit Ability1Prefab;
+	public Fireball Ability1Prefab;
 	GameObject ability1;
-	Chipmunk1AcornSpit ability1script;
+	Fireball ability1script;
 	public int Ability1Cooldown = 0;
 	public Chipmunk2Lunge Ability2;
 	public int Ability2Cooldown = 0;
@@ -47,8 +48,14 @@ public class ChipmunkPlayerControl : Photon.MonoBehaviour{
     private Quaternion _onUpdateRot;
     private float _lerpFraction;
 
-    
-	// Use this for initialization
+    private enum PlayerState {
+        attacking = 0,
+        walking = 1,
+        standing = 2,
+        lunging = 3,
+        charging = 4
+    }
+
 	void Start () {
         _latestCorrectPos = transform.position;
         _onUpdatePos = transform.position;
@@ -60,16 +67,10 @@ public class ChipmunkPlayerControl : Photon.MonoBehaviour{
         _spriteRenderer.sprite = NormalSprite;
 
         ability1 = PhotonNetwork.Instantiate(Ability1Prefab.name, new Vector2(-100, -100), Quaternion.identity, 0);
-        ability1script = ability1.GetComponent("Chipmunk1AcornSpit") as Chipmunk1AcornSpit;
+        ability1script = ability1.GetComponent("Fireball") as Fireball;
 	}
+
 	
-	private enum PlayerState {
-		attacking = 0,
-		walking = 1,
-		standing = 2,
-		lunging = 3,
-		charging = 4
-	}
 	
     void Update() {
         if (photonView.isMine) { 
