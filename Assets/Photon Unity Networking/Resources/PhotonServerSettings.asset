@@ -38,4 +38,5 @@ MonoBehaviour:
   - DoJump
   - OnEnemyAttacked
   - OnEnemyAttackedRPC
+  - SavePlayerScore
   DisableAutoOpenWizard: 0

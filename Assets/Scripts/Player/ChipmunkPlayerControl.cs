@@ -5,41 +5,30 @@ using System.Collections;
 public class ChipmunkPlayerControl : Photon.MonoBehaviour{
     public Sprite NormalSprite;
     public Sprite AttackSprite;
-
-    public Sprite FrontSprite;
-    public Sprite BackSprite;
-    public Sprite LeftSprite;
-    public Sprite RightSprite;
-    public Sprite FrontAttack;
-    public Sprite BackAttack;
-    public Sprite LeftAttack;
-    public Sprite RightAttack;
-    private Sprite _currentSprite;
 	private SpriteRenderer _spriteRenderer;
+    private PlayerState _playerState = PlayerState.Standing;
 
-	public float movementSpeed;
-	private float chargedMoveSpeed;
+    public float ChargedMovementSpeedMultiplier;
+    public float RotationSpeed = 5;
 
     public KeyCode UpKey;
     public KeyCode DownKey;
     public KeyCode LeftKey;
     public KeyCode RightKey;
-    public KeyCode AttackKey;
+    public KeyCode AttackKey;    
 
 	public Chipmunk1AcornSpit Ability1Prefab;
-	GameObject ability1;
-	Chipmunk1AcornSpit ability1script;
+	private GameObject _ability1GameObject;
+	private Chipmunk1AcornSpit _ability1Script;
 	public int Ability1Cooldown = 0;
-	public Chipmunk2Lunge Ability2;
-	public int Ability2Cooldown = 0;
-	public int Ability2RecoverTime = 0;
 
-    private PlayerState _playerState = PlayerState.standing;
+	public Chipmunk2Lunge Ability2;
+    public int Ability2CooldownValue = 15;
+	private int _ability2Cooldown = 0;
 
     public int AttackCooldownValue = 15;
     private int _attackCooldown = 0;
-	private int chargeValue = 0;
-    public float RotationSpeed = 5;
+	private int _chargedValue = 0;
 
     private Vector3 _latestCorrectPos;
     private Vector3 _onUpdatePos;
@@ -53,26 +42,23 @@ public class ChipmunkPlayerControl : Photon.MonoBehaviour{
         _latestCorrectPos = transform.position;
         _onUpdatePos = transform.position;
 
-        movementSpeed = PlayerStats.MovementSpeed;
-        chargedMoveSpeed = movementSpeed / 2;
-
         _spriteRenderer = GetComponent<SpriteRenderer>();
         _spriteRenderer.sprite = NormalSprite;
 
-        ability1 = PhotonNetwork.Instantiate(Ability1Prefab.name, new Vector2(-100, -100), Quaternion.identity, 0);
-        ability1script = ability1.GetComponent("Chipmunk1AcornSpit") as Chipmunk1AcornSpit;
+        _ability1GameObject = PhotonNetwork.Instantiate(Ability1Prefab.name, new Vector2(-100, -100), Quaternion.identity, 0);
+        _ability1Script = _ability1GameObject.GetComponent("Chipmunk1AcornSpit") as Chipmunk1AcornSpit;
 	}
 	
 	private enum PlayerState {
-		attacking = 0,
-		walking = 1,
-		standing = 2,
-		lunging = 3,
-		charging = 4
+		Attacking = 0,
+		Walking = 1,
+		Standing = 2,
+		Lunging = 3,
+		Charging = 4
 	}
 	
     void Update() {
-        if (photonView.isMine) { 
+        if (photonView.isMine) { //point at camera
             Vector2 positionOnScreen = Camera.main.WorldToViewportPoint(transform.position);
             Vector2 mouseOnScreen = (Vector2)Camera.main.ScreenToViewportPoint(Input.mousePosition);
             float angle = Mathf.Atan2(positionOnScreen.y - mouseOnScreen.y, positionOnScreen.x - mouseOnScreen.x) * Mathf.Rad2Deg;
@@ -86,7 +72,7 @@ public class ChipmunkPlayerControl : Photon.MonoBehaviour{
         if (photonView.isMine) {
             if (ChatDisplay.ChatState == ChatDisplay.ChattingState.ChatClosedButShowing
                 || ChatDisplay.ChatState == ChatDisplay.ChattingState.NoUsername) {
-                    if (_playerState != PlayerState.attacking && _playerState != PlayerState.lunging) //only update movement if not attacking
+                    if (_playerState != PlayerState.Attacking && _playerState != PlayerState.Lunging) //only update movement if not attacking
                         PlayerMovement();
             }
             if (Input.GetKey(KeyCode.E)) {
@@ -116,108 +102,108 @@ public class ChipmunkPlayerControl : Photon.MonoBehaviour{
 
     public void PlayerMovement() {
         if (Input.GetKey(UpKey)) {
-			if(_playerState == PlayerState.charging){
-				rigidbody2D.AddForce(Vector2.up * chargedMoveSpeed);
+			if(_playerState == PlayerState.Charging){
+                rigidbody2D.AddForce(Vector2.up * PlayerStats.MovementSpeed * ChargedMovementSpeedMultiplier);
 			}
 			else{
-				rigidbody2D.AddForce(Vector2.up * movementSpeed);
-				_playerState = PlayerState.walking;
+				rigidbody2D.AddForce(Vector2.up * PlayerStats.MovementSpeed);
+				_playerState = PlayerState.Walking;
 			}
         }
         if (Input.GetKey(DownKey)) {
-			if(_playerState == PlayerState.charging){
-				rigidbody2D.AddForce(Vector2.up * -1 * chargedMoveSpeed);
+			if(_playerState == PlayerState.Charging){
+                rigidbody2D.AddForce(Vector2.up * -1 * PlayerStats.MovementSpeed * ChargedMovementSpeedMultiplier);
 			}
 			else{
-				rigidbody2D.AddForce(Vector2.up * -1 * movementSpeed);
-				_playerState = PlayerState.walking;
+                rigidbody2D.AddForce(Vector2.up * -1 * PlayerStats.MovementSpeed);
+				_playerState = PlayerState.Walking;
 			}
         }
         if (Input.GetKey(LeftKey)) {
-			if(_playerState == PlayerState.charging){
-				rigidbody2D.AddForce(Vector2.right * -1 * chargedMoveSpeed);
+			if(_playerState == PlayerState.Charging){
+                rigidbody2D.AddForce(Vector2.right * -1 * PlayerStats.MovementSpeed * ChargedMovementSpeedMultiplier);
 			}
 			else{
-				rigidbody2D.AddForce(Vector2.right * -1 * movementSpeed);
-				_playerState = PlayerState.walking;
+                rigidbody2D.AddForce(Vector2.right * -1 * PlayerStats.MovementSpeed);
+				_playerState = PlayerState.Walking;
 			}
 
         }
         if (Input.GetKey(RightKey)) {
-			if(_playerState == PlayerState.charging){
-				rigidbody2D.AddForce(Vector2.right * chargedMoveSpeed);
+			if(_playerState == PlayerState.Charging){
+                rigidbody2D.AddForce(Vector2.right * PlayerStats.MovementSpeed * ChargedMovementSpeedMultiplier);
 			}
 			else{
-				rigidbody2D.AddForce(Vector2.right * movementSpeed);
-				_playerState = PlayerState.walking;
+                rigidbody2D.AddForce(Vector2.right * PlayerStats.MovementSpeed);
+				_playerState = PlayerState.Walking;
 			}
         }
     }
 
 
     public void PlayerSprite() {
-            if (_playerState == PlayerState.attacking)
+            if (_playerState == PlayerState.Attacking)
                 _spriteRenderer.sprite = AttackSprite;
             else
                 _spriteRenderer.sprite = NormalSprite;
     }
 
     public void PlayerAttack() {
-		if (_attackCooldown == 0 && Input.GetKeyDown(AttackKey) && (_playerState == PlayerState.standing || _playerState == PlayerState.walking)) {
-			chargeValue = 0;
+		if (_attackCooldown == 0 && Input.GetKeyDown(AttackKey) && (_playerState == PlayerState.Standing || _playerState == PlayerState.Walking)) {
+			_chargedValue = 0;
             DelegateHolder.TriggerPlayerAttack(true, 20);
             _attackCooldown = AttackCooldownValue;
-            _playerState = PlayerState.attacking;
+            _playerState = PlayerState.Attacking;
         }
         if(_attackCooldown > 0){
             _attackCooldown--;
         }
         
-        if (_attackCooldown == 0 && _playerState == PlayerState.attacking) {
+        if (_attackCooldown == 0 && _playerState == PlayerState.Attacking) {
 			DelegateHolder.TriggerPlayerAttack(false, 0);
 			if(Input.GetKey(AttackKey)){
-				_playerState = PlayerState.charging;
+				_playerState = PlayerState.Charging;
 			}
 			else{
-				_playerState = PlayerState.standing;
+				_playerState = PlayerState.Standing;
 			}
 
         }
 
-		if(_playerState == PlayerState.charging && Input.GetKey(AttackKey)){
-			if(chargeValue < 120){
-				chargeValue++;
+		if(_playerState == PlayerState.Charging && Input.GetKey(AttackKey)){
+			if(_chargedValue < 120){
+				_chargedValue++;
 			}
 		} 
 
-		if(_playerState == PlayerState.charging && Input.GetKeyUp(AttackKey)){
-			DelegateHolder.TriggerPlayerAttack(true, 20 + (chargeValue / 4));
+		if(_playerState == PlayerState.Charging && Input.GetKeyUp(AttackKey)){
+			DelegateHolder.TriggerPlayerAttack(true, 20 + (_chargedValue / 4));
 			_attackCooldown = AttackCooldownValue;
-			_playerState = PlayerState.attacking;
-			chargeValue = 0;
+			_playerState = PlayerState.Attacking;
+			_chargedValue = 0;
 		}
     }
 
 	void PlayerAbility(int abilityNumber){
 		switch(abilityNumber){
 		case 1:
-			if(Ability1Cooldown == 0 && _playerState != PlayerState.attacking){
-				ability1.transform.position = transform.position;
-				ability1.transform.rotation = transform.rotation;
-				ability1.rigidbody2D.velocity = Vector3.zero;
-				ability1.rigidbody2D.AddRelativeForce(ability1script.velocity * -1 * Vector2.right);
-				ability1script.activated = true;
+			if(Ability1Cooldown == 0 && _playerState != PlayerState.Attacking){
+				_ability1GameObject.transform.position = transform.position;
+				_ability1GameObject.transform.rotation = transform.rotation;
+				_ability1GameObject.rigidbody2D.velocity = Vector3.zero;
+				_ability1GameObject.rigidbody2D.AddRelativeForce(_ability1Script.velocity * -1 * Vector2.right);
+				_ability1Script.activated = true;
 				Ability1Cooldown = Ability1Prefab.cooldown;
 			}
 			break;
 		case 2:
-			if(Ability2Cooldown == 0 && _playerState != PlayerState.attacking){
+			if(_ability2Cooldown == 0 && _playerState != PlayerState.Attacking){
 				rigidbody2D.AddForce(Vector2.zero);
 				rigidbody2D.AddRelativeForce(Ability2.lungeForce * Vector2.right);
-				_playerState = PlayerState.lunging;
+				_playerState = PlayerState.Lunging;
 				Ability2.isLunging = true;
-				Ability2Cooldown = Ability2.cooldown;
-				Ability2RecoverTime = Ability2.recoverTime;
+				_ability2Cooldown = Ability2.cooldown;
+				Ability2CooldownValue = Ability2.recoverTime;
 			}
 			break;
 		}
@@ -227,14 +213,14 @@ public class ChipmunkPlayerControl : Photon.MonoBehaviour{
 		if(Ability1Cooldown > 0){
 			Ability1Cooldown--;
 		}
-		if(Ability2Cooldown > 0){
-			Ability2Cooldown--;
+		if(_ability2Cooldown > 0){
+			_ability2Cooldown--;
 		}
-		if(Ability2RecoverTime > 0){
-			Ability2RecoverTime--;
+		if(Ability2CooldownValue > 0){
+			Ability2CooldownValue--;
 		}
-		if(Ability2RecoverTime == 0 && _playerState == PlayerState.lunging) {
-			_playerState = PlayerState.standing;
+		if(Ability2CooldownValue == 0 && _playerState == PlayerState.Lunging) {
+			_playerState = PlayerState.Standing;
 			Ability2.isLunging = false;
 			Ability2.resetEnemyIDs();
 		}

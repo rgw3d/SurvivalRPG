@@ -14,6 +14,7 @@ GameObject:
   - 114: {fileID: 11400000}
   - 60: {fileID: 6000000}
   - 114: {fileID: 11400004}
+  - 114: {fileID: 11400006}
   m_Layer: 8
   m_Name: Photon Player
   m_TagString: Player
@@ -164,7 +165,7 @@ MonoBehaviour:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 100000}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 8e719ebe997e4264fbf08a6a401c9c84, type: 3}
   m_Name: 
@@ -179,12 +180,12 @@ MonoBehaviour:
   BackAttack: {fileID: 21300148, guid: 0f491ec263b3953419c255895b4cb4ad, type: 3}
   LeftAttack: {fileID: 21300128, guid: 0f491ec263b3953419c255895b4cb4ad, type: 3}
   RightAttack: {fileID: 21300138, guid: 0f491ec263b3953419c255895b4cb4ad, type: 3}
+  movementSpeed: 0
   UpKey: 119
   DownKey: 115
   LeftKey: 97
   RightKey: 100
   AttackKey: 32
-  Ability1Prefab: {fileID: 11405138, guid: 7f2023a2a81dc4908938732c3b19a115, type: 2}
   Ability1Cooldown: 0
   Ability2: {fileID: 11498532}
   Ability2Cooldown: 0
@@ -205,6 +206,8 @@ MonoBehaviour:
   XPBarEmpty: {fileID: 2800000, guid: ac34608897b99bb40bdddf3f45572286, type: 3}
   XPBarFull: {fileID: 2800000, guid: 378f55510a50452428351bd61e6d3400, type: 3}
   XPBarVerticalSize: .0500000007
+  HealthBarEmpty: {fileID: 2800000, guid: 8f68b8c69d9dcc54bb61330c9e614012, type: 3}
+  HealthBarFull: {fileID: 2800000, guid: ec2e711c034976444bee33c352ceae97, type: 3}
 --- !u!114 &11400004
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -225,11 +228,37 @@ MonoBehaviour:
   onSerializeRigidBodyOption: 2
   ownershipTransfer: 0
   ObservedComponents:
-  - {fileID: 11400000}
+  - {fileID: 11400006}
   ObservedComponentsFoldoutOpen: 1
   viewIdField: 0
   instantiationId: -1
   isRuntimeInstantiated: 0
+--- !u!114 &11400006
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 100000}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5f7c7d171b516314d9aff201b5fd8e87, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  NormalSprite: {fileID: 21300000, guid: 0485e2d3d22dbc149b672eec28f2ac65, type: 3}
+  AttackSprite: {fileID: 21300000, guid: 55183ee4f286914469909f430124674f, type: 3}
+  ChargedMovementSpeedMultiplier: 0
+  RotationSpeed: 5
+  UpKey: 119
+  DownKey: 115
+  LeftKey: 97
+  RightKey: 100
+  AttackKey: 32
+  Ability1Prefab: {fileID: 11405138, guid: 7f2023a2a81dc4908938732c3b19a115, type: 2}
+  Ability1Cooldown: 10
+  Ability2: {fileID: 0}
+  Ability2Cooldown: 10
+  Ability2RecoverTime: 0
+  AttackCooldownValue: 15
 --- !u!114 &11422180
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -242,6 +271,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   isAttacking: 0
+  damage: 0
 --- !u!114 &11498532
 MonoBehaviour:
   m_ObjectHideFlags: 1
