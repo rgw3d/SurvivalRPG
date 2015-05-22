@@ -16,8 +16,8 @@ public class PlayerGUI : MonoBehaviour {
     }
 
     void OnGUI() {
-        //Draw rectangle on top for the score, all the way across, making it percent based on how much xp is needed for that level
         DrawScore();
+        DrawHealth();
     }
 
     void DrawScore() {
@@ -38,7 +38,7 @@ public class PlayerGUI : MonoBehaviour {
         GUI.EndGroup();
     }
 
-    void drawHealth() {
+    void DrawHealth() {
         string scoreNum = PlayerStats.PlayerHealth + "";
         GUIStyle style = new GUIStyle();
         style.richText = true;

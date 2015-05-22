@@ -203,7 +203,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   XPBarEmpty: {fileID: 2800000, guid: ac34608897b99bb40bdddf3f45572286, type: 3}
-  XPBarFull: {fileID: 2800000, guid: ec2e711c034976444bee33c352ceae97, type: 3}
+  XPBarFull: {fileID: 2800000, guid: 378f55510a50452428351bd61e6d3400, type: 3}
   XPBarVerticalSize: .0500000007
 --- !u!114 &11400004
 MonoBehaviour:

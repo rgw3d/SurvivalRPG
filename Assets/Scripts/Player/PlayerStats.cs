@@ -139,8 +139,8 @@ public class PlayerStats: MonoBehaviour {
         }
     }
 
-    public static void SavePlayerScore(int score) {
-        PlayerPrefs.SetInt(GameControl.PLAYER_SCORE_KEY + PhotonNetworkManager.selectedPlayerName, score);
+    public static void SavePlayerScore() {
+        PlayerPrefs.SetInt(GameControl.PLAYER_SCORE_KEY + PhotonNetworkManager.selectedPlayerName, PlayerScore);
     }
 
     public static int CalculateLevelUpXP() {
