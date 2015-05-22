@@ -3,20 +3,29 @@ using System.Collections;
 
 public class PlayerGUI : MonoBehaviour {
 
-    public float PlayerScore = 0;
-    
-    public float PlayerHealth = 0;
+    public float PlayerScore;
+    public float PlayerLevel;
+    public float PlayerHealth;
 
     void Start() {
         DelegateHolder.StatChange += UpdateGUIStats;//add the method to the event, and the event is made from the delegate
+        PlayerLevel = PlayerStats.GetPlayerLevel();
+        PlayerHealth = PlayerStats.GetMaxHealth();
     }
 
     void OnGUI() {
-        //Draw rectangle on top or score
+        //Draw rectangle on top for the score, all the way across, making it percent based on how much xp is needed for that level
         drawScore();
     }
 
     void drawScore() {
+        /*
+        GUI.DrawTexture(new Rect(pos.x, pos.y, size.x, size.y), progressBarEmpty);
+        GUI.BeginGroup(new Rect(pos.x, pos.y, size.x * Mathf.Clamp01(progress), size.y));
+        GUI.DrawTexture(new Rect(0, 0, size.x, size.y), progressBarFull);
+        GUI.EndGroup();
+         */
+
         string scoreNum = (int)(PlayerScore) + "";
         GUIStyle style = new GUIStyle();
         style.richText = true;

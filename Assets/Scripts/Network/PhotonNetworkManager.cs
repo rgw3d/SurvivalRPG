@@ -45,7 +45,7 @@ public class PhotonNetworkManager : MonoBehaviour {
                             RoomOptions roomOptions = new RoomOptions() { isVisible = true, maxPlayers = 4, isOpen = true };
                             PhotonNetwork.CreateRoom(_roomName, roomOptions, TypedLobby.Default);
                             IsHost = true;
-                            Application.LoadLevel(GameControl.PLAYSCREEN);//load play screen
+                            Application.LoadLevel(GameControl.PLAY_SCREEN);//load play screen
                         }
                         _roomName = GUILayout.TextField(_roomName, 20);
                     GUILayout.EndVertical();
@@ -54,7 +54,7 @@ public class PhotonNetworkManager : MonoBehaviour {
                         if (_roomsList != null) {
                             for (int i = 0; i < _roomsList.Length; i++) {
                                 if (GUILayout.Button("Join " + _roomsList[i].name)) {
-                                    Application.LoadLevel(GameControl.PLAYSCREEN);//load play screen
+                                    Application.LoadLevel(GameControl.PLAY_SCREEN);//load play screen
                                     StartCoroutine(WaitForSceneToLoad(1f));
                                     PhotonNetwork.JoinRoom(_roomsList[i].name);//Connect to Room
                                 }
@@ -64,17 +64,17 @@ public class PhotonNetworkManager : MonoBehaviour {
            
                 GUILayout.BeginVertical(GUILayout.MinWidth(Screen.width / 4));//Select Player
                     GUILayout.Label("Selected Player");
-                    string[] allplayerNames = PlayerPrefs.GetString(GameControl.PLAYERNAMESKEY).Split(',');
+                    string[] allplayerNames = PlayerPrefs.GetString(GameControl.PLAYER_NAMES_KEY).Split(',');
                     _playerSelectSlider = GUILayout.HorizontalSlider(_playerSelectSlider, 0f, (float)allplayerNames.Length-1);
                     int playerIndex = Mathf.RoundToInt(_playerSelectSlider);
                     GUILayout.Box("Name: " +allplayerNames[playerIndex] + "\n"
-                        + "Level " + (PlayerPrefs.GetInt(GameControl.PLAYERLEVELKEY + allplayerNames[playerIndex]))
-                        + " " + (PlayerStats.CharacterClass)PlayerPrefs.GetInt(GameControl.PLAYERCLASSKEY + allplayerNames[playerIndex]) + "\n"
-                        + "Max Health: " + PlayerPrefs.GetInt(GameControl.PLAYERMAXHEALTHKEY + allplayerNames[playerIndex]) + "\n" 
-                        + "Max Mana: " + PlayerPrefs.GetInt(GameControl.PLAYERMAXMANAKEY + allplayerNames[playerIndex]) + "\n"
-                        + "Attack: " + PlayerPrefs.GetInt(GameControl.PLAYERATTACKKEY + allplayerNames[playerIndex]) + "\n"
-		            	+ "Defense: " + PlayerPrefs.GetInt(GameControl.PLAYERDEFENSEKEY + allplayerNames[playerIndex]) + "\n"
-		             	+ "Movement Speed: " + PlayerPrefs.GetFloat(GameControl.PLAYERMOVEMENTKEY + allplayerNames[playerIndex]));
+                        + "Level " + (PlayerPrefs.GetInt(GameControl.PLAYER_LEVEL_KEY + allplayerNames[playerIndex]))
+                        + " " + (PlayerStats.CharacterClass)PlayerPrefs.GetInt(GameControl.PLAYER_CLASS_KEY + allplayerNames[playerIndex]) + "\n"
+                        + "Max Health: " + PlayerPrefs.GetInt(GameControl.PLAYER_MAX_HEALTH_KEY + allplayerNames[playerIndex]) + "\n" 
+                        + "Max Mana: " + PlayerPrefs.GetInt(GameControl.PLAYER_MAX_MANA_KEY + allplayerNames[playerIndex]) + "\n"
+                        + "Attack: " + PlayerPrefs.GetInt(GameControl.PLAYER_ATTACK_KEY + allplayerNames[playerIndex]) + "\n"
+		            	+ "Defense: " + PlayerPrefs.GetInt(GameControl.PLAYER_DEFENSE_KEY + allplayerNames[playerIndex]) + "\n"
+		             	+ "Movement Speed: " + PlayerPrefs.GetFloat(GameControl.PLAYER_MOVEMENT_KEY + allplayerNames[playerIndex]));
 					selectedPlayerName = allplayerNames[playerIndex];
 					if (GUILayout.Button("Delete Character")) {
 						DeleteCharacter(allplayerNames[playerIndex]);
@@ -89,7 +89,7 @@ public class PhotonNetworkManager : MonoBehaviour {
                         _playerName = GUILayout.TextField(_playerName, 12);
                 
                         GUILayout.Box("Class: " + _playerClass);
-                        _playerClassSlider = GUILayout.HorizontalSlider(_playerClassSlider, 0f, 3f);
+                        _playerClassSlider = GUILayout.HorizontalSlider(_playerClassSlider, 1f, 4f);
                         _playerClass = (PlayerStats.CharacterClass)Mathf.RoundToInt(_playerClassSlider);
                     GUILayout.EndVertical();
 
@@ -108,7 +108,7 @@ public class PhotonNetworkManager : MonoBehaviour {
             StartCoroutine(TextPopup(.5f));
             return;
         }
-        string[] allplayerNames = PlayerPrefs.GetString(GameControl.PLAYERNAMESKEY).Split(',');
+        string[] allplayerNames = PlayerPrefs.GetString(GameControl.PLAYER_NAMES_KEY).Split(',');
         foreach (string s in allplayerNames) {
             if (s.Equals(_playerName)) {//if any of the same name exist then the name is rejected
                 StartCoroutine(TextPopup(.5f));
@@ -117,51 +117,51 @@ public class PhotonNetworkManager : MonoBehaviour {
         }
         
 
-        if (PlayerPrefs.GetString(GameControl.PLAYERNAMESKEY).Equals("")) //first name that is being added
-            PlayerPrefs.SetString(GameControl.PLAYERNAMESKEY, _playerName);
+        if (PlayerPrefs.GetString(GameControl.PLAYER_NAMES_KEY).Equals("")) //first name that is being added
+            PlayerPrefs.SetString(GameControl.PLAYER_NAMES_KEY, _playerName);
         else //every additional name
-            PlayerPrefs.SetString(GameControl.PLAYERNAMESKEY, PlayerPrefs.GetString(GameControl.PLAYERNAMESKEY) +","+ _playerName);
+            PlayerPrefs.SetString(GameControl.PLAYER_NAMES_KEY, PlayerPrefs.GetString(GameControl.PLAYER_NAMES_KEY) +","+ _playerName);
         
-        PlayerPrefs.SetInt(GameControl.PLAYERCLASSKEY + _playerName, (int)_playerClass);
+        PlayerPrefs.SetInt(GameControl.PLAYER_CLASS_KEY + _playerName, (int)_playerClass);
 
         switch (_playerClass) {
             case PlayerStats.CharacterClass.Fighter:
-                PlayerPrefs.SetInt(GameControl.PLAYERLEVELKEY + _playerName, 0);
-                PlayerPrefs.SetInt(GameControl.PLAYERMAXHEALTHKEY + _playerName, 100);
-                PlayerPrefs.SetInt(GameControl.PLAYERMAXMANAKEY + _playerName, 20);
-				PlayerPrefs.SetInt(GameControl.PLAYERATTACKKEY + _playerName, 100);
-                PlayerPrefs.SetInt(GameControl.PLAYERDEFENSEKEY + _playerName, 100);
-				PlayerPrefs.SetFloat(GameControl.PLAYERMOVEMENTKEY + _playerName, 80f);
+                PlayerPrefs.SetInt(GameControl.PLAYER_LEVEL_KEY + _playerName, 0);
+                PlayerPrefs.SetInt(GameControl.PLAYER_MAX_HEALTH_KEY + _playerName, 100);
+                PlayerPrefs.SetInt(GameControl.PLAYER_MAX_MANA_KEY + _playerName, 20);
+				PlayerPrefs.SetInt(GameControl.PLAYER_ATTACK_KEY + _playerName, 100);
+                PlayerPrefs.SetInt(GameControl.PLAYER_DEFENSE_KEY + _playerName, 100);
+				PlayerPrefs.SetFloat(GameControl.PLAYER_MOVEMENT_KEY + _playerName, 80f);
                 break;
             case PlayerStats.CharacterClass.Mage:
-                PlayerPrefs.SetInt(GameControl.PLAYERLEVELKEY + _playerName, 0);
-                PlayerPrefs.SetInt(GameControl.PLAYERMAXHEALTHKEY + _playerName, 1);
-                PlayerPrefs.SetInt(GameControl.PLAYERMAXMANAKEY + _playerName, 1000);
-                PlayerPrefs.SetInt(GameControl.PLAYERATTACKKEY + _playerName, 100);
-				PlayerPrefs.SetInt(GameControl.PLAYERDEFENSEKEY + _playerName, 1);
-				PlayerPrefs.SetFloat(GameControl.PLAYERMOVEMENTKEY + _playerName, 400f);
+                PlayerPrefs.SetInt(GameControl.PLAYER_LEVEL_KEY + _playerName, 0);
+                PlayerPrefs.SetInt(GameControl.PLAYER_MAX_HEALTH_KEY + _playerName, 1);
+                PlayerPrefs.SetInt(GameControl.PLAYER_MAX_MANA_KEY + _playerName, 1000);
+                PlayerPrefs.SetInt(GameControl.PLAYER_ATTACK_KEY + _playerName, 100);
+				PlayerPrefs.SetInt(GameControl.PLAYER_DEFENSE_KEY + _playerName, 1);
+				PlayerPrefs.SetFloat(GameControl.PLAYER_MOVEMENT_KEY + _playerName, 400f);
                 break;
             case PlayerStats.CharacterClass.Healer:
-                PlayerPrefs.SetInt(GameControl.PLAYERLEVELKEY + _playerName, 0);
-                PlayerPrefs.SetInt(GameControl.PLAYERMAXHEALTHKEY + _playerName, 50);
-                PlayerPrefs.SetInt(GameControl.PLAYERMAXMANAKEY + _playerName, 500);
-                PlayerPrefs.SetInt(GameControl.PLAYERATTACKKEY + _playerName, 10);
-				PlayerPrefs.SetInt(GameControl.PLAYERDEFENSEKEY + _playerName, 20);
-				PlayerPrefs.SetFloat(GameControl.PLAYERMOVEMENTKEY + _playerName, 80f);
+                PlayerPrefs.SetInt(GameControl.PLAYER_LEVEL_KEY + _playerName, 0);
+                PlayerPrefs.SetInt(GameControl.PLAYER_MAX_HEALTH_KEY + _playerName, 50);
+                PlayerPrefs.SetInt(GameControl.PLAYER_MAX_MANA_KEY + _playerName, 500);
+                PlayerPrefs.SetInt(GameControl.PLAYER_ATTACK_KEY + _playerName, 10);
+				PlayerPrefs.SetInt(GameControl.PLAYER_DEFENSE_KEY + _playerName, 20);
+				PlayerPrefs.SetFloat(GameControl.PLAYER_MOVEMENT_KEY + _playerName, 80f);
                 break;
 			case PlayerStats.CharacterClass.Shrek:
-                PlayerPrefs.SetInt(GameControl.PLAYERLEVELKEY + _playerName, 0);
-				PlayerPrefs.SetInt(GameControl.PLAYERMAXHEALTHKEY + _playerName, 9000);
-				PlayerPrefs.SetInt(GameControl.PLAYERMAXMANAKEY + _playerName, 0);
-				PlayerPrefs.SetInt(GameControl.PLAYERATTACKKEY + _playerName, 411);
-				PlayerPrefs.SetInt(GameControl.PLAYERDEFENSEKEY + _playerName, 350);
-				PlayerPrefs.SetFloat(GameControl.PLAYERMOVEMENTKEY + _playerName, 20f);
+                PlayerPrefs.SetInt(GameControl.PLAYER_LEVEL_KEY + _playerName, 0);
+				PlayerPrefs.SetInt(GameControl.PLAYER_MAX_HEALTH_KEY + _playerName, 9000);
+				PlayerPrefs.SetInt(GameControl.PLAYER_MAX_MANA_KEY + _playerName, 0);
+				PlayerPrefs.SetInt(GameControl.PLAYER_ATTACK_KEY + _playerName, 411);
+				PlayerPrefs.SetInt(GameControl.PLAYER_DEFENSE_KEY + _playerName, 350);
+				PlayerPrefs.SetFloat(GameControl.PLAYER_MOVEMENT_KEY + _playerName, 20f);
 				break;
         }
     }
 
 	void DeleteCharacter(string deletedPlayerName){
-		string[] allPlayerNames = PlayerPrefs.GetString(GameControl.PLAYERNAMESKEY).Split(',');
+		string[] allPlayerNames = PlayerPrefs.GetString(GameControl.PLAYER_NAMES_KEY).Split(',');
 		string newAllPlayerNames = "";
 		foreach(string name in allPlayerNames){
 			if(!name.Equals(deletedPlayerName)){
@@ -171,13 +171,13 @@ public class PhotonNetworkManager : MonoBehaviour {
 					newAllPlayerNames += "," + name;
 			}
 		}
-		PlayerPrefs.SetString(GameControl.PLAYERNAMESKEY,newAllPlayerNames);
-        PlayerPrefs.DeleteKey(GameControl.PLAYERLEVELKEY + deletedPlayerName);
-		PlayerPrefs.DeleteKey(GameControl.PLAYERCLASSKEY + deletedPlayerName);
-		PlayerPrefs.DeleteKey(GameControl.PLAYERMAXHEALTHKEY + deletedPlayerName);
-		PlayerPrefs.DeleteKey(GameControl.PLAYERMAXMANAKEY + deletedPlayerName);
-		PlayerPrefs.DeleteKey(GameControl.PLAYERDEFENSEKEY + deletedPlayerName);
-		PlayerPrefs.DeleteKey(GameControl.PLAYERATTACKKEY + deletedPlayerName);
+		PlayerPrefs.SetString(GameControl.PLAYER_NAMES_KEY,newAllPlayerNames);
+        PlayerPrefs.DeleteKey(GameControl.PLAYER_LEVEL_KEY + deletedPlayerName);
+		PlayerPrefs.DeleteKey(GameControl.PLAYER_CLASS_KEY + deletedPlayerName);
+		PlayerPrefs.DeleteKey(GameControl.PLAYER_MAX_HEALTH_KEY + deletedPlayerName);
+		PlayerPrefs.DeleteKey(GameControl.PLAYER_MAX_MANA_KEY + deletedPlayerName);
+		PlayerPrefs.DeleteKey(GameControl.PLAYER_DEFENSE_KEY + deletedPlayerName);
+		PlayerPrefs.DeleteKey(GameControl.PLAYER_ATTACK_KEY + deletedPlayerName);
 	}
 
     public static IEnumerator TextPopup(float waitTime) {
