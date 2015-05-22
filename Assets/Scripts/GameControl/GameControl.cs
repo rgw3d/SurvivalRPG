@@ -5,8 +5,6 @@ using System;
 public class GameControl : MonoBehaviour {
 
     public static int Difficulty = 5; //from 1-10;
-    public static float LevelUpScoreBase = 100;
-    public static float LevelUpMultiplier = 2;// exp to get to level x = LevelUpScoreMultilier * LevelUpMultiplier * x
 
     public KeyCode ExitKey = KeyCode.Escape;
 

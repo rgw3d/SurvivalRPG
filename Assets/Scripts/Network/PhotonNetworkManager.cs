@@ -126,7 +126,7 @@ public class PhotonNetworkManager : MonoBehaviour {
 
         switch (_playerClass) {
             case PlayerStats.CharacterClass.Fighter:
-                PlayerPrefs.SetInt(GameControl.PLAYER_LEVEL_KEY + _playerName, 0);
+                PlayerPrefs.SetInt(GameControl.PLAYER_LEVEL_KEY + _playerName, 1);
                 PlayerPrefs.SetInt(GameControl.PLAYER_MAX_HEALTH_KEY + _playerName, 100);
                 PlayerPrefs.SetInt(GameControl.PLAYER_MAX_MANA_KEY + _playerName, 20);
 				PlayerPrefs.SetInt(GameControl.PLAYER_ATTACK_KEY + _playerName, 100);
@@ -134,7 +134,7 @@ public class PhotonNetworkManager : MonoBehaviour {
 				PlayerPrefs.SetFloat(GameControl.PLAYER_MOVEMENT_KEY + _playerName, 80f);
                 break;
             case PlayerStats.CharacterClass.Mage:
-                PlayerPrefs.SetInt(GameControl.PLAYER_LEVEL_KEY + _playerName, 0);
+                PlayerPrefs.SetInt(GameControl.PLAYER_LEVEL_KEY + _playerName, 1);
                 PlayerPrefs.SetInt(GameControl.PLAYER_MAX_HEALTH_KEY + _playerName, 1);
                 PlayerPrefs.SetInt(GameControl.PLAYER_MAX_MANA_KEY + _playerName, 1000);
                 PlayerPrefs.SetInt(GameControl.PLAYER_ATTACK_KEY + _playerName, 100);
@@ -142,7 +142,7 @@ public class PhotonNetworkManager : MonoBehaviour {
 				PlayerPrefs.SetFloat(GameControl.PLAYER_MOVEMENT_KEY + _playerName, 400f);
                 break;
             case PlayerStats.CharacterClass.Healer:
-                PlayerPrefs.SetInt(GameControl.PLAYER_LEVEL_KEY + _playerName, 0);
+                PlayerPrefs.SetInt(GameControl.PLAYER_LEVEL_KEY + _playerName, 1);
                 PlayerPrefs.SetInt(GameControl.PLAYER_MAX_HEALTH_KEY + _playerName, 50);
                 PlayerPrefs.SetInt(GameControl.PLAYER_MAX_MANA_KEY + _playerName, 500);
                 PlayerPrefs.SetInt(GameControl.PLAYER_ATTACK_KEY + _playerName, 10);
@@ -150,7 +150,7 @@ public class PhotonNetworkManager : MonoBehaviour {
 				PlayerPrefs.SetFloat(GameControl.PLAYER_MOVEMENT_KEY + _playerName, 80f);
                 break;
 			case PlayerStats.CharacterClass.Shrek:
-                PlayerPrefs.SetInt(GameControl.PLAYER_LEVEL_KEY + _playerName, 0);
+                PlayerPrefs.SetInt(GameControl.PLAYER_LEVEL_KEY + _playerName, 1);
 				PlayerPrefs.SetInt(GameControl.PLAYER_MAX_HEALTH_KEY + _playerName, 9000);
 				PlayerPrefs.SetInt(GameControl.PLAYER_MAX_MANA_KEY + _playerName, 0);
 				PlayerPrefs.SetInt(GameControl.PLAYER_ATTACK_KEY + _playerName, 411);
