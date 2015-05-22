@@ -93,9 +93,6 @@ public class PlayerControl : Photon.MonoBehaviour{
                     if (_playerState != PlayerState.attacking && _playerState != PlayerState.lunging) //only update movement if not attacking
                         PlayerMovement();
             }
-            if (Input.GetKey(KeyCode.E)) { //just a test of the ability to work
-                DelegateHolder.TriggerPlayerStatChange(StatType.Score, 1f);
-            }
 			if (Input.GetKey(KeyCode.F)){
 				PlayerAbility(1);
 			}
