@@ -107,6 +107,7 @@ public abstract class EnemyBase : Photon.MonoBehaviour {
                     PlayerList.Sort(ComparePlayerDistances);
                 }
                 catch (MissingReferenceException e) {
+                    print(e.Message);
                     UpdatePlayerList();
                     Target = null;
                 }
