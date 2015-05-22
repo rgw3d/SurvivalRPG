@@ -52,7 +52,7 @@ public class PlayerControl : Photon.MonoBehaviour{
         _latestCorrectPos = transform.position;
         _onUpdatePos = transform.position;
 
-        _movementSpeed = PlayerStats.GetBaseMovementSpeed();
+        _movementSpeed = PlayerStats.MovementSpeed;
 
         _spriteRenderer = GetComponent<SpriteRenderer>();
         _spriteRenderer.sprite = NormalSprite;

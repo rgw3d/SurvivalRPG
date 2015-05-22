@@ -1,8 +1,6 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-
-public delegate float ChangeStat(StatType statType, float amountChange);
 public delegate void PlayerAttack(bool isAttacking);
 public delegate void GameCreated();
 public delegate void GenerateAndRenderMap();
@@ -15,8 +13,6 @@ public delegate void PlayerHasDisconnected();
 
 public static class DelegateHolder {
 
-
-    public static event ChangeStat StatChange;
     public static event PlayerAttack OnPlayerAttack;
     public static event GameCreated OnGameCreated;
     public static event GenerateAndRenderMap OnGenerateAndRenderMap;
@@ -25,12 +21,6 @@ public static class DelegateHolder {
     public static event ChatMessageSent OnChatMessageSent;
     public static event PlayerHasConnected OnPlayerHasConnected;
     public static event PlayerHasDisconnected OnPlayerHasDisconnected;
-
-    public static void TriggerPlayerStatChange(StatType statType, float amountChange) {
-        if (StatChange != null) {
-            StatChange(statType, amountChange);
-        }
-    }
 
     public static void TriggerPlayerAttack(bool isAttacking) {
         if(OnPlayerAttack != null)
