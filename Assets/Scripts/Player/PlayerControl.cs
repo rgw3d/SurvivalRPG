@@ -19,6 +19,7 @@ public class PlayerControl : Photon.MonoBehaviour{
 	private SpriteRenderer _spriteRenderer;
 
 	public float movementSpeed;
+	private float chargedMoveSpeed;
 
     public KeyCode UpKey;
     public KeyCode DownKey;
@@ -38,6 +39,7 @@ public class PlayerControl : Photon.MonoBehaviour{
 
     public int AttackCooldownValue = 15;
     private int _attackCooldown = 0;
+	private int chargeValue = 0;
     public float RotationSpeed = 5;
 
     private Vector3 _latestCorrectPos;
@@ -48,11 +50,28 @@ public class PlayerControl : Photon.MonoBehaviour{
 
     
 	// Use this for initialization
+
+	private enum CardinalDirection {
+		front = 3,
+		back = 1,
+		left = 4,
+		right = 2
+	}
+	
+	private enum PlayerState {
+		attacking = 0,
+		walking = 1,
+		standing = 2,
+		lunging = 3,
+		charging = 4
+	}
+
 	void Start () {
         _latestCorrectPos = transform.position;
         _onUpdatePos = transform.position;
 
         movementSpeed = PlayerStats.MovementSpeed;
+		chargedMoveSpeed = movementSpeed/2;
 
         _spriteRenderer = GetComponent<SpriteRenderer>();
         _spriteRenderer.sprite = NormalSprite;
@@ -60,22 +79,7 @@ public class PlayerControl : Photon.MonoBehaviour{
 		ability1 = PhotonNetwork.Instantiate(Ability1Prefab.name, new Vector2(-100,-100), Quaternion.identity, 0);
 		ability1script = ability1.GetComponent("Fireball") as Fireball;
 	}
-
-    private enum CardinalDirection {
-        front = 3,
-        back = 1,
-        left = 4,
-        right = 2
-    }
-
-    private enum PlayerState {
-        attacking = 0,
-        walking = 1,
-        standing = 2,
-		lunging = 3,
-		charging = 4
-    }
-
+	
     void Update() {
         if (photonView.isMine) { 
             Vector2 positionOnScreen = Camera.main.WorldToViewportPoint(transform.position);
@@ -116,22 +120,41 @@ public class PlayerControl : Photon.MonoBehaviour{
 
     public void PlayerMovement() {
         if (Input.GetKey(UpKey)) {
-            rigidbody2D.AddForce(Vector2.up * movementSpeed);
-            //_playerDirection = CardinalDirection.back;
-            _playerState = PlayerState.walking;
+			if(_playerState == PlayerState.charging){
+				rigidbody2D.AddForce(Vector2.up * chargedMoveSpeed);
+			}
+			else{
+				rigidbody2D.AddForce(Vector2.up * movementSpeed);
+				_playerState = PlayerState.walking;
+			}
         }
         if (Input.GetKey(DownKey)) {
-            rigidbody2D.AddForce(Vector2.up * -1 * movementSpeed);
-            _playerState = PlayerState.walking;
+			if(_playerState == PlayerState.charging){
+				rigidbody2D.AddForce(Vector2.up * -1 * chargedMoveSpeed);
+			}
+			else{
+				rigidbody2D.AddForce(Vector2.up * -1 * movementSpeed);
+				_playerState = PlayerState.walking;
+			}
         }
         if (Input.GetKey(LeftKey)) {
-            rigidbody2D.AddForce(Vector2.right * -1 * movementSpeed);
-            _playerState = PlayerState.walking;
+			if(_playerState == PlayerState.charging){
+				rigidbody2D.AddForce(Vector2.right * -1 * chargedMoveSpeed);
+			}
+			else{
+				rigidbody2D.AddForce(Vector2.right * -1 * movementSpeed);
+				_playerState = PlayerState.walking;
+			}
 
         }
         if (Input.GetKey(RightKey)) {
-            rigidbody2D.AddForce(Vector2.right * movementSpeed);
-            _playerState = PlayerState.walking;
+			if(_playerState == PlayerState.charging){
+				rigidbody2D.AddForce(Vector2.right * chargedMoveSpeed);
+			}
+			else{
+				rigidbody2D.AddForce(Vector2.right * movementSpeed);
+				_playerState = PlayerState.walking;
+			}
         }
     }
 
@@ -144,8 +167,9 @@ public class PlayerControl : Photon.MonoBehaviour{
     }
 
     public void PlayerAttack() {
-		if (_attackCooldown == 0 && Input.GetKeyDown(AttackKey) && _playerState != PlayerState.attacking && _playerState != PlayerState.lunging) {
-            DelegateHolder.TriggerPlayerAttack(true);
+		if (_attackCooldown == 0 && Input.GetKeyDown(AttackKey) && (_playerState == PlayerState.standing || _playerState == PlayerState.walking)) {
+			chargeValue = 0;
+            DelegateHolder.TriggerPlayerAttack(true, 20);
             _attackCooldown = AttackCooldownValue;
             _playerState = PlayerState.attacking;
         }
@@ -154,9 +178,28 @@ public class PlayerControl : Photon.MonoBehaviour{
         }
         
         if (_attackCooldown == 0 && _playerState == PlayerState.attacking) {
-            _playerState = PlayerState.standing;
-            DelegateHolder.TriggerPlayerAttack(false);
+			DelegateHolder.TriggerPlayerAttack(false, 0);
+			if(Input.GetKey(AttackKey)){
+				_playerState = PlayerState.charging;
+			}
+			else{
+				_playerState = PlayerState.standing;
+			}
+
         }
+
+		if(_playerState == PlayerState.charging && Input.GetKey(AttackKey)){
+			if(chargeValue < 120){
+				chargeValue++;
+			}
+		} 
+
+		if(_playerState == PlayerState.charging && Input.GetKeyUp(AttackKey)){
+			DelegateHolder.TriggerPlayerAttack(true, 20 + (chargeValue / 4));
+			_attackCooldown = AttackCooldownValue;
+			_playerState = PlayerState.attacking;
+			chargeValue = 0;
+		}
     }
 
 	void PlayerAbility(int abilityNumber){
