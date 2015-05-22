@@ -14,7 +14,7 @@ GameObject:
   - 114: {fileID: 11440000}
   - 50: {fileID: 5051542}
   m_Layer: 10
-  m_Name: fireball
+  m_Name: Acorn
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -70,7 +70,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   cooldown: 90
-  damage: 30
+  damage: 10
   velocity: 750
   activated: 0
 --- !u!114 &11440000
