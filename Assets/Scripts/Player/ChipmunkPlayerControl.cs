@@ -70,27 +70,28 @@ public class ChipmunkPlayerControl : Photon.MonoBehaviour{
 
 	void FixedUpdate () {
         if (photonView.isMine) {
-            if (ChatDisplay.ChatState == ChatDisplay.ChattingState.ChatClosedButShowing
+            if (ChatDisplay.ChatState == ChatDisplay.ChattingState.ChatClosedButShowing // chat is closed then do normal stuff
                 || ChatDisplay.ChatState == ChatDisplay.ChattingState.NoUsername) {
-                    if (_playerState != PlayerState.Attacking && _playerState != PlayerState.Lunging) //only update movement if not attacking
-                        PlayerMovement();
+                if (_playerState != PlayerState.Attacking && _playerState != PlayerState.Lunging) //only update movement if not attacking
+                    PlayerMovement();
+                if (Input.GetKey(KeyCode.E)) {
+                    PlayerStats.PlayerScore++;
+                }
+                if (Input.GetKey(KeyCode.Q)) {
+                    PlayerStats.PlayerHealth--;
+                }
+                if (Input.GetKey(KeyCode.Z)) {
+                    PlayerStats.PlayerHealth++;
+                }
+                if (Input.GetKey(KeyCode.Alpha1)) {
+                    PlayerAbility(1);
+                }
+                if (Input.GetKey(KeyCode.Alpha2)) {
+                    PlayerAbility(2);
+                }
+                PlayerAttack();
             }
-            if (Input.GetKey(KeyCode.E)) {
-                PlayerStats.PlayerScore++;
-            }
-            if (Input.GetKey(KeyCode.Q)) {
-                PlayerStats.PlayerHealth--;
-            }
-            if (Input.GetKey(KeyCode.Z)) {
-                PlayerStats.PlayerHealth++;
-            }
-			if (Input.GetKey(KeyCode.Alpha1)){
-				PlayerAbility(1);
-			}
-			if (Input.GetKey(KeyCode.Alpha2)){
-				PlayerAbility(2);
-			}
-            PlayerAttack();
+            
 			LowerCooldowns();
         }
         else {
