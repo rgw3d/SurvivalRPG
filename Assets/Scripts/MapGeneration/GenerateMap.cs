@@ -171,7 +171,6 @@ public class GenerateMap : Photon.MonoBehaviour {
 		foreach(MapRoom room in Map.roomList){
 			int NumObstaclesPercent = Random.Range(1,10);
 			if(NumObstaclesPercent <= 2){
-				return;
 			}
 			else if(NumObstaclesPercent > 2 && NumObstaclesPercent <= 8){
 				int r1X = Random.Range(room.LeftX, room.RightX + 1);

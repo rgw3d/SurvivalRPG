@@ -72,7 +72,8 @@ public class PlayerControl : Photon.MonoBehaviour{
         attacking = 0,
         walking = 1,
         standing = 2,
-		lunging = 3
+		lunging = 3,
+		charging = 4
     }
 
     void Update() {
@@ -96,10 +97,10 @@ public class PlayerControl : Photon.MonoBehaviour{
             if (Input.GetKey(KeyCode.E)) { //just a test of the ability to work
                 DelegateHolder.TriggerPlayerStatChange(StatType.Score, 1f);
             }
-			if (Input.GetKey(KeyCode.F)){
+			if (Input.GetKey(KeyCode.Alpha1)){
 				PlayerAbility(1);
 			}
-			if (Input.GetKey(KeyCode.G)){
+			if (Input.GetKey(KeyCode.Alpha2)){
 				PlayerAbility(2);
 			}
             PlayerAttack();
