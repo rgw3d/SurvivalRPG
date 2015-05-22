@@ -88,7 +88,7 @@ public abstract class EnemyBase : Photon.MonoBehaviour {
                 AttackBehavior();
             }
         }
-        else {
+        else if(!photonView.isMine) {
             SyncedMovement();
         }
 
