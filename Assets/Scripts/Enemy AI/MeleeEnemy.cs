@@ -10,8 +10,13 @@ public class MeleeEnemy : EnemyBase {
         transform.Translate(Speed * Mathf.Sin(angle), Speed * Mathf.Cos(angle), 0);
     }
 
-    void OnTriggerEnter2D(Collider2D collider) {
-    }
+	public override void createNeededSubobjects(){
+
+	}
+
+	public override void lowerCooldowns(){
+
+	}
 
     void OnTriggerStay2D(Collider2D col) {
         if (PlayerList.Contains(col.gameObject)) {

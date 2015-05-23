@@ -16,7 +16,7 @@ GameObject:
   - 114: {fileID: 11400002}
   - 114: {fileID: 11445110}
   m_Layer: 9
-  m_Name: Basic enemy
+  m_Name: MeleeEnemy
   m_TagString: Enemy
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -94,13 +94,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2f36aead8c51848b8941345a3e204399, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  playerChar: {fileID: 100000, guid: 324e7e8985f374349bf4127f48448169, type: 2}
+  PlayerList: []
+  Target: {fileID: 0}
   HealthStartingValue: 100
   HealthValue: 0
   Speed: .0500000007
   PathfindCooldownValue: 60
   LineOfSightDistance: 5
   ActivationDistance: 25
+  ResetTargetCooldown: .25
   LineOfSightMask:
     serializedVersion: 2
     m_Bits: 257
@@ -140,16 +142,20 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4f5aca55208ea4b24b12258b762f47ae, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  playerChar: {fileID: 100000, guid: 324e7e8985f374349bf4127f48448169, type: 2}
+  PlayerList: []
+  Target: {fileID: 0}
   HealthStartingValue: 100
   HealthValue: 0
   Speed: .0500000007
   PathfindCooldownValue: 60
   LineOfSightDistance: 5
   ActivationDistance: 25
+  ResetTargetCooldown: .25
   LineOfSightMask:
     serializedVersion: 2
     m_Bits: 0
+  attackCooldown: 0
+  tranquilizerPrefab: {fileID: 0}
 --- !u!212 &21200000
 SpriteRenderer:
   m_ObjectHideFlags: 1

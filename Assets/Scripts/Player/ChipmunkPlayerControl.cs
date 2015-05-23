@@ -37,9 +37,15 @@ public class ChipmunkPlayerControl : Photon.MonoBehaviour{
     private Quaternion _latestCorrectRot;
     private Quaternion _onUpdateRot;
     private float _lerpFraction;
+		
+	private enum PlayerState {
+		Attacking = 0,
+		Walking = 1,
+		Standing = 2,
+		Lunging = 3,
+		Charging = 4
+	}
 
-    
-	// Use this for initialization
 	void Start () {
         _latestCorrectPos = transform.position;
         _onUpdatePos = transform.position;
@@ -50,15 +56,7 @@ public class ChipmunkPlayerControl : Photon.MonoBehaviour{
         _ability1GameObject = PhotonNetwork.Instantiate(Ability1Prefab.name, new Vector2(-100, -100), Quaternion.identity, 0);
         _ability1Script = _ability1GameObject.GetComponent("Chipmunk1AcornSpit") as Chipmunk1AcornSpit;
 	}
-	
-	private enum PlayerState {
-		Attacking = 0,
-		Walking = 1,
-		Standing = 2,
-		Lunging = 3,
-		Charging = 4
-	}
-	
+
     void Update() {
         if (photonView.isMine) { //point at camera
             Vector2 positionOnScreen = Camera.main.WorldToViewportPoint(transform.position);

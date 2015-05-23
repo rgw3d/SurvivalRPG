@@ -43,7 +43,10 @@ public abstract class EnemyBase : Photon.MonoBehaviour {
         InvokeRepeating("SetTarget", 1, ResetTargetCooldown);//Set it to find a new target 
         DelegateHolder.OnPlayerHasConnected += PlayerConnectionChange;
         DelegateHolder.OnPlayerHasDisconnected += PlayerConnectionChange;
+		createNeededSubobjects();
     }
+
+	public abstract void createNeededSubobjects();
 
     public void UpdatePlayerList() {
         PlayerList = new List<GameObject>(GameObject.FindGameObjectsWithTag("Player"));
@@ -97,7 +100,10 @@ public abstract class EnemyBase : Photon.MonoBehaviour {
             if (photonView.isMine)
                 PhotonNetwork.Destroy(this.gameObject);
         }
+		lowerCooldowns();
     }
+
+	public abstract void lowerCooldowns();
 
     public void SetTarget() {
         _staticTransform = transform;
