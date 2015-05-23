@@ -163,13 +163,13 @@ public abstract class EnemyBase : Photon.MonoBehaviour {
     public abstract void AttackBehavior();
 
 	public void OnEnemyAttacked(float damageTaken){
-			HealthValue += -damageTaken;
+			HealthValue -= damageTaken;
             photonView.RPC("OnEnemyAttackedRPC", PhotonTargets.Others, damageTaken);
 	}
 
     [RPC]
     public void OnEnemyAttackedRPC(float damageTaken) {
-        HealthValue += -damageTaken;
+        HealthValue -= damageTaken;
     }
 
     public void OnPhotonSerializeView(PhotonStream stream, PhotonMessageInfo info) {

@@ -23,12 +23,14 @@ public class ChipmunkPlayerControl : Photon.MonoBehaviour{
 	private int _ability1Cooldown = 0;
 
 	public Chipmunk2Lunge Ability2;
-    public int Ability2CooldownValue = 15;
-	private int _ability2Cooldown = 0;
+    public static int Ability2CooldownValue = 15;
+	public static int _ability2Cooldown = 0;
 
     public int AttackCooldownValue = 15;
     private int _attackCooldown = 0;
-	private int _chargedValue = 0;
+
+    public static int MaxChargeTime = 120;
+	public static int _chargedValue = 0;
 
     private Vector3 _latestCorrectPos;
     private Vector3 _onUpdatePos;
@@ -172,7 +174,7 @@ public class ChipmunkPlayerControl : Photon.MonoBehaviour{
         }
 
 		if(_playerState == PlayerState.Charging && Input.GetKey(AttackKey)){
-			if(_chargedValue < 120){
+			if(_chargedValue < MaxChargeTime){
 				_chargedValue++;
 			}
 		} 

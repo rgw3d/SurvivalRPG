@@ -42,8 +42,9 @@ public class PhotonNetworkManager : MonoBehaviour {
 
                     GUILayout.BeginVertical(GUILayout.MinWidth(Screen.width / 4));//Create Room
                         if (GUILayout.Button("Create Room")) {
+                            
                             RoomOptions roomOptions = new RoomOptions() { isVisible = true, maxPlayers = 4, isOpen = true };
-                            PhotonNetwork.CreateRoom(_roomName, roomOptions, TypedLobby.Default);
+                            PhotonNetwork.JoinOrCreateRoom(_roomName, roomOptions, TypedLobby.Default);
                             IsHost = true;
                             Application.LoadLevel(GameControl.PLAY_SCREEN);//load play screen
                         }

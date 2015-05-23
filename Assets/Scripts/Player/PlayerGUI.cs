@@ -5,33 +5,23 @@ public class PlayerGUI : MonoBehaviour {
 
     public Texture XPBarEmpty;
     public Texture XPBarFull;
-    public float XPBarVerticalSize = 1 / 10;
-    private GUIStyle GUIBox = null;
-    private GUIStyle LevelBoxStyle = null;
-    private GUIStyle HealthStyle = null;
-
     public Texture HealthBarEmpty;
     public Texture HealthBarFull;
+    public Texture ProgressBarEmpty;
+    public Texture PowerBarFull;
+    public Texture Ability1Full;
+    public Texture Ability2Full;
+    private GUIStyle GUIBox = null;
+    private GUIStyle LevelBoxStyle = null;
+    private GUIStyle HealthNumberStyle = null;
+    private GUIStyle HealthWordStyle = null;
+
+    
 
     public Vector2 Bounds;
 
-    private Vector2 _scoreBarStart = new Vector2(Screen.width/10, 0);
-    private Vector2 _scoreBarDims;
-    private Vector2 _healthBarStart;
-    private Vector2 _healthBarDims;
-
-    private Vector2 _manaBarStart = new Vector2(Screen.width / 60, Screen.height * 2 / 10);
-    private Vector2 _manaBarDims = new Vector2(Screen.width / 40, Screen.height * 4 / 10);
-
     void Start() {
         Bounds = new Vector2(Screen.width / 6, Screen.height/4 );
-        _scoreBarDims = new Vector2(Screen.width/8, Screen.height * XPBarVerticalSize);
-
-        _healthBarStart = new Vector2(Screen.width / 60, Screen.height * 2 / 10);
-        _healthBarDims = new Vector2(Screen.width / 40, Screen.height * 4 / 10);
-
-        _manaBarStart = new Vector2(_healthBarStart.x + _healthBarDims.x, _healthBarStart.y);
-        _manaBarDims = new Vector2(_healthBarDims.x, _healthBarDims.y);
     }
 
     void OnGUI() {
@@ -41,6 +31,7 @@ public class PlayerGUI : MonoBehaviour {
             DrawScore();
             //Then The health bar on the left under the level/xp
             DrawHealth();
+            ProgressBars();
 
         GUI.EndGroup();
     }
@@ -53,7 +44,7 @@ public class PlayerGUI : MonoBehaviour {
         //Draw xp bar
         float progress = (float)PlayerStats.PlayerScore / PlayerStats.CalculateLevelUpXP();
         GUI.DrawTexture(new Rect(Bounds.x / 3, 0, Bounds.x * 2 / 3, height), XPBarEmpty);
-        GUI.BeginGroup(new Rect(Bounds.x / 3, 0, Bounds.x * 2 / 3 * Mathf.Clamp(progress, 0, 1), height));
+        GUI.BeginGroup(new Rect(Bounds.x / 3, 0, Bounds.x * 2 / 3 * Mathf.Clamp01(progress), height));
         GUI.DrawTexture(new Rect(0, 0, Bounds.x * 2 / 3, height), XPBarFull);
         GUI.EndGroup();
 
@@ -61,27 +52,49 @@ public class PlayerGUI : MonoBehaviour {
 
     void DrawHealth() {
         float startingHeight = Bounds.y / 5;
-        float height = Bounds.y * 3 / 5;
+        float height = Bounds.y * 4 / 5;
         float width = Bounds.x / 4;
 
         //Draw bar
         float healthProgress = (float)(PlayerStats.MaxHealth-PlayerStats.PlayerHealth) / PlayerStats.MaxHealth;
         GUI.DrawTexture(new Rect(0, startingHeight, width,height), HealthBarFull);
-        GUI.BeginGroup(new Rect(0,startingHeight, width, height * Mathf.Clamp(healthProgress, 0, 1)));
+        GUI.BeginGroup(new Rect(0,startingHeight, width, height * Mathf.Clamp01(healthProgress)));
         GUI.DrawTexture(new Rect(0, 0, width, height), HealthBarEmpty);
-        GUI.Label(new Rect(0, 0, width, height), "" + PlayerStats.PlayerHealth, HealthStyle);
+        GUI.Label(new Rect(0, 0, width, height), "" + PlayerStats.PlayerHealth, HealthNumberStyle);
         GUI.EndGroup();
 
-        GUIStyle style = new GUIStyle();
-        style.richText = true;
-        style.alignment = TextAnchor.LowerCenter;
-        style.normal.textColor = Color.black;
-        style.fontSize = (int)(Bounds.y*.1);
-        GUI.Label(new Rect(0, startingHeight, width, height), "Health", style);
+        GUI.Label(new Rect(0, startingHeight, width, height), "Health", HealthWordStyle);
 
     }
 
-    
+    void ProgressBars() {
+        float startingHeight = Bounds.y / 5 + Bounds.y / 40;
+        float height = Bounds.y / 5;
+        float startingWidth = Bounds.x / 4 + Bounds.x / 30;
+        float width = Bounds.x * 3 / 4;
+
+        //Power Attack
+        float powerProgress = (float)PlayerStats.PlayerScore / 1;
+        GUI.DrawTexture(new Rect(startingWidth, startingHeight, width, height), ProgressBarEmpty);
+        GUI.BeginGroup(new Rect(startingWidth, startingHeight, width * Mathf.Clamp01(powerProgress), height));
+        GUI.DrawTexture(new Rect(0, 0, width, height), PowerBarFull);
+        GUI.EndGroup();
+
+        //Ability 1
+        float ability1Progress = (float)PlayerStats.PlayerScore / PlayerStats.CalculateLevelUpXP();
+        GUI.DrawTexture(new Rect(startingWidth,  startingHeight * 2, width, height), ProgressBarEmpty);
+        GUI.BeginGroup(new Rect(startingWidth, startingHeight * 2, width * Mathf.Clamp01(ability1Progress), height));
+        GUI.DrawTexture(new Rect(0, 0, width, height), Ability1Full);
+        GUI.EndGroup();
+
+        //Ability 2
+        float ability2Progress = (float)PlayerStats.PlayerScore / PlayerStats.CalculateLevelUpXP();
+        GUI.DrawTexture(new Rect(startingWidth, startingHeight * 3, width, height), ProgressBarEmpty);
+        GUI.BeginGroup(new Rect(startingWidth, startingHeight * 3, width * Mathf.Clamp01(ability2Progress), height));
+        GUI.DrawTexture(new Rect(0, 0, width, height), Ability2Full);
+        GUI.EndGroup();
+
+    }
 
     private void InitStyles() {
         if (GUIBox == null) {
@@ -97,11 +110,17 @@ public class PlayerGUI : MonoBehaviour {
             LevelBoxStyle.fontSize = (int)(Bounds.y * 0.1f);
 
         }
-        if (HealthStyle == null) {
-            HealthStyle = new GUIStyle();
-            HealthStyle.richText = true;
-            HealthStyle.alignment = TextAnchor.UpperCenter;
-            HealthStyle.fontSize = (int)(Bounds.y);
+        if (HealthNumberStyle == null) {
+            HealthNumberStyle = new GUIStyle();
+            HealthNumberStyle.richText = true;
+            HealthNumberStyle.alignment = TextAnchor.UpperCenter;
+            HealthNumberStyle.fontSize = (int)(Bounds.y * .15f);
+        }
+        if (HealthWordStyle == null) {
+            HealthWordStyle = new GUIStyle();
+            HealthWordStyle.richText = true;
+            HealthWordStyle.alignment = TextAnchor.LowerCenter;
+            HealthWordStyle.fontSize = (int)(Bounds.y * .13f);
         }
     }
 
