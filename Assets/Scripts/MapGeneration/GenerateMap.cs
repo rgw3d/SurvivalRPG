@@ -46,8 +46,8 @@ public class GenerateMap : Photon.MonoBehaviour {
         CreateRooms();
         CreateCorridors();
         CreateWalls();
-        CreateGoal();
 		CreateObstacles();
+        CreateGoal();
     }
 
     public void CreateMap() {//This fills the entire map with white tiles (blank tiles)
@@ -173,16 +173,16 @@ public class GenerateMap : Photon.MonoBehaviour {
 			if(NumObstaclesPercent <= 2){
 			}
 			else if(NumObstaclesPercent > 2 && NumObstaclesPercent <= 8){
-				int r1X = Random.Range(room.LeftX, room.RightX + 1);
-				int r1Y = Random.Range(room.BottomY, room.TopY + 1);
+				int r1X = Random.Range(room.LeftX + 1 , room.RightX);
+				int r1Y = Random.Range(room.BottomY + 1, room.TopY);
 				Map.mapTiles[r1X, r1Y].SetTileType(MapTile.TileType.Obstacle);
 			}
 			else if(NumObstaclesPercent > 8){
-				int r1X = Random.Range(room.LeftX, room.RightX + 1);
-				int r1Y = Random.Range(room.BottomY, room.TopY + 1);
+				int r1X = Random.Range(room.LeftX + 1, room.RightX);
+				int r1Y = Random.Range(room.BottomY + 1, room.TopY);
 				Map.mapTiles[r1X, r1Y].SetTileType(MapTile.TileType.Obstacle);
-				r1X = Random.Range(room.LeftX, room.RightX + 1);
-				r1Y = Random.Range(room.BottomY, room.TopY + 1);
+				r1X = Random.Range(room.LeftX + 1, room.RightX);
+				r1Y = Random.Range(room.BottomY + 1, room.TopY);
 				Map.mapTiles[r1X, r1Y].SetTileType(MapTile.TileType.Obstacle);
 
 			}
