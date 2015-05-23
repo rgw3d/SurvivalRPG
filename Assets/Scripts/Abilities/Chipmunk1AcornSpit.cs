@@ -12,6 +12,10 @@ public class Chipmunk1AcornSpit: Spell {
 			collider2D.enabled = false;//should disable the collider completly on this side
 	}
  
+	void FixedUpdate(){
+		transform.Rotate(0,0,transform.rotation.z + 10);
+	}
+
 	void OnTriggerStay2D(Collider2D other){
 		if(other.tag == "Enemy" || other.tag == "Wall"){
 			activated = false;
