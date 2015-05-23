@@ -20,7 +20,8 @@ public class ChipmunkPlayerControl : Photon.MonoBehaviour{
 	public Chipmunk1AcornSpit Ability1Prefab;
 	private GameObject _ability1GameObject;
 	private Chipmunk1AcornSpit _ability1Script;
-	private int _ability1Cooldown = 0;
+    public static int Ability1CooldownValue = 0;
+    public static int _ability1Cooldown = 0;
 
 	public Chipmunk2Lunge Ability2;
     public static int Ability2CooldownValue = 15;
@@ -194,7 +195,7 @@ public class ChipmunkPlayerControl : Photon.MonoBehaviour{
 				_ability1GameObject.rigidbody2D.velocity = Vector3.zero;
 				_ability1GameObject.rigidbody2D.AddRelativeForce(_ability1Script.velocity * -1 * Vector2.right);
 				_ability1Script.activated = true;
-				_ability1Cooldown = Ability1Prefab.cooldown;
+                _ability1Cooldown = Ability1CooldownValue;
 			}
 			break;
 		case 2:

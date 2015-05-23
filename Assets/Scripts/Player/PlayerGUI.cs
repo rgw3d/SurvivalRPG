@@ -14,9 +14,7 @@ public class PlayerGUI : MonoBehaviour {
     private GUIStyle GUIBox = null;
     private GUIStyle LevelBoxStyle = null;
     private GUIStyle HealthNumberStyle = null;
-    private GUIStyle HealthWordStyle = null;
-
-    
+    private GUIStyle HealthWordStyle = null;    
 
     public Vector2 Bounds;
 
@@ -74,21 +72,21 @@ public class PlayerGUI : MonoBehaviour {
         float width = Bounds.x * 3 / 4;
 
         //Power Attack
-        float powerProgress = (float)PlayerStats.PlayerScore / 1;
+        float powerProgress = (float)ChipmunkPlayerControl._chargedValue / ChipmunkPlayerControl.MaxChargeTime;
         GUI.DrawTexture(new Rect(startingWidth, startingHeight, width, height), ProgressBarEmpty);
         GUI.BeginGroup(new Rect(startingWidth, startingHeight, width * Mathf.Clamp01(powerProgress), height));
         GUI.DrawTexture(new Rect(0, 0, width, height), PowerBarFull);
         GUI.EndGroup();
 
         //Ability 1
-        float ability1Progress = (float)PlayerStats.PlayerScore / PlayerStats.CalculateLevelUpXP();
+        float ability1Progress = (float)ChipmunkPlayerControl._ability1Cooldown/ ChipmunkPlayerControl.Ability1CooldownValue;
         GUI.DrawTexture(new Rect(startingWidth,  startingHeight * 2, width, height), ProgressBarEmpty);
         GUI.BeginGroup(new Rect(startingWidth, startingHeight * 2, width * Mathf.Clamp01(ability1Progress), height));
         GUI.DrawTexture(new Rect(0, 0, width, height), Ability1Full);
         GUI.EndGroup();
 
         //Ability 2
-        float ability2Progress = (float)PlayerStats.PlayerScore / PlayerStats.CalculateLevelUpXP();
+        float ability2Progress = (float)ChipmunkPlayerControl._ability2Cooldown / ChipmunkPlayerControl.Ability2CooldownValue;
         GUI.DrawTexture(new Rect(startingWidth, startingHeight * 3, width, height), ProgressBarEmpty);
         GUI.BeginGroup(new Rect(startingWidth, startingHeight * 3, width * Mathf.Clamp01(ability2Progress), height));
         GUI.DrawTexture(new Rect(0, 0, width, height), Ability2Full);
