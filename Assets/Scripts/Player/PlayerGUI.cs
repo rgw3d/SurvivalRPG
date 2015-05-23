@@ -60,16 +60,25 @@ public class PlayerGUI : MonoBehaviour {
     }
 
     void DrawHealth() {
+        float startingHeight = Bounds.y / 5;
+        float height = Bounds.y * 3 / 5;
+        float width = Bounds.x / 4;
+
         //Draw bar
         float healthProgress = (float)(PlayerStats.MaxHealth-PlayerStats.PlayerHealth) / PlayerStats.MaxHealth;
-        //float manaProgress = (float)(PlayerStats.MaxMana - PlayerStats.)
-
-        GUI.DrawTexture(new Rect(_healthBarStart.x, _healthBarStart.y, _healthBarDims.x, _healthBarDims.y), HealthBarFull);
-        GUI.BeginGroup(new Rect(_healthBarStart.x, _healthBarStart.y, _healthBarDims.x + _manaBarDims.x, _healthBarDims.y * Mathf.Clamp(healthProgress, 0, 1)));
-        GUI.DrawTexture(new Rect(0, 0, _healthBarDims.x, _healthBarDims.y), HealthBarEmpty);
-        //GUI.DrawTexture(new Rect(_manaBarStart.x, _manaBarStart.y, _manaBarDims.x, _manaBarDims.y), HealthBarEmpty);
-        GUI.Label(new Rect(0, 0, _healthBarDims.x, _healthBarDims.y), "" + PlayerStats.PlayerHealth, HealthStyle);
+        GUI.DrawTexture(new Rect(0, startingHeight, width,height), HealthBarFull);
+        GUI.BeginGroup(new Rect(0,startingHeight, width, height * Mathf.Clamp(healthProgress, 0, 1)));
+        GUI.DrawTexture(new Rect(0, 0, width, height), HealthBarEmpty);
+        GUI.Label(new Rect(0, 0, width, height), "" + PlayerStats.PlayerHealth, HealthStyle);
         GUI.EndGroup();
+
+        GUIStyle style = new GUIStyle();
+        style.richText = true;
+        style.alignment = TextAnchor.LowerCenter;
+        style.normal.textColor = Color.black;
+        style.fontSize = (int)(Bounds.y*.1);
+        GUI.Label(new Rect(0, startingHeight, width, height), "Health", style);
+
     }
 
     
@@ -92,7 +101,7 @@ public class PlayerGUI : MonoBehaviour {
             HealthStyle = new GUIStyle();
             HealthStyle.richText = true;
             HealthStyle.alignment = TextAnchor.UpperCenter;
-            HealthStyle.fontSize = (int)(_scoreBarDims.y);
+            HealthStyle.fontSize = (int)(Bounds.y);
         }
     }
 
