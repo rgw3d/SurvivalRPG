@@ -19,13 +19,13 @@ public class RangedEnemy : EnemyBase {
 		}
     }
 
-	public override void lowerCooldowns(){
+	public override void LowerCooldowns(){
 		if(_attackCooldown > 0){
 			_attackCooldown--;
 		}
 	}
 
-	public override void createNeededSubobjects(){
+	public override void CreateNeededSubobjects(){
 		_tranquilizer = PhotonNetwork.Instantiate(tranquilizerPrefab.name, new Vector2(-100, -100), Quaternion.identity, 0);
 	}
 	

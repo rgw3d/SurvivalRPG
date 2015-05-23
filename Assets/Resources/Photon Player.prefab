@@ -206,9 +206,13 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   XPBarEmpty: {fileID: 2800000, guid: ac34608897b99bb40bdddf3f45572286, type: 3}
   XPBarFull: {fileID: 2800000, guid: 378f55510a50452428351bd61e6d3400, type: 3}
-  XPBarVerticalSize: .0500000007
   HealthBarEmpty: {fileID: 2800000, guid: 8f68b8c69d9dcc54bb61330c9e614012, type: 3}
   HealthBarFull: {fileID: 2800000, guid: ec2e711c034976444bee33c352ceae97, type: 3}
+  ProgressBarEmpty: {fileID: 2800000, guid: ac34608897b99bb40bdddf3f45572286, type: 3}
+  PowerBarFull: {fileID: 2800000, guid: 8ebdc6e4919f52445a993ea3bd088674, type: 3}
+  Ability1Full: {fileID: 2800000, guid: 6fc8347f02b6ddc4a904515d6d4bce8e, type: 3}
+  Ability2Full: {fileID: 2800000, guid: 0970092e8d720864383fa0638231fea9, type: 3}
+  Bounds: {x: 0, y: 0}
 --- !u!114 &11400004
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -256,7 +260,6 @@ MonoBehaviour:
   AttackKey: 32
   Ability1Prefab: {fileID: 11405138, guid: 7f2023a2a81dc4908938732c3b19a115, type: 2}
   Ability2: {fileID: 11400008}
-  Ability2CooldownValue: 15
   AttackCooldownValue: 15
 --- !u!114 &11400008
 MonoBehaviour:

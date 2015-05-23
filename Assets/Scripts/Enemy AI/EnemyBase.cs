@@ -38,15 +38,15 @@ public abstract class EnemyBase : Photon.MonoBehaviour {
     }
 
     void Start() {
-        PlayerList = new List<GameObject>(GameObject.FindGameObjectsWithTag("Player"));
+        UpdatePlayerList();
         HealthValue = HealthStartingValue;
         InvokeRepeating("SetTarget", 1, ResetTargetCooldown);//Set it to find a new target 
         DelegateHolder.OnPlayerHasConnected += PlayerConnectionChange;
         DelegateHolder.OnPlayerHasDisconnected += PlayerConnectionChange;
-		createNeededSubobjects();
+		CreateNeededSubobjects();
     }
 
-	public abstract void createNeededSubobjects();
+	public abstract void CreateNeededSubobjects();
 
     public void UpdatePlayerList() {
         PlayerList = new List<GameObject>(GameObject.FindGameObjectsWithTag("Player"));
@@ -100,10 +100,10 @@ public abstract class EnemyBase : Photon.MonoBehaviour {
             if (photonView.isMine)
                 PhotonNetwork.Destroy(this.gameObject);
         }
-		lowerCooldowns();
+		LowerCooldowns();
     }
 
-	public abstract void lowerCooldowns();
+	public abstract void LowerCooldowns();
 
     public void SetTarget() {
         _staticTransform = transform;
@@ -123,6 +123,7 @@ public abstract class EnemyBase : Photon.MonoBehaviour {
         else {
             Target = null;
         }
+        Debug.Log(Target);
     }
 
     private static int ComparePlayerDistances(GameObject player1, GameObject player2) {
@@ -132,8 +133,12 @@ public abstract class EnemyBase : Photon.MonoBehaviour {
     }
 
     public bool InLineOfSight(GameObject target) {
-        RaycastHit2D x = Physics2D.Linecast(transform.position, target.transform.position, LineOfSightMask.value);
-        return x.transform.gameObject == target;
+        if (target == null) {
+            Debug.Log("NULLLLLLLLL");
+        }
+       RaycastHit2D x = Physics2D.Linecast(transform.position, target.transform.position, LineOfSightMask.value);
+       return x.transform.gameObject == target;
+        //return true;
     }
 
     public void PathFind() {

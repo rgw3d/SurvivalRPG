@@ -10,11 +10,11 @@ public class MeleeEnemy : EnemyBase {
         transform.Translate(Speed * Mathf.Sin(angle), Speed * Mathf.Cos(angle), 0);
     }
 
-	public override void createNeededSubobjects(){
+	public override void CreateNeededSubobjects(){
 
 	}
 
-	public override void lowerCooldowns(){
+	public override void LowerCooldowns(){
 
 	}
 
