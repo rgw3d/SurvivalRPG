@@ -240,6 +240,8 @@ public class ChipmunkPlayerControl : Photon.MonoBehaviour{
 			PlayerStats.Ability1Cooldown--;
 		}
         if (PlayerStats.Ability2Cooldown > 0) {
+            if (rigidbody2D.velocity == Vector2.zero)
+                _playerState = PlayerState.Standing;
             PlayerStats.Ability2Cooldown--;
         }
 	}
