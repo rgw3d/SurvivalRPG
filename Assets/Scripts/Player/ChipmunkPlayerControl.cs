@@ -19,6 +19,18 @@ public class ChipmunkPlayerControl : Photon.MonoBehaviour{
     public KeyCode Ability1Key;
     public KeyCode Ability2Key;
 
+    /*
+     *Explanation of cooldowns -- there are two types
+     *there is the cooldown between times you can do an abiliy
+     *and there are cooldowns for how long the abiliy lasts
+     *For the basic attack, there is a cooldown on how often you can jam the button
+     *For the lunge ability, there is a cooldown on how long the actual lunge lasts
+     *  and how often you can press the button 
+     *  
+     * confusing
+     * 
+     */
+
 	public Chipmunk1AcornSpit Ability1Prefab;
 	private GameObject _ability1GameObject;
 	private Chipmunk1AcornSpit _ability1Script;
@@ -151,15 +163,15 @@ public class ChipmunkPlayerControl : Photon.MonoBehaviour{
     }
 
     public void PlayerAttack() {
-        if (Input.GetKey(Ability1Key)) {
+        if (Input.GetKeyDown(Ability1Key)) {
             PlayerAbility(1);
         }
-        if (Input.GetKey(Ability2Key)) {
+        if (Input.GetKeyDown(Ability2Key)) {
             PlayerAbility(2);
         }
 
 		if (PlayerStats.AttackCooldown == 0 && Input.GetKeyDown(AttackKey) && (_playerState == PlayerState.Standing || _playerState == PlayerState.Walking)) {
-            DelegateHolder.TriggerPlayerAttack(true, 20); 
+            DelegateHolder.TriggerPlayerAttack(true, PlayerStats.AttackValue); 
             PlayerStats.PowerAttackCharge = 0;
             PlayerStats.AttackCooldown = PlayerStats.AttackCooldownReset;
             _playerState = PlayerState.Attacking;
@@ -177,10 +189,10 @@ public class ChipmunkPlayerControl : Photon.MonoBehaviour{
         }
 
 		if(_playerState == PlayerState.Charging && Input.GetKeyUp(AttackKey)){
-			DelegateHolder.TriggerPlayerAttack(true, 20 + (_chargedValue / 4));
+			DelegateHolder.TriggerPlayerAttack(true, PlayerStats.AttackValue + (PlayerStats.PowerAttackCharge / 2));
             PlayerStats.AttackCooldown = PlayerStats.AttackCooldownReset;
-			_playerState = PlayerState.Attacking;
-			_chargedValue = 0;
+            _playerState = PlayerState.Walking;
+            PlayerStats.PowerAttackCharge = 0;
 		}
 
         if (PlayerStats.Ability2Cooldown == 0 && _playerState == PlayerState.Lunging) {

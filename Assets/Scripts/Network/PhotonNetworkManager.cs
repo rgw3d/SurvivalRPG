@@ -11,7 +11,7 @@ public class PhotonNetworkManager : MonoBehaviour {
     private float _playerClassSlider = 1;
     private float _playerSelectSlider = 0;
     private string _playerName = "Player Name";
-    private PlayerStats.CharacterClass _playerClass = PlayerStats.CharacterClass.Fighter;
+    private PlayerStats.CharacterClass _playerClass = PlayerStats.CharacterClass.Chipmunk;
 
     public static bool IsHost = false;
 	public static string selectedPlayerName = "";
@@ -126,37 +126,57 @@ public class PhotonNetworkManager : MonoBehaviour {
         PlayerPrefs.SetInt(GameControl.PLAYER_CLASS_KEY + _playerName, (int)_playerClass);
 
         switch (_playerClass) {
-            case PlayerStats.CharacterClass.Fighter:
+            case PlayerStats.CharacterClass.Chipmunk://fighter
                 PlayerPrefs.SetInt(GameControl.PLAYER_LEVEL_KEY + _playerName, 1);
                 PlayerPrefs.SetInt(GameControl.PLAYER_MAX_HEALTH_KEY + _playerName, 100);
                 PlayerPrefs.SetInt(GameControl.PLAYER_MAX_MANA_KEY + _playerName, 20);
-				PlayerPrefs.SetInt(GameControl.PLAYER_ATTACK_KEY + _playerName, 100);
-                PlayerPrefs.SetInt(GameControl.PLAYER_DEFENSE_KEY + _playerName, 100);
+                PlayerPrefs.SetInt(GameControl.PLAYER_ATTACK_KEY + _playerName, 20);
+                PlayerPrefs.SetInt(GameControl.PLAYER_RANGED_ATTACK_KEY + _playerName, 30);
+                PlayerPrefs.SetInt(GameControl.PLAYER_DEFENSE_KEY + _playerName, 5);
 				PlayerPrefs.SetFloat(GameControl.PLAYER_MOVEMENT_KEY + _playerName, 80f);
+                PlayerPrefs.SetInt(GameControl.PLAYER_ATTACK_COOLDOWN_KEY + _playerName, 10);
+                PlayerPrefs.SetInt(GameControl.PLAYER_POWER_ATTACK_MAX_VALUE_KEY + _playerName, 120);
+                PlayerPrefs.SetInt(GameControl.PLAYER_ABILITY_1_COOLDOWN_KEY + _playerName, 40);
+                PlayerPrefs.SetInt(GameControl.PLAYER_ABILITY_2_COOLDOWN_KEY + _playerName, 120);
                 break;
-            case PlayerStats.CharacterClass.Mage:
+            case PlayerStats.CharacterClass.Toad://mage
                 PlayerPrefs.SetInt(GameControl.PLAYER_LEVEL_KEY + _playerName, 1);
-                PlayerPrefs.SetInt(GameControl.PLAYER_MAX_HEALTH_KEY + _playerName, 1);
-                PlayerPrefs.SetInt(GameControl.PLAYER_MAX_MANA_KEY + _playerName, 1000);
-                PlayerPrefs.SetInt(GameControl.PLAYER_ATTACK_KEY + _playerName, 100);
-				PlayerPrefs.SetInt(GameControl.PLAYER_DEFENSE_KEY + _playerName, 1);
-				PlayerPrefs.SetFloat(GameControl.PLAYER_MOVEMENT_KEY + _playerName, 400f);
+                PlayerPrefs.SetInt(GameControl.PLAYER_MAX_HEALTH_KEY + _playerName, 50);
+                PlayerPrefs.SetInt(GameControl.PLAYER_MAX_MANA_KEY + _playerName, 200);
+                PlayerPrefs.SetInt(GameControl.PLAYER_RANGED_ATTACK_KEY + _playerName, 30);
+                PlayerPrefs.SetInt(GameControl.PLAYER_ATTACK_KEY + _playerName, 10);
+				PlayerPrefs.SetInt(GameControl.PLAYER_DEFENSE_KEY + _playerName, 2);
+				PlayerPrefs.SetFloat(GameControl.PLAYER_MOVEMENT_KEY + _playerName, 100f);
+                PlayerPrefs.SetInt(GameControl.PLAYER_ATTACK_COOLDOWN_KEY + _playerName, 10);
+                PlayerPrefs.SetInt(GameControl.PLAYER_POWER_ATTACK_MAX_VALUE_KEY + _playerName, 120);
+                PlayerPrefs.SetInt(GameControl.PLAYER_ABILITY_1_COOLDOWN_KEY + _playerName, 40);
+                PlayerPrefs.SetInt(GameControl.PLAYER_ABILITY_2_COOLDOWN_KEY + _playerName, 120);
                 break;
-            case PlayerStats.CharacterClass.Healer:
+            case PlayerStats.CharacterClass.Dove://healer
                 PlayerPrefs.SetInt(GameControl.PLAYER_LEVEL_KEY + _playerName, 1);
                 PlayerPrefs.SetInt(GameControl.PLAYER_MAX_HEALTH_KEY + _playerName, 50);
                 PlayerPrefs.SetInt(GameControl.PLAYER_MAX_MANA_KEY + _playerName, 500);
+                PlayerPrefs.SetInt(GameControl.PLAYER_RANGED_ATTACK_KEY + _playerName, 30);
                 PlayerPrefs.SetInt(GameControl.PLAYER_ATTACK_KEY + _playerName, 10);
 				PlayerPrefs.SetInt(GameControl.PLAYER_DEFENSE_KEY + _playerName, 20);
 				PlayerPrefs.SetFloat(GameControl.PLAYER_MOVEMENT_KEY + _playerName, 80f);
+                PlayerPrefs.SetInt(GameControl.PLAYER_ATTACK_COOLDOWN_KEY + _playerName, 10);
+                PlayerPrefs.SetInt(GameControl.PLAYER_POWER_ATTACK_MAX_VALUE_KEY + _playerName, 120);
+                PlayerPrefs.SetInt(GameControl.PLAYER_ABILITY_1_COOLDOWN_KEY + _playerName, 40);
+                PlayerPrefs.SetInt(GameControl.PLAYER_ABILITY_2_COOLDOWN_KEY + _playerName, 120);
                 break;
-			case PlayerStats.CharacterClass.Shrek:
+			case PlayerStats.CharacterClass.Turtle://tank
                 PlayerPrefs.SetInt(GameControl.PLAYER_LEVEL_KEY + _playerName, 1);
 				PlayerPrefs.SetInt(GameControl.PLAYER_MAX_HEALTH_KEY + _playerName, 9000);
 				PlayerPrefs.SetInt(GameControl.PLAYER_MAX_MANA_KEY + _playerName, 0);
+                PlayerPrefs.SetInt(GameControl.PLAYER_RANGED_ATTACK_KEY + _playerName, 30);
 				PlayerPrefs.SetInt(GameControl.PLAYER_ATTACK_KEY + _playerName, 411);
 				PlayerPrefs.SetInt(GameControl.PLAYER_DEFENSE_KEY + _playerName, 350);
-				PlayerPrefs.SetFloat(GameControl.PLAYER_MOVEMENT_KEY + _playerName, 20f);
+				PlayerPrefs.SetFloat(GameControl.PLAYER_MOVEMENT_KEY + _playerName, 30f);
+                PlayerPrefs.SetInt(GameControl.PLAYER_ATTACK_COOLDOWN_KEY + _playerName, 10);
+                PlayerPrefs.SetInt(GameControl.PLAYER_POWER_ATTACK_MAX_VALUE_KEY + _playerName, 120);
+                PlayerPrefs.SetInt(GameControl.PLAYER_ABILITY_1_COOLDOWN_KEY + _playerName, 40);
+                PlayerPrefs.SetInt(GameControl.PLAYER_ABILITY_2_COOLDOWN_KEY + _playerName, 120);
 				break;
         }
     }
@@ -179,6 +199,13 @@ public class PhotonNetworkManager : MonoBehaviour {
 		PlayerPrefs.DeleteKey(GameControl.PLAYER_MAX_MANA_KEY + deletedPlayerName);
 		PlayerPrefs.DeleteKey(GameControl.PLAYER_DEFENSE_KEY + deletedPlayerName);
 		PlayerPrefs.DeleteKey(GameControl.PLAYER_ATTACK_KEY + deletedPlayerName);
+        PlayerPrefs.DeleteKey(GameControl.PLAYER_RANGED_ATTACK_KEY + deletedPlayerName);
+        PlayerPrefs.DeleteKey(GameControl.PLAYER_MOVEMENT_KEY + deletedPlayerName);
+        PlayerPrefs.DeleteKey(GameControl.PLAYER_ATTACK_COOLDOWN_KEY + deletedPlayerName);
+        PlayerPrefs.DeleteKey(GameControl.PLAYER_POWER_ATTACK_MAX_VALUE_KEY + deletedPlayerName);
+        PlayerPrefs.DeleteKey(GameControl.PLAYER_ABILITY_1_COOLDOWN_KEY + deletedPlayerName);
+        PlayerPrefs.DeleteKey(GameControl.PLAYER_ABILITY_2_COOLDOWN_KEY + deletedPlayerName);
+        PlayerPrefs.DeleteKey(GameControl.PLAYER_SCORE_KEY + deletedPlayerName);
 	}
 
     public static IEnumerator TextPopup(float waitTime) {

@@ -144,11 +144,11 @@ public class PlayerStats: MonoBehaviour {
     public static int AttackCooldownReset {
         get {
             if (_attackCooldownReset == -1)
-                _attackCooldownReset = PlayerPrefs.GetInt(GameControl.PLAYER_ATTACK_COOLDOWN_KEY);
+                _attackCooldownReset = PlayerPrefs.GetInt(GameControl.PLAYER_ATTACK_COOLDOWN_KEY + PlayerName);
             return _attackCooldownReset;
         }
         set {
-            PlayerPrefs.SetInt(GameControl.PLAYER_ATTACK_COOLDOWN_KEY, value);
+            PlayerPrefs.SetInt(GameControl.PLAYER_ATTACK_COOLDOWN_KEY + PlayerName, value);
         }
     }
 
@@ -166,11 +166,11 @@ public class PlayerStats: MonoBehaviour {
     public static int PowerAttackMaxValue {
         get {
             if (_powerAttackMaxValue == -1)
-                _powerAttackMaxValue = PlayerPrefs.GetInt(GameControl.PLAYER_POWER_ATTACK_COOLDOWN_KEY);
+                _powerAttackMaxValue = PlayerPrefs.GetInt(GameControl.PLAYER_POWER_ATTACK_MAX_VALUE_KEY + PlayerName);
             return _powerAttackMaxValue;
         }
         set {
-           PlayerPrefs.SetInt(GameControl.PLAYER_POWER_ATTACK_COOLDOWN_KEY,value);
+            PlayerPrefs.SetInt(GameControl.PLAYER_POWER_ATTACK_MAX_VALUE_KEY + PlayerName, value);
         }
     }
 
@@ -188,11 +188,11 @@ public class PlayerStats: MonoBehaviour {
     public static int Ability1CooldownReset {
         get {
             if (_ability1CooldownReset == -1)
-                _ability1CooldownReset = PlayerPrefs.GetInt(GameControl.PLAYER_ABILITY_1_COOLDOWN_KEY);
+                _ability1CooldownReset = PlayerPrefs.GetInt(GameControl.PLAYER_ABILITY_1_COOLDOWN_KEY + PlayerName);
             return _ability1CooldownReset;
         }
         set {
-            PlayerPrefs.SetInt(GameControl.PLAYER_ABILITY_1_COOLDOWN_KEY, value);
+            PlayerPrefs.SetInt(GameControl.PLAYER_ABILITY_1_COOLDOWN_KEY + PlayerName, value);
         }
     }
 
@@ -210,11 +210,11 @@ public class PlayerStats: MonoBehaviour {
     public static int Ability2CooldownReset {
         get {
             if (_ability2CooldownReset == -1)
-                _ability2CooldownReset = PlayerPrefs.GetInt(GameControl.PLAYER_ABILITY_2_COOLDOWN_Key);
+                _ability2CooldownReset = PlayerPrefs.GetInt(GameControl.PLAYER_ABILITY_2_COOLDOWN_KEY + PlayerName);
             return _ability2CooldownReset;
         }
         set {
-            PlayerPrefs.SetInt(GameControl.PLAYER_ABILITY_2_COOLDOWN_Key, value);
+            PlayerPrefs.SetInt(GameControl.PLAYER_ABILITY_2_COOLDOWN_KEY + PlayerName, value);
         }
     }
 
@@ -229,7 +229,7 @@ public class PlayerStats: MonoBehaviour {
     }
 
     public static void SavePlayerScore() {
-        PlayerPrefs.SetInt(GameControl.PLAYER_SCORE_KEY + PhotonNetworkManager.selectedPlayerName, PlayerScore);
+        PlayerPrefs.SetInt(GameControl.PLAYER_SCORE_KEY + PlayerName, PlayerScore);
     }
 
     public static int CalculateLevelUpXP() {
@@ -238,10 +238,10 @@ public class PlayerStats: MonoBehaviour {
 
     public enum CharacterClass {
         None = 0,
-        Fighter = 1,
-        Mage = 2,
-        Healer = 3,
-        Shrek = 4
+        Chipmunk = 1,
+        Toad = 2,
+        Dove = 3,
+        Turtle = 4
     }
 
 
