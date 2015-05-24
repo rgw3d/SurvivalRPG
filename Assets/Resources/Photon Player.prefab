@@ -258,6 +258,8 @@ MonoBehaviour:
   LeftKey: 97
   RightKey: 100
   AttackKey: 32
+  Ability1Key: 49
+  Ability2Key: 50
   Ability1Prefab: {fileID: 11405138, guid: 7f2023a2a81dc4908938732c3b19a115, type: 2}
   Ability2: {fileID: 11400008}
   AttackCooldownValue: 15

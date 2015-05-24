@@ -14,7 +14,8 @@ public class PlayerGUI : MonoBehaviour {
     private GUIStyle GUIBox = null;
     private GUIStyle LevelBoxStyle = null;
     private GUIStyle HealthNumberStyle = null;
-    private GUIStyle HealthWordStyle = null;    
+    private GUIStyle HealthWordStyle = null;
+    private GUIStyle CooldownBarStyle = null;
 
     public Vector2 Bounds;
 
@@ -72,25 +73,32 @@ public class PlayerGUI : MonoBehaviour {
         float width = Bounds.x * 3 / 4;
 
         //Power Attack
-        float powerProgress = (float)ChipmunkPlayerControl._chargedValue / ChipmunkPlayerControl.MaxChargeTime;
+        float powerProgress = (float)(PlayerStats.PowerAttackCharge - PlayerStats.PowerAttackMaxValue) / PlayerStats.PowerAttackMaxValue;
         GUI.DrawTexture(new Rect(startingWidth, startingHeight, width, height), ProgressBarEmpty);
         GUI.BeginGroup(new Rect(startingWidth, startingHeight, width * Mathf.Clamp01(powerProgress), height));
         GUI.DrawTexture(new Rect(0, 0, width, height), PowerBarFull);
         GUI.EndGroup();
+        GUI.Label(new Rect(startingWidth, startingHeight, width, height), "Charge: ", CooldownBarStyle);
 
         //Ability 1
-        float ability1Progress = (float)ChipmunkPlayerControl._ability1Cooldown/ ChipmunkPlayerControl.Ability1CooldownValue;
+        float ability1Progress = (float)(PlayerStats.Ability1CooldownReset - PlayerStats.Ability1Cooldown) / PlayerStats.Ability1CooldownReset;
         GUI.DrawTexture(new Rect(startingWidth,  startingHeight * 2, width, height), ProgressBarEmpty);
         GUI.BeginGroup(new Rect(startingWidth, startingHeight * 2, width * Mathf.Clamp01(ability1Progress), height));
         GUI.DrawTexture(new Rect(0, 0, width, height), Ability1Full);
         GUI.EndGroup();
+        GUI.Label(new Rect(startingWidth, startingHeight * 2, width, height), "Ability 1: "
+            + ((PlayerStats.Ability1CooldownReset - PlayerStats.Ability1Cooldown) / 60f).ToString("F") + " / " + (PlayerStats.Ability1CooldownReset / 60f).ToString("F")
+            , CooldownBarStyle);
 
         //Ability 2
-        float ability2Progress = (float)ChipmunkPlayerControl._ability2Cooldown / ChipmunkPlayerControl.Ability2CooldownValue;
+        float ability2Progress = (float)(PlayerStats.Ability2CooldownReset - PlayerStats.Ability2Cooldown) / PlayerStats.Ability2CooldownReset;
         GUI.DrawTexture(new Rect(startingWidth, startingHeight * 3, width, height), ProgressBarEmpty);
         GUI.BeginGroup(new Rect(startingWidth, startingHeight * 3, width * Mathf.Clamp01(ability2Progress), height));
         GUI.DrawTexture(new Rect(0, 0, width, height), Ability2Full);
         GUI.EndGroup();
+        GUI.Label(new Rect(startingWidth, startingHeight * 3, width, height), "Ability 2: "
+            + ((PlayerStats.Ability2CooldownReset - PlayerStats.Ability2Cooldown) / 60f).ToString("F") + " / " + (PlayerStats.Ability2CooldownReset / 60f).ToString("F")
+            , CooldownBarStyle);
 
     }
 
@@ -117,8 +125,14 @@ public class PlayerGUI : MonoBehaviour {
         if (HealthWordStyle == null) {
             HealthWordStyle = new GUIStyle();
             HealthWordStyle.richText = true;
-            HealthWordStyle.alignment = TextAnchor.LowerCenter;
+            HealthWordStyle.alignment = TextAnchor.LowerLeft;
             HealthWordStyle.fontSize = (int)(Bounds.y * .13f);
+        }
+        if (CooldownBarStyle == null) {
+            CooldownBarStyle = new GUIStyle();
+            CooldownBarStyle.alignment = TextAnchor.MiddleLeft;
+            CooldownBarStyle.fontSize = (int)(Bounds.y * .1f);
+            CooldownBarStyle.normal.textColor = Color.black;
         }
     }
 
