@@ -15,7 +15,9 @@ public class ChipmunkPlayerControl : Photon.MonoBehaviour{
     public KeyCode DownKey;
     public KeyCode LeftKey;
     public KeyCode RightKey;
-    public KeyCode AttackKey;    
+    public KeyCode AttackKey;
+    public KeyCode Ability1Key;
+    public KeyCode Ability2Key;
 
 	public Chipmunk1AcornSpit Ability1Prefab;
 	private GameObject _ability1GameObject;
@@ -83,11 +85,10 @@ public class ChipmunkPlayerControl : Photon.MonoBehaviour{
                 }
                 if (Input.GetKey(KeyCode.Z)) {
                     PlayerStats.PlayerHealth++;
-                }
-                if (Input.GetKey(KeyCode.Alpha1)) {
+                } if (Input.GetKey(Ability1Key)) {
                     PlayerAbility(1);
                 }
-                if (Input.GetKey(KeyCode.Alpha2)) {
+                if (Input.GetKey(Ability2Key)) {
                     PlayerAbility(2);
                 }
                 PlayerAttack();
@@ -142,7 +143,6 @@ public class ChipmunkPlayerControl : Photon.MonoBehaviour{
         }
     }
 
-
     public void PlayerSprite() {
             if (_playerState == PlayerState.Attacking)
                 _spriteRenderer.sprite = AttackSprite;
@@ -151,60 +151,64 @@ public class ChipmunkPlayerControl : Photon.MonoBehaviour{
     }
 
     public void PlayerAttack() {
-		if (_attackCooldown == 0 && Input.GetKeyDown(AttackKey) && (_playerState == PlayerState.Standing || _playerState == PlayerState.Walking)) {
-			_chargedValue = 0;
-            DelegateHolder.TriggerPlayerAttack(true, 20);
-            _attackCooldown = AttackCooldownValue;
+        if (Input.GetKey(Ability1Key)) {
+            PlayerAbility(1);
+        }
+        if (Input.GetKey(Ability2Key)) {
+            PlayerAbility(2);
+        }
+
+		if (PlayerStats.AttackCooldown == 0 && Input.GetKeyDown(AttackKey) && (_playerState == PlayerState.Standing || _playerState == PlayerState.Walking)) {
+            DelegateHolder.TriggerPlayerAttack(true, 20); 
+            PlayerStats.PowerAttackCharge = 0;
+            PlayerStats.AttackCooldown = PlayerStats.AttackCooldownReset;
             _playerState = PlayerState.Attacking;
         }
-        if(_attackCooldown > 0){
-            _attackCooldown--;
-        }
-        
-        if (_attackCooldown == 0 && _playerState == PlayerState.Attacking) {
+
+        if (PlayerStats.AttackCooldown == 0 && _playerState == PlayerState.Attacking) {
 			DelegateHolder.TriggerPlayerAttack(false, 0);
 			if(Input.GetKey(AttackKey)){
 				_playerState = PlayerState.Charging;
 			}
 			else{
+                PlayerStats.PowerAttackCharge = 0;
 				_playerState = PlayerState.Standing;
 			}
-
         }
-
-		if(_playerState == PlayerState.Charging && Input.GetKey(AttackKey)){
-			if(_chargedValue < MaxChargeTime){
-				_chargedValue++;
-			}
-		} 
 
 		if(_playerState == PlayerState.Charging && Input.GetKeyUp(AttackKey)){
 			DelegateHolder.TriggerPlayerAttack(true, 20 + (_chargedValue / 4));
-			_attackCooldown = AttackCooldownValue;
+            PlayerStats.AttackCooldown = PlayerStats.AttackCooldownReset;
 			_playerState = PlayerState.Attacking;
 			_chargedValue = 0;
 		}
+
+        if (PlayerStats.Ability2Cooldown == 0 && _playerState == PlayerState.Lunging) {
+            _playerState = PlayerState.Standing;
+            Ability2.isLunging = false;
+            Ability2.resetEnemyIDs();
+        }
     }
 
 	void PlayerAbility(int abilityNumber){
 		switch(abilityNumber){
 		case 1:
-			if(_ability1Cooldown == 0 && _playerState != PlayerState.Attacking){
+			if(PlayerStats.Ability1Cooldown == 0 && _playerState != PlayerState.Attacking){
 				_ability1GameObject.transform.position = transform.position;
 				_ability1GameObject.transform.rotation = transform.rotation;
 				_ability1GameObject.rigidbody2D.velocity = Vector3.zero;
 				_ability1GameObject.rigidbody2D.AddRelativeForce(_ability1Script.velocity * -1 * Vector2.right);
 				_ability1Script.activated = true;
-                _ability1Cooldown = Ability1CooldownValue;
+                PlayerStats.Ability1Cooldown = PlayerStats.Ability1CooldownReset;
 			}
 			break;
 		case 2:
-			if(_ability2Cooldown == 0 && _playerState != PlayerState.Attacking){
+			if(PlayerStats.Ability2Cooldown == 0 && _playerState != PlayerState.Attacking){
 				rigidbody2D.AddForce(Vector2.zero);
 				rigidbody2D.AddRelativeForce(Ability2.lungeForce * Vector2.right);
 				_playerState = PlayerState.Lunging;
 				Ability2.isLunging = true;
-				_ability2Cooldown = Ability2.cooldown;
+				PlayerStats.Ability2Cooldown = PlayerStats.Ability2CooldownReset;
 				Ability2CooldownValue = Ability2.recoverTime;
 			}
 			break;
@@ -212,20 +216,20 @@ public class ChipmunkPlayerControl : Photon.MonoBehaviour{
 	}
 
 	void LowerCooldowns(){
-		if(_ability1Cooldown > 0){
-			_ability1Cooldown--;
+        if (_attackCooldown > 0) {
+            _attackCooldown--;
+        }
+        if (_playerState == PlayerState.Charging && Input.GetKey(AttackKey)) {
+            if (PlayerStats.PowerAttackCharge < PlayerStats.PowerAttackMaxValue) {
+                PlayerStats.PowerAttackCharge++;
+            }
+        } 
+		if(PlayerStats.Ability1Cooldown > 0){
+			PlayerStats.Ability1Cooldown--;
 		}
-		if(_ability2Cooldown > 0){
-			_ability2Cooldown--;
-		}
-		if(Ability2CooldownValue > 0){
-			Ability2CooldownValue--;
-		}
-		if(Ability2CooldownValue == 0 && _playerState == PlayerState.Lunging) {
-			_playerState = PlayerState.Standing;
-			Ability2.isLunging = false;
-			Ability2.resetEnemyIDs();
-		}
+        if (PlayerStats.Ability2Cooldown > 0) {
+            PlayerStats.Ability2Cooldown--;
+        }
 	}
 
     void OnPhotonSerializeView(PhotonStream stream, PhotonMessageInfo info) {

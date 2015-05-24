@@ -140,6 +140,94 @@ public class PlayerStats: MonoBehaviour {
         }
     }
 
+    private static int _attackCooldownReset = -1;
+    public static int AttackCooldownReset {
+        get {
+            if (_attackCooldownReset == -1)
+                _attackCooldownReset = PlayerPrefs.GetInt(GameControl.PLAYER_ATTACK_COOLDOWN_KEY);
+            return _attackCooldownReset;
+        }
+        set {
+            PlayerPrefs.SetInt(GameControl.PLAYER_ATTACK_COOLDOWN_KEY, value);
+        }
+    }
+
+    private static int _attackCooldown = 0;
+    public static int AttackCooldown {
+        get {
+            return _attackCooldown;
+        }
+        set {
+            _attackCooldown = value;
+        }
+    }
+
+    private static int _powerAttackMaxValue = -1;
+    public static int PowerAttackMaxValue {
+        get {
+            if (_powerAttackMaxValue == -1)
+                _powerAttackMaxValue = PlayerPrefs.GetInt(GameControl.PLAYER_POWER_ATTACK_COOLDOWN_KEY);
+            return _powerAttackMaxValue;
+        }
+        set {
+           PlayerPrefs.SetInt(GameControl.PLAYER_POWER_ATTACK_COOLDOWN_KEY,value);
+        }
+    }
+
+    private static int _powerAttackCharge = 0;
+    public static int PowerAttackCharge {
+        get {
+            return _powerAttackCharge;
+        }
+        set {
+            _powerAttackCharge = value;
+        }
+    }
+
+    private static int _ability1CooldownReset = -1;
+    public static int Ability1CooldownReset {
+        get {
+            if (_ability1CooldownReset == -1)
+                _ability1CooldownReset = PlayerPrefs.GetInt(GameControl.PLAYER_ABILITY_1_COOLDOWN_KEY);
+            return _ability1CooldownReset;
+        }
+        set {
+            PlayerPrefs.SetInt(GameControl.PLAYER_ABILITY_1_COOLDOWN_KEY, value);
+        }
+    }
+
+    private static int _ability1Cooldown = 0;
+    public static int Ability1Cooldown {
+        get {
+            return _ability1Cooldown;
+        }
+        set {
+            _ability1Cooldown = value;
+        }
+    }
+
+    private static int _ability2CooldownReset = -1;
+    public static int Ability2CooldownReset {
+        get {
+            if (_ability2CooldownReset == -1)
+                _ability2CooldownReset = PlayerPrefs.GetInt(GameControl.PLAYER_ABILITY_2_COOLDOWN_Key);
+            return _ability2CooldownReset;
+        }
+        set {
+            PlayerPrefs.SetInt(GameControl.PLAYER_ABILITY_2_COOLDOWN_Key, value);
+        }
+    }
+
+    private static int _ability2Cooldown = 0;
+    public static int Ability2Cooldown {
+        get {
+            return _ability2Cooldown;
+        }
+        set {
+            _ability2Cooldown = value;
+        }
+    }
+
     public static void SavePlayerScore() {
         PlayerPrefs.SetInt(GameControl.PLAYER_SCORE_KEY + PhotonNetworkManager.selectedPlayerName, PlayerScore);
     }

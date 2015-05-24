@@ -19,7 +19,11 @@ public class GameControl : MonoBehaviour {
     public const string PLAYER_RANGED_ATTACK_KEY = "PLAYERRANGEDATTACKKEY";
 	public const string PLAYER_MOVEMENT_KEY = "PLAYERMOVEMENTKEY";
     public const string PLAYER_LEVEL_KEY = "PLAYERLEVELKEY";
-    public const string PLAYER_SCORE_KEY = "PLAYERSCOREKEY";    
+    public const string PLAYER_SCORE_KEY = "PLAYERSCOREKEY";
+    public const string PLAYER_ATTACK_COOLDOWN_KEY = "PLAYERATTACKCOOLDOWNKEY";
+    public const string PLAYER_POWER_ATTACK_COOLDOWN_KEY = "PLAYERPOWERATTACKCOOLDOWNKEY";
+    public const string PLAYER_ABILITY_1_COOLDOWN_KEY = "PLAYERABILITY1COOLDOWNKEY";
+    public const string PLAYER_ABILITY_2_COOLDOWN_Key = "PLAYERABILITY2COOLDOWNKEY";
 
 	void Start () {
         DontDestroyOnLoad(this);
