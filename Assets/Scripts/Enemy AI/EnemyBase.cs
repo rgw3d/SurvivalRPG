@@ -141,12 +141,9 @@ public abstract class EnemyBase : Photon.MonoBehaviour {
     }
 
     public bool InLineOfSight(GameObject target) {
-        print(target.transform.position + "  <-- player  enemy--> " +transform.position );
+       //print(target.transform.position + "  <-- player  enemy--> " +transform.position );
        RaycastHit2D x = Physics2D.Linecast(transform.position, target.transform.position, LineOfSightMask.value);
         
-       if (x.transform == null) {
-           Debug.Log("the transform is null");
-       }
        return x.collider == target.collider2D;
         //return true;
     }
