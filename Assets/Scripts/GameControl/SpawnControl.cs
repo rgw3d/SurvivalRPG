@@ -54,7 +54,6 @@ public class SpawnControl : Photon.MonoBehaviour {
 
 	public void SpawnHealthKits(bool isHost){
 		foreach(MapRoom room in GenerateMap.Map.roomList){
-			Debug.Log("healthkits are spawning?");
 			int NumObstaclesPercent = Random.Range(1,10);
 			if(NumObstaclesPercent <= 5){
 			}
