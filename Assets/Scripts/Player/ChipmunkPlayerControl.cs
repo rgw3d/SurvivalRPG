@@ -120,6 +120,10 @@ public class ChipmunkPlayerControl : Photon.MonoBehaviour{
         PlayerSprite();
 	}
 
+	public void onPlayerAttacked(int damage){
+		PlayerStats.PlayerHealth -= damage;
+	}
+
     public void PlayerMovement() {
         if (Input.GetKey(UpKey)) {
 			if(_playerState == PlayerState.Charging){
