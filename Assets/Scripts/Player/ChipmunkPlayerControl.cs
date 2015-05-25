@@ -6,6 +6,7 @@ public class ChipmunkPlayerControl : Photon.MonoBehaviour{
     public Sprite NormalSprite;
     public Sprite AttackSprite;
 	private SpriteRenderer _spriteRenderer;
+    private Animator _animator;
     private PlayerState _playerState = PlayerState.Standing;
 
     public float ChargedSpeedMult;
@@ -243,7 +244,7 @@ public class ChipmunkPlayerControl : Photon.MonoBehaviour{
 			PlayerStats.Ability1Cooldown--;
 		}
         if (PlayerStats.Ability2Cooldown > 0) {
-            if (rigidbody2D.velocity == Vector2.zero)
+            if (rigidbody2D.velocity == Vector2.zero && _playerState == PlayerState.Lunging)
                 _playerState = PlayerState.Standing;
             PlayerStats.Ability2Cooldown--;
         }
