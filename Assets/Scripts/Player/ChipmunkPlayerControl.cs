@@ -97,12 +97,15 @@ public class ChipmunkPlayerControl : Photon.MonoBehaviour{
                 }
                 if (Input.GetKey(KeyCode.Z)) {
                     PlayerStats.PlayerHealth++;
-                } if (Input.GetKey(Ability1Key)) {
+                } 
+                
+                /*if (Input.GetKey(Ability1Key)) {
                     PlayerAbility(1);
                 }
                 if (Input.GetKey(Ability2Key)) {
                     PlayerAbility(2);
                 }
+                 * */
                 PlayerAttack();
             }
             
@@ -163,12 +166,12 @@ public class ChipmunkPlayerControl : Photon.MonoBehaviour{
     }
 
     public void PlayerAttack() {
-        /*if (Input.GetKeyDown(Ability1Key)) {
+        if (Input.GetKeyDown(Ability1Key)) {
             PlayerAbility(1);
         }
         if (Input.GetKeyDown(Ability2Key)) {
             PlayerAbility(2);
-        }*/
+        }
 
 		if (PlayerStats.AttackCooldown == 0 && Input.GetKeyDown(AttackKey) && (_playerState == PlayerState.Standing || _playerState == PlayerState.Walking)) {
             DelegateHolder.TriggerPlayerAttack(true, PlayerStats.AttackValue); 
