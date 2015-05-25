@@ -24,7 +24,7 @@ public class Chipmunk1AcornSpit: Spell {
 			if(other.tag =="Enemy"){
 				EnemyBase enemyBase = other.GetComponent("EnemyBase") as EnemyBase;
 				enemyBase.OnEnemyAttacked(PlayerStats.RangedAttackValue);
-				other.rigidbody2D.AddRelativeForce(velocity * -.75f * transform.right);
+				other.rigidbody2D.AddRelativeForce(velocity * .75f * transform.up);
 			}
 
 		}
