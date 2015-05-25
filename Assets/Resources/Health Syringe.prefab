@@ -11,9 +11,10 @@ GameObject:
   - 212: {fileID: 21252394}
   - 61: {fileID: 6152394}
   - 114: {fileID: 11451468}
+  - 114: {fileID: 11435346}
   m_Layer: 0
   m_Name: Health Syringe
-  m_TagString: Untagged
+  m_TagString: Health
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -41,6 +42,31 @@ BoxCollider2D:
   m_IsTrigger: 1
   m_Size: {x: .310000002, y: .310000002}
   m_Center: {x: 0, y: 0}
+--- !u!114 &11435346
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 152394}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: aa584fbee541324448dd18d8409c7a41, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ownerId: 0
+  group: 0
+  prefixBackup: -1
+  observed: {fileID: 0}
+  synchronization: 0
+  onSerializeTransformOption: 3
+  onSerializeRigidBodyOption: 2
+  ownershipTransfer: 0
+  ObservedComponents:
+  - {fileID: 0}
+  ObservedComponentsFoldoutOpen: 1
+  viewIdField: 0
+  instantiationId: -1
+  isRuntimeInstantiated: 0
 --- !u!114 &11451468
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -52,6 +78,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 27160306d162c42bdbc60bbb46dd78ad, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  healAmount: 50
 --- !u!212 &21252394
 SpriteRenderer:
   m_ObjectHideFlags: 1

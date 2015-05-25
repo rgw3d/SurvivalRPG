@@ -107,6 +107,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   PlayerPrefab: {fileID: 100000, guid: 324e7e8985f374349bf4127f48448169, type: 2}
   CameraPrefab: {fileID: 100000, guid: b0674bb90435bb349a475d11394b5c56, type: 2}
+  HealthKitPrefab: {fileID: 152394, guid: 30935b54aa1c54de8bf601d2a789f968, type: 2}
   EnemyTypes:
   - {fileID: 100000, guid: db6493934dc68c745983c14a68f21b2c, type: 2}
   - {fileID: 143786, guid: bf41a0e8465a140bebb436913880c994, type: 2}

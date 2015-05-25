@@ -4,10 +4,11 @@
 TagManager:
   tags:
   - Enemy
-  - 
+  - EnemyProjectile
   - Map Controller
   - Sword
   - Wall
+  - Health
   - 
   Builtin Layer 0: Default
   Builtin Layer 1: TransparentFX
