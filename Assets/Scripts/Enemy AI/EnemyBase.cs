@@ -123,18 +123,21 @@ public abstract class EnemyBase : Photon.MonoBehaviour {
         else {
             Target = null;
         }
-        Debug.Log(Target);
     }
 
     private static int ComparePlayerDistances(GameObject player1, GameObject player2) {
+        if (player1 == null || player2 == null) {
+            return 1;
+        }
         float dist1 = Vector3.Distance(_staticTransform.position, player1.transform.position);
         float dist2 = Vector3.Distance(_staticTransform.position, player2.transform.position);
         return Mathf.RoundToInt(dist1 - dist2);
+
     }
 
     public bool InLineOfSight(GameObject target) {
         if (target == null) {
-            Debug.Log("NULLLLLLLLL");
+            Debug.Log("NULLLLLLLLL target");
         }
        RaycastHit2D x = Physics2D.Linecast(transform.position, target.transform.position, LineOfSightMask.value);
        return x.transform.gameObject == target;
