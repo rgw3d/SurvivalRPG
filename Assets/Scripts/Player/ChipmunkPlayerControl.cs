@@ -10,9 +10,9 @@ public class ChipmunkPlayerControl : Photon.MonoBehaviour{
     private PlayerState _playerState = PlayerState.Standing;
 
     public float ChargedSpeedMult;
-    public float RotationSpeed = 5;
-
-    public KeyCode UpKey;
+	public float RotationSpeed = 5;
+	
+	public KeyCode UpKey;
     public KeyCode DownKey;
     public KeyCode LeftKey;
     public KeyCode RightKey;
