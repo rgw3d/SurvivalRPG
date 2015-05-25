@@ -50,9 +50,11 @@ public abstract class EnemyBase : Photon.MonoBehaviour {
 
     public void UpdatePlayerList() {
         PlayerList = new List<GameObject>(GameObject.FindGameObjectsWithTag("Player"));
+        Debug.Log("Size of player list: " + PlayerList.Count);
     }
 
     public void PlayerConnectionChange() {
+        Debug.Log("Player has connected!");
         UpdatePlayerList();
     }
 
