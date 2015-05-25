@@ -63,10 +63,12 @@ public abstract class EnemyBase : Photon.MonoBehaviour {
     }
 
 	void Update(){
-		Vector2 enemyPosition = transform.position;
-		Vector2 playerPosition = PlayerList[0].transform.position;
-		float angle = Mathf.Atan2(playerPosition.y - enemyPosition.y, playerPosition.x - enemyPosition.x) * Mathf.Rad2Deg;
-		transform.rotation = Quaternion.Lerp(transform.rotation, Quaternion.Euler(new Vector3(0f, 0f, angle)), rotationSpeed * Time.deltaTime);
+        if (photonView.isMine) {
+            Vector2 enemyPosition = transform.position;
+            Vector2 playerPosition = PlayerList[0].transform.position;
+            float angle = Mathf.Atan2(playerPosition.y - enemyPosition.y, playerPosition.x - enemyPosition.x) * Mathf.Rad2Deg;
+            transform.rotation = Quaternion.Lerp(transform.rotation, Quaternion.Euler(new Vector3(0f, 0f, angle)), rotationSpeed * Time.deltaTime);
+        }
 	}
 	
 	void FixedUpdate() {
