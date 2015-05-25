@@ -6,6 +6,7 @@ public class Chipmunk1AcornSpit: Spell {
 	public int damage;
 	public float velocity;
 	public bool activated = false;
+	public Quaternion initRotation;
 
 	void Start(){
 		if(!GetComponentInParent<PhotonView>().isMine)
@@ -24,7 +25,8 @@ public class Chipmunk1AcornSpit: Spell {
 			if(other.tag =="Enemy"){
 				EnemyBase enemyBase = other.GetComponent("EnemyBase") as EnemyBase;
 				enemyBase.OnEnemyAttacked(PlayerStats.RangedAttackValue);
-				other.rigidbody2D.AddRelativeForce(velocity * .75f * transform.up);
+				transform.rotation = initRotation;
+				other.rigidbody2D.AddRelativeForce(velocity * -.75f * transform.right);
 			}
 
 		}

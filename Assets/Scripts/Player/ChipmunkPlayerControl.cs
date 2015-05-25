@@ -219,6 +219,7 @@ public class ChipmunkPlayerControl : Photon.MonoBehaviour{
 			if(PlayerStats.Ability1Cooldown == 0 && _playerState != PlayerState.Attacking){
 				_ability1GameObject.transform.position = transform.position;
 				_ability1GameObject.transform.rotation = transform.rotation;
+				_ability1Script.initRotation = transform.rotation;
 				_ability1GameObject.rigidbody2D.velocity = Vector3.zero;
 				_ability1GameObject.rigidbody2D.AddRelativeForce(_ability1Script.velocity * -1 * Vector2.right);
 				_ability1Script.activated = true;
