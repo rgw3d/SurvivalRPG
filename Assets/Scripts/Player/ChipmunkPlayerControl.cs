@@ -235,8 +235,8 @@ public class ChipmunkPlayerControl : Photon.MonoBehaviour{
 	}
 
 	void LowerCooldowns(){
-        if (_attackCooldown > 0) {
-            _attackCooldown--;
+		if (PlayerStats.AttackCooldown > 0) {
+			PlayerStats.AttackCooldown--;
         }
         if (_playerState == PlayerState.Charging && Input.GetKey(ChargeAttackKey)) {
             if (PlayerStats.PowerAttackCharge < PlayerStats.PowerAttackMaxValue) {
