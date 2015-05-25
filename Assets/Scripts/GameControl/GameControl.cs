@@ -57,6 +57,12 @@ public class GameControl : MonoBehaviour {
         foreach (GameObject enemy in GameObject.FindGameObjectsWithTag("Enemy")) {
             Destroy(enemy);
         }
+        foreach (GameObject health in GameObject.FindGameObjectsWithTag("Health")) {
+            Destroy(health);
+        }
+        foreach (GameObject enemyProjectile in GameObject.FindGameObjectsWithTag("EnemyProjectile")) {
+            Destroy(enemyProjectile);
+        }
     }
 
 
