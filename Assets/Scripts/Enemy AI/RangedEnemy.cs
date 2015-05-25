@@ -13,7 +13,7 @@ public class RangedEnemy : EnemyBase {
 			_tranquilizer.transform.position = transform.position;
 			_tranquilizer.transform.rotation = transform.rotation;
 			_tranquilizer.rigidbody2D.velocity = Vector3.zero;
-			_tranquilizer.rigidbody2D.AddRelativeForce(tranquilizerPrefab.velocity * -1 * Vector2.right);
+			_tranquilizer.rigidbody2D.AddRelativeForce(tranquilizerPrefab.velocity * Vector2.right);
 			tranquilizerPrefab.activated = true;
 			_attackCooldown = tranquilizerPrefab.cooldown;
 		}

@@ -7,7 +7,7 @@ public class MeleeEnemy : EnemyBase {
         float angle = Mathf.Atan((transform.position.x - Target.transform.position.x) / (transform.position.y - Target.transform.position.y));
         if (transform.position.y - Target.transform.position.y >= 0)
             angle += Mathf.PI;
-        transform.Translate(Speed * Mathf.Sin(angle), Speed * Mathf.Cos(angle), 0);
+        transform.Translate(Speed * Mathf.Sin(angle), Speed * Mathf.Cos(angle), 0, Space.World);
     }
 
 	public override void CreateNeededSubobjects(){
@@ -17,12 +17,5 @@ public class MeleeEnemy : EnemyBase {
 	public override void LowerCooldowns(){
 
 	}
-
-    void OnTriggerStay2D(Collider2D col) {
-        if (PlayerList.Contains(col.gameObject)) {
-            rigidbody2D.AddForce(col.gameObject.rigidbody2D.velocity * 10);
-        }
-    }
-	
 }
 

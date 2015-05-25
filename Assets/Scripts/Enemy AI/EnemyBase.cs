@@ -9,6 +9,7 @@ public abstract class EnemyBase : Photon.MonoBehaviour {
     public float HealthStartingValue = 100;
     public float HealthValue;
     public float Speed = 0.05f;
+	public int rotationSpeed = 5;
 
     private int _pathfindTick = 0;
     public int PathfindCooldownValue = 60;
@@ -61,8 +62,14 @@ public abstract class EnemyBase : Photon.MonoBehaviour {
         UpdatePlayerList();
     }
 
-
-    void FixedUpdate() {
+	void Update(){
+		Vector2 enemyPosition = transform.position;
+		Vector2 playerPosition = PlayerList[0].transform.position;
+		float angle = Mathf.Atan2(playerPosition.y - enemyPosition.y, playerPosition.x - enemyPosition.x) * Mathf.Rad2Deg;
+		transform.rotation = Quaternion.Lerp(transform.rotation, Quaternion.Euler(new Vector3(0f, 0f, angle)), rotationSpeed * Time.deltaTime);
+	}
+	
+	void FixedUpdate() {
         if (photonView.isMine && Target != null) {
             float distance = Vector3.Distance(transform.position, Target.transform.position);
             if (distance < ActivationDistance) { // good luck m8
@@ -165,7 +172,7 @@ public abstract class EnemyBase : Photon.MonoBehaviour {
             float angle = Mathf.Atan((transform.position.x - _currentPath[_indexOfPath].x) / (transform.position.y - _currentPath[_indexOfPath].y));
             if (transform.position.y - _currentPath[_indexOfPath].y >= 0)
                 angle += Mathf.PI;
-            transform.Translate(Speed * Mathf.Sin(angle), Speed * Mathf.Cos(angle), 0);
+            transform.Translate(Speed * Mathf.Sin(angle), Speed * Mathf.Cos(angle), 0, Space.World);
 
             if (Mathf.Abs(transform.position.x - _currentPath[_indexOfPath].x) < .03f && Mathf.Abs(transform.position.y - _currentPath[_indexOfPath].y) < .03f) {
                 _indexOfPath++;
