@@ -13,7 +13,7 @@ public abstract class EnemyBase : Photon.MonoBehaviour {
 
     private int _pathfindTick = 0;
     public int PathfindCooldownValue = 60;
-    public int LineOfSightDistance = 5;
+    public int LineOfSightDistance = 10;
     public int ActivationDistance = 25;
     public float ResetTargetCooldown = .25f;
 
