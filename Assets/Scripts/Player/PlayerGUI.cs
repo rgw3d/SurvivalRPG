@@ -73,7 +73,7 @@ public class PlayerGUI : MonoBehaviour {
         float width = Bounds.x * 3 / 4;
 
         //Power Attack
-        float powerProgress = (float)(PlayerStats.PowerAttackCharge - PlayerStats.PowerAttackMaxValue) / PlayerStats.PowerAttackMaxValue;
+        float powerProgress = (float)PlayerStats.PowerAttackCharge  / PlayerStats.PowerAttackMaxValue;
         GUI.DrawTexture(new Rect(startingWidth, startingHeight, width, height), ProgressBarEmpty);
         GUI.BeginGroup(new Rect(startingWidth, startingHeight, width * Mathf.Clamp01(powerProgress), height));
         GUI.DrawTexture(new Rect(0, 0, width, height), PowerBarFull);
