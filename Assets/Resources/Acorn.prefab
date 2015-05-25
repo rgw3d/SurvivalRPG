@@ -13,6 +13,7 @@ GameObject:
   - 58: {fileID: 5880190}
   - 114: {fileID: 11440000}
   - 50: {fileID: 5051542}
+  - 114: {fileID: 11400000}
   m_Layer: 10
   m_Name: Acorn
   m_TagString: Untagged
@@ -58,6 +59,17 @@ CircleCollider2D:
   m_IsTrigger: 1
   m_Radius: .100000001
   m_Center: {x: 0, y: 0}
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 100634}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2d494523040d9ea4a92f53cdbd42188b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!114 &11405138
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -88,11 +100,12 @@ MonoBehaviour:
   group: 0
   prefixBackup: -1
   observed: {fileID: 0}
-  synchronization: 0
+  synchronization: 3
   onSerializeTransformOption: 3
   onSerializeRigidBodyOption: 2
   ownershipTransfer: 0
-  ObservedComponents: []
+  ObservedComponents:
+  - {fileID: 11400000}
   ObservedComponentsFoldoutOpen: 1
   viewIdField: 0
   instantiationId: -1
