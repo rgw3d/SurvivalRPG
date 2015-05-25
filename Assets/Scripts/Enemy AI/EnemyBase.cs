@@ -38,12 +38,15 @@ public abstract class EnemyBase : Photon.MonoBehaviour {
     }
 
     void Start() {
-        UpdatePlayerList();
-        HealthValue = HealthStartingValue;
-        InvokeRepeating("SetTarget", 1, ResetTargetCooldown);//Set it to find a new target 
-        DelegateHolder.OnPlayerHasConnected += PlayerConnectionChange;
-        DelegateHolder.OnPlayerHasDisconnected += PlayerConnectionChange;
-		CreateNeededSubobjects();
+        if (photonView.isMine) {
+            UpdatePlayerList();
+            HealthValue = HealthStartingValue;
+            InvokeRepeating("SetTarget", 1, ResetTargetCooldown);//Set it to find a new target 
+            InvokeRepeating("UpdatePlayerList", 5, 5);
+            DelegateHolder.OnPlayerHasConnected += PlayerConnectionChange;
+            DelegateHolder.OnPlayerHasDisconnected += PlayerConnectionChange;
+            CreateNeededSubobjects();
+        }
     }
 
 	public abstract void CreateNeededSubobjects();
@@ -138,11 +141,13 @@ public abstract class EnemyBase : Photon.MonoBehaviour {
     }
 
     public bool InLineOfSight(GameObject target) {
-        if (target == null) {
-            Debug.Log("NULLLLLLLLL target");
-        }
+        print(target.transform.position + "  <-- player  enemy--> " +transform.position );
        RaycastHit2D x = Physics2D.Linecast(transform.position, target.transform.position, LineOfSightMask.value);
-       return x.transform.gameObject == target;
+        
+       if (x.transform == null) {
+           Debug.Log("the transform is null");
+       }
+       return x.collider == target.collider2D;
         //return true;
     }
 
