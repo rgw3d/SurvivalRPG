@@ -4,7 +4,7 @@ using System.Collections.Generic;
 public class Chipmunk2Lunge : Spell {
 
 	public int lungeForce = -3300;
-	public int recoverTime = 30;
+	public int recoverTime = 20;
 	public int damage;
 	public bool isLunging = false;
 	private List<int> enemyIDs;
