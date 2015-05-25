@@ -60,8 +60,13 @@ public class MovementSync : Photon.MonoBehaviour {
         // We want it to take a bit longer, so we multiply with 9 instead.
 
         _lerpFraction = _lerpFraction + Time.deltaTime * 9;
-        transform.localPosition = Vector3.Lerp(_onUpdatePos, _latestCorrectPos, _lerpFraction);    // set our pos between A and B
-        transform.rotation = Quaternion.Slerp(_onUpdateRot, _latestCorrectRot, _lerpFraction);
+        if (Vector3.Distance(_onUpdatePos, _latestCorrectPos) > 10) {
+            transform.localPosition = _latestCorrectPos;
+        }
+        else {
+            transform.localPosition = Vector3.Lerp(_onUpdatePos, _latestCorrectPos, _lerpFraction);    // set our pos between A and B
+            transform.rotation = Quaternion.Slerp(_onUpdateRot, _latestCorrectRot, _lerpFraction);
+        }
 
     }
 }
