@@ -121,8 +121,17 @@ public class ChipmunkPlayerControl : Photon.MonoBehaviour{
 	}
 
 	public void onPlayerAttacked(int damage){
-		PlayerStats.PlayerHealth -= damage;
+        if (photonView.isMine)
+            PlayerStats.PlayerHealth -= damage;
+        else
+            photonView.RPC("OnPlayerAttackedRPC",PhotonTargets.MasterClient, damage);
+
 	}
+
+    [RPC]
+    public void OnPlayerAttackedRPC(int damage) {
+        PlayerStats.PlayerHealth -= damage;
+    }
 
     public void PlayerMovement() {
         if (Input.GetKey(UpKey)) {
