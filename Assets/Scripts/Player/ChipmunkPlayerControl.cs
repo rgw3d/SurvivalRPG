@@ -19,6 +19,7 @@ public class ChipmunkPlayerControl : Photon.MonoBehaviour{
     public KeyCode AttackKey;
     public KeyCode Ability1Key;
     public KeyCode Ability2Key;
+	public KeyCode ChargeAttackKey;
 
     /*
      *Explanation of cooldowns -- there are two types
@@ -183,19 +184,21 @@ public class ChipmunkPlayerControl : Photon.MonoBehaviour{
 
         if (PlayerStats.AttackCooldown == 0 && _playerState == PlayerState.Attacking) {
 			DelegateHolder.TriggerPlayerAttack(false, 0);
-			if(Input.GetKey(AttackKey)){
+			/*if(Input.GetKey(AttackKey)){
 				_playerState = PlayerState.Charging;
-			}
-			else{
-                PlayerStats.PowerAttackCharge = 0;
-				_playerState = PlayerState.Standing;
-			}
+			}*/
+
+			_playerState = PlayerState.Standing;
         }
 
-		if(_playerState == PlayerState.Charging && Input.GetKeyUp(AttackKey)){
+		if(Input.GetKey(ChargeAttackKey) && (_playerState == PlayerState.Standing || _playerState == PlayerState.Walking)){
+			_playerState = PlayerState.Charging;
+		}
+
+		if(_playerState == PlayerState.Charging && Input.GetKeyUp(ChargeAttackKey)){
 			DelegateHolder.TriggerPlayerAttack(true, PlayerStats.AttackValue + (PlayerStats.PowerAttackCharge / 2));
             PlayerStats.AttackCooldown = PlayerStats.AttackCooldownReset;
-            _playerState = PlayerState.Walking;
+            _playerState = PlayerState.Standing;
             PlayerStats.PowerAttackCharge = 0;
 		}
 
@@ -235,7 +238,7 @@ public class ChipmunkPlayerControl : Photon.MonoBehaviour{
         if (_attackCooldown > 0) {
             _attackCooldown--;
         }
-        if (_playerState == PlayerState.Charging && Input.GetKey(AttackKey)) {
+        if (_playerState == PlayerState.Charging && Input.GetKey(ChargeAttackKey)) {
             if (PlayerStats.PowerAttackCharge < PlayerStats.PowerAttackMaxValue) {
                 PlayerStats.PowerAttackCharge++;
             }
