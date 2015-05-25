@@ -131,7 +131,7 @@ public class PhotonNetworkManager : MonoBehaviour {
                 PlayerPrefs.SetInt(GameControl.PLAYER_MAX_HEALTH_KEY + _playerName, 100);
                 PlayerPrefs.SetInt(GameControl.PLAYER_MAX_MANA_KEY + _playerName, 20);
                 PlayerPrefs.SetInt(GameControl.PLAYER_ATTACK_KEY + _playerName, 20);
-                PlayerPrefs.SetInt(GameControl.PLAYER_RANGED_ATTACK_KEY + _playerName, 30);
+                PlayerPrefs.SetInt(GameControl.PLAYER_RANGED_ATTACK_KEY + _playerName, 10);
                 PlayerPrefs.SetInt(GameControl.PLAYER_DEFENSE_KEY + _playerName, 5);
 				PlayerPrefs.SetFloat(GameControl.PLAYER_MOVEMENT_KEY + _playerName, 80f);
                 PlayerPrefs.SetInt(GameControl.PLAYER_ATTACK_COOLDOWN_KEY + _playerName, 15);

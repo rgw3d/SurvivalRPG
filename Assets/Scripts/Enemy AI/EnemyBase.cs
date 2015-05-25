@@ -177,8 +177,8 @@ public abstract class EnemyBase : Photon.MonoBehaviour {
     public abstract void AttackBehavior();
 
 	public void OnEnemyAttacked(float damageTaken){
-			HealthValue -= damageTaken;
-            photonView.RPC("OnEnemyAttackedRPC", PhotonTargets.Others, damageTaken);
+		HealthValue -= damageTaken;
+        photonView.RPC("OnEnemyAttackedRPC", PhotonTargets.Others, damageTaken);
 	}
 
     [RPC]

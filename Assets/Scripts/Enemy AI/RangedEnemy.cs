@@ -9,7 +9,7 @@ public class RangedEnemy : EnemyBase {
 	private GameObject _tranquilizer;
 
     public override void AttackBehavior() {
-		if(_attackCooldown == 0){
+		if(_attackCooldown == 0 && _tranquilizer.rigidbody2D.velocity == Vector2.zero){
 			_tranquilizer.transform.position = transform.position;
 			_tranquilizer.transform.rotation = transform.rotation;
 			_tranquilizer.rigidbody2D.velocity = Vector3.zero;

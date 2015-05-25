@@ -83,7 +83,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   damage: 10
   cooldown: 90
-  velocity: 0
+  velocity: 100
   activated: 0
 --- !u!114 &11444850
 MonoBehaviour:
