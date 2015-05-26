@@ -28,14 +28,6 @@ public class RangedEnemy : EnemyBase {
 	public override void CreateNeededSubobjects(){
 		_tranquilizer = PhotonNetwork.Instantiate(tranquilizerPrefab.name, new Vector2(-100, -100), Quaternion.identity, 0);
 	}
-	
-    void OnTriggerStay2D(Collider2D col) {
-        if (PlayerList.Contains(col.gameObject)) {
-            rigidbody2D.AddForce(col.gameObject.rigidbody2D.velocity * 10);
-        }
-    }
-	
-	
-	
+
 }
 

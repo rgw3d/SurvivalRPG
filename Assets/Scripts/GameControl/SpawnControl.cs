@@ -53,22 +53,24 @@ public class SpawnControl : Photon.MonoBehaviour {
     }
 
 	public void SpawnHealthKits(bool isHost){
-		foreach(MapRoom room in GenerateMap.Map.roomList){
-			int NumObstaclesPercent = Random.Range(1,10);
-			if(NumObstaclesPercent <= 5){
-			}
-			else if(NumObstaclesPercent > 5 && NumObstaclesPercent <= 9){
-				int r1X = Random.Range(room.LeftX + 1 , room.RightX);
-				int r1Y = Random.Range(room.BottomY + 1, room.TopY);
-				PhotonNetwork.Instantiate(HealthKitPrefab.name,new Vector2(r1X,r1Y), Quaternion.identity, 0);
-			}
-			else if(NumObstaclesPercent > 9){
-				int r1X = Random.Range(room.LeftX + 1, room.RightX);
-				int r1Y = Random.Range(room.BottomY + 1, room.TopY);
-				PhotonNetwork.Instantiate(HealthKitPrefab.name,new Vector2(r1X,r1Y), Quaternion.identity, 0);
-				r1X = Random.Range(room.LeftX + 1, room.RightX);
-				r1Y = Random.Range(room.BottomY + 1, room.TopY);
-				PhotonNetwork.Instantiate(HealthKitPrefab.name,new Vector2(r1X,r1Y), Quaternion.identity, 0);	
+		if (isHost){
+			foreach(MapRoom room in GenerateMap.Map.roomList){
+				int NumObstaclesPercent = Random.Range(1,10);
+				if(NumObstaclesPercent <= 5){
+				}
+				else if(NumObstaclesPercent > 5 && NumObstaclesPercent <= 9){
+					int r1X = Random.Range(room.LeftX + 1 , room.RightX);
+					int r1Y = Random.Range(room.BottomY + 1, room.TopY);
+					PhotonNetwork.Instantiate(HealthKitPrefab.name,new Vector2(r1X,r1Y), Quaternion.identity, 0);
+				}
+				else if(NumObstaclesPercent > 9){
+					int r1X = Random.Range(room.LeftX + 1, room.RightX);
+					int r1Y = Random.Range(room.BottomY + 1, room.TopY);
+					PhotonNetwork.Instantiate(HealthKitPrefab.name,new Vector2(r1X,r1Y), Quaternion.identity, 0);
+					r1X = Random.Range(room.LeftX + 1, room.RightX);
+					r1Y = Random.Range(room.BottomY + 1, room.TopY);
+					PhotonNetwork.Instantiate(HealthKitPrefab.name,new Vector2(r1X,r1Y), Quaternion.identity, 0);	
+				}
 			}
 		}
 	}
