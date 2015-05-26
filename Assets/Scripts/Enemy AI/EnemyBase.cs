@@ -43,7 +43,7 @@ public abstract class EnemyBase : Photon.MonoBehaviour {
             UpdatePlayerList();
             HealthValue = HealthStartingValue;
             InvokeRepeating("SetTarget", 1, ResetTargetCooldown);//Set it to find a new target 
-            InvokeRepeating("UpdatePlayerList", 5, 5);
+            InvokeRepeating("UpdatePlayerList", 1, 2);
             DelegateHolder.OnPlayerHasConnected += PlayerConnectionChange;
             DelegateHolder.OnPlayerHasDisconnected += PlayerConnectionChange;
             CreateNeededSubobjects();
@@ -74,10 +74,12 @@ public abstract class EnemyBase : Photon.MonoBehaviour {
 	void FixedUpdate() {
         if (photonView.isMine && Target != null) {
             float distance = Vector3.Distance(transform.position, Target.transform.position);
+            
             if (distance < ActivationDistance) { // good luck m8
                 _isInLineOfSight = InLineOfSight(Target);
                 if (_isInLineOfSight) {
                     if (distance < LineOfSightDistance) {
+                        Debug.Log("changing state");
                         _currentPathfindingState = PathfindingState.Attacking;
                     }
                     else {
@@ -150,11 +152,8 @@ public abstract class EnemyBase : Photon.MonoBehaviour {
     }
 
     public bool InLineOfSight(GameObject target) {
-       //print(target.transform.position + "  <-- player  enemy--> " +transform.position );
        RaycastHit2D x = Physics2D.Linecast(transform.position, target.transform.position, LineOfSightMask.value);
-        
        return x.collider == target.collider2D;
-        //return true;
     }
 
     public void PathFind() {

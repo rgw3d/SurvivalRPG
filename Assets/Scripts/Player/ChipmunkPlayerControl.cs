@@ -71,7 +71,7 @@ public class ChipmunkPlayerControl : Photon.MonoBehaviour{
         _spriteRenderer.sprite = NormalSprite;
 
         _animator = GetComponent<Animator>();
-        _animator.SetInteger(0, 2);
+        _animator.SetInteger("State", 2);
 
         _ability1GameObject = PhotonNetwork.Instantiate(Ability1Prefab.name, new Vector2(-100, -100), Quaternion.identity, 0);
         _ability1Script = _ability1GameObject.GetComponent("Chipmunk1AcornSpit") as Chipmunk1AcornSpit;
@@ -174,6 +174,9 @@ public class ChipmunkPlayerControl : Photon.MonoBehaviour{
 				_playerState = PlayerState.Walking;
 			}
         }
+
+        if (_playerState == PlayerState.Walking && !Input.GetKey(RightKey) && !Input.GetKey(LeftKey) && !Input.GetKey(DownKey) && !Input.GetKey(UpKey))
+            _playerState = PlayerState.Standing;
     }
 
     public void PlayerSprite() {
