@@ -9,7 +9,7 @@ public class MeleeEnemySword : MonoBehaviour {
 	
 
 
-	void OnTriggerEnter2D(Collider2D other){
+	void OnTriggerStay2D(Collider2D other){
 		if(activated){
 			if(other.tag == "Player"){
 				activated = false;

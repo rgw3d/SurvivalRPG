@@ -16,6 +16,7 @@ public class MeleeEnemy : EnemyBase {
 
 		if(_attackCooldown == 0){
 			enemySwordScript.activated = true;
+			_attackCooldown = enemySwordScript.cooldown;
 		}
 		if(_attackCooldown < enemySwordScript.cooldown / 2){
 			enemySwordScript.activated = false;
