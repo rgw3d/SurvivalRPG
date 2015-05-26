@@ -40,4 +40,5 @@ MonoBehaviour:
   - OnEnemyAttackedRPC
   - SavePlayerScore
   - OnPlayerAttackedRPC
+  - ClearMap
   DisableAutoOpenWizard: 0
