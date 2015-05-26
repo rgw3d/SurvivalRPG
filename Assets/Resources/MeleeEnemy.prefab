@@ -31,7 +31,7 @@ GameObject:
   - 4: {fileID: 411042}
   - 60: {fileID: 6011042}
   - 114: {fileID: 11411042}
-  m_Layer: 0
+  m_Layer: 2
   m_Name: MeleeEnemySword
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -45,7 +45,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 100000}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 93.2527161, y: 35.6458244, z: 0}
+  m_LocalPosition: {x: 92.784584, y: 36.3567429, z: 0}
   m_LocalScale: {x: 2, y: 2, z: 1}
   m_Children:
   - {fileID: 411042}

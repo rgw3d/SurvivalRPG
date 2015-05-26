@@ -26,7 +26,7 @@ public class Chipmunk1AcornSpit: Spell {
 				EnemyBase enemyBase = other.GetComponent("EnemyBase") as EnemyBase;
 				enemyBase.OnEnemyAttacked(PlayerStats.RangedAttackValue);
 				transform.rotation = initRotation;
-				other.rigidbody2D.AddRelativeForce(velocity * -.75f * transform.right);
+				other.rigidbody2D.AddRelativeForce(velocity * -.75f * Vector2.right);
 			}
 
 		}
