@@ -206,7 +206,6 @@ public class ChipmunkPlayerControl : Photon.MonoBehaviour{
 			/*if(Input.GetKey(AttackKey)){
 				_playerState = PlayerState.Charging;
 			}*/
-
 			_playerState = PlayerState.Standing;
         }
 
@@ -217,8 +216,9 @@ public class ChipmunkPlayerControl : Photon.MonoBehaviour{
 		if(_playerState == PlayerState.Charging && Input.GetKeyUp(ChargeAttackKey)){
 			DelegateHolder.TriggerPlayerAttack(true, PlayerStats.AttackValue + (PlayerStats.PowerAttackCharge / 2));
             PlayerStats.AttackCooldown = PlayerStats.AttackCooldownReset;
-            _playerState = PlayerState.Standing;
+            _playerState = PlayerState.Attacking;
             PlayerStats.PowerAttackCharge = 0;
+
 		}
 
         if (PlayerStats.Ability2Cooldown == 0 && _playerState == PlayerState.Lunging) {

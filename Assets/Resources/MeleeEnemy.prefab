@@ -21,6 +21,23 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
+--- !u!1 &111042
+GameObject:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  serializedVersion: 4
+  m_Component:
+  - 4: {fileID: 411042}
+  - 60: {fileID: 6011042}
+  - 114: {fileID: 11411042}
+  m_Layer: 0
+  m_Name: MeleeEnemySword
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
 --- !u!4 &400000
 Transform:
   m_ObjectHideFlags: 1
@@ -28,10 +45,23 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 100000}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -.999946952, y: .0407561511, z: 0}
+  m_LocalPosition: {x: 93.2527161, y: 35.6458244, z: 0}
   m_LocalScale: {x: 2, y: 2, z: 1}
-  m_Children: []
+  m_Children:
+  - {fileID: 411042}
   m_Father: {fileID: 0}
+  m_RootOrder: 0
+--- !u!4 &411042
+Transform:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 111042}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: .35137558, y: -.0333423615, z: -6.04882812}
+  m_LocalScale: {x: .5, y: .5, z: 1}
+  m_Children: []
+  m_Father: {fileID: 400000}
   m_RootOrder: 0
 --- !u!50 &5000000
 Rigidbody2D:
@@ -82,6 +112,22 @@ PolygonCollider2D:
       - {x: -.129999995, y: -.224999994}
       - {x: .129999995, y: -.224999994}
       - {x: .129999995, y: .224999994}
+--- !u!60 &6011042
+PolygonCollider2D:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 111042}
+  m_Enabled: 1
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_Poly:
+    m_Paths:
+    - - {x: 0, y: 1}
+      - {x: .95105654, y: .309016973}
+      - {x: .587785184, y: -.809017062}
+      - {x: -.587785363, y: -.809016943}
+      - {x: -.95105648, y: .309017122}
 --- !u!114 &11400000
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -98,6 +144,7 @@ MonoBehaviour:
   HealthStartingValue: 100
   HealthValue: 0
   Speed: .0500000007
+  rotationSpeed: 5
   PathfindCooldownValue: 60
   LineOfSightDistance: 5
   ActivationDistance: 25
@@ -105,6 +152,8 @@ MonoBehaviour:
   LineOfSightMask:
     serializedVersion: 2
     m_Bits: 257
+  enemySwordScript: {fileID: 0}
+  meleeEnemySword: {fileID: 111042}
 --- !u!114 &11400002
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -130,6 +179,20 @@ MonoBehaviour:
   viewIdField: 0
   instantiationId: -1
   isRuntimeInstantiated: 0
+--- !u!114 &11411042
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 111042}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 443034a6bcb044a38be71f93df6944a8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  damage: 15
+  cooldown: 120
+  activated: 0
 --- !u!212 &21200000
 SpriteRenderer:
   m_ObjectHideFlags: 1
