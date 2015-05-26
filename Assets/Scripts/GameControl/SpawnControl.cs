@@ -76,12 +76,28 @@ public class SpawnControl : Photon.MonoBehaviour {
 	}
 
     public void SpawnEnemies(bool isHost) {
-        if (isHost) {//to spawn enemy, just call PhotonNetwork.Instantiate() to do it
-			//PhotonNetwork.Instantiate(EnemyTypes[0].name, GenerateMap.Map.roomList[6].GetCenter(), Quaternion.identity, 0);
-		    //how are we going to spawn enemies? we will spawn them accros the network! and only the server moves them
-            //that is not bad
-            //we can make that happen
-        }
+		if (isHost){
+			foreach(MapRoom room in GenerateMap.Map.roomList){
+				int NumObstaclesPercent = Random.Range(1,10);
+				int iterations = 0;
+				if(NumObstaclesPercent <= 1){
+					iterations = 0;
+				}
+				else if(NumObstaclesPercent > 1 && NumObstaclesPercent <= 4){
+					iterations = 1;
+				}
+				else if(NumObstaclesPercent > 4 && NumObstaclesPercent <= 10){
+					iterations = 2;
+				}
+
+				for(int i = 0; i < iterations; i++){
+					int r1X = Random.Range(room.LeftX + 1 , room.RightX);
+					int r1Y = Random.Range(room.BottomY + 1, room.TopY);
+					int enemyType = Random.Range(0,2);
+					PhotonNetwork.Instantiate(_enemyNames[enemyType],new Vector2(r1X,r1Y), Quaternion.identity, 0);
+				}
+			}
+		}
     }
     public static void SpawnNewEnemies(int location = 6, int type = 0) {
         Debug.Log("Spawning new enemies");
