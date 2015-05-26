@@ -175,18 +175,13 @@ public class ChipmunkPlayerControl : Photon.MonoBehaviour{
 			}
         }
 
-        if (_playerState == PlayerState.Walking && !Input.GetKey(RightKey) && !Input.GetKey(LeftKey) && !Input.GetKey(DownKey) && !Input.GetKey(UpKey))
+        if (_playerState == PlayerState.Walking && !Input.anyKey)
             _playerState = PlayerState.Standing;
     }
 
     public void PlayerSprite() {
 
         _animator.SetInteger("State", (int)_playerState);
-            /*if (_playerState == PlayerState.Attacking)
-                _spriteRenderer.sprite = AttackSprite;
-            else
-                _spriteRenderer.sprite = NormalSprite;
-             * */
     }
 
     public void PlayerAttack() {
