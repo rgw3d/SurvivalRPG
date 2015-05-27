@@ -14,7 +14,7 @@ GameObject:
   - 58: {fileID: 5880642}
   - 50: {fileID: 5001112}
   - 114: {fileID: 11400000}
-  m_Layer: 10
+  m_Layer: 2
   m_Name: Tranquilizer
   m_TagString: EnemyProjectile
   m_Icon: {fileID: 0}
@@ -128,7 +128,7 @@ SpriteRenderer:
   m_UseLightProbes: 0
   m_LightProbeAnchor: {fileID: 0}
   m_ScaleInLightmap: 1
-  m_SortingLayerID: 0
+  m_SortingLayerID: 374042183
   m_SortingOrder: 0
   m_Sprite: {fileID: 21300000, guid: f9ce228f6167440daa18d7fba499b662, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
