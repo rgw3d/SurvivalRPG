@@ -12,6 +12,7 @@ public class Ladder : Photon.MonoBehaviour {
             PlayerStats.SavePlayerScore();
             photonView.RPC("SavePlayerScore", PhotonTargets.Others);
             DelegateHolder.TriggerGenerateAndRenderMap();
+            photonView.RPC("IncreaseXP", PhotonTargets.All, 100);
         }
 	}
 
@@ -23,5 +24,10 @@ public class Ladder : Photon.MonoBehaviour {
     [RPC]
     public void ClearMap() {
         GameControl.ClearMap();
+    }
+
+    [RPC]
+    public void IncreaseXP(int amt) {
+        PlayerStats.PlayerScore += amt;
     }
 }

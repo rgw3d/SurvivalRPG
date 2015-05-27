@@ -122,12 +122,19 @@ public abstract class EnemyBase : Photon.MonoBehaviour {
 
         if (HealthValue <= 0) {
             //Debug.Log("Enemy Health < 0 \nDestroying");
-            if (photonView.isMine)
+            if (photonView.isMine) {
+                photonView.RPC("IncreaseXP", PhotonTargets.All, 20);
                 PhotonNetwork.Destroy(this.gameObject);
+            }
         }
 		LowerCooldowns();
         UpdateAnimations();
     }
+
+    [RPC]
+    public void IncreaseXP(int amt) {
+        PlayerStats.PlayerScore += amt;
+    } 
 
 	public abstract void LowerCooldowns();
 

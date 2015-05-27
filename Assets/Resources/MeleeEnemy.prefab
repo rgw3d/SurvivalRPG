@@ -161,7 +161,7 @@ MonoBehaviour:
   Speed: .0500000007
   rotationSpeed: 5
   PathfindCooldownValue: 60
-  LineOfSightDistance: 5
+  LineOfSightDistance: 15
   ActivationDistance: 25
   ResetTargetCooldown: .25
   LineOfSightMask:
