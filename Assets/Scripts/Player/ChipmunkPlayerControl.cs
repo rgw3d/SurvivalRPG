@@ -103,14 +103,7 @@ public class ChipmunkPlayerControl : Photon.MonoBehaviour{
                 if (Input.GetKey(KeyCode.Z)) {
                     PlayerStats.PlayerHealth++;
                 } 
-                
-                /*if (Input.GetKey(Ability1Key)) {
-                    PlayerAbility(1);
-                }
-                if (Input.GetKey(Ability2Key)) {
-                    PlayerAbility(2);
-                }
-                 * */
+
                 PlayerAttack();
             }
             
