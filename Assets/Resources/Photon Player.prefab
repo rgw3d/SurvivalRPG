@@ -33,7 +33,7 @@ GameObject:
   - 4: {fileID: 464518}
   - 60: {fileID: 6064518}
   - 114: {fileID: 11422180}
-  m_Layer: 0
+  m_Layer: 2
   m_Name: Sword
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -50,7 +50,7 @@ GameObject:
   - 4: {fileID: 498532}
   - 60: {fileID: 6098532}
   - 114: {fileID: 11498532}
-  m_Layer: 0
+  m_Layer: 2
   m_Name: LungeSword
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -64,7 +64,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 100000}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 93.9570007, y: 35.5600014, z: 0}
+  m_LocalPosition: {x: 37.7116547, y: 64.10923, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 498532}
@@ -174,6 +174,7 @@ Animator:
   m_UpdateMode: 0
   m_ApplyRootMotion: 1
   m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
 --- !u!114 &11400002
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -286,7 +287,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   cooldown: 120
-  lungeForce: -3300
+  lungeForce: -2000
   recoverTime: 30
   damage: 25
   isLunging: 0
