@@ -11,7 +11,7 @@ public abstract class EnemyBase : Photon.MonoBehaviour {
     public float Speed = 0.05f;
 	public int rotationSpeed = 5;
 
-    private Animator _animator;
+    public Animator Animator;
 
     private int _pathfindTick = 0;
     public int PathfindCooldownValue = 60;
@@ -48,7 +48,6 @@ public abstract class EnemyBase : Photon.MonoBehaviour {
             DelegateHolder.OnPlayerHasConnected += PlayerConnectionChange;
             DelegateHolder.OnPlayerHasDisconnected += PlayerConnectionChange;
             CreateNeededSubobjects();
-            _animator = GetComponent<Animator>();
             InvokeRepeating("UpdatePlayerList", .5f, 1);
             StartCoroutine(justWaitThenStop(1));
         }
@@ -139,7 +138,7 @@ public abstract class EnemyBase : Photon.MonoBehaviour {
 	public abstract void LowerCooldowns();
 
     public void UpdateAnimations() {
-        _animator.SetInteger("State", (int)_currentPathfindingState);
+        Animator.SetInteger("State", (int)_currentPathfindingState);
     }
 
     public void SetTarget() {

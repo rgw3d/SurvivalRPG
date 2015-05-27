@@ -114,6 +114,7 @@ MonoBehaviour:
   HealthValue: 0
   Speed: .0500000007
   rotationSpeed: 5
+  Animator: {fileID: 9500000}
   PathfindCooldownValue: 60
   LineOfSightDistance: 5
   ActivationDistance: 25
