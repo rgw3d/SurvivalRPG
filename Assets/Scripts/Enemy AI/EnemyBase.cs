@@ -112,7 +112,7 @@ public abstract class EnemyBase : Photon.MonoBehaviour {
         }
 
         if (HealthValue <= 0) {
-            Debug.Log("Enemy Health < 0 \nDestroying");
+            //Debug.Log("Enemy Health < 0 \nDestroying");
             if (photonView.isMine)
                 PhotonNetwork.Destroy(this.gameObject);
         }
