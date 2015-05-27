@@ -14,6 +14,7 @@ GameObject:
   - 60: {fileID: 6043786}
   - 114: {fileID: 11443788}
   - 114: {fileID: 11443786}
+  - 95: {fileID: 9500000}
   m_Layer: 9
   m_Name: RangedEnemy
   m_TagString: Enemy
@@ -29,7 +30,7 @@ Transform:
   m_GameObject: {fileID: 143786}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 7.54554749, y: 20.631815, z: 0}
-  m_LocalScale: {x: 2, y: 2, z: 1}
+  m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 0
@@ -82,6 +83,20 @@ PolygonCollider2D:
       - {x: -.129999995, y: -.224999994}
       - {x: .129999995, y: -.224999994}
       - {x: .129999995, y: .224999994}
+--- !u!95 &9500000
+Animator:
+  serializedVersion: 3
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 143786}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: e4ed50657394433408318e874902468e, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 1
+  m_HasTransformHierarchy: 1
 --- !u!114 &11443786
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -98,6 +113,7 @@ MonoBehaviour:
   HealthStartingValue: 100
   HealthValue: 0
   Speed: .0500000007
+  rotationSpeed: 5
   PathfindCooldownValue: 60
   LineOfSightDistance: 5
   ActivationDistance: 25

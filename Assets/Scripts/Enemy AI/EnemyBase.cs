@@ -11,6 +11,8 @@ public abstract class EnemyBase : Photon.MonoBehaviour {
     public float Speed = 0.05f;
 	public int rotationSpeed = 5;
 
+    private Animator _animator;
+
     private int _pathfindTick = 0;
     public int PathfindCooldownValue = 60;
     public int LineOfSightDistance = 10;
@@ -33,9 +35,9 @@ public abstract class EnemyBase : Photon.MonoBehaviour {
     private float _lerpFraction;//networking
 
     public enum PathfindingState {
-        Inactive,
-        Active,
-        Attacking
+        Inactive = 0,
+        Active = 1,
+        Attacking = 2
     }
 
     void Start() {
@@ -43,10 +45,12 @@ public abstract class EnemyBase : Photon.MonoBehaviour {
             UpdatePlayerList();
             HealthValue = HealthStartingValue;
             InvokeRepeating("SetTarget", 1, ResetTargetCooldown);//Set it to find a new target 
-            InvokeRepeating("UpdatePlayerList", 1, 2);
             DelegateHolder.OnPlayerHasConnected += PlayerConnectionChange;
             DelegateHolder.OnPlayerHasDisconnected += PlayerConnectionChange;
             CreateNeededSubobjects();
+            _animator = GetComponent<Animator>();
+            InvokeRepeating("UpdatePlayerList", .5f, 1);
+            StartCoroutine(justWaitThenStop(1));
         }
     }
 
@@ -59,8 +63,15 @@ public abstract class EnemyBase : Photon.MonoBehaviour {
 
     public void PlayerConnectionChange() {
         Debug.Log("Player has connected!");
-        UpdatePlayerList();
+        InvokeRepeating("UpdatePlayerList", .5f, 1);
+        StartCoroutine(justWaitThenStop(1));
     }
+
+    public IEnumerator justWaitThenStop(int time) {
+        yield return new WaitForSeconds(time);
+        CancelInvoke("UpdatePlayerList");
+    }
+
 
 	void Update(){
         if (photonView.isMine) {
@@ -117,9 +128,14 @@ public abstract class EnemyBase : Photon.MonoBehaviour {
                 PhotonNetwork.Destroy(this.gameObject);
         }
 		LowerCooldowns();
+        UpdateAnimations();
     }
 
 	public abstract void LowerCooldowns();
+
+    public void UpdateAnimations() {
+        _animator.SetInteger("State", (int)_currentPathfindingState);
+    }
 
     public void SetTarget() {
         _staticTransform = transform;
@@ -202,9 +218,11 @@ public abstract class EnemyBase : Photon.MonoBehaviour {
         if (stream.isWriting) {
             Vector3 pos = transform.localPosition;
             Quaternion rot = transform.localRotation;
+            short ste = (short)_currentPathfindingState;
 
             stream.Serialize(ref pos);
             stream.Serialize(ref rot);
+            stream.Serialize(ref ste);
             
         }
         else {
@@ -220,6 +238,10 @@ public abstract class EnemyBase : Photon.MonoBehaviour {
             _latestCorrectRot = rot;
             _onUpdateRot = transform.rotation;
             _lerpFraction = 0;                           // reset the fraction we alreay moved. see Update()
+
+            short ste = 0;
+            stream.Serialize(ref ste);
+            _currentPathfindingState = (PathfindingState)ste;
 
 
         }
