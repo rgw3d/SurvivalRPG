@@ -113,7 +113,7 @@ public class PlayerGUI : MonoBehaviour {
             LevelBoxStyle.normal.textColor = Color.black;
             LevelBoxStyle.richText = true;
             LevelBoxStyle.alignment = TextAnchor.UpperCenter;
-            LevelBoxStyle.fontSize = (int)(Bounds.y * 0.1f);
+            LevelBoxStyle.fontSize = (int)(Bounds.y * 0.08f);
 
         }
         if (HealthNumberStyle == null) {
@@ -126,12 +126,12 @@ public class PlayerGUI : MonoBehaviour {
             HealthWordStyle = new GUIStyle();
             HealthWordStyle.richText = true;
             HealthWordStyle.alignment = TextAnchor.LowerLeft;
-            HealthWordStyle.fontSize = (int)(Bounds.y * .13f);
+            HealthWordStyle.fontSize = (int)(Bounds.y * .1f);
         }
         if (CooldownBarStyle == null) {
             CooldownBarStyle = new GUIStyle();
             CooldownBarStyle.alignment = TextAnchor.MiddleLeft;
-            CooldownBarStyle.fontSize = (int)(Bounds.y * .1f);
+            CooldownBarStyle.fontSize = (int)(Bounds.y * .07f);
             CooldownBarStyle.normal.textColor = Color.black;
         }
     }
