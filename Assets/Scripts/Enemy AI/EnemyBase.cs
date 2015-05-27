@@ -58,7 +58,6 @@ public abstract class EnemyBase : Photon.MonoBehaviour {
 
     public void UpdatePlayerList() {
         PlayerList = new List<GameObject>(GameObject.FindGameObjectsWithTag("Player"));
-        Debug.Log("Size of player list: " + PlayerList.Count);
     }
 
     public void PlayerConnectionChange() {
@@ -90,7 +89,6 @@ public abstract class EnemyBase : Photon.MonoBehaviour {
                 _isInLineOfSight = InLineOfSight(Target);
                 if (_isInLineOfSight) {
                     if (distance < LineOfSightDistance) {
-                        Debug.Log("changing state");
                         _currentPathfindingState = PathfindingState.Attacking;
                     }
                     else {
