@@ -94,7 +94,8 @@ public class ChipmunkPlayerControl : Photon.MonoBehaviour{
                 || ChatDisplay.ChatState == ChatDisplay.ChattingState.NoUsername) {
                 if (_playerState != PlayerState.Attacking && _playerState != PlayerState.Lunging) //only update movement if not attacking
                     PlayerMovement();
-                if (Input.GetKey(KeyCode.E)) {
+               
+                /*if (Input.GetKey(KeyCode.E)) {
                     PlayerStats.PlayerScore++;
                 }
                 if (Input.GetKey(KeyCode.Q)) {
@@ -103,6 +104,7 @@ public class ChipmunkPlayerControl : Photon.MonoBehaviour{
                 if (Input.GetKey(KeyCode.Z)) {
                     PlayerStats.PlayerHealth++;
                 } 
+                 * */
 
                 PlayerAttack();
             }

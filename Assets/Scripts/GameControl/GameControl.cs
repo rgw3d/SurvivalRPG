@@ -25,8 +25,15 @@ public class GameControl : MonoBehaviour {
     public const string PLAYER_ABILITY_1_COOLDOWN_KEY = "PLAYERABILITY1COOLDOWNKEY";
     public const string PLAYER_ABILITY_2_COOLDOWN_KEY = "PLAYERABILITY2COOLDOWNKEY";
 
+
+    private static GameControl Instance;
+
+    void Awake() {
+        DontDestroyOnLoad(gameObject);
+    }
+
 	void Start () {
-        DontDestroyOnLoad(this);
+       // DontDestroyOnLoad(this);
         DelegateHolder.OnPlayerHasConnected += PlayerConnected;
         DelegateHolder.OnPlayerHasDisconnected += PlayerDisconnected;
     }
@@ -43,8 +50,10 @@ public class GameControl : MonoBehaviour {
                 Application.Quit();
             }
             if (Application.loadedLevelName.Equals(PLAY_SCREEN)) {//escape key for when in play screen
-                PhotonNetwork.LeaveRoom();
+                //PhotonNetwork.LeaveRoom();
+                PhotonNetwork.Disconnect();
                 Application.LoadLevel(TITLE_SCREEN);
+                DestroyImmediate(gameObject);
             }
         }
         if (Input.GetKey(KeyCode.T) || Input.GetKey(KeyCode.Slash)) {

@@ -12,6 +12,9 @@ public class SpawnControl : Photon.MonoBehaviour {
 
     public GameObject Player;
 
+
+    
+
 	void Start () {
         Player = null;
         DelegateHolder.OnMapGenerated += SpawnPlayers;

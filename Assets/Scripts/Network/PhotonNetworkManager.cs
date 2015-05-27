@@ -18,7 +18,6 @@ public class PhotonNetworkManager : MonoBehaviour {
     private Vector2 scrollPosition;
 
     void Start() {
-        DontDestroyOnLoad(this);
         PhotonNetwork.ConnectUsingSettings("0.1");
     }
 
@@ -37,6 +36,12 @@ public class PhotonNetworkManager : MonoBehaviour {
 
         GUILayout.BeginArea(new Rect(0, 0, Screen.width, Screen.height));
             GUILayout.BeginVertical();
+                GUILayout.BeginHorizontal();
+                    var style = new GUIStyle(GUI.skin.box);
+                    style.normal.textColor = Color.red;
+                    style.fontSize = (int)(Screen.width / 50);
+                    GUILayout.Label("Escape from the Lab", style);
+                GUILayout.EndHorizontal();
                 GUILayout.BeginHorizontal(GUILayout.MinHeight(Screen.height/3));
                 GUILayout.FlexibleSpace();
 
@@ -130,7 +135,7 @@ public class PhotonNetworkManager : MonoBehaviour {
                 PlayerPrefs.SetInt(GameControl.PLAYER_LEVEL_KEY + _playerName, 1);
                 PlayerPrefs.SetInt(GameControl.PLAYER_MAX_HEALTH_KEY + _playerName, 100);
                 PlayerPrefs.SetInt(GameControl.PLAYER_MAX_MANA_KEY + _playerName, 20);
-                PlayerPrefs.SetInt(GameControl.PLAYER_ATTACK_KEY + _playerName, 20);
+                PlayerPrefs.SetInt(GameControl.PLAYER_ATTACK_KEY + _playerName, 30);
                 PlayerPrefs.SetInt(GameControl.PLAYER_RANGED_ATTACK_KEY + _playerName, 10);
                 PlayerPrefs.SetInt(GameControl.PLAYER_DEFENSE_KEY + _playerName, 5);
 				PlayerPrefs.SetFloat(GameControl.PLAYER_MOVEMENT_KEY + _playerName, 80f);
